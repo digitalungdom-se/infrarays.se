@@ -1,13 +1,24 @@
 import React from 'react';
-import Plate from 'components/Plate.js'
+import styled, { ThemeProvider } from 'styled-components';
+import './app.css';
+import theme from './theme';
+import Plate from 'components/Plate';
+
+const StyledApp = styled.div`
+  background: ${(props) => props.theme.bg };
+  width: 100%;
+  height: 100%;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <Plate>
-          Hej!
-      </Plate>
-    </div>
+    <ThemeProvider theme={theme}>
+      <StyledApp>
+        <Plate>
+            Hej!
+        </Plate>
+      </StyledApp>
+    </ThemeProvider>
   );
 }
 
