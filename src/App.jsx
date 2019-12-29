@@ -1,11 +1,11 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import './app.css';
-import theme from './theme';
 import Plate from 'components/Plate';
+import theme from './theme';
 
 const StyledApp = styled.div`
-  background: ${(props) => props.theme.bg };
+  background: ${(props) => props.theme.bg};
   width: 100%;
   height: 100%;
 `;
