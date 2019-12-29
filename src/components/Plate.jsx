@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledPlate = styled.div`
@@ -8,8 +9,18 @@ const StyledPlate = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-export default ({children}) => (
+const Plate = ({ children }) => (
   <StyledPlate>
     {children}
   </StyledPlate>
 );
+
+Plate.propTypes = {
+  children: PropTypes.node,
+};
+
+Plate.defaultProps = {
+  children: null,
+};
+
+export default Plate;
