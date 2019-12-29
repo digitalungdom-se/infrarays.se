@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import './app.css';
 import Plate from 'components/Plate';
 import Logo from 'components/Logo';
+import Router from './Router';
 import theme from './theme';
 
 const StyledApp = styled.div`
@@ -17,6 +18,7 @@ function App() {
       <StyledApp>
         <Plate>
           <Logo />
+          <Router />
         </Plate>
       </StyledApp>
     </ThemeProvider>
