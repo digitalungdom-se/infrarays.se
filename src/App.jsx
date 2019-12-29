@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import './app.css';
 import Plate from 'components/Plate';
 import Logo from 'components/Logo';
+import Footer from 'features/footer';
 import Router from './Router';
 import theme from './theme';
 
@@ -20,6 +21,7 @@ function App() {
           <Logo />
           <Router />
         </Plate>
+        <Footer />
       </StyledApp>
     </ThemeProvider>
   );
