@@ -1,9 +1,12 @@
 import React from 'react';
+import Plate from 'components/Plate';
+import Logo from 'components/Logo';
 
 const Login = () => (
-  <div>
-    Login
-  </div>
+  <Plate>
+    <Logo />
+    Logga in
+  </Plate>
 );
 
 export default Login;
