@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledPlate = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  margin: 0 auto;
+  margin-top: 5vh;
 
   width: 80%;
   max-width: 700px;
@@ -22,6 +21,8 @@ const StyledPlate = styled.div`
   -o-box-shadow: 0 0 3px #ccc;
   box-shadow: 0 0 3px #ccc;
   border-radius: 8px;
+
+  display: block;
 `;
 
 const Plate = ({ children }) => (

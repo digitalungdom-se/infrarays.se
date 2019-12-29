@@ -9,6 +9,7 @@ import theme from './theme';
 
 const StyledApp = styled.div`
   background: ${(props) => props.theme.bg};
+  overflow: auto;
   width: 100%;
   min-height: 100vh;
 `;
