@@ -2,10 +2,12 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
+  Route,
 } from 'react-router-dom';
 import Login from 'features/login';
 import Footer from 'features/footer';
 import Portal from 'features/portal';
+import NoMatch from 'components/nomatch';
 import ProtectedRoute from './ProtectedRoute';
 
 function AppRouter() {
@@ -28,8 +30,10 @@ function AppRouter() {
         >
           <Login />
         </ProtectedRoute>
+        <Route>
+          <NoMatch />
+        </Route>
       </Switch>
-      <Footer />
     </Router>
   );
 }

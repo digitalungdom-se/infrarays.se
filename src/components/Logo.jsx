@@ -1,13 +1,13 @@
 import React from 'react';
-import logo from 'resources/logo.svg';
+import logo from 'resources/rays.png';
 import styled from 'styled-components';
 
 const StyledImg = styled.img`
-  height: 75px;
+   max-width: 300px;
 `;
 
-const Logo = () => (
-  <StyledImg src={logo} className="App-logo" alt="logo" />
+const Logo = ({ style }) => (
+  <StyledImg style={style} src={logo} className="App-logo" alt="logo" />
 );
 
 export default Logo;

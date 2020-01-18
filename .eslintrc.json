@@ -23,6 +23,12 @@
         "react"
     ],
     "rules": {
+        "jsx-a11y/label-has-associated-control": [ 2, {
+            "labelComponents": ["label"],
+            "labelAttributes": ["label"],
+            "controlComponents": ["CustomInput"],
+            "depth": 3
+        }]
     },
     "settings": {
         "import/resolver": {

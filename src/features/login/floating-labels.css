@@ -1,0 +1,12 @@
+:root {
+  --input-padding-x: .75rem;
+  --input-padding-y: 1.5rem;
+
+  --label-padding-x: .75rem;
+  --label-padding-y: .75rem;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
