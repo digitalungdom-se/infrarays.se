@@ -1,0 +1,25 @@
+h1 {
+  text-align: center;
+}
+
+.inputbox {
+  margin-top: 30px;
+  width: 300px;
+}
+
+.submit {
+  min-width: 250px;
+  margin: 0 25%;
+  width: 50%;
+  height: 50px;
+  border: none;
+  background: #DC0C05;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 4px;
+}
+
+.submit:hover {
+  background: #ff7773;
+  cursor: pointer;
+}

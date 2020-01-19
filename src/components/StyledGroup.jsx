@@ -49,8 +49,8 @@ const StyledGroup = styled(Form.Group)`
   & input::placeholder {
     color: transparent;
   }
-
-  & input:not(:placeholder-shown) {
+  
+  & input:not(:placeholder-shown):not([type="date"]) {
     padding-top: calc(${(props) => props.y}rem + ${(props) => props.y}rem * (1 / 3));
     padding-bottom: calc(${(props) => props.y}rem * (2 / 3));
   }

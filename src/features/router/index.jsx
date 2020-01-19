@@ -5,8 +5,8 @@ import {
   Route,
 } from 'react-router-dom';
 import Login from 'features/login';
-import Footer from 'features/footer';
 import Portal from 'features/portal';
+import Register from 'features/register';
 import NoMatch from 'components/nomatch';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -29,6 +29,13 @@ function AppRouter() {
           path="/login"
         >
           <Login />
+        </ProtectedRoute>
+        <ProtectedRoute
+          shouldBeAuthenticated={false}
+          isAuthenticated={isAuthenticated}
+          path="/register"
+        >
+          <Register />
         </ProtectedRoute>
         <Route>
           <NoMatch />

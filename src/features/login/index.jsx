@@ -4,9 +4,8 @@ import Plate from 'components/Plate';
 import Logo from 'components/Logo';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import './floating-labels.css';
 import { Link } from 'react-router-dom';
-import StyledGroup from './StyledGroup';
+import StyledGroup from 'components/StyledGroup';
 
 const Login = () => (
   <Center maxWidth="360px">
