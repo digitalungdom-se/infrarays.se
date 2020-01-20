@@ -11,7 +11,8 @@ export default styled.div`
 
   position: absolute;
   left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  top: ${(props) => (props.noTop ? '0%' : '50%')};
+  margin-top: ${(props) => (props.noTop ? '100px' : '0')};
+  -webkit-transform: translate(-50%, -${(props) => (props.noTop ? '0%' : '0%')});
+  transform: translate(-50%, -${(props) => (props.noTop ? '0%' : '0%')});
 `;

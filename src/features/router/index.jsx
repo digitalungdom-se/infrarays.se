@@ -37,6 +37,9 @@ function AppRouter() {
         >
           <Register />
         </ProtectedRoute>
+        <Route path="/portal">
+          <Portal />
+        </Route>
         <Route>
           <NoMatch />
         </Route>
