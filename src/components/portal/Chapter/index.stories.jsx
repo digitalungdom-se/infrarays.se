@@ -1,7 +1,16 @@
 import React from 'react';
+import { UploadHook } from 'components/portal/Upload/index.stories';
 import Chapter from './index';
 
-export default { title: 'Chapter' };
+export default {
+  title: 'Chapter',
+  decorators: [(Story) => (
+    <div style={{ background: '#f6f6f6', padding: 50 }}>
+      <Story />
+    </div>
+  ),
+  ],
+};
 
 export const withText = () => (
   <Chapter
@@ -12,5 +21,11 @@ export const withText = () => (
       + 'I ditt personliga brev vill vi därför att du kortfattat berättar om dina intressen och varför du söker till Rays.'
       + 'För oss är det intressant att höra varifrån din passion för naturvetenskap kommer och hur dina tidigare erfarenheter har påverkat dig. '
     }
+    upload={(
+      <UploadHook
+        title="Ladda upp personligt brev"
+        displayFileName
+      />
+)}
   />
 );

@@ -6,9 +6,10 @@ import styled from 'styled-components';
 
 const StyledInputGroup = styled(InputGroup)`
   &.received input, &.received span {
+    /* green */
     color: #155724;
     background-color: #d4edda;
-    border-color: #d4edda;
+    border-color: #c3e6cb;
   }
 
   &.requested span {
@@ -23,6 +24,17 @@ function ContactPerson({
   status,
   cooldown,
 }) {
+  const text = {
+    nothing: 'Ej förfrågad',
+    requested: 'Förfrågan skickad',
+    received: 'Brev mottaget',
+  };
+
+  const button = {
+    nothing: 'Skicka förfrågan',
+    requested: 'Skicka igen',
+  };
+
   return (
     <StyledInputGroup
       style={{ marginTop: 16, marginBottom: 16 }}
@@ -35,7 +47,9 @@ function ContactPerson({
       />
       <InputGroup.Append>
         <InputGroup.Text>
-          Ej förfrågad
+          {
+            text[status]
+          }
         </InputGroup.Text>
         {
           status !== 'received'
@@ -43,7 +57,9 @@ function ContactPerson({
           <Button
             disabled={status !== 'nothing'}
           >
-            Skicka förfrågan
+            {
+              `${button[status]} ${cooldown}`
+            }
           </Button>
           )
         }
