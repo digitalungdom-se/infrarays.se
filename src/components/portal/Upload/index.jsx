@@ -2,8 +2,27 @@ import React, { useState } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Spinner from 'react-bootstrap/Spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 
-export default ({ title, onChange }) => {
+const StyledInputGroup = styled(InputGroup)`
+  &.uploaded span {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+
+  &.uploaded span::after {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+`;
+
+export default ({
+  title, onChange, uploaded, uploading, displayFileName,
+}) => {
   const [fileName, updateFileName] = useState('');
 
   function handleFileChange(e) {
@@ -14,23 +33,34 @@ export default ({ title, onChange }) => {
   }
 
   return (
-    <InputGroup className="mb-3 custom-file">
+    <StyledInputGroup className={`mb-3 custom-file ${uploaded && !uploading && 'uploaded'}`}>
       <FormControl
         type="file"
         className="custom-file-input file-input"
         onChange={handleFileChange}
       />
       <InputGroup.Text className="custom-file-label">
-        {fileName ? (
+        {(!uploading && !uploaded) && (displayFileName ? (fileName || title) : title)}
+        {uploading && (
           <span>
+            <Spinner animation="border" variant="primary" size="sm" />
+            {' '}
             Laddar upp
             {' '}
             {fileName}
             {' '}
-            <Spinner animation="border" variant="primary" size="sm" />
           </span>
-        ) : title}
+        )}
+        {
+          (!uploading && uploaded)
+          && (
+          <span>
+            <FontAwesomeIcon icon={faCheck} color="green" />
+            {` ${uploaded} `}
+          </span>
+          )
+        }
       </InputGroup.Text>
-    </InputGroup>
+    </StyledInputGroup>
   );
 };
