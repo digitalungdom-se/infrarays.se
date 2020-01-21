@@ -13,6 +13,6 @@ export default styled.div`
   left: 50%;
   top: ${(props) => (props.noTop ? '0%' : '50%')};
   margin-top: ${(props) => (props.noTop ? '100px' : '0')};
-  -webkit-transform: translate(-50%, -${(props) => (props.noTop ? '0%' : '0%')});
-  transform: translate(-50%, -${(props) => (props.noTop ? '0%' : '0%')});
+  -webkit-transform: translate(-50%, -${(props) => (props.noTop ? '0%' : '50%')});
+  transform: translate(-50%, -${(props) => (props.noTop ? '0%' : '50%')});
 `;
