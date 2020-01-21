@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import ContactPerson from './index';
 
 export default { title: 'ContactPerson' };
@@ -14,10 +15,11 @@ export const withText = () => (
     />
     <ContactPerson
       status="requested"
-      email="douben@kth.se"
+      cooldown={moment().add(1, 'hour').format('X')}
+      email="example@email.com"
     />
     <ContactPerson
-      email="douben@kth.se"
+      email="malan@harvard.edu"
       status="received"
     />
   </div>

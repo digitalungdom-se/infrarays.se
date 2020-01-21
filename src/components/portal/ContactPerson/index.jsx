@@ -3,6 +3,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
+import moment from 'moment';
 
 const StyledInputGroup = styled(InputGroup)`
   &.received input, &.received span {
@@ -24,9 +25,12 @@ function ContactPerson({
   status,
   cooldown,
 }) {
+  const diff = moment.unix(cooldown).diff(moment());
+  const formattedDiff = moment.utc(diff).format(diff > 3600 * 1000 ? 'H' : 'm');
+
   const text = {
     nothing: 'Ej förfrågad',
-    requested: 'Förfrågan skickad',
+    requested: 'Förfrågad',
     received: 'Brev mottaget',
   };
 
@@ -55,11 +59,13 @@ function ContactPerson({
           status !== 'received'
           && (
           <Button
-            disabled={status !== 'nothing'}
+            disabled={status === 'received' || diff > 0}
           >
-            {
-              `${button[status]} ${cooldown}`
-            }
+              {`${button[status]} `}
+              {diff > 0
+              && (
+                `${formattedDiff + (diff > 3600 * 1000 ? 'h' : 'm')}`
+              )}
           </Button>
           )
         }
