@@ -25,6 +25,7 @@ function ContactPerson({
   status,
   cooldown,
 }) {
+  // https://stackoverflow.com/questions/13262621/how-do-i-use-format-on-a-moment-js-duration
   const diff = moment.unix(cooldown).diff(moment());
   const formattedDiff = moment.utc(diff).format(diff > 3600 * 1000 ? 'H' : 'm');
 
