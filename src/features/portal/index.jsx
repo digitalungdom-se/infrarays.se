@@ -6,7 +6,9 @@ import Upload from 'components/portal/Upload';
 import ContactPerson from 'components/portal/ContactPerson';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import { ButtonGroup } from 'react-bootstrap';
+import { ButtonGroup, ProgressBar } from 'react-bootstrap';
+import Logo from 'components/Logo';
+import ReactMarkdown from 'react-markdown';
 import portal from './portal.json';
 
 export default () => {
@@ -14,13 +16,13 @@ export default () => {
 
   const people = [
     { email: null, status: 'nothing' },
-    { email: null, status: 'nothing' },
-    { email: null, status: 'nothing' },
+    { email: 'email@example.org', status: 'requested' },
+    { email: 'malan@harvard.edu', status: 'received' },
   ];
 
   const contactPeople = people.map((person) => (
     <ContactPerson
-      status="nothing"
+      status={person.status}
       email={person.email}
     />
   ));
@@ -31,7 +33,12 @@ export default () => {
       title={chapter.title}
       description={chapter.description}
       subtitle={chapter.subtitle}
-      upload={<Upload title="Ladda upp personligt brev" />}
+      upload={(
+        <Upload
+          title="Ladda upp personligt brev"
+          displayFileName
+        />
+      )}
     >
       {chapter.contactPeople && contactPeople}
     </Chapter>
@@ -40,42 +47,40 @@ export default () => {
   return (
     <Center noTop>
       <StyledPlate>
-        <div className="title">
+        <Logo
+          style={{
+            maxHeight: 70,
+            maxWidth: '80%',
+            margin: '20px auto',
+            display: 'block',
+          }}
+        />
+        <div>
           <h1>
             {portal.title}
           </h1>
-          <p>
-            {portal.introduction}
-          </p>
-
-          <p>
-              Vi som arrangerar Rays önskar dig ett stort lycka till
-              och ser fram emot att få läsa din ansökan!
-            <a href="http://raysforexcellence.se/ansok/" rel="noopener noreferrer" target="_blank" styled="text-decoration: none">För mer information tryck här!</a>
-          </p>
-
-
-          <div className="progress">
-            <div className="progress-bar progress-bar-striped" role="progressbar" styled="width: <%= (counter/6) * 100 %>%; background-color: #DC0C05;" aria-valuenow="<%= counter %>" aria-valuemin="0" aria-valuemax="6" />
-          </div>
+          <ReactMarkdown
+            source={portal.introduction}
+          />
+          <ProgressBar now={60} />
           <hr styled="color:#b8b8b8" size="1" />
         </div>
-        <div className="container">
+        <div>
           <Chapters />
-          <div style={{ paddingTop: 20 }}>
+          <div style={{ padding: '20px 0' }}>
             {
-              complete && <Alert variant="success">Din ansökan är fullständig och är mottagen för Rays.</Alert>
-            }
+                complete && <Alert variant="success">Din ansökan är fullständig och är mottagen för Rays.</Alert>
+              }
             <ButtonGroup>
               <Button variant="secondary">
-              Logga ut
+                Logga ut
               </Button>
               <Button variant="danger">
-              Radera konto
+                Radera konto
               </Button>
             </ButtonGroup>
             <Button variant="primary" style={{ float: 'right' }}>
-              Ladda ned din ansökan
+                Ladda ned din ansökan
             </Button>
           </div>
         </div>

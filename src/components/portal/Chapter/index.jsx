@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import './index.css';
 import PropTypes from 'prop-types';
+import ReactMarkdown from 'react-markdown';
 
 function Chapter({
   title,
@@ -11,13 +11,7 @@ function Chapter({
   children,
 }) {
   return (
-    <div
-      style={{
-        borderBottom: '2px solid #ddd',
-        paddingTop: 20,
-        paddingBottom: 20,
-      }}
-    >
+    <div>
       <h3 style={{ display: 'block' }}>
         {title}
       </h3>
@@ -27,12 +21,15 @@ function Chapter({
           paddingTop: 10, paddingBottom: 20,
         }}
       >
-        {description}
+        <ReactMarkdown
+          source={description}
+        />
       </div>
       {
         upload
       }
       {children}
+      <hr styled="color:#b8b8b8" size="1" />
     </div>
   );
 }
