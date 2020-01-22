@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 const StyledPlate = styled.div`
   padding: 20px 36px;
+  @media(max-width: 400px) {
+    padding: 20px 5%;
+  }
   background: #fff;
   color: #000;
   -moz-box-shadow: 0 0 3px #ccc;
@@ -10,7 +13,7 @@ const StyledPlate = styled.div`
   box-shadow: 0 0 3px #ccc;
   border-radius: 8px;
 
-  display: block;
+  /* display: block; */
 `;
 
 export default StyledPlate;

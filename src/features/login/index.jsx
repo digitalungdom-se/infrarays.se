@@ -3,7 +3,7 @@ import Center from 'components/Center';
 import Plate from 'components/Plate';
 import Logo from 'components/Logo';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import Button from 'components/Button';
 import { Link } from 'react-router-dom';
 import StyledGroup from 'components/StyledGroup';
 
@@ -12,9 +12,9 @@ const Login = () => (
     <Plate>
       <Logo
         style={{
-          width: '50%',
+          maxHeight: 70,
+          maxWidth: '80%',
           margin: '20px auto 60px auto',
-          maxWidth: '300px',
           display: 'block',
         }}
       />
@@ -35,13 +35,14 @@ const Login = () => (
         style={{ paddingTop: 40 }}
       >
         <Button
-          variant="primary"
+          size="lg"
+          variant="custom"
           type="submit"
           style={{
             width: '100%',
           }}
         >
-        Logga in
+          Logga in
         </Button>
       </Form.Group>
     </Plate>

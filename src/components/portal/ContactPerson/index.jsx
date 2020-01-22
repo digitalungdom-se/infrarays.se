@@ -48,7 +48,7 @@ function ContactPerson({
       <FormControl
         type="email"
         value={email}
-        disabled={status !== 'nothing'}
+        disabled={status === 'received'}
         placeholder="E-mail"
       />
       <InputGroup.Append>

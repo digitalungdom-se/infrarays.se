@@ -29,6 +29,6 @@ export const withText = () => (
         title="Ladda upp personligt brev"
         displayFileName
       />
-)}
+    )}
   />
 );

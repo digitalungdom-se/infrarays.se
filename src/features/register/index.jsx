@@ -7,6 +7,7 @@ import Plate from 'components/Plate';
 import Logo from 'components/Logo';
 import './signup.css';
 import styled from 'styled-components';
+import Button from 'components/Button';
 
 const StyledLabel = styled(Form.Label)`
   font-weight: bold;
@@ -74,13 +75,25 @@ export default () => (
             </Form.Control>
           </Form.Group>
         </div>
-        <div className="gdpr" style={{ padding: 10, fontSize: 12 }}>
+        <div
+          className="gdpr"
+          style={{
+            padding: 10, fontSize: 12, width: '50%', minWidth: 300,
+          }}
+        >
           <span>
             Genom att du registrerar ditt konto accepterar du hanteringen av dina uppgifter.
             <Link to="/gdpr"> Läs mer.</Link>
           </span>
         </div>
-        <input type="Submit" value="Registrera konto" className="submit" />
+        <Button
+          size="lg"
+          type="submit"
+          variant="custom"
+          style={{ minWidth: 300, width: '50%', margin: '0 25%' }}
+        >
+          Registrera konto
+        </Button>
         <div style={{ paddingTop: 20, textAlign: 'center' }}>
             Har du redan ett konto?
           {' '}
