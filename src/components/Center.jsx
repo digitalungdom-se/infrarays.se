@@ -1,18 +1,30 @@
+import React from 'react';
 import styled from 'styled-components';
 
-export default styled.div`
+// https://stackoverflow.com/questions/396145/how-to-vertically-center-a-div-for-all-browsers
 
-  width: 80%;
+const Middle = styled.div`
+  @media(min-width: ${(props) => props.minWidth || '400px'}) {
+    display: table-cell;
+    padding: 5% 0;
+  }
+  vertical-align: middle;
+`;
+
+const Inner = styled.div`
+  width: 90%;
   max-width: ${(props) => props.maxWidth || '700px'};
   @media(max-width: ${(props) => props.minWidth || '400px'}) {
     height: 100%;
     width: 100%;
   }
-
-  position: absolute;
-  left: 50%;
-  top: ${(props) => (props.noTop ? '0%' : '50%')};
-  margin-top: ${(props) => (props.noTop ? '100px' : '0')};
-  -webkit-transform: translate(-50%, -${(props) => (props.noTop ? '0%' : '50%')});
-  transform: translate(-50%, -${(props) => (props.noTop ? '0%' : '50%')});
+  margin: 0 auto;
 `;
+
+export default ({ children }) => (
+  <Middle>
+    <Inner>
+      {children}
+    </Inner>
+  </Middle>
+);
