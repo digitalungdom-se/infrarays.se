@@ -49,6 +49,7 @@ function ContactPerson({
         type="email"
         value={email}
         disabled={status !== 'nothing'}
+        placeholder="E-mail"
       />
       <InputGroup.Append>
         <InputGroup.Text>

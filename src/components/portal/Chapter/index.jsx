@@ -2,32 +2,38 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import './index.css';
 import PropTypes from 'prop-types';
-import Plate from 'components/Plate';
 
 function Chapter({
   title,
   subtitle,
   description,
   upload,
+  children,
 }) {
   return (
-    <Plate>
-      <div className="section">
-        <h3 style={{ display: 'block' }}>
-          {title}
-        </h3>
-        <h4>{subtitle}</h4>
-        <div style={{
+    <div
+      style={{
+        borderBottom: '2px solid #ddd',
+        paddingTop: 20,
+        paddingBottom: 20,
+      }}
+    >
+      <h3 style={{ display: 'block' }}>
+        {title}
+      </h3>
+      <h4>{subtitle}</h4>
+      <div
+        style={{
           paddingTop: 10, paddingBottom: 20,
         }}
-        >
-          {description}
-        </div>
-        {
-          upload
-        }
+      >
+        {description}
       </div>
-    </Plate>
+      {
+        upload
+      }
+      {children}
+    </div>
   );
 }
 

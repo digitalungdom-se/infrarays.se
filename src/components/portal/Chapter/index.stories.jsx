@@ -1,12 +1,15 @@
 import React from 'react';
 import { UploadHook } from 'components/portal/Upload/index.stories';
+import Plate from 'components/Plate';
 import Chapter from './index';
 
 export default {
   title: 'Chapter',
   decorators: [(Story) => (
     <div style={{ background: '#f6f6f6', padding: 50 }}>
-      <Story />
+      <Plate>
+        <Story />
+      </Plate>
     </div>
   ),
   ],

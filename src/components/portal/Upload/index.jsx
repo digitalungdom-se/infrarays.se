@@ -21,7 +21,7 @@ const StyledInputGroup = styled(InputGroup)`
 `;
 
 export default ({
-  title, onChange, uploaded, uploading, displayFileName,
+  title, onChange = () => {}, uploaded, uploading, displayFileName,
 }) => {
   const [fileName, updateFileName] = useState('');
 
