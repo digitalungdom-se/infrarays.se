@@ -21,9 +21,9 @@ const Inner = styled.div`
   margin: 0 auto;
 `;
 
-export default ({ children }) => (
-  <Middle>
-    <Inner>
+export default ({ children, minWidth, maxWidth }) => (
+  <Middle minWidth={minWidth}>
+    <Inner minWidth={minWidth} maxWidth={maxWidth}>
       {children}
     </Inner>
   </Middle>
