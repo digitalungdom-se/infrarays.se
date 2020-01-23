@@ -11,12 +11,9 @@ const Login = () => (
   <Center maxWidth="360px">
     <Plate>
       <Logo
-        style={{
-          maxHeight: 70,
-          maxWidth: '80%',
-          margin: '20px auto 60px auto',
-          display: 'block',
-        }}
+        center
+        maxWidth="80%"
+        style={{ marginBottom: 60 }}
       />
       <StyledGroup controlId="form-email">
         <Form.Control type="email" placeholder="E-mail" autofocus />

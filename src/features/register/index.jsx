@@ -17,7 +17,10 @@ const StyledLabel = styled(Form.Label)`
 export default () => (
   <Center maxWidth="850px">
     <Plate>
-      <Logo style={{ margin: '0 auto', display: 'flex', height: 70 }} />
+      <Logo
+        center
+        maxWidth="80%"
+      />
       <h1> Registrera dig här</h1>
       <form
         style={{
@@ -50,22 +53,7 @@ export default () => (
           <Form.Label>Födelsedag</Form.Label>
         </StyledGroup>
         <div style={{ width: 300 }}>
-          <Form.Group style={{ width: 100, display: 'inline-block' }} controlId="form-sex">
-            <StyledLabel>Kön</StyledLabel>
-            <Form.Control
-              size="lg"
-              as="select"
-              defaultValue="-"
-            >
-              <option disabled value="-">-</option>
-              <option value="male">Man</option>
-              <option value="female">Kvinna</option>
-              <option value="other">Annat</option>
-              <option value="undefined">Vill ej uppge</option>
-            </Form.Control>
-            <Form.Control.Feedback type="invalid">Du måste välja!</Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group style={{ width: 190, display: 'inline-block', float: 'right' }} controlId="form-finland">
+          <Form.Group controlId="form-finland">
             <StyledLabel>
               Ansöker genom Finland
             </StyledLabel>

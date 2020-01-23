@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Center from 'components/Center';
 import StyledPlate from 'components/Plate';
 import Chapter from 'components/portal/Chapter';
@@ -10,6 +10,28 @@ import { ButtonGroup, ProgressBar } from 'react-bootstrap';
 import Logo from 'components/Logo';
 import ReactMarkdown from 'react-markdown';
 import portal from './portal.json';
+
+const UploadHook = () => {
+  const [uploading, setUploading] = useState(false);
+  const [uploaded, setUploaded] = useState('');
+
+  function handleChange(file, fileName) {
+    setUploading(true);
+    setTimeout(() => {
+      setUploading(false);
+      setUploaded(fileName);
+    }, 1000);
+  }
+
+  return (
+    <Upload
+      title="Ladda upp personligt brev"
+      onChange={handleChange}
+      uploading={uploading}
+      uploaded={uploaded}
+    />
+  );
+};
 
 export default () => {
   const complete = true;
@@ -34,7 +56,7 @@ export default () => {
       description={chapter.description}
       subtitle={chapter.subtitle}
       upload={(
-        <Upload
+        <UploadHook
           title="Ladda upp personligt brev"
           displayFileName
         />
@@ -48,12 +70,8 @@ export default () => {
     <Center noTop>
       <StyledPlate>
         <Logo
-          style={{
-            maxHeight: 70,
-            maxWidth: '80%',
-            margin: '20px auto',
-            display: 'block',
-          }}
+          center
+          maxWidth="80%"
         />
         <div>
           <h1>
