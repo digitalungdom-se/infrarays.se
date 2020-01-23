@@ -6,11 +6,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'components/Button';
 import { Link } from 'react-router-dom';
 import StyledGroup from 'components/StyledGroup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Alert from 'react-bootstrap/Alert';
 import { login } from './loginSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const loggingIn = useSelector((state) => state.login.loggingIn);
+  const error = useSelector((state) => state.login.error);
   return (
     <Center maxWidth="360px">
       <Plate>
@@ -30,21 +33,44 @@ const Login = () => {
           }}
         >
           <StyledGroup controlId="form-email">
-            <Form.Control name="email" type="email" placeholder="E-mail" autoFocus />
+            <Form.Control
+              name="email"
+              type="email"
+              placeholder="E-mail"
+              autoFocus
+              isInvalid={error?.msg === 'unknown email'}
+            />
             <Form.Label>E-mail</Form.Label>
+            <Form.Control.Feedback type="invalid">
+              Okänd email-adress.
+            </Form.Control.Feedback>
           </StyledGroup>
           <StyledGroup controlId="form-password">
-            <Form.Control name="password" type="password" placeholder="Lösenord" />
+            <Form.Control
+              name="password"
+              type="password"
+              placeholder="Lösenord"
+              isInvalid={error?.msg === 'incorrect password'}
+            />
             <Form.Label>Lösenord</Form.Label>
+            <Form.Control.Feedback type="invalid">
+              Felaktigt lösenord.
+            </Form.Control.Feedback>
             <Form.Text>
               <Link to="/forgot" style={{ float: 'right', fontSize: 16 }}>
-            Glömt lösenordet?
+                Glömt lösenordet?
               </Link>
             </Form.Text>
           </StyledGroup>
           <Form.Group
             style={{ paddingTop: 40 }}
           >
+            { (error?.msg === 'unverified email' || error?.msg === 'fetch error')
+              && (
+              <Alert variant="danger" style={{ textAlign: 'center' }}>
+                {error.msg}
+              </Alert>
+              )}
             <Button
               size="lg"
               variant="custom"
@@ -52,8 +78,9 @@ const Login = () => {
               style={{
                 width: '100%',
               }}
+              disabled={loggingIn}
             >
-          Logga in
+              {loggingIn ? 'Loggar in...' : 'Logga in'}
             </Button>
           </Form.Group>
         </Form>

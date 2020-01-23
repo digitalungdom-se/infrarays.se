@@ -2,26 +2,33 @@
 import { createSlice } from '@reduxjs/toolkit';
 import betterFetch from 'utils/betterFetch';
 
-export const initialState = {};
+export const initialState = {
+  error: {
+    msg: 'fetch error',
+  },
+};
 
 const loginSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     loginStart(state) {
-      state.loggingIn = 'LOADING';
+      state.loggingIn = true;
     },
     loginSuccess(state, action) {
       const { details } = action.payload;
       state.me = details;
       state.authorized = true;
-      state.loggingIn = 'SUCCESS';
+      state.loggingIn = false;
     },
     loginFailure(state, action) {
-      state.loggingIn = {
-        status: 'FAILED',
-        error: action.payload,
+      state.loggingIn = false;
+      const error = {
+        ...action.payload,
+        fetchError: action.payload.err.fetchError && true,
+        msg: 'fetch error',
       };
+      state.error = error;
     },
   },
 });

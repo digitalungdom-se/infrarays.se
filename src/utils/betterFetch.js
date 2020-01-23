@@ -37,11 +37,10 @@ export default function betterFetch(url, oldOptions = { method: 'get' }) {
         } else return res;
       });
     }
+
     const error = new Error(response.statusText || response.status);
-    return response.json().then((res) => {
-      error.response = res;
-      throw error;
-    });
+    error.fetchError = true;
+    throw error;
   }).catch((err) => {
     let error;
     // was the error NOT a fetch error
