@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+import betterFetch from 'utils/betterFetch';
 
 export const initialState = {};
 
@@ -32,16 +33,18 @@ export const {
   loginFailure,
 } = loginSlice.actions;
 
-export function login({ username, password, keepCookie = false }) {
+export function login({
+  email, password, keepCookie = false,
+}, url = '/api/user/login') {
   return (dispatch) => {
     dispatch(loginStart());
-    return fetch('/api/user/login', {
+    return betterFetch(url, {
       method: 'post',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
       keepCookie,
     })
       .then((res) => dispatch(loginSuccess({ res })))

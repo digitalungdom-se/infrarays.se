@@ -9,6 +9,7 @@ const data = [
 
 const References = () => data.map((person) => (
   <ContactPerson
+    key={person.email}
     status={person.status}
     email={person.email}
   />
