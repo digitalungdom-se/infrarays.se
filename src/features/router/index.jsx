@@ -4,9 +4,9 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import Login from 'features/login';
+import Login from 'features/auth/login';
 import Portal from 'features/portal';
-import Register from 'features/register';
+import Register from 'features/auth/register';
 import NoMatch from 'components/nomatch';
 import Admin from 'features/admin';
 import ProtectedRoute from './ProtectedRoute';

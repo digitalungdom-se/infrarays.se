@@ -1,7 +1,9 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import './app.css';
+import { Provider } from 'react-redux';
 import Router from 'features/router';
+import store from './store';
+import './app.css';
 import theme from './theme.json';
 
 const StyledApp = styled.div`
@@ -23,11 +25,13 @@ const StyledApp = styled.div`
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <StyledApp>
-        <Router />
-      </StyledApp>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <StyledApp>
+          <Router />
+        </StyledApp>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
