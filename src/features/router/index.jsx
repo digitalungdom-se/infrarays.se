@@ -8,6 +8,7 @@ import Login from 'features/login';
 import Portal from 'features/portal';
 import Register from 'features/register';
 import NoMatch from 'components/nomatch';
+import Admin from 'features/admin';
 import ProtectedRoute from './ProtectedRoute';
 
 function AppRouter() {
@@ -39,6 +40,9 @@ function AppRouter() {
         </ProtectedRoute>
         <Route path="/portal">
           <Portal />
+        </Route>
+        <Route path="/admin">
+          <Admin />
         </Route>
         <Route>
           <NoMatch />

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledPlate = styled.div`
+const Plate = styled.div`
   padding: 20px 36px;
   @media(max-width: 400px) {
     padding: 20px 5%;
@@ -16,4 +16,4 @@ const StyledPlate = styled.div`
   /* display: block; */
 `;
 
-export default StyledPlate;
+export default Plate;
