@@ -6,6 +6,11 @@ import theme from './theme.json';
 
 const StyledApp = styled.div`
   background: ${(props) => props.theme.bg};
+
+  * .bg-custom {
+    background-color: ${((props) => props.theme.brand)};
+    color: white;
+  }
   
   /* https://stackoverflow.com/questions/396145/how-to-vertically-center-a-div-for-all-browsers */
   display: table;

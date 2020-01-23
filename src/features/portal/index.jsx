@@ -1,53 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Center from 'components/Center';
 import StyledPlate from 'components/Plate';
 import Chapter from 'components/portal/Chapter';
-import Upload from 'components/portal/Upload';
-import ContactPerson from 'components/portal/ContactPerson';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { ButtonGroup, ProgressBar } from 'react-bootstrap';
 import Logo from 'components/Logo';
 import ReactMarkdown from 'react-markdown';
-import portal from './portal.json';
-
-const UploadHook = () => {
-  const [uploading, setUploading] = useState(false);
-  const [uploaded, setUploaded] = useState('');
-
-  function handleChange(file, fileName) {
-    setUploading(true);
-    setTimeout(() => {
-      setUploading(false);
-      setUploaded(fileName);
-    }, 1000);
-  }
-
-  return (
-    <Upload
-      title="Ladda upp personligt brev"
-      onChange={handleChange}
-      uploading={uploading}
-      uploaded={uploaded}
-    />
-  );
-};
+import portal from 'config/portal.json';
+import UploadHook from './upload';
+import References from './references';
 
 export default () => {
   const complete = true;
-
-  const people = [
-    { email: null, status: 'nothing' },
-    { email: 'email@example.org', status: 'requested' },
-    { email: 'malan@harvard.edu', status: 'received' },
-  ];
-
-  const contactPeople = people.map((person) => (
-    <ContactPerson
-      status={person.status}
-      email={person.email}
-    />
-  ));
 
   const Chapters = () => portal.chapters.map((chapter) => (
     <Chapter
@@ -55,14 +20,14 @@ export default () => {
       title={chapter.title}
       description={chapter.description}
       subtitle={chapter.subtitle}
-      upload={(
+    >
+      {chapter.upload && (
         <UploadHook
-          title="Ladda upp personligt brev"
-          displayFileName
+          label={chapter.upload.label}
+          accept={chapter.upload.accept}
         />
       )}
-    >
-      {chapter.contactPeople && contactPeople}
+      {chapter.contactPeople && <References />}
     </Chapter>
   ));
 
@@ -80,7 +45,7 @@ export default () => {
           <ReactMarkdown
             source={portal.introduction}
           />
-          <ProgressBar now={60} />
+          <ProgressBar variant="custom" now={60} />
           <hr styled="color:#b8b8b8" size="1" />
         </div>
         <div>

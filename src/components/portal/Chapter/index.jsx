@@ -7,7 +7,6 @@ function Chapter({
   title,
   subtitle,
   description,
-  upload,
   children,
 }) {
   return (
@@ -18,17 +17,16 @@ function Chapter({
       <h4>{subtitle}</h4>
       <div
         style={{
-          paddingTop: 10, paddingBottom: 20,
+          paddingTop: 10,
         }}
       >
         <ReactMarkdown
           source={description}
         />
       </div>
-      {
-        upload
-      }
-      {children}
+      <div style={{ padding: '10px 0' }}>
+        {children}
+      </div>
       <hr styled="color:#b8b8b8" size="1" />
     </div>
   );

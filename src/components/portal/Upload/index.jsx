@@ -21,7 +21,12 @@ const StyledInputGroup = styled(InputGroup)`
 `;
 
 export default ({
-  title, onChange = () => {}, uploaded, uploading, displayFileName,
+  label,
+  onChange = () => {},
+  uploaded,
+  uploading,
+  displayFileName,
+  accept,
 }) => {
   const [fileName, updateFileName] = useState('');
 
@@ -38,9 +43,10 @@ export default ({
         type="file"
         className="custom-file-input file-input"
         onChange={handleFileChange}
+        accept={accept}
       />
       <InputGroup.Text className="custom-file-label">
-        {(!uploading && !uploaded) && (displayFileName ? (fileName || title) : title)}
+        {(!uploading && !uploaded) && (displayFileName ? (fileName || label) : label)}
         {uploading && (
           <span>
             <Spinner animation="border" variant="primary" size="sm" />

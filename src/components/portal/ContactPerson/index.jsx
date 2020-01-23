@@ -47,7 +47,7 @@ function ContactPerson({
     >
       <FormControl
         type="email"
-        value={email}
+        defaultValue={email}
         disabled={status === 'received'}
         placeholder="E-mail"
       />
