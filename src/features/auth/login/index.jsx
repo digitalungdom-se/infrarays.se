@@ -8,12 +8,15 @@ import { Link } from 'react-router-dom';
 import StyledGroup from 'components/StyledGroup';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
+import { useTranslation, Trans } from 'react-i18next';
 import { login } from './loginSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
   const loggingIn = useSelector((state) => state.login.loggingIn);
   const error = useSelector((state) => state.login.error);
+  const { t } = useTranslation();
+
   return (
     <Center maxWidth="360px">
       <Plate>
@@ -42,23 +45,23 @@ const Login = () => {
             />
             <Form.Label>E-mail</Form.Label>
             <Form.Control.Feedback type="invalid">
-              Okänd email-adress.
+              {t('Unknown email')}
             </Form.Control.Feedback>
           </StyledGroup>
           <StyledGroup controlId="form-password">
             <Form.Control
               name="password"
               type="password"
-              placeholder="Lösenord"
+              placeholder={t('Password')}
               isInvalid={error?.msg === 'incorrect password'}
             />
-            <Form.Label>Lösenord</Form.Label>
+            <Form.Label>{t('Password')}</Form.Label>
             <Form.Control.Feedback type="invalid">
-              Felaktigt lösenord.
+              {t('Incorrect password')}
             </Form.Control.Feedback>
             <Form.Text>
               <Link to="/forgot" style={{ float: 'right', fontSize: 16 }}>
-                Glömt lösenordet?
+                {t('Forgot password')}
               </Link>
             </Form.Text>
           </StyledGroup>
@@ -68,7 +71,7 @@ const Login = () => {
             { (error?.msg === 'unverified email' || error?.msg === 'fetch error')
               && (
               <Alert variant="danger" style={{ textAlign: 'center' }}>
-                {error.msg}
+                {t(error.msg)}
               </Alert>
               )}
             <Button
@@ -80,7 +83,7 @@ const Login = () => {
               }}
               disabled={loggingIn}
             >
-              {loggingIn ? 'Loggar in...' : 'Logga in'}
+              {loggingIn ? t('Logging in') : t('Login')}
             </Button>
           </Form.Group>
         </Form>
@@ -91,9 +94,10 @@ const Login = () => {
           textAlign: 'center',
         }}
       >
-      Inget konto?
-        {' '}
-        <Link to="/register">Skapa ett här!</Link>
+        <Trans i18nKey="No account">
+          No account?
+          <Link to="/register">Register here!</Link>
+        </Trans>
       </Plate>
     </Center>
   );

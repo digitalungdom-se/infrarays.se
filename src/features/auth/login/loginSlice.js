@@ -2,11 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import betterFetch from 'utils/betterFetch';
 
-export const initialState = {
-  error: {
-    msg: 'fetch error',
-  },
-};
+export const initialState = {};
 
 const loginSlice = createSlice({
   name: 'auth',

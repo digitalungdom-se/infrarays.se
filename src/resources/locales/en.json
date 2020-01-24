@@ -1,0 +1,10 @@
+{
+  "Login": "Login",
+  "Logging in": "Logging in...",
+  "Password": "Password",
+  "Incorrect password": "Incorrect password",
+  "Forgot password": "Forgot password?",
+  "No account": "No account? <1>Register here!</1>",
+  "unverified email": "Verify your e-mail first.",
+  "fetch error": "Network error."
+}

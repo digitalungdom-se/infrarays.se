@@ -1,0 +1,10 @@
+{
+  "Login": "Logga in",
+  "Logging in": "Loggar in...",
+  "Password": "Lösenord",
+  "Incorrect password": "Felaktigt lösenord",
+  "Forgot password": "Glömt lösenordet?",
+  "No account": "Inget konto? <1>Skapa ett här!</1>",
+  "unverified email": "Bekräfta din e-postadress först.",
+  "fetch error": "Nätverksproblem."
+}
