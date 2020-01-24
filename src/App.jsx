@@ -2,9 +2,9 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
 import Router from 'features/router';
+import theme from 'config/theme.json';
 import store from './store';
 import './app.css';
-import theme from './theme.json';
 
 const StyledApp = styled.div`
   background: ${(props) => props.theme.bg};
