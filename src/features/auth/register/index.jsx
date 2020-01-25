@@ -8,20 +8,21 @@ import Logo from 'components/Logo';
 import './signup.css';
 import styled from 'styled-components';
 import Button from 'components/Button';
+import { withTranslation, Trans } from 'react-i18next';
 
 const StyledLabel = styled(Form.Label)`
   font-weight: bold;
   color: red;
 `;
 
-export default () => (
+export default withTranslation()(({ t }) => (
   <Center maxWidth="850px">
     <Plate>
       <Logo
         center
         maxWidth="80%"
       />
-      <h1> Registrera dig här</h1>
+      <h1>{t('Register here')}</h1>
       <form
         style={{
           display: 'flex',
@@ -37,25 +38,25 @@ export default () => (
           <Form.Label>E-mail</Form.Label>
         </StyledGroup>
         <StyledGroup className="inputbox" controlId="form-password">
-          <Form.Control type="password" placeholder="Lösenord" />
-          <Form.Label>Lösenord</Form.Label>
+          <Form.Control type="password" placeholder={t('Password')} />
+          <Form.Label>{t('Password')}</Form.Label>
         </StyledGroup>
         <StyledGroup className="inputbox" controlId="form-firstname">
-          <Form.Control type="text" placeholder="Förnamn" />
-          <Form.Label>Förnamn</Form.Label>
+          <Form.Control type="text" placeholder={t('First name')} />
+          <Form.Label>{t('First name')}</Form.Label>
         </StyledGroup>
         <StyledGroup className="inputbox" controlId="form-lastname">
-          <Form.Control type="text" placeholder="Efternamn" />
-          <Form.Label>Efternamn</Form.Label>
+          <Form.Control type="text" placeholder={t('Surname')} />
+          <Form.Label>{t('Surname')}</Form.Label>
         </StyledGroup>
         <StyledGroup className="inputbox" controlId="form-birthday">
-          <Form.Control type="date" placeholder="Födelsedag" />
-          <Form.Label>Födelsedag</Form.Label>
+          <Form.Control type="date" placeholder={t('Date of birth')} />
+          <Form.Label>{t('Date of birth')}</Form.Label>
         </StyledGroup>
         <div style={{ width: 300 }}>
           <Form.Group controlId="form-finland">
             <StyledLabel>
-              Ansöker genom Finland
+              {t('Applying through Finland')}
             </StyledLabel>
             <Form.Control size="lg" as="select">
               <option value="no">Nej</option>
@@ -70,8 +71,10 @@ export default () => (
           }}
         >
           <span>
-            Genom att du registrerar ditt konto accepterar du hanteringen av dina uppgifter.
-            <Link to="/gdpr"> Läs mer.</Link>
+            <Trans i18nKey="TOS">
+              By creating an account you accept how we handle your data.
+              <Link to="/gdpr"> Read more.</Link>
+            </Trans>
           </span>
         </div>
         <Button
@@ -80,20 +83,23 @@ export default () => (
           variant="custom"
           style={{ minWidth: 300, width: '50%', margin: '0 25%' }}
         >
-          Registrera konto
+          {t('Register')}
         </Button>
         <div style={{ paddingTop: 20, textAlign: 'center' }}>
-            Har du redan ett konto?
-          {' '}
-          <Link to="/login">Logga in här!</Link>
+          <Trans i18nKey="Have account?">
+            Already have an account?
+            <Link to="/login">Login here!</Link>
+          </Trans>
           <div>
             <span style={{ fontSize: 12 }}>
-            Utvecklat av
-              <a href="https://digitalungdom.se/" rel="noopener noreferrer" target="_blank" styled="text-decoration: none"> Digital Ungdom</a>
+              <Trans i18nKey="Developed by">
+                Developed by
+                <a href="https://digitalungdom.se/" rel="noopener noreferrer" target="_blank" styled="text-decoration: none"> Digital Ungdom</a>
+              </Trans>
             </span>
           </div>
         </div>
       </form>
     </Plate>
   </Center>
-);
+));

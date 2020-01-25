@@ -19,11 +19,8 @@ const loginSlice = createSlice({
     },
     loginFailure(state, action) {
       state.loggingIn = false;
-      const error = {
-        ...action.payload,
-        fetchError: action.payload.err.fetchError && true,
-        msg: 'fetch error',
-      };
+      const error = action.payload;
+      if (action.payload.err.fetchError) error.msg = 'fetch error';
       state.error = error;
     },
   },

@@ -6,5 +6,14 @@
   "Forgot password": "Glömt lösenordet?",
   "No account": "Inget konto? <1>Skapa ett här!</1>",
   "unverified email": "Bekräfta din e-postadress först.",
-  "fetch error": "Nätverksproblem."
+  "fetch error": "Nätverksproblem.",
+  "Register here": "Registrera dig här",
+  "First name": "Förnamn",
+  "Surname": "Efternamn",
+  "Date of birth": "Födelsedag",
+  "Applying through Finland": "Ansöker genom Finland",
+  "TOS": "Genom att du registrerar ditt konto accepterar du hanteringen av dina uppgifter.<1> Läs mer.</1>",
+  "Register": "Registrera",
+  "Have account?": "Har du redan ett konto? <1>Logga in här!</1>",
+  "Developed by": "Utvecklat av <1>Digital Ungdom</1>"
 }

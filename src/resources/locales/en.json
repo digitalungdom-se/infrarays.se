@@ -6,5 +6,14 @@
   "Forgot password": "Forgot password?",
   "No account": "No account? <1>Register here!</1>",
   "unverified email": "Verify your e-mail first.",
-  "fetch error": "Network error."
+  "fetch error": "Network error.",
+  "Register here": "Register here",
+  "First name": "First name",
+  "Surname": "Surname",
+  "Date of birth": "Date of birth",
+  "Applying through Finland": "Applying through Finland",
+  "TOS": "By creating an account you accept how we handle your data.<1> Read more.</1>",
+  "Register": "Register",
+  "Have account?": "Already have an account? <1>Login here!</1>",
+  "Developed by": "Developed by <1>Digital Ungdom</1>"
 }
