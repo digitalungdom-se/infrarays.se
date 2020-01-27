@@ -3,7 +3,7 @@ import Center from 'components/Center';
 import Plate from 'components/Plate';
 import Logo from 'components/Logo';
 import Form from 'react-bootstrap/Form';
-import Button from 'components/Button';
+import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import StyledGroup from 'components/StyledGroup';
 import { useDispatch, useSelector } from 'react-redux';

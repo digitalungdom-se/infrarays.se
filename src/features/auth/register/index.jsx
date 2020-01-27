@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import StyledGroup from 'components/StyledGroup';
 import Center from 'components/Center';
@@ -7,7 +8,6 @@ import Plate from 'components/Plate';
 import Logo from 'components/Logo';
 import './signup.css';
 import styled from 'styled-components';
-import Button from 'components/Button';
 import { withTranslation, Trans } from 'react-i18next';
 
 const StyledLabel = styled(Form.Label)`
