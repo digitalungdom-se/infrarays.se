@@ -7,8 +7,9 @@ import {
 import Login from 'features/auth/login';
 import Portal from 'features/portal';
 import Register from 'features/auth/register';
-import NoMatch from 'components/nomatch';
 import Admin from 'features/admin';
+import ForgotPassword from 'features/forgotPassword';
+import NoMatch from 'features/nomatch';
 import ProtectedRoute from './ProtectedRoute';
 
 function AppRouter() {
@@ -40,6 +41,9 @@ function AppRouter() {
         </ProtectedRoute>
         <Route path="/portal">
           <Portal />
+        </Route>
+        <Route path="/forgot-password">
+          <ForgotPassword />
         </Route>
         <Route path="/admin">
           <Admin />

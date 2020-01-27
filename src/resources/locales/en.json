@@ -15,5 +15,6 @@
   "TOS": "By creating an account you accept how we handle your data.<1> Read more.</1>",
   "Register": "Register",
   "Have account?": "Already have an account? <1>Login here!</1>",
-  "Developed by": "Developed by <1>Digital Ungdom</1>"
+  "Developed by": "Developed by <1>Digital Ungdom</1>",
+  "Not found": "No page was found on this URL."
 }
