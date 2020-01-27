@@ -16,5 +16,8 @@
   "Register": "Register",
   "Have account?": "Already have an account? <1>Login here!</1>",
   "Developed by": "Developed by <1>Digital Ungdom</1>",
-  "Not found": "No page was found on this URL."
+  "Not found": "No page was found on this URL.",
+  "Forgot password?": "Forgot password?",
+  "Enter e-mailaddress to reset": "Enter your e-mailaddress and you will receive an e-mail with instructions on how to reset your password.",
+  "Reset password": "Reset password"
 }

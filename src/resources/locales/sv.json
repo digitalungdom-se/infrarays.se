@@ -16,5 +16,8 @@
   "Register": "Registrera",
   "Have account?": "Har du redan ett konto? <1>Logga in här!</1>",
   "Developed by": "Utvecklat av <1>Digital Ungdom</1>",
-  "Not found": "Ingen sida hittades på denna URL."
+  "Not found": "Ingen sida hittades på denna URL.",
+  "Forgot password?": "Glömt lösenordet?",
+  "Enter e-mailaddress to reset": "Skriv in din e-mailadress så får du ett e-mail med instruktioner för att återställa lösenordet.",
+  "Reset password": "Återställ lösenord"
 }
