@@ -5,12 +5,13 @@
   "Incorrect password": "Incorrect password",
   "Forgot password": "Forgot password?",
   "No account": "No account? <1>Register here!</1>",
-  "unverified email": "Verify your e-mail first.",
+  "Unknown email": "Unknown e-mail",
+  "not verified": "Verify your e-mail first.",
   "fetch error": "Network error.",
   "Register here": "Register here",
   "First name": "First name",
   "Surname": "Surname",
-  "Date of birth": "Date of birth",
+  "Date of birth": "Date of birth (YYYY-MM-DD)",
   "Applying through Finland": "Applying through Finland",
   "TOS": "By creating an account you accept how we handle your data.<1> Read more.</1>",
   "Register": "Register",
@@ -19,5 +20,6 @@
   "Not found": "No page was found on this URL.",
   "Forgot password?": "Forgot password?",
   "Enter e-mailaddress to reset": "Enter your e-mailaddress and you will receive an e-mail with instructions on how to reset your password.",
-  "Reset password": "Reset password"
+  "Reset password": "Reset password",
+  "Password can be max 72 chars": "Password can be max 72 characters long"
 }

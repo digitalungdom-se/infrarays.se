@@ -5,12 +5,13 @@
   "Incorrect password": "Felaktigt lösenord",
   "Forgot password": "Glömt lösenordet?",
   "No account": "Inget konto? <1>Skapa ett här!</1>",
-  "unverified email": "Bekräfta din e-postadress först.",
+  "Unknown email": "Okänd e-mail",
+  "not verified": "Bekräfta din e-postadress först.",
   "fetch error": "Nätverksproblem.",
   "Register here": "Registrera dig här",
   "First name": "Förnamn",
   "Surname": "Efternamn",
-  "Date of birth": "Födelsedag",
+  "Date of birth": "Födelsedag (ÅÅÅÅ-MM-DD)",
   "Applying through Finland": "Ansöker genom Finland",
   "TOS": "Genom att du registrerar ditt konto accepterar du hanteringen av dina uppgifter.<1> Läs mer.</1>",
   "Register": "Registrera",
@@ -19,5 +20,6 @@
   "Not found": "Ingen sida hittades på denna URL.",
   "Forgot password?": "Glömt lösenordet?",
   "Enter e-mailaddress to reset": "Skriv in din e-mailadress så får du ett e-mail med instruktioner för att återställa lösenordet.",
-  "Reset password": "Återställ lösenord"
+  "Reset password": "Återställ lösenord",
+  "Password can be max 72 chars": "Lösenordet får max vara 72 karaktärer långt"
 }
