@@ -4,13 +4,17 @@ import Plate from 'components/Plate';
 import Logo from 'components/Logo';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import StyledGroup from 'components/StyledGroup';
 import Alert from 'react-bootstrap/Alert';
 import { useTranslation, Trans } from 'react-i18next';
+import { appSuccess } from 'features/appSlice';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const [loggingIn, setLogin] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [error, setError] = useState();
   const { t } = useTranslation();
 
@@ -32,18 +36,27 @@ const Login = () => {
               },
               body: JSON.stringify({ username, password })
             })
+              .then(res => {
+                if (res.status === 500) {
+                  res.fetchError = true;
+                  throw res;
+                } else return res;
+              })
               .then(res => res.json())
               .then(res => {
                 if (res.type === 'fail') throw res;
-                console.log(res);
+                else {
+                  dispatch(appSuccess(res));
+                  history.push('/');
+                }
                 setLogin(false);
               })
               .catch(err => {
                 setLogin(false);
-                if (typeof err === 'object') {
-                  setError(err.msg.message);
-                } else {
+                if (err.fetchError) {
                   setError('fetch error');
+                } else {
+                  setError(err.msg.message);
                 }
               });
           }}
@@ -66,7 +79,7 @@ const Login = () => {
               name="password"
               type="password"
               placeholder={t('Password')}
-              isInvalid={error?.msg === 'incorrect password'}
+              isInvalid={error === 'incorrect password'}
             />
             <Form.Label>{t('Password')}</Form.Label>
             <Form.Control.Feedback type="invalid">
