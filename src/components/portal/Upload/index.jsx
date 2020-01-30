@@ -26,7 +26,7 @@ export default ({
   uploaded,
   uploading,
   displayFileName,
-  accept,
+  accept
 }) => {
   const [fileName, updateFileName] = useState('');
 
@@ -38,7 +38,9 @@ export default ({
   }
 
   return (
-    <StyledInputGroup className={`mb-3 custom-file ${uploaded && !uploading && 'uploaded'}`}>
+    <StyledInputGroup
+      className={`mb-3 custom-file ${uploaded && !uploading && 'uploaded'}`}
+    >
       <FormControl
         type="file"
         className="custom-file-input file-input"
@@ -46,26 +48,21 @@ export default ({
         accept={accept}
       />
       <InputGroup.Text className="custom-file-label">
-        {(!uploading && !uploaded) && (displayFileName ? (fileName || label) : label)}
+        {!uploading &&
+          !uploaded &&
+          (displayFileName ? fileName || label : label)}
         {uploading && (
           <span>
-            <Spinner animation="border" variant="primary" size="sm" />
-            {' '}
-            Laddar upp
-            {' '}
-            {fileName}
-            {' '}
+            <Spinner animation="border" variant="primary" size="sm" /> Laddar
+            upp {fileName}{' '}
           </span>
         )}
-        {
-          (!uploading && uploaded)
-          && (
+        {!uploading && uploaded && (
           <span>
             <FontAwesomeIcon icon={faCheck} color="green" />
             {` ${uploaded} `}
           </span>
-          )
-        }
+        )}
       </InputGroup.Text>
     </StyledInputGroup>
   );

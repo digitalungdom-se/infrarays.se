@@ -9,27 +9,22 @@ import Logo from 'components/Logo';
 import './signup.css';
 import { withTranslation, Trans } from 'react-i18next';
 import betterFetch from 'utils/betterFetch';
-import { useDispatch } from 'react-redux';
 
 export default withTranslation()(({ t }) => {
-  const dispatch = useDispatch();
   const [error, setError] = useState();
   return (
     <Center maxWidth="850px">
       <Plate>
-        <Logo
-          center
-          maxWidth="80%"
-        />
+        <Logo center maxWidth="80%" />
         <h1>{t('Register here')}</h1>
         <Form
           style={{
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'space-around',
-            width: '100%',
+            width: '100%'
           }}
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault();
             const email = e.target.email.value;
             const password = e.target.password.value;
@@ -39,30 +34,34 @@ export default withTranslation()(({ t }) => {
             const finnish = e.target.finnish.value;
             if (password.length > 72) {
               setError({
-                password: 'Password can be max 72 chars',
+                password: 'Password can be max 72 chars'
               });
             } else if (finnish === '') {
               setError({
-                finnish: true,
+                finnish: true
               });
             } else {
               betterFetch('/api/user/register', {
                 method: 'post',
                 headers: {
                   Accept: 'application/json',
-                  'Content-Type': 'application/json',
+                  'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                  email, password, name: `${firstName} ${surname}`, birthdate, finnish: finnish === 'Yes',
-                }),
+                  email,
+                  password,
+                  name: `${firstName} ${surname}`,
+                  birthdate,
+                  finnish: finnish === 'Yes'
+                })
               })
-                .then((res) => console.log({ res }))
-                .catch((err) => {
+                .then(res => console.log({ res }))
+                .catch(err => {
                   if (err.fetchError) {
                     setError('fetch error');
                   } else {
                     const errors = {};
-                    err.errors.forEach((err1) => {
+                    err.errors.forEach(err1 => {
                       errors[err1.param] = err1.msg;
                     });
                     setError(errors);
@@ -72,14 +71,27 @@ export default withTranslation()(({ t }) => {
           }}
         >
           <StyledGroup className="inputbox" controlId="form-email">
-            <Form.Control isInvalid={error?.email} required type="email" placeholder="E-mail" autoFocus name="email" />
+            <Form.Control
+              isInvalid={error?.email}
+              required
+              type="email"
+              placeholder="E-mail"
+              autoFocus
+              name="email"
+            />
             <Form.Label>E-mail</Form.Label>
             <Form.Control.Feedback type="invalid">
               {error?.email}
             </Form.Control.Feedback>
           </StyledGroup>
           <StyledGroup className="inputbox" controlId="form-password">
-            <Form.Control isInvalid={error?.password} required type="password" placeholder={t('Password')} name="password" />
+            <Form.Control
+              isInvalid={error?.password}
+              required
+              type="password"
+              placeholder={t('Password')}
+              name="password"
+            />
             <Form.Label>{t('Password')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {t(error?.password)}
@@ -120,13 +132,17 @@ export default withTranslation()(({ t }) => {
               as="div"
               style={{
                 height: 50,
-                paddingTop: 2,
+                paddingTop: 2
               }}
               isInvalid={error?.finnish}
             >
-              <Form.Label style={{
-                display: 'block', fontSize: 12, marginBottom: '0rem', color: '#777',
-              }}
+              <Form.Label
+                style={{
+                  display: 'block',
+                  fontSize: 12,
+                  marginBottom: '0rem',
+                  color: '#777'
+                }}
               >
                 {t('Applying through Finland')}
               </Form.Label>
@@ -158,13 +174,13 @@ export default withTranslation()(({ t }) => {
             style={{
               padding: 10,
               fontSize: 12,
-              width: "50%",
+              width: '50%',
               minWidth: 300
             }}
           >
             <span>
               <Trans i18nKey="TOS">
-              By creating an account you accept how we handle your data.
+                By creating an account you accept how we handle your data.
                 <Link to="/gdpr"> Read more.</Link>
               </Trans>
             </span>
@@ -179,14 +195,22 @@ export default withTranslation()(({ t }) => {
           </Button>
           <div style={{ paddingTop: 20, textAlign: 'center' }}>
             <Trans i18nKey="Have account?">
-            Already have an account?
+              Already have an account?
               <Link to="/login">Login here!</Link>
             </Trans>
             <div>
               <span style={{ fontSize: 12 }}>
                 <Trans i18nKey="Developed by">
-                Developed by
-                  <a href="https://digitalungdom.se/" rel="noopener noreferrer" target="_blank" styled="text-decoration: none"> Digital Ungdom</a>
+                  Developed by
+                  <a
+                    href="https://digitalungdom.se/"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    styled="text-decoration: none"
+                  >
+                    {' '}
+                    Digital Ungdom
+                  </a>
                 </Trans>
               </span>
             </div>

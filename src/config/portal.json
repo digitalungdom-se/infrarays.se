@@ -4,6 +4,7 @@
   "chapters": [
     {
       "title": "Personligt brev",
+      "fileType": "coverLetter",
       "subtitle": "Max 600 ord",
       "description": "Vi som arrangerar Rays vill lära känna dig som ansöker så bra som möjligt. I ditt personliga brev vill vi därför att du kortfattat berättar om dina intressen och varför du söker till Rays. För oss är det intressant att höra varifrån din passion för naturvetenskap kommer och hur dina tidigare erfarenheter har påverkat dig.",
       "upload": {
@@ -13,6 +14,7 @@
     },
     {
       "title": "CV",
+      "fileType": "cv",
       "subtitle": "Max 2 sidor",
       "description": "Förutom grundläggande information rekommenderas ditt CV innehålla en beskrivning av exempelvis deltagande i såväl naturvetenskapliga som idrottsliga tävlingar, utmärkelser i skolan eller andra sammanhang, samt ideellt arbete och förtroendeuppdrag.",
       "upload": {
@@ -22,6 +24,7 @@
     },
     {
       "title": "Essäsvar",
+      "fileType": "essay",
       "subtitle": "Max 300 ord på vardera",
       "description": "1. Ange två eller tre naturvetenskapliga, tekniska, eller matematiska ämnen du tycker om och berätta varför. Du får gärna vara specifik. Vi kommer anpassa ditt forskningsprojekt till de intressen du beskriver i denna fråga.\n2. Välj och besvara **en** av nedanstående frågor:\n    * Berätta om något du gjort som du anser demonstrerar din potential att bli en ledande forskare inom naturvetenskap, teknik och/eller matematik.\n    * Berätta om något eller någon som inspirerar dig. Hur har det/den/de påverkat dig, dina mål, dina drömmar om framtiden och hur du uppfattar din omgivning?\n    * Beskriv hur du jobbar/har jobbat för att utveckla någon av dina egenskaper och hur det har hjälpt/hjälper dig?\n    * Beskriv ett problem du har löst eller en utmaning du vill lösa. Det kan vara en intellektuell utmaning, en forskningsfråga, ett etiskt dilemma – något som du bryr dig om, oavsett omfattningen. Förklara dess betydelse för dig och vilka utmaningar du ställts/skulle ställas inför och hur du löste/skulle lösa detta problem.\n\n**Du ska svara på båda frågor i en och samma pdf.**",
       "upload": {
@@ -31,6 +34,7 @@
     },
     {
       "title": "Betyg",
+      "fileType": "grades",
       "description": "Scanna in och bifoga slutbetyg för de gymnasiekurser du avslutat. Detta går att få ifrån skolans expedition och ska vara signerat av rektor eller ansvarig lärare.",
       "upload": {
         "label": "Ladda upp betyg",

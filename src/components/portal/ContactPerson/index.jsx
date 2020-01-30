@@ -4,9 +4,11 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import moment from 'moment';
+import { Form } from 'react-bootstrap';
 
 const StyledInputGroup = styled(InputGroup)`
-  &.received input, &.received span {
+  &.received input,
+  &.received span {
     /* green */
     color: #155724;
     background-color: #d4edda;
@@ -20,11 +22,7 @@ const StyledInputGroup = styled(InputGroup)`
   }
 `;
 
-function ContactPerson({
-  email,
-  status,
-  cooldown,
-}) {
+function ContactPerson({ email, status, cooldown, handleSubmit }) {
   // https://stackoverflow.com/questions/13262621/how-do-i-use-format-on-a-moment-js-duration
   const diff = moment.unix(cooldown).diff(moment());
   const formattedDiff = moment.utc(diff).format(diff > 3600 * 1000 ? 'H' : 'm');
@@ -32,47 +30,45 @@ function ContactPerson({
   const text = {
     nothing: 'Ej förfrågad',
     requested: 'Förfrågad',
-    received: 'Brev mottaget',
+    received: 'Brev mottaget'
   };
 
   const button = {
     nothing: 'Skicka förfrågan',
-    requested: 'Skicka igen',
+    requested: 'Skicka igen'
   };
 
   return (
-    <StyledInputGroup
-      style={{ marginTop: 16, marginBottom: 16 }}
-      className={status}
+    <Form
+      onSubmit={e => {
+        e.preventDefault();
+        const newEmail = e.target.email.value;
+        handleSubmit(newEmail);
+      }}
     >
-      <FormControl
-        type="email"
-        defaultValue={email}
-        disabled={status === 'received'}
-        placeholder="E-mail"
-      />
-      <InputGroup.Append>
-        <InputGroup.Text>
-          {
-            text[status]
-          }
-        </InputGroup.Text>
-        {
-          status !== 'received'
-          && (
-          <Button
-            disabled={status === 'received' || diff > 0}
-          >
+      <StyledInputGroup
+        style={{ marginTop: 16, marginBottom: 16 }}
+        className={status}
+      >
+        <FormControl
+          type="email"
+          name="email"
+          defaultValue={email}
+          disabled={status === 'received'}
+          placeholder="E-mail"
+        />
+        <InputGroup.Append>
+          <InputGroup.Text>{text[status]}</InputGroup.Text>
+          {status !== 'received' && (
+            <Button type="submit" disabled={status === 'received' || diff > 0}>
               {`${button[status]} `}
-              {diff > 0
-              && (
-                `${formattedDiff + (diff > 3600 * 1000 ? 'h' : 'm')}`
-              )}
-          </Button>
-          )
-        }
-      </InputGroup.Append>
-    </StyledInputGroup>
+              {diff > 0 &&
+                `${formattedDiff + (diff > 3600 * 1000 ? 'h' : 'm')}`}
+            </Button>
+          )}
+        </InputGroup.Append>
+      </StyledInputGroup>
+    </Form>
   );
 }
 

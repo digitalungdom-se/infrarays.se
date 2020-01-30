@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Spinner, Alert } from 'react-bootstrap';
 import CenterCard from 'components/CenterCard';
 import useFetch from 'utils/useFetch';

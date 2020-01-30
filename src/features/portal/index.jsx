@@ -8,62 +8,56 @@ import { ButtonGroup, ProgressBar } from 'react-bootstrap';
 import Logo from 'components/Logo';
 import ReactMarkdown from 'react-markdown';
 import portal from 'config/portal.json';
+import { useSelector } from 'react-redux';
 import UploadHook from './upload';
 import References from './references';
 
 export default () => {
-  const complete = true;
+  const progress = useSelector(state => state.app.progress);
 
-  const Chapters = () => portal.chapters.map((chapter) => (
-    <Chapter
-      key={chapter.title}
-      title={chapter.title}
-      description={chapter.description}
-      subtitle={chapter.subtitle}
-    >
-      {chapter.upload && (
-        <UploadHook
-          label={chapter.upload.label}
-          accept={chapter.upload.accept}
-        />
-      )}
-      {chapter.contactPeople && <References />}
-    </Chapter>
-  ));
+  const Chapters = () =>
+    portal.chapters.map(chapter => (
+      <Chapter
+        key={chapter.title}
+        title={chapter.title}
+        description={chapter.description}
+        subtitle={chapter.subtitle}
+      >
+        {chapter.upload && (
+          <UploadHook
+            label={chapter.upload.label}
+            accept={chapter.upload.accept}
+            fileType={chapter.fileType}
+          />
+        )}
+        {chapter.contactPeople && <References />}
+      </Chapter>
+    ));
 
   return (
     <Center noTop>
       <StyledPlate>
-        <Logo
-          center
-          maxWidth="80%"
-        />
+        <Logo center maxWidth="80%" />
         <div>
-          <h1>
-            {portal.title}
-          </h1>
-          <ReactMarkdown
-            source={portal.introduction}
-          />
-          <ProgressBar variant="custom" now={60} />
+          <h1>{portal.title}</h1>
+          <ReactMarkdown source={portal.introduction} />
+          <ProgressBar variant="custom" now={(progress / 4) * 100} />
           <hr styled="color:#b8b8b8" size="1" />
         </div>
         <div>
           <Chapters />
           <div style={{ padding: '20px 0' }}>
-            {
-                complete && <Alert variant="success">Din ansökan är fullständig och är mottagen för Rays.</Alert>
-              }
+            {progress === 4 && (
+              <Alert variant="success">
+                Din ansökan är fullständig och är mottagen för Rays.
+              </Alert>
+            )}
             <ButtonGroup>
-              <Button variant="secondary">
-                Logga ut
-              </Button>
-              <Button variant="danger">
-                Radera konto
-              </Button>
+              <Button variant="secondary">Logga ut</Button>
+              <Button variant="danger">Radera konto</Button>
             </ButtonGroup>
             <Button variant="primary" style={{ float: 'right' }}>
-                Ladda ned din ansökan
+              Ladda ned din ansökan
             </Button>
           </div>
         </div>
