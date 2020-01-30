@@ -86,7 +86,10 @@ const Login = () => {
               {t('Incorrect password')}
             </Form.Control.Feedback>
             <Form.Text>
-              <Link to="/forgot" style={{ float: 'right', fontSize: 16 }}>
+              <Link
+                to="/forgot-password"
+                style={{ float: 'right', fontSize: 16 }}
+              >
                 {t('Forgot password')}
               </Link>
             </Form.Text>
