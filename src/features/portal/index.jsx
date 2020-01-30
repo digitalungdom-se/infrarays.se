@@ -10,8 +10,8 @@ import ReactMarkdown from 'react-markdown';
 import portal from 'config/portal.json';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutSuccess } from 'features/appSlice';
-import UploadHook from './upload';
-import References from './references';
+import Upload from './Upload';
+import References from './References';
 
 export default () => {
   const progress = useSelector(state => state.app.progress);
@@ -26,7 +26,7 @@ export default () => {
         subtitle={chapter.subtitle}
       >
         {chapter.upload && (
-          <UploadHook
+          <Upload
             label={chapter.upload.label}
             accept={chapter.upload.accept}
             fileType={chapter.fileType}
