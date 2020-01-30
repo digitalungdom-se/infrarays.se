@@ -8,12 +8,14 @@ import { ButtonGroup, ProgressBar } from 'react-bootstrap';
 import Logo from 'components/Logo';
 import ReactMarkdown from 'react-markdown';
 import portal from 'config/portal.json';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutSuccess } from 'features/appSlice';
 import UploadHook from './upload';
 import References from './references';
 
 export default () => {
   const progress = useSelector(state => state.app.progress);
+  const dispatch = useDispatch();
 
   const Chapters = () =>
     portal.chapters.map(chapter => (
@@ -53,7 +55,22 @@ export default () => {
               </Alert>
             )}
             <ButtonGroup>
-              <Button variant="secondary">Logga ut</Button>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  fetch('/api/user/logout', {
+                    method: 'delete'
+                  })
+                    .then(res => res.json())
+                    .then(res => {
+                      if (res.type === 'success') {
+                        dispatch(logoutSuccess());
+                      }
+                    });
+                }}
+              >
+                Logga ut
+              </Button>
               <Button variant="danger">Radera konto</Button>
             </ButtonGroup>
             <Button variant="primary" style={{ float: 'right' }}>

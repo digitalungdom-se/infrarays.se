@@ -23,6 +23,9 @@ const appSlice = createSlice({
       state.files = files;
       state.progress = progress;
     },
+    appFailure() {
+      return initialState;
+    },
     uploadSuccess(state, action) {
       state.files[action.payload.fileType] = {
         name: action.payload.fileName,
@@ -35,10 +38,19 @@ const appSlice = createSlice({
         received: false,
         send_date: new Date().toISOString()
       });
+    },
+    logoutSuccess() {
+      return initialState;
     }
   }
 });
 
-export const { appSuccess, uploadSuccess, addPersonSuccess } = appSlice.actions;
+export const {
+  appSuccess,
+  appFailure,
+  uploadSuccess,
+  addPersonSuccess,
+  logoutSuccess
+} = appSlice.actions;
 
 export default appSlice.reducer;

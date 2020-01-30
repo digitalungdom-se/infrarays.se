@@ -7,7 +7,7 @@ import Admin from 'features/admin';
 import ForgotPassword from 'features/forgotPassword';
 import NoMatch from 'features/nomatch';
 import Verify from 'features/auth/verify';
-import { appSuccess } from 'features/appSlice';
+import { appSuccess, appFailure } from 'features/appSlice';
 import { useDispatch } from 'react-redux';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -25,7 +25,15 @@ function AppRouter() {
       })
         .then(res => res.json())
         .then(res => {
-          dispatch(appSuccess(res));
+          if (res.type === 'fail') {
+            res.json = true;
+            throw res;
+          } else dispatch(appSuccess(res));
+        })
+        .catch(err => {
+          if (err.json) {
+            dispatch(appFailure());
+          }
         });
     data();
   });
