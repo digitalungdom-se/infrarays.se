@@ -9,9 +9,12 @@ import Logo from 'components/Logo';
 import './signup.css';
 import { withTranslation, Trans } from 'react-i18next';
 import betterFetch from 'utils/betterFetch';
+import { appSuccess } from 'features/appSlice';
+import { useDispatch } from 'react-redux';
 
 export default withTranslation()(({ t }) => {
   const [error, setError] = useState();
+  const dispatch = useDispatch();
   return (
     <Center maxWidth="850px">
       <Plate>
@@ -41,7 +44,7 @@ export default withTranslation()(({ t }) => {
                 finnish: true
               });
             } else {
-              betterFetch('/api/user/register', {
+              fetch('/api/user/register', {
                 method: 'post',
                 headers: {
                   Accept: 'application/json',
@@ -55,16 +58,25 @@ export default withTranslation()(({ t }) => {
                   finnish: finnish === 'Yes'
                 })
               })
-                .then(res => console.log({ res }))
-                .catch(err => {
-                  if (err.fetchError) {
-                    setError('fetch error');
+                .then(res => res.json())
+                .then(res => {
+                  if (res.type === 'success') {
+                    dispatch(appSuccess(res));
                   } else {
+                    res.json = true;
+                    throw res;
+                  }
+                })
+                .catch(err => {
+                  console.log(err);
+                  if (err.json) {
                     const errors = {};
                     err.errors.forEach(err1 => {
                       errors[err1.param] = err1.msg;
                     });
                     setError(errors);
+                  } else {
+                    setError('fetch error');
                   }
                 });
             }

@@ -8,12 +8,17 @@ const StyledGroup = styled(Form.Group)`
     margin-bottom: 1rem;
   }
 
+  .inputbox {
+    margin-top: 30px;
+    width: 300px;
+  }
+
   & > input {
-    padding: ${(props) => props.y}rem ${(props) => props.x}rem;
+    padding: ${props => props.y}rem ${props => props.x}rem;
   }
 
   & > label {
-    padding: ${(props) => props.y / 2}rem ${(props) => props.x}rem;
+    padding: ${props => props.y / 2}rem ${props => props.x}rem;
   }
 
   & > label {
@@ -26,8 +31,8 @@ const StyledGroup = styled(Form.Group)`
     /* line-height: 0; */
     color: #495057;
     border: 1px solid transparent;
-    border-radius: .25rem;
-    transition: all .1s ease-in-out;
+    border-radius: 0.25rem;
+    transition: all 0.1s ease-in-out;
   }
 
   & input::-webkit-input-placeholder {
@@ -49,15 +54,17 @@ const StyledGroup = styled(Form.Group)`
   & input::placeholder {
     color: transparent;
   }
-  
-  & input:not(:placeholder-shown):not([type="date"]) {
-    padding-top: calc(${(props) => props.y}rem + ${(props) => props.y}rem * (1 / 3));
-    padding-bottom: calc(${(props) => props.y}rem * (2 / 3));
+
+  & input:not(:placeholder-shown):not([type='date']) {
+    padding-top: calc(
+      ${props => props.y}rem + ${props => props.y}rem * (1 / 3)
+    );
+    padding-bottom: calc(${props => props.y}rem * (2 / 3));
   }
 
   & input:not(:placeholder-shown) ~ label {
-    padding-top: calc(${(props) => props.y / 2}rem * ( 1 / 3));
-    padding-bottom: calc(${(props) => props.y}rem * ( 2 / 3));
+    padding-top: calc(${props => props.y / 2}rem * (1 / 3));
+    padding-bottom: calc(${props => props.y}rem * (2 / 3));
     font-size: 12px;
     color: #777;
   }
@@ -65,12 +72,12 @@ const StyledGroup = styled(Form.Group)`
 
 StyledGroup.defaultProps = {
   x: 0.75,
-  y: 1.5,
+  y: 1.5
 };
 
 StyledGroup.propTypes = {
   x: PropTypes.number,
-  y: PropTypes.number,
+  y: PropTypes.number
 };
 
 export default StyledGroup;

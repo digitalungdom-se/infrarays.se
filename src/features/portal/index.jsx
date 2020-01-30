@@ -8,14 +8,14 @@ import { ButtonGroup, ProgressBar } from 'react-bootstrap';
 import Logo from 'components/Logo';
 import ReactMarkdown from 'react-markdown';
 import portal from 'config/portal.json';
-import { useSelector, useDispatch } from 'react-redux';
-import { logoutSuccess } from 'features/appSlice';
+import { useSelector } from 'react-redux';
 import Upload from './Upload';
 import References from './References';
+import Logout from './Logout';
+import Delete from './Delete';
 
 export default () => {
   const progress = useSelector(state => state.app.progress);
-  const dispatch = useDispatch();
 
   const Chapters = () =>
     portal.chapters.map(chapter => (
@@ -55,23 +55,8 @@ export default () => {
               </Alert>
             )}
             <ButtonGroup>
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  fetch('/api/user/logout', {
-                    method: 'delete'
-                  })
-                    .then(res => res.json())
-                    .then(res => {
-                      if (res.type === 'success') {
-                        dispatch(logoutSuccess());
-                      }
-                    });
-                }}
-              >
-                Logga ut
-              </Button>
-              <Button variant="danger">Radera konto</Button>
+              <Delete />
+              <Logout />
             </ButtonGroup>
             <Button variant="primary" style={{ float: 'right' }}>
               Ladda ned din ansökan
