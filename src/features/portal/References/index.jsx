@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ContactPerson from 'components/portal/ContactPerson';
 import { useSelector, useDispatch } from 'react-redux';
 import { addPersonSuccess } from 'features/appSlice';
+import moment from 'moment';
 
 const Person = ({ index }) => {
   const [loading, setLoading] = useState(false);
@@ -41,6 +42,8 @@ const Person = ({ index }) => {
       status={status}
       email={person?.email}
       loading={loading}
+      sendDate={person?.send_date || '1970-01-01'}
+      cooldown={['day', 1]}
     />
   );
 };

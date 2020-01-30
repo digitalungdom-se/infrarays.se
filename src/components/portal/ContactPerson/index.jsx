@@ -29,9 +29,18 @@ const StyledInputGroup = styled(InputGroup)`
   }
 `;
 
-function ContactPerson({ email, status, loading, cooldown, handleSubmit }) {
+function ContactPerson({
+  email,
+  status,
+  loading,
+  sendDate,
+  cooldown,
+  handleSubmit
+}) {
   // https://stackoverflow.com/questions/13262621/how-do-i-use-format-on-a-moment-js-duration
-  const diff = moment.unix(cooldown).diff(moment());
+  const diff = moment(sendDate)
+    .add(cooldown[0], cooldown[1])
+    .diff(moment());
   const formattedDiff = moment.utc(diff).format(diff > 3600 * 1000 ? 'H' : 'm');
 
   const text = {
@@ -70,6 +79,7 @@ function ContactPerson({ email, status, loading, cooldown, handleSubmit }) {
           defaultValue={email}
           disabled={status === 'received' || loading}
           placeholder="E-mail"
+          required
         />
         <InputGroup.Append>
           <InputGroup.Text>{text[status]}</InputGroup.Text>

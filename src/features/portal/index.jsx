@@ -44,7 +44,11 @@ export default () => {
         <div>
           <h1>{portal.title}</h1>
           <ReactMarkdown source={portal.introduction} />
-          <ProgressBar variant="custom" now={(progress / 4) * 100} />
+          <ProgressBar
+            label={`${(progress / 4) * 100}%`}
+            variant="custom"
+            now={(progress / 4) * 100}
+          />
           <hr styled="color:#b8b8b8" size="1" />
         </div>
         <div>

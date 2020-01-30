@@ -22,7 +22,7 @@ const Verify = () => {
     toast.info('Du är redan verifierad', {
       position: toast.POSITION.TOP_CENTER
     });
-    history.push('/portal');
+    history.push('/');
   }
 
   if (response?.type === 'success' && !isLoading) {

@@ -61,14 +61,17 @@ export default withTranslation()(({ t }) => {
                 .then(res => res.json())
                 .then(res => {
                   if (res.type === 'success') {
-                    dispatch(appSuccess(res));
+                    fetch('/api/auth')
+                      .then(r => r.json())
+                      .then(r => {
+                        if (r.type === 'success') dispatch(appSuccess(r));
+                      });
                   } else {
                     res.json = true;
                     throw res;
                   }
                 })
                 .catch(err => {
-                  console.log(err);
                   if (err.json) {
                     const errors = {};
                     err.errors.forEach(err1 => {
