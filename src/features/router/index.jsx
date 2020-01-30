@@ -9,6 +9,7 @@ import NoMatch from 'features/nomatch';
 import Verify from 'features/auth/verify';
 import { appSuccess, appFailure } from 'features/appSlice';
 import { useDispatch } from 'react-redux';
+import Recommendation from 'features/recommendation';
 import ProtectedRoute from './ProtectedRoute';
 
 function AppRouter() {
@@ -61,6 +62,9 @@ function AppRouter() {
         </Route>
         <Route path="/admin">
           <Admin />
+        </Route>
+        <Route path="/recommendation/:userID/:recommendationID">
+          <Recommendation />
         </Route>
         <Route>
           <NoMatch />
