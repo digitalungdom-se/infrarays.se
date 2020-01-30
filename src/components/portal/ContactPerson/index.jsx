@@ -77,7 +77,7 @@ function ContactPerson({
           type="email"
           name="email"
           defaultValue={email}
-          disabled={status === 'received' || loading}
+          disabled={status !== 'nothing' || loading}
           placeholder="E-mail"
           required
         />

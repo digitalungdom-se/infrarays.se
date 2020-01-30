@@ -10,6 +10,7 @@ import Verify from 'features/auth/verify';
 import { appSuccess, appFailure } from 'features/appSlice';
 import { useDispatch } from 'react-redux';
 import Recommendation from 'features/recommendation';
+import ResetPassword from 'features/resetPassword';
 import ProtectedRoute from './ProtectedRoute';
 
 function AppRouter() {
@@ -65,6 +66,9 @@ function AppRouter() {
         </Route>
         <Route path="/recommendation/:userID/:recommendationID">
           <Recommendation />
+        </Route>
+        <Route path="/reset-password/:token">
+          <ResetPassword />
         </Route>
         <Route>
           <NoMatch />

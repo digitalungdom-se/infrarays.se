@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import ContactPerson from 'components/portal/ContactPerson';
 import { useSelector, useDispatch } from 'react-redux';
 import { addPersonSuccess } from 'features/appSlice';
-import moment from 'moment';
 
 const Person = ({ index }) => {
   const [loading, setLoading] = useState(false);
@@ -14,13 +13,22 @@ const Person = ({ index }) => {
 
   function handleSubmit(email) {
     setLoading(true);
+    let body;
+    if (person?.email) {
+      body = {
+        email: person.email,
+        newEmail: email
+      };
+    } else {
+      body = { email };
+    }
     fetch('/api/user/send/recommendation', {
       method: 'post',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email })
+      body: JSON.stringify(body)
     })
       .then(res => res.json())
       .then(res => {
