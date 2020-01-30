@@ -13,6 +13,7 @@ import Upload from './Upload';
 import References from './References';
 import Logout from './Logout';
 import Delete from './Delete';
+import Download from './Download';
 
 export default () => {
   const progress = useSelector(state => state.app.progress);
@@ -58,9 +59,7 @@ export default () => {
               <Delete />
               <Logout />
             </ButtonGroup>
-            <Button variant="primary" style={{ float: 'right' }}>
-              Ladda ned din ansökan
-            </Button>
+            <Download style={{ float: 'right' }} />
           </div>
         </div>
       </StyledPlate>
