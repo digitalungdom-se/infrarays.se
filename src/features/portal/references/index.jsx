@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ContactPerson from 'components/portal/ContactPerson';
 import { useSelector, useDispatch } from 'react-redux';
 import { addPersonSuccess } from 'features/appSlice';
 
 const Person = ({ index }) => {
+  const [loading, setLoading] = useState(false);
   const person = useSelector(
     state => state.app?.userData.recommendations[index]
   );
@@ -11,6 +12,7 @@ const Person = ({ index }) => {
   const dispatch = useDispatch();
 
   function handleSubmit(email) {
+    setLoading(true);
     fetch('/api/user/send/recommendation', {
       method: 'post',
       headers: {
@@ -21,6 +23,7 @@ const Person = ({ index }) => {
     })
       .then(res => res.json())
       .then(res => {
+        setLoading(false);
         if (res.type === 'success') {
           dispatch(addPersonSuccess({ email }));
         }
@@ -37,6 +40,7 @@ const Person = ({ index }) => {
       handleSubmit={handleSubmit}
       status={status}
       email={person?.email}
+      loading={loading}
     />
   );
 };

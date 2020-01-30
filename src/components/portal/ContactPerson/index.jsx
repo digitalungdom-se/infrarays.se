@@ -4,7 +4,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Form } from 'react-bootstrap';
+import { Form, Spinner } from 'react-bootstrap';
 
 const StyledInputGroup = styled(InputGroup)`
   &.received input,
@@ -15,14 +15,21 @@ const StyledInputGroup = styled(InputGroup)`
     border-color: #c3e6cb;
   }
 
-  &.requested span {
+  &.requested .input-group-append span {
     color: #1a237e;
     background-color: #c5cae9;
     border-color: #c5cae9;
   }
+
+  &.requested .input-group-prepend span {
+  }
+
+  &.requested .input-group-prepend + input {
+    border-left: 0;
+  }
 `;
 
-function ContactPerson({ email, status, cooldown, handleSubmit }) {
+function ContactPerson({ email, status, loading, cooldown, handleSubmit }) {
   // https://stackoverflow.com/questions/13262621/how-do-i-use-format-on-a-moment-js-duration
   const diff = moment.unix(cooldown).diff(moment());
   const formattedDiff = moment.utc(diff).format(diff > 3600 * 1000 ? 'H' : 'm');
@@ -50,11 +57,18 @@ function ContactPerson({ email, status, cooldown, handleSubmit }) {
         style={{ marginTop: 16, marginBottom: 16 }}
         className={status}
       >
+        {loading && (
+          <InputGroup.Prepend>
+            <InputGroup.Text>
+              <Spinner animation="border" size="sm" variant="primary" />
+            </InputGroup.Text>
+          </InputGroup.Prepend>
+        )}
         <FormControl
           type="email"
           name="email"
           defaultValue={email}
-          disabled={status === 'received'}
+          disabled={status === 'received' || loading}
           placeholder="E-mail"
         />
         <InputGroup.Append>
