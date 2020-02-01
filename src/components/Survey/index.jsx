@@ -14,18 +14,30 @@ const Icon = styled(FontAwesomeIcon)`
   }
 `;
 
-export default ({ survey, onSubmit = () => {} }) => {
+const StyledHeader = styled(Card.Header)`
+  &.done {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+
+  &.done .btn {
+    color: #155724;
+  }
+`;
+
+export default ({ done, survey, onSubmit = () => {} }) => {
   const [process, setProcess] = useState(survey?.applicationProcess);
   const [portal, setPortal] = useState(survey?.applicationPortal);
   return (
-    <Accordion defaultActiveKey="1">
+    <Accordion defaultActiveKey="1" className={done && 'done'}>
       <h3 className="col-xs-12 col-md-4">Formulär</h3>
       <Card>
-        <Card.Header>
+        <StyledHeader className={done ? 'done' : ''}>
           <Accordion.Toggle eventKey="0" as={Button} variant="link">
             Öppna
           </Accordion.Toggle>
-        </Card.Header>
+        </StyledHeader>
         <Accordion.Collapse eventKey="0">
           <Card.Body>
             <p>
