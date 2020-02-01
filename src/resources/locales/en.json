@@ -17,6 +17,7 @@
   "Applying through Finland": "Applying through Finland",
   "TOS": "By creating an account you accept how we handle your data.<1> Read more.</1>",
   "Register": "Register",
+  "Registering": "Registering",
   "Have account?": "Already have an account? <1>Login here!</1>",
   "Developed by": "Developed by <1>Digital Ungdom</1>",
   "Not found": "No page was found on this URL.",
@@ -26,5 +27,6 @@
   "password can be max 72 chars": "Password can be max 72 characters long",
   "choose an option": "Choose an option!",
   "invalid date": "Invalid format for date",
-  "Please verify e-mail!": "Please check your e-mail to verify your account!"
+  "Please verify e-mail!": "Please check your e-mail to verify your account!",
+  "Verifying e-mail...": "Verifying your e-mail..."
 }

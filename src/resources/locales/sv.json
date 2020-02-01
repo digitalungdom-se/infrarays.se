@@ -17,6 +17,7 @@
   "Applying through Finland": "Ansöker genom Finland",
   "TOS": "Genom att du registrerar ditt konto accepterar du hanteringen av dina uppgifter.<1> Läs mer.</1>",
   "Register": "Registrera",
+  "Registering": "Registrerar",
   "Have account?": "Har du redan ett konto? <1>Logga in här!</1>",
   "Developed by": "Utvecklat av <1>Digital Ungdom</1>",
   "Not found": "Ingen sida hittades på denna URL.",
@@ -26,5 +27,7 @@
   "password can be max 72 chars": "Lösenordet får max vara 72 karaktärer långt",
   "choose an option": "Välj ett alternativ!",
   "invalid date": "Ogiltigt format för datum",
-  "Please verify e-mail!": "Besök din e-mails inkorg för att verifiera ditt konto!"
+  "Please verify e-mail!": "Besök din e-mails inkorg för att verifiera ditt konto!",
+  "Verifying e-mail...": "Verifierar din e-mail...",
+  "verifying-email": "<1>Ogiltig token.</1> Länken som du har klickat på innehåller en ogiltig token:<2>{{token}}</2> Dubbelkolla att du har klickat på rätt länk. Om det inte fungerar ska du kontakta portalansvariga,<3>styrelse@digitalungdom.se</3>."
 }

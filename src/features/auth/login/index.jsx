@@ -61,7 +61,7 @@ const Login = () => {
                       msg: err.msg.message
                     });
                 } else {
-                  setError('fetch error');
+                  setError({ msg: 'fetch error' });
                 }
               });
           }}
@@ -104,9 +104,10 @@ const Login = () => {
             </Form.Text>
           </StyledGroup>
           <Form.Group style={{ paddingTop: 40 }}>
-            {(error === 'not verified' || error === 'fetch error') && (
+            {(error?.msg === 'not verified' ||
+              error?.msg === 'fetch error') && (
               <Alert variant="danger" style={{ textAlign: 'center' }}>
-                {t(error)}
+                {t(error?.msg)}
               </Alert>
             )}
             <Button

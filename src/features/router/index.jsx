@@ -52,9 +52,6 @@ function AppRouter() {
         <ProtectedRoute shouldBeAuthenticated={false} path="/register">
           <Register />
         </ProtectedRoute>
-        <Route path="/portal">
-          <Portal />
-        </Route>
         <Route path="/forgot-password">
           <ForgotPassword />
         </Route>

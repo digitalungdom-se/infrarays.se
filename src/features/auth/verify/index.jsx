@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { appSuccess } from 'features/appSlice';
 import { useDispatch } from 'react-redux';
+import { useTranslation, Trans } from 'react-i18next';
 
 const Verify = () => {
   const { token } = useParams();
@@ -36,11 +37,13 @@ const Verify = () => {
     dispatch(appSuccess(response));
   }
 
+  const { t } = useTranslation();
+
   return (
     <>
       {isLoading && (
         <div style={{ textAlign: 'center' }}>
-          Verifierar din e-mail...
+          {t('Verifying e-mail...')}
           <Spinner
             animation="border"
             size="lg"
@@ -58,19 +61,25 @@ const Verify = () => {
       {response?.type === 'fail' && (
         <Alert variant="danger">
           {response?.errors[0]?.msg === 'no token'}
-          <b>Ogiltig token.</b> Länken som du har klickat på innehåller en
-          ogiltig token:
-          <code
-            style={{ textAlign: 'center', display: 'block', paddingBottom: 0 }}
-          >
-            {token}
-          </code>
-          Dubbelkolla att du har klickat på rätt länk. Om det inte fungerar ska
-          du kontakta portalansvariga,{' '}
-          <a href="mailto:styrelse@digitalungdom.se">
-            styrelse@digitalungdom.se
-          </a>
-          .
+          <div i18nKey="verifying-email" token={token}>
+            <b>Ogiltig token.</b> Länken som du har klickat på innehåller en
+            ogiltig token:
+            <code
+              style={{
+                textAlign: 'center',
+                display: 'block',
+                paddingBottom: 0
+              }}
+            >
+              {token}
+            </code>
+            Dubbelkolla att du har klickat på rätt länk. Om det inte fungerar
+            ska du kontakta portalansvariga,{' '}
+            <a href="mailto:styrelse@digitalungdom.se">
+              styrelse@digitalungdom.se
+            </a>
+            .
+          </div>
         </Alert>
       )}
       {error && <Alert variant="danger">Nätverksproblem.</Alert>}

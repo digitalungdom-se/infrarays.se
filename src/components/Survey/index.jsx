@@ -31,7 +31,6 @@ export default ({ done, survey, onSubmit = () => {} }) => {
   const [portal, setPortal] = useState(survey?.applicationPortal);
   return (
     <Accordion defaultActiveKey="1" className={done && 'done'}>
-      <h3 className="col-xs-12 col-md-4">Formulär</h3>
       <Card>
         <StyledHeader className={done ? 'done' : ''}>
           <Accordion.Toggle eventKey="0" as={Button} variant="link">

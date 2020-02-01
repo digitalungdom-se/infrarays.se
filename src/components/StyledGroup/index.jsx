@@ -67,7 +67,7 @@ const StyledGroup = styled(Form.Group)`
     padding-top: calc(${props => props.y / 2}rem * (1 / 3));
     padding-bottom: calc(${props => props.y}rem * (2 / 3));
     font-size: 12px;
-    color: #777;
+    color: ${props => props.theme.brand || '#777'};
   }
 `;
 
