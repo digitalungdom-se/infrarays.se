@@ -23,10 +23,10 @@ const Login = () => {
       <Plate>
         <Logo center maxWidth="80%" style={{ marginBottom: 60 }} />
         <Form
-          onSubmit={e => {
-            e.preventDefault();
-            const username = e.target.email.value;
-            const password = e.target.password.value;
+          onSubmit={event => {
+            event.preventDefault();
+            const username = event.target.email.value;
+            const password = event.target.password.value;
             setLogin(true);
             fetch('/api/user/login', {
               method: 'post',
@@ -36,27 +36,32 @@ const Login = () => {
               },
               body: JSON.stringify({ username, password })
             })
-              .then(res => {
-                if (res.status === 500) {
-                  res.fetchError = true;
-                  throw res;
-                } else return res;
-              })
               .then(res => res.json())
               .then(res => {
-                if (res.type === 'fail') throw res;
-                else {
+                if (res.type === 'success') {
                   dispatch(appSuccess(res));
                   history.push('/');
+                } else {
+                  res.json = true;
+                  throw res;
                 }
                 setLogin(false);
               })
               .catch(err => {
                 setLogin(false);
-                if (err.fetchError) {
-                  setError('fetch error');
+                if (err.json) {
+                  const errors = {};
+                  if (err.errors) {
+                    err.errors.forEach(e => {
+                      errors[e.param] = e;
+                    });
+                    setError(errors);
+                  } else
+                    setError({
+                      msg: err.msg.message
+                    });
                 } else {
-                  setError(err.msg.message);
+                  setError('fetch error');
                 }
               });
           }}
@@ -67,12 +72,14 @@ const Login = () => {
               type="email"
               placeholder="E-mail"
               autoFocus
-              isInvalid={error === 'no user'}
+              isInvalid={error?.username || error?.msg === 'no user'}
               required
             />
             <Form.Label>E-mail</Form.Label>
             <Form.Control.Feedback type="invalid">
-              {t('Unknown email')}
+              {error?.username !== undefined
+                ? t(error.username.msg)
+                : t(error?.msg)}
             </Form.Control.Feedback>
           </StyledGroup>
           <StyledGroup controlId="form-password">
@@ -80,12 +87,12 @@ const Login = () => {
               name="password"
               type="password"
               placeholder={t('Password')}
-              isInvalid={error === 'incorrect password'}
+              isInvalid={error?.msg === 'incorrect password'}
               required
             />
             <Form.Label>{t('Password')}</Form.Label>
             <Form.Control.Feedback type="invalid">
-              {t('Incorrect password')}
+              {t(error?.msg)}
             </Form.Control.Feedback>
             <Form.Text>
               <Link
