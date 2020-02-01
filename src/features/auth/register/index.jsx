@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { Spinner, Alert } from 'react-bootstrap';
 import moment from 'moment';
 import { toast } from 'react-toastify';
+import MaskedInput from 'react-maskedinput';
 
 export default withTranslation()(({ t }) => {
   const [error, setError] = useState();
@@ -43,10 +44,10 @@ export default withTranslation()(({ t }) => {
             const finnish = e.target.finnish.value;
             const isError = {};
             if (password.length > 72) {
-              isError.password = 'Password can be max 72 chars';
+              isError.password = 'password can be max 72 chars';
             }
             if (finnish === '') {
-              isError.finnish = true;
+              isError.finnish = 'choose an option';
             }
             if (moment(birthdate).isValid() === false) {
               isError.birthdate = 'invalid date';
@@ -74,7 +75,7 @@ export default withTranslation()(({ t }) => {
                   setLoading(false);
                   if (res.type === 'success') {
                     setSuccess(true);
-                    toast.success('Du behöver nu verifiera din e-mail!', {
+                    toast.success(t('Please verify e-mail!'), {
                       position: 'top-center',
                       autoClose: false,
                       hideProgressBar: false,
@@ -83,7 +84,6 @@ export default withTranslation()(({ t }) => {
                       draggable: true
                     });
                     setError(null);
-                    // history.push('/verify');
                   } else {
                     res.json = true;
                     throw res;
@@ -98,7 +98,7 @@ export default withTranslation()(({ t }) => {
                     });
                     setError(errors);
                   } else {
-                    setError('fetch error');
+                    setError({ fetchError: 'fetch error' });
                   }
                 });
             }
@@ -159,6 +159,9 @@ export default withTranslation()(({ t }) => {
           </StyledGroup>
           <StyledGroup className="inputbox" controlId="form-birthdate">
             <Form.Control
+              as={() => (
+                <MaskedInput className="form-control" mask="1111-11-11" />
+              )}
               disabled={success}
               isValid={success}
               required
@@ -169,7 +172,7 @@ export default withTranslation()(({ t }) => {
             />
             <Form.Label>{t('Date of birth')}</Form.Label>
             <Form.Control.Feedback type="invalid">
-              {error?.birthdate}
+              {t(error?.birthdate)}
             </Form.Control.Feedback>
           </StyledGroup>
           <Form.Group controlId="form-finland" className="inputbox">
@@ -215,7 +218,7 @@ export default withTranslation()(({ t }) => {
               />
             </Form.Control>
             <Form.Control.Feedback type="invalid">
-              Välj ett alternativ!
+              {t(error?.finnish)}
             </Form.Control.Feedback>
           </Form.Group>
           <div
@@ -234,6 +237,14 @@ export default withTranslation()(({ t }) => {
               </Trans>
             </span>
           </div>
+          {error?.fetchError && (
+            <Alert
+              style={{ width: '50%', margin: '10px 25%' }}
+              variant="danger"
+            >
+              {t(error?.fetchError)}
+            </Alert>
+          )}
           <Button
             size="lg"
             type="submit"

@@ -23,5 +23,8 @@
   "Forgot password?": "Forgot password?",
   "Enter e-mailaddress to reset": "Enter your e-mailaddress and you will receive an e-mail with instructions on how to reset your password.",
   "Reset password": "Reset password",
-  "Password can be max 72 chars": "Password can be max 72 characters long"
+  "password can be max 72 chars": "Password can be max 72 characters long",
+  "choose an option": "Choose an option!",
+  "invalid date": "Invalid format for date",
+  "Please verify e-mail!": "Please check your e-mail to verify your account!"
 }
