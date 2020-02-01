@@ -1,3 +1,43 @@
 {
-  
+  "title": "Application for Rays 2020",
+  "introduction": "Thank you for your interest in applying to Rays! We will be reading all applications and respond to you as we can. Below you can find the information we want you to send. On the **March 31st at 23:59** you will no longer be able to edit your application and it will automatically be sent to Rays. For your application to be sent you must have uplaoded all files and filled in the survey. Until this date you can update any part by simply uploading a new file again. Your old file will be replaced by the new one. All files must be in PDF-format and the specific requirements for word count can be located in each part. The file limit is 5 MB per part.\n\nWe who arrange Rays wish you the very best of luck and look forward to reading your application! [For more information please check the website!](http://raysforexcellence.se/ansok/)",
+  "coverLetter": {
+    "title": "Personal letter",
+    "subtitle": "Maximum 600 words",
+    "description": "We who arrange Rays want to get to know you applicants as well as possible. In your personal letter, we want you to tell us about your interests and why you are applying to Rays. We want to hear about where your passion for science comes from and how your previous experiences have shaped you.",
+    "upload": {
+      "label": "Upload cover letter"
+    }
+  },
+  "cv": {
+    "title": "CV",
+    "subtitle": "Maximum 2 pages",
+    "description": "Apart from basic information, we recommend you to include descriptions of competitions you have partaken in (both scientific and athletic), awards won at school or in other contexts, experience of voluntary work and holding positions of trust.",
+    "upload": {
+      "label": "Upload CV"
+    }
+  },
+  "essay": {
+    "title": "Essays",
+      "subtitle": "Maximum 300 words on each essay",
+      "description": "1. Name two or three subjects in science, technology or mathematics that interest you especially, and tell us why you like about them. You may be very specific if you want. We will use your answer when matching students to mentors.\n2. Choose and answer **one** of the following questions:\n    * Tell us about something you have done, which you think demonstrates your potential to become a future leader within the natural sciences, technology or mathematics.\n    * Tell us about something or someone who inspires you. How have/has they/it influenced you, your goals, your dreams for the future and how you perceive the surroundings?\n    * Describe how you work or have worked to develop one of your personal qualities and how that has helped you or is helping you?\n    * Tell us about a challenge you have solved / want to solve. It might be an intellectual challenge, a research question, or an ethical dilemma – something that you care about, no matter the scope. Explain its importance to you and what challenges you have faced or would have to face and how you dealt with or would deal with these.\n\n**You need to have the answer both questions in the same PDF.**",
+      "upload": {
+        "label": "Upload essays"
+      }
+  },
+  "grades": {
+    "title": "Betyg",
+      "description": "Please scan your grades for all completed high school courses and attach them to your application. The document should be available from the school office and should be **signed by the headmaster or your responsible teacher**.",
+      "upload": {
+        "label": "Upload grades"
+      }
+  },
+  "survey": {
+    "title": "Formulär",
+    "description": "Vi som arrangerar Rays vill veta varifrån du kommer, på vilken gymnasieskola du studerar, hur du hört talas om Rays samt vad du tycker om ansökningsprocessen. Allt detta för att vi ska kunna bli ännu bättre på att marknadsföra oss samt utveckla ansökningprocessen. Fyll därför i formuläret nedan och klicka på skicka för att spara ditt svar."
+  },
+  "recommendation": {
+    "title": "Rekommendationsbrev",
+    "description": "Teachers, coaches and others could address questions such as how their student handles challenges or responsibility, and why the student has the potential of a future leader within research. Letters of Recommendation should be composed, signed and sent by the teacher/coach. [More information can be found here.](https://raysforexcellence.se/rekommendationsbev)\n\nGenom att skriva in en e-post nedan kommer en länk att skickas till mottagaren som kan ladda upp sitt rekommendationsbrev. Du kommer att kunna skicka om och ändra emailet så länge mottagaren inte har laddat upp sitt brev. Så fort mottagaren har laddat upp brevet är den låst till din ansökan.\n\n**Du bör helst skicka in minst 1 och max 3 rekommendationsbrev.**"
+  }
 }

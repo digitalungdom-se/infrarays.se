@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Accordion, Card, Button, Form, FormControl } from 'react-bootstrap';
+import {
+  Accordion,
+  Card,
+  Button,
+  Form,
+  FormControl,
+  Spinner
+} from 'react-bootstrap';
 import Rating from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -26,8 +33,9 @@ const StyledHeader = styled(Card.Header)`
   }
 `;
 
-export default ({ done, survey, onSubmit = () => {} }) => {
+export default ({ loading, done, survey, onSubmit = () => {} }) => {
   const [process, setProcess] = useState(survey?.applicationProcess);
+  const [error, setError] = useState();
   const [portal, setPortal] = useState(survey?.applicationPortal);
   return (
     <Accordion defaultActiveKey="1" className={done && 'done'}>
@@ -55,15 +63,30 @@ export default ({ done, survey, onSubmit = () => {} }) => {
                 const improvement = e.target.improvement.value;
                 const informant = e.target.informant.value;
                 const gender = e.target.gender.value;
-                onSubmit({
-                  city,
-                  school,
-                  improvement,
-                  informant,
-                  gender,
-                  applicationPortal: portal,
-                  applicationProcess: process
-                });
+                const isError = {};
+                if (gender === 'select') {
+                  isError.gender = true;
+                }
+                if (portal === undefined) {
+                  isError.portal = true;
+                }
+                if (process === undefined) {
+                  isError.process = true;
+                }
+                if (Object.keys(isError).length) {
+                  setError(isError);
+                } else {
+                  setError(null);
+                  onSubmit({
+                    city,
+                    school,
+                    improvement,
+                    informant,
+                    gender,
+                    applicationPortal: portal,
+                    applicationProcess: process
+                  });
+                }
               }}
             >
               <Form.Group controlId="form-city">
@@ -72,6 +95,7 @@ export default ({ done, survey, onSubmit = () => {} }) => {
                   defaultValue={survey?.city}
                   type="text"
                   name="city"
+                  required
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId="form-school">
@@ -80,38 +104,49 @@ export default ({ done, survey, onSubmit = () => {} }) => {
                   defaultValue={survey?.school}
                   type="text"
                   name="school"
+                  required
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId="form-gender">
-                <Form.Label>Gender</Form.Label>
+                <Form.Label>Kön</Form.Label>
                 <Form.Control
-                  defaultValue={survey?.gender}
+                  defaultValue={survey?.gender || 'select'}
                   as="select"
                   name="gender"
+                  isInvalid={error?.gender}
+                  required
                 >
-                  <option>male</option>
-                  <option>female</option>
-                  <option>other</option>
-                  <option>undisclosed</option>
+                  <option value="select" disabled>
+                    Välj ett alternativ
+                  </option>
+                  <option value="male">Man</option>
+                  <option value="female">Kvinna</option>
+                  <option value="other">Annat</option>
+                  <option value="undisclosed">Vill ej uppge</option>
                 </Form.Control>
+                <Form.Control.Feedback type="invalid">
+                  Välj ett alternativ!
+                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="form-city">
                 <Form.Label>Vad tycker du om ansökningsprocessen?</Form.Label>
-                <FormControl as="div">
+                <FormControl as="div" isInvalid={error?.process}>
                   <Rating
                     initialRating={process}
                     onChange={value => {
-                      console.log(value);
                       setProcess(value);
                     }}
                     emptySymbol={<Icon className="empty icon" icon={faStar} />}
                     fullSymbol={<Icon className="full icon" icon={faStar} />}
                   />
                 </FormControl>
+                <Form.Control.Feedback type="invalid">
+                  Du måste betygsätta!
+                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="form-city">
                 <Form.Label>Vad tycker du om ansökningsportalen?</Form.Label>
-                <FormControl as="div">
+                <FormControl as="div" isInvalid={error?.portal}>
                   <Rating
                     initialRating={portal}
                     onChange={value => setPortal(value)}
@@ -120,14 +155,21 @@ export default ({ done, survey, onSubmit = () => {} }) => {
                     name="portal"
                   />
                 </FormControl>
+                <Form.Control.Feedback type="invalid">
+                  Du måste betygsätta!
+                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="form-city">
-                <Form.Label>Improvement</Form.Label>
+                <Form.Label>
+                  Hur kan ansökningsprocessen och portalen förbättras?
+                </Form.Label>
                 <Form.Control
                   defaultValue={survey?.improvement}
                   name="improvement"
                   as="textarea"
                   rows={3}
+                  maxLength="10000"
+                  required
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId="form-city">
@@ -137,9 +179,14 @@ export default ({ done, survey, onSubmit = () => {} }) => {
                   name="informant"
                   as="textarea"
                   rows={3}
+                  maxLength="10000"
+                  required
                 ></Form.Control>
               </Form.Group>
-              <Button type="submit">Submit</Button>
+              <Button type="submit" disabled={loading}>
+                {loading && <Spinner animation="border" size="sm" />}{' '}
+                {loading ? 'Sparar svar' : 'Spara svar'}
+              </Button>
             </Form>
           </Card.Body>
         </Accordion.Collapse>

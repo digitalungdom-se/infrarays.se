@@ -28,5 +28,6 @@
   "choose an option": "Choose an option!",
   "invalid date": "Invalid format for date",
   "Please verify e-mail!": "Please check your e-mail to verify your account!",
-  "Verifying e-mail...": "Verifying your e-mail..."
+  "Verifying e-mail...": "Verifying your e-mail...",
+  "You have reset your password!": "You have now reset your password!"
 }

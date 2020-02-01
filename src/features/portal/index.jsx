@@ -58,8 +58,8 @@ export default () => {
       <StyledPlate>
         <Logo center maxWidth="80%" />
         <div>
-          <h1>{portal.title}</h1>
-          <ReactMarkdown source={portal.introduction} />
+          <h1>{t.title}</h1>
+          <ReactMarkdown source={t.introduction} />
           <ProgressBar
             label={`${(progress / 5) * 100}%`}
             variant="custom"

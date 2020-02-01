@@ -64,7 +64,7 @@ function AppRouter() {
         <Route path="/recommendation/:userID/:recommendationID">
           <Recommendation />
         </Route>
-        <Route path="/reset-password/:token">
+        <Route path="/reset/:token">
           <ResetPassword />
         </Route>
         <Route>
