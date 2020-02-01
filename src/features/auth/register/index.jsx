@@ -16,6 +16,10 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 import MaskedInput from 'react-maskedinput';
 
+const MaskedField = props => {
+  return <MaskedInput {...props} name="birthdate" mask="1111-11-11" />;
+};
+
 export default withTranslation()(({ t }) => {
   const [error, setError] = useState();
   const [success, setSuccess] = useState(false);
@@ -159,9 +163,7 @@ export default withTranslation()(({ t }) => {
           </StyledGroup>
           <StyledGroup className="inputbox" controlId="form-birthdate">
             <Form.Control
-              as={() => (
-                <MaskedInput className="form-control" mask="1111-11-11" />
-              )}
+              as={MaskedField}
               disabled={success}
               isValid={success}
               required
