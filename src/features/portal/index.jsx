@@ -9,6 +9,7 @@ import Logo from 'components/Logo';
 import ReactMarkdown from 'react-markdown';
 import portal from 'config/portal.json';
 import { useSelector } from 'react-redux';
+import PortalSurvey from './Survey';
 import Upload from './Upload';
 import References from './References';
 import Logout from './Logout';
@@ -16,7 +17,9 @@ import Delete from './Delete';
 import Download from './Download';
 
 export default () => {
-  const progress = useSelector(state => state.app.progress);
+  const files = useSelector(state => state.app?.files);
+  const survey = useSelector(state => state.app?.survey);
+  const progress = (files ? Object.keys(files).length : 0) + (survey ? 1 : 0);
 
   const Chapters = () =>
     portal.chapters.map(chapter => (
@@ -34,6 +37,7 @@ export default () => {
           />
         )}
         {chapter.contactPeople && <References />}
+        {chapter.survey && <PortalSurvey />}
       </Chapter>
     ));
 
@@ -45,9 +49,9 @@ export default () => {
           <h1>{portal.title}</h1>
           <ReactMarkdown source={portal.introduction} />
           <ProgressBar
-            label={`${(progress / 4) * 100}%`}
+            label={`${(progress / 5) * 100}%`}
             variant="custom"
-            now={(progress / 4) * 100}
+            now={(progress / 5) * 100}
           />
           <hr styled="color:#b8b8b8" size="1" />
         </div>

@@ -3,7 +3,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Spinner from 'react-bootstrap/Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
 const StyledInputGroup = styled(InputGroup)`
@@ -18,6 +18,18 @@ const StyledInputGroup = styled(InputGroup)`
     background-color: #28a745;
     border-color: #28a745;
   }
+
+  &.error span {
+    color: #bd2130;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+
+  &.error span::after {
+    color: #fff;
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
 `;
 
 export default ({
@@ -26,7 +38,8 @@ export default ({
   uploaded,
   uploading,
   displayFileName,
-  accept
+  accept,
+  error
 }) => {
   const [fileName, updateFileName] = useState('');
 
@@ -37,16 +50,26 @@ export default ({
     return onChange(e.target.files[0], name);
   }
 
+  let extension;
+  if (uploaded) {
+    const split = uploaded.split('.');
+    extension = split[split.length - 1];
+  }
+
   return (
     <StyledInputGroup
-      className={`mb-3 custom-file ${uploaded && !uploading && 'uploaded'}`}
+      className={`mb-3 custom-file ${uploaded &&
+        !uploading &&
+        'uploaded'} ${error && 'error'}`}
     >
       <FormControl
         type="file"
         className="custom-file-input file-input"
         onChange={handleFileChange}
         accept={accept}
+        isInvalid={error}
       />
+      <FormControl.Feedback type="invalid">{error}</FormControl.Feedback>
       <InputGroup.Text className="custom-file-label">
         {!uploading &&
           !uploaded &&
@@ -58,9 +81,13 @@ export default ({
           </span>
         )}
         {!uploading && uploaded && (
-          <span>
-            <FontAwesomeIcon icon={faCheck} color="green" />
-            {` ${uploaded} `}
+          <span style={{ wordWrap: 'break-word', display: 'block' }}>
+            {error ? (
+              <FontAwesomeIcon icon={faTimes} color="#721c24" />
+            ) : (
+              <FontAwesomeIcon icon={faCheck} color="green" />
+            )}
+            {` ${uploaded}`}
           </span>
         )}
       </InputGroup.Text>

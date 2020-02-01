@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Center from 'components/Center';
 import Plate from 'components/Plate';
 import styled from 'styled-components';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Spinner, Alert } from 'react-bootstrap';
 import StyledGroup from 'components/StyledGroup';
 import { Trans } from 'react-i18next';
 
@@ -12,15 +12,16 @@ const StyledTitle = styled.h1`
 `;
 
 const ForgotPassword = () => {
-  const [error, setError] = useState();
-  const [success, setSuccess] = useState();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   return (
     <Center maxWidth="400px">
       <Plate>
         <StyledTitle>
           <Trans i18nKey="Forgot password?">Forgot password?</Trans>
         </StyledTitle>
-        <div style={{ maxWidth: 300, margin: '0 auto', paddingBottom: 20 }}>
+        <div style={{ maxWidth: 300, margin: '0 auto' }}>
           <p>
             <Trans i18nKey="Enter e-mailaddress to reset">
               Enter your e-mailaddress and you will receive an e-mail with
@@ -31,12 +32,17 @@ const ForgotPassword = () => {
             onSubmit={e => {
               e.preventDefault();
               const email = e.target.email.value;
+              setLoading(true);
               fetch('/api/user/password/forgot', {
                 method: 'post',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({ email })
               })
                 .then(res => res.json())
                 .then(res => {
+                  setLoading(false);
                   if (res.type === 'success') {
                     setSuccess(true);
                   } else {
@@ -45,8 +51,9 @@ const ForgotPassword = () => {
                   }
                 })
                 .catch(err => {
+                  setLoading(false);
                   if (err.json) {
-                    setError(err.msg);
+                    setError(err.errors[0]?.msg);
                   } else setError('fetch error');
                 });
             }}
@@ -57,15 +64,32 @@ const ForgotPassword = () => {
                 name="email"
                 type="email"
                 placeholder="E-mail"
+                isInvalid={error !== ''}
+                isValid={success}
+                disabled={success}
               />
               <Form.Label>E-mail</Form.Label>
+              <Form.Control.Feedback type="invalid">
+                <Trans key={error}>Error</Trans>
+              </Form.Control.Feedback>
+              <Form.Control.Feedback type="valid">
+                Du har fått ett e-mail!
+              </Form.Control.Feedback>
             </StyledGroup>
             <Button
               variant="custom"
               type="submit"
               size="lg"
               style={{ width: '100%' }}
+              disabled={loading || success}
             >
+              {loading && (
+                <Spinner
+                  animation="border"
+                  size="sm"
+                  style={{ width: '1.5rem', height: '1.5rem' }}
+                />
+              )}{' '}
               <Trans i18nKey="Reset password">Reset password</Trans>
             </Button>
           </Form>

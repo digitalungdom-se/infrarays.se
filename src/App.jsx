@@ -7,6 +7,7 @@ import theme from 'config/theme.json';
 import 'resources/app.css';
 import { darken, desaturate } from 'polished';
 import { ToastContainer } from 'react-toastify';
+import ChangeLanguage from 'features/ChangeLanguage';
 import store, { persistor } from './store';
 
 const StyledApp = styled.div`
@@ -48,6 +49,7 @@ function App() {
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={theme}>
           <StyledApp>
+            <ChangeLanguage />
             <ToastContainer />
             <Router />
           </StyledApp>

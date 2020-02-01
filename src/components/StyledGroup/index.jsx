@@ -33,6 +33,7 @@ const StyledGroup = styled(Form.Group)`
     border: 1px solid transparent;
     border-radius: 0.25rem;
     transition: all 0.1s ease-in-out;
+    pointer-events: none;
   }
 
   & input::-webkit-input-placeholder {

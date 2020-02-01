@@ -1,9 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-export const initialState = {
-  progress: 0
-};
+export const initialState = {};
 
 const appSlice = createSlice({
   name: 'app',
@@ -12,19 +10,40 @@ const appSlice = createSlice({
     appSuccess(state, action) {
       state.userData = action.payload.userData;
       const files = {};
-      let progress = 0;
       action.payload.files.forEach(file => {
         files[file.type] = {
           name: file.file_name,
           time: file.created
         };
-        progress += 1;
       });
+      if (action.payload.survey) {
+        state.survey = action.payload.survey;
+        const {
+          city,
+          school,
+          gender,
+          application_portal,
+          application_process,
+          improvement,
+          informant
+        } = action.payload.survey;
+        state.survey = {
+          city,
+          school,
+          gender,
+          applicationPortal: application_portal,
+          applicationProcess: application_process,
+          improvement,
+          informant
+        };
+      }
       state.files = files;
-      state.progress = progress;
     },
     appFailure() {
       return initialState;
+    },
+    updateSurvey(state, action) {
+      state.survey = action.payload.survey;
     },
     uploadSuccess(state, action) {
       state.files[action.payload.fileType] = {

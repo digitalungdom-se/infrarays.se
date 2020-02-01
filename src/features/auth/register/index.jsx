@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import StyledGroup from 'components/StyledGroup';
 import Center from 'components/Center';
 import Plate from 'components/Plate';
@@ -11,9 +11,15 @@ import { withTranslation, Trans } from 'react-i18next';
 import betterFetch from 'utils/betterFetch';
 import { appSuccess } from 'features/appSlice';
 import { useDispatch } from 'react-redux';
+import { Spinner, Alert } from 'react-bootstrap';
+import moment from 'moment';
+import { toast } from 'react-toastify';
 
 export default withTranslation()(({ t }) => {
   const [error, setError] = useState();
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
   const dispatch = useDispatch();
   return (
     <Center maxWidth="850px">
@@ -35,15 +41,20 @@ export default withTranslation()(({ t }) => {
             const surname = e.target.surname.value;
             const birthdate = e.target.birthdate.value;
             const finnish = e.target.finnish.value;
+            const isError = {};
             if (password.length > 72) {
-              setError({
-                password: 'Password can be max 72 chars'
-              });
-            } else if (finnish === '') {
-              setError({
-                finnish: true
-              });
+              isError.password = 'Password can be max 72 chars';
+            }
+            if (finnish === '') {
+              isError.finnish = true;
+            }
+            if (moment(birthdate).isValid() === false) {
+              isError.birthdate = 'invalid date';
+            }
+            if (Object.keys(isError).length) {
+              setError(isError);
             } else {
+              setLoading(true);
               fetch('/api/user/register', {
                 method: 'post',
                 headers: {
@@ -60,18 +71,26 @@ export default withTranslation()(({ t }) => {
               })
                 .then(res => res.json())
                 .then(res => {
+                  setLoading(false);
                   if (res.type === 'success') {
-                    fetch('/api/auth')
-                      .then(r => r.json())
-                      .then(r => {
-                        if (r.type === 'success') dispatch(appSuccess(r));
-                      });
+                    setSuccess(true);
+                    toast.success('Du behöver nu verifiera din e-mail!', {
+                      position: 'top-center',
+                      autoClose: false,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true
+                    });
+                    setError(null);
+                    // history.push('/verify');
                   } else {
                     res.json = true;
                     throw res;
                   }
                 })
                 .catch(err => {
+                  setLoading(false);
                   if (err.json) {
                     const errors = {};
                     err.errors.forEach(err1 => {
@@ -87,6 +106,8 @@ export default withTranslation()(({ t }) => {
         >
           <StyledGroup className="inputbox" controlId="form-email">
             <Form.Control
+              disabled={success}
+              isValid={success}
               isInvalid={error?.email}
               required
               type="email"
@@ -96,11 +117,13 @@ export default withTranslation()(({ t }) => {
             />
             <Form.Label>E-mail</Form.Label>
             <Form.Control.Feedback type="invalid">
-              {error?.email}
+              {t(error?.email)}
             </Form.Control.Feedback>
           </StyledGroup>
           <StyledGroup className="inputbox" controlId="form-password">
             <Form.Control
+              disabled={success}
+              isValid={success}
               isInvalid={error?.password}
               required
               type="password"
@@ -114,6 +137,8 @@ export default withTranslation()(({ t }) => {
           </StyledGroup>
           <StyledGroup className="inputbox" controlId="form-firstname">
             <Form.Control
+              disabled={success}
+              isValid={success}
               required
               type="text"
               placeholder={t('First name')}
@@ -123,6 +148,8 @@ export default withTranslation()(({ t }) => {
           </StyledGroup>
           <StyledGroup className="inputbox" controlId="form-lastname">
             <Form.Control
+              disabled={success}
+              isValid={success}
               required
               type="text"
               placeholder={t('Surname')}
@@ -132,18 +159,23 @@ export default withTranslation()(({ t }) => {
           </StyledGroup>
           <StyledGroup className="inputbox" controlId="form-birthdate">
             <Form.Control
+              disabled={success}
+              isValid={success}
               required
               type="text"
               placeholder={t('Date of birth')}
               name="birthdate"
+              isInvalid={error?.birthdate}
             />
             <Form.Label>{t('Date of birth')}</Form.Label>
             <Form.Control.Feedback type="invalid">
-              Ogiltigt!
+              {error?.birthdate}
             </Form.Control.Feedback>
           </StyledGroup>
           <Form.Group controlId="form-finland" className="inputbox">
             <Form.Control
+              disabled={success}
+              isValid={success}
               as="div"
               style={{
                 height: 50,
@@ -169,6 +201,7 @@ export default withTranslation()(({ t }) => {
                 type="radio"
                 id="custom-inline-radio-1"
                 name="finnish"
+                disabled={success}
               />
               <Form.Check
                 custom
@@ -178,6 +211,7 @@ export default withTranslation()(({ t }) => {
                 type="radio"
                 id="custom-inline-radio-2"
                 name="finnish"
+                disabled={success}
               />
             </Form.Control>
             <Form.Control.Feedback type="invalid">
@@ -205,8 +239,19 @@ export default withTranslation()(({ t }) => {
             type="submit"
             variant="custom"
             style={{ minWidth: 300, width: '50%', margin: '0 25%' }}
+            disabled={loading}
           >
-            {t('Register')}
+            {loading ? (
+              <>
+                <Spinner
+                  animation="border"
+                  style={{ width: '1.5rem', height: '1.5rem' }}
+                />{' '}
+                {t('Registering')}
+              </>
+            ) : (
+              t('Register')
+            )}
           </Button>
           <div style={{ paddingTop: 20, textAlign: 'center' }}>
             <Trans i18nKey="Have account?">

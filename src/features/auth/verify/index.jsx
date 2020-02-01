@@ -1,14 +1,17 @@
 import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Switch, Route } from 'react-router-dom';
 import { Spinner, Alert } from 'react-bootstrap';
 import CenterCard from 'components/CenterCard';
 import useFetch from 'utils/useFetch';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { appSuccess } from 'features/appSlice';
+import { useDispatch } from 'react-redux';
 
 const Verify = () => {
   const { token } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
   const { response, error, isLoading } = useFetch('/api/user/verify', {
     method: 'post',
     headers: {
@@ -29,11 +32,12 @@ const Verify = () => {
     toast.success('Verified e-mail!', {
       position: toast.POSITION.TOP_CENTER
     });
-    history.push('/portal');
+    history.push('/');
+    dispatch(appSuccess(response));
   }
 
   return (
-    <CenterCard maxWidth="400px" title="Verify e-mail">
+    <>
       {isLoading && (
         <div style={{ textAlign: 'center' }}>
           Verifierar din e-mail...
@@ -70,8 +74,27 @@ const Verify = () => {
         </Alert>
       )}
       {error && <Alert variant="danger">Nätverksproblem.</Alert>}
+    </>
+  );
+};
+
+const MustVerify = () => {
+  return <p>Du måste verifiera din e-mail.</p>;
+};
+
+const VerifyRouter = () => {
+  return (
+    <CenterCard maxWidth="400px" title="Verify e-mail">
+      <Switch>
+        <Route path="/verify/:token">
+          <Verify />
+        </Route>
+        <Route>
+          <MustVerify />
+        </Route>
+      </Switch>
     </CenterCard>
   );
 };
 
-export default Verify;
+export default VerifyRouter;

@@ -6,6 +6,7 @@
   "Forgot password": "Glömt lösenordet?",
   "No account": "Inget konto? <1>Skapa ett här!</1>",
   "Unknown email": "Okänd e-mail",
+  "email exists": "Email är redan registrerad",
   "not verified": "Bekräfta din e-postadress först.",
   "fetch error": "Nätverksproblem.",
   "Register here": "Registrera dig här",

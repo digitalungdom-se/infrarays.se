@@ -68,6 +68,7 @@ const Login = () => {
               placeholder="E-mail"
               autoFocus
               isInvalid={error === 'no user'}
+              required
             />
             <Form.Label>E-mail</Form.Label>
             <Form.Control.Feedback type="invalid">
@@ -80,6 +81,7 @@ const Login = () => {
               type="password"
               placeholder={t('Password')}
               isInvalid={error === 'incorrect password'}
+              required
             />
             <Form.Label>{t('Password')}</Form.Label>
             <Form.Control.Feedback type="invalid">

@@ -6,11 +6,11 @@ import Register from 'features/auth/register';
 import Admin from 'features/admin';
 import ForgotPassword from 'features/forgotPassword';
 import NoMatch from 'features/nomatch';
-import Verify from 'features/auth/verify';
 import { appSuccess, appFailure } from 'features/appSlice';
 import { useDispatch } from 'react-redux';
 import Recommendation from 'features/recommendation';
 import ResetPassword from 'features/resetPassword';
+import VerifyRouter from 'features/auth/verify';
 import ProtectedRoute from './ProtectedRoute';
 
 function AppRouter() {
@@ -58,8 +58,8 @@ function AppRouter() {
         <Route path="/forgot-password">
           <ForgotPassword />
         </Route>
-        <Route path="/verify/:token">
-          <Verify />
+        <Route path="/verify">
+          <VerifyRouter />
         </Route>
         <Route path="/admin">
           <Admin />

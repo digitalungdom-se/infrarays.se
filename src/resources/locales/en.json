@@ -6,6 +6,7 @@
   "Forgot password": "Forgot password?",
   "No account": "No account? <1>Register here!</1>",
   "Unknown email": "Unknown e-mail",
+  "email exists": "Email is already registered",
   "not verified": "Verify your e-mail first.",
   "fetch error": "Network error.",
   "Register here": "Register here",
