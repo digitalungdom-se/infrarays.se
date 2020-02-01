@@ -4,7 +4,7 @@ import Plate from 'components/Plate';
 import styled from 'styled-components';
 import { Form, Button, Spinner, Alert } from 'react-bootstrap';
 import StyledGroup from 'components/StyledGroup';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 const StyledTitle = styled.h1`
   color: ${props => props.theme.brand};
@@ -15,6 +15,7 @@ const ForgotPassword = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const { t } = useTranslation();
   return (
     <Center maxWidth="400px">
       <Plate>
@@ -70,7 +71,7 @@ const ForgotPassword = () => {
               />
               <Form.Label>E-mail</Form.Label>
               <Form.Control.Feedback type="invalid">
-                <Trans key={error}>Error</Trans>
+                {t(error)}
               </Form.Control.Feedback>
               <Form.Control.Feedback type="valid">
                 Du har fått ett e-mail!

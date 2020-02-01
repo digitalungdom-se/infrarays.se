@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import CenterCard from 'components/CenterCard';
-import { Form, Alert, Spinner } from 'react-bootstrap';
+import { Form, Alert, Spinner, InputGroup } from 'react-bootstrap';
 import Upload from 'components/portal/Upload';
 import { useParams } from 'react-router-dom';
 import useFetch from 'utils/useFetch';
 import { useTranslation } from 'react-i18next';
+import ContactPerson from 'components/portal/ContactPerson';
 
 const esc = encodeURIComponent;
 export const query = params =>
@@ -13,7 +14,7 @@ export const query = params =>
     .map(k => `${esc(k)}=${esc(params[k])}`)
     .join('&');
 
-const UploadState = ({ name, setSuccess }) => {
+const UploadState = ({ name, setSuccess, updateFileName = () => {} }) => {
   const [error, setError] = useState();
   const [uploading, setUploading] = useState();
   const [uploaded, setUploaded] = useState();
@@ -43,6 +44,7 @@ const UploadState = ({ name, setSuccess }) => {
               setUploaded(fileName);
               setUploading(false);
               setSuccess(true);
+              updateFileName(fileName);
             }
           });
       }}
@@ -52,12 +54,21 @@ const UploadState = ({ name, setSuccess }) => {
 
 const Recommendation = () => {
   const [success, setSuccess] = useState();
+  const [fileName, updateFileName] = useState();
   // const [error, setError] = useState();
   const { userID, recommendationID } = useParams();
 
   const { response, error, isLoading } = useFetch(
     `/api/user/recommendation?${query({ userID, recommendationID })}`
   );
+
+  // const response = {
+  //   recommendationInfo: {
+  //     name: 'douglas bengtsson',
+  //     fileName: 'application.pdf'
+  //   },
+  //   type: 'success'
+  // };
 
   let name = '';
   if (response?.type === 'success') {
@@ -104,19 +115,24 @@ const Recommendation = () => {
                 notifikation när det är uppladdat. Det får max vara 5 MB.
               </p>
               {(response?.recommendationInfo.fileName || success) && (
-                <Alert variant="success">
-                  Du har laddat upp:{' '}
-                  <b>{response?.recommendationInfo.fileName}</b>
+                <>
+                  <b>Du är klar!</b>
                   <br />
-                  Du är klar!
-                </Alert>
+                  <ContactPerson
+                    email={response?.recommendationInfo.fileName || fileName}
+                    status="received"
+                    cooldown={0}
+                  />
+                </>
               )}
-              {response?.recommendationInfo.fileName === undefined && (
-                <UploadState
-                  name={response?.recommendationInfo.fileName}
-                  setSuccess={setSuccess}
-                />
-              )}
+              {response?.recommendationInfo.fileName === undefined &&
+                !success && (
+                  <UploadState
+                    name={response?.recommendationInfo.fileName}
+                    setSuccess={setSuccess}
+                    updateFileName={name => updateFileName(name)}
+                  />
+                )}
             </>
           )}
         </Form>

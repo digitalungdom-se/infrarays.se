@@ -33,15 +33,18 @@ function ContactPerson({
   email,
   status,
   loading,
-  sendDate,
-  cooldown,
+  sendDate = '1970-01-01',
+  cooldown = ['day', 1],
   handleSubmit
 }) {
   // https://stackoverflow.com/questions/13262621/how-do-i-use-format-on-a-moment-js-duration
   const diff = moment(sendDate)
     .add(cooldown[0], cooldown[1])
     .diff(moment());
-  const formattedDiff = moment.utc(diff).format(diff > 3600 * 1000 ? 'H' : 'm');
+  const formattedDiff =
+    diff > 3600 * 1000
+      ? Math.round(diff / (3600 * 1000))
+      : Math.round(diff / (1000 * 60));
 
   const text = {
     nothing: 'Ej förfrågad',

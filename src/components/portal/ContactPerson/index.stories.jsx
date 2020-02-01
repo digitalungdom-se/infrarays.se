@@ -4,7 +4,7 @@ import ContactPerson from './index';
 
 export default { title: 'ContactPerson' };
 
-export const withText = () => (
+export const ThreePeople = () => (
   <div
     style={{
       padding: 50
@@ -14,9 +14,17 @@ export const withText = () => (
     <ContactPerson email="foo@bar.com" loading status="requested" />
     <ContactPerson
       status="requested"
-      cooldown={moment()
-        .add(1, 'hour')
-        .format('X')}
+      cooldown={['day', 1]}
+      sendDate={moment()
+        .subtract('hour', 23)
+        .subtract('minute', 50)
+        .toISOString()}
+      email="example@email.com"
+    />
+    <ContactPerson
+      status="requested"
+      cooldown={['day', 1]}
+      sendDate={moment().toISOString()}
       email="example@email.com"
     />
     <ContactPerson email="malan@harvard.edu" status="received" />
