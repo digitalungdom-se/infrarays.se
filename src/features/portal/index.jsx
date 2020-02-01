@@ -37,7 +37,7 @@ export default () => {
           />
         )}
         {chapter.contactPeople && <References />}
-        {chapter.survey && <PortalSurvey />}
+        {chapter.survey && <PortalSurvey done={survey !== undefined} />}
       </Chapter>
     ));
 
