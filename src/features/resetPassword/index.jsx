@@ -6,16 +6,16 @@ import StyledGroup from 'components/StyledGroup';
 import { useParams, useHistory } from 'react-router-dom';
 import { appSuccess } from 'features/appSlice';
 import { toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
   const { token } = useParams();
   const history = useHistory();
   const [error, setError] = useState();
-  const { t } = useTranslation;
+  const { t } = useTranslation();
   return (
-    <CenterCard maxWidth="360px" title="Byt lösenord">
+    <CenterCard maxWidth="360px" title={t('Change password')}>
       <Form
         onSubmit={e => {
           e.preventDefault();
@@ -53,7 +53,11 @@ const ResetPassword = () => {
         }}
         style={{ margin: '0 auto', width: 300 }}
       >
-        <p>Välj ett lösenord som du vill byta till.</p>
+        <p>
+          <Trans i18nKey="Choose a new password">
+            Please choose a new password.
+          </Trans>
+        </p>
         <StyledGroup controlId="form-password">
           <FormControl
             type="password"
@@ -62,7 +66,7 @@ const ResetPassword = () => {
             autoFocus
             required
           />
-          <FormLabel>Lösenord</FormLabel>
+          <FormLabel>{t('Password')}</FormLabel>
         </StyledGroup>
         {error && (
           <Alert variant="danger">
@@ -77,7 +81,7 @@ const ResetPassword = () => {
           }}
           type="submit"
         >
-          Byt lösenord
+          {t('Change password')}
         </Button>
       </Form>
     </CenterCard>

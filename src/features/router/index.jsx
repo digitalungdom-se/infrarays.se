@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from 'features/auth/login';
-import Portal from 'features/portal';
-import Register from 'features/auth/register';
-import Admin from 'features/admin';
-import ForgotPassword from 'features/forgotPassword';
-import NoMatch from 'features/nomatch';
 import { appSuccess, appFailure } from 'features/appSlice';
 import { useDispatch } from 'react-redux';
-import Recommendation from 'features/recommendation';
-import ResetPassword from 'features/resetPassword';
-import VerifyRouter from 'features/auth/verify';
+import Loading from 'components/Loading';
 import ProtectedRoute from './ProtectedRoute';
+
+const Login = lazy(() => import('features/auth/login'));
+const Portal = lazy(() => import('features/portal'));
+const Register = lazy(() => import('features/auth/register'));
+const Admin = lazy(() => import('features/admin'));
+const ForgotPassword = lazy(() => import('features/forgotPassword'));
+const NoMatch = lazy(() => import('features/nomatch'));
+const Recommendation = lazy(() => import('features/recommendation'));
+const ResetPassword = lazy(() => import('features/resetPassword'));
+const VerifyRouter = lazy(() => import('features/auth/verify'));
+const GDPR = lazy(() => import('features/GDPR'));
 
 function AppRouter() {
   const dispatch = useDispatch();
@@ -42,35 +45,40 @@ function AppRouter() {
 
   return (
     <Router>
-      <Switch>
-        <ProtectedRoute exact path="/">
-          <Portal />
-        </ProtectedRoute>
-        <ProtectedRoute shouldBeAuthenticated={false} path="/login">
-          <Login />
-        </ProtectedRoute>
-        <ProtectedRoute shouldBeAuthenticated={false} path="/register">
-          <Register />
-        </ProtectedRoute>
-        <Route path="/forgot-password">
-          <ForgotPassword />
-        </Route>
-        <Route path="/verify">
-          <VerifyRouter />
-        </Route>
-        <Route path="/admin">
-          <Admin />
-        </Route>
-        <Route path="/recommendation/:userID/:recommendationID">
-          <Recommendation />
-        </Route>
-        <Route path="/reset/:token">
-          <ResetPassword />
-        </Route>
-        <Route>
-          <NoMatch />
-        </Route>
-      </Switch>
+      <Suspense fallback={<Loading />}>
+        <Switch>
+          <ProtectedRoute exact path="/">
+            <Portal />
+          </ProtectedRoute>
+          <ProtectedRoute shouldBeAuthenticated={false} path="/login">
+            <Login />
+          </ProtectedRoute>
+          <ProtectedRoute shouldBeAuthenticated={false} path="/register">
+            <Register />
+          </ProtectedRoute>
+          <Route path="/gdpr">
+            <GDPR />
+          </Route>
+          <Route path="/forgot-password">
+            <ForgotPassword />
+          </Route>
+          <Route path="/verify">
+            <VerifyRouter />
+          </Route>
+          <Route path="/admin">
+            <Admin />
+          </Route>
+          <Route path="/recommendation/:userID/:recommendationID">
+            <Recommendation />
+          </Route>
+          <Route path="/reset/:token">
+            <ResetPassword />
+          </Route>
+          <Route>
+            <NoMatch />
+          </Route>
+        </Switch>
+      </Suspense>
     </Router>
   );
 }

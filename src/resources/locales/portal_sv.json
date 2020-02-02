@@ -2,12 +2,12 @@
   "title": "Ansökan för Rays 2020",
   "introduction": "Tack för att du vill ansöka till Rays! Vi kommer att läsa alla ansökningar och återkomma så snart vi kan. Du ser nedan vilka uppgifter vi vill att du sänder in. Den **31 mars klockan 23:59** stänger möjligheten att ladda uppansökningar och då kommer din ansökan automatiskt att skickas in till Rays. För att din ansökan ska skickas måste du ha laddat upp alla filer samt fyllt i formuläret. Fram till detta datum kan du uppdatera en del genom att bara ladda upp en ny fil igen. Din gamla fil kommer då ersättas med den nya. Alla filer måste vara i pdf-format och de specifika begränsningarna för filstorlek och antalet ord står bredvid varje uppladdningsdel. Filstorleken är 5 MB per del.\n\nVi som arrangerar Rays önskar dig ett stort lycka till och ser fram emot att få läsa din ansökan! [För mer information tryck här!](http://raysforexcellence.se/ansok/)",
   "coverLetter": {
-    "title": "Personligt brev",
-    "subtitle": "Max 600 ord",
-    "description": "Vi som arrangerar Rays vill lära känna dig som ansöker så bra som möjligt. I ditt personliga brev vill vi därför att du kortfattat berättar om dina intressen och varför du söker till Rays. För oss är det intressant att höra varifrån din passion för naturvetenskap kommer och hur dina tidigare erfarenheter har påverkat dig.",
-    "upload": {
-      "label": "Ladda upp personligt brev"
-    }
+  "title": "Personligt brev",
+  "subtitle": "Max 600 ord",
+  "description": "Vi som arrangerar Rays vill lära känna dig som ansöker så bra som möjligt. I ditt personliga brev vill vi därför att du kortfattat berättar om dina intressen och varför du söker till Rays. För oss är det intressant att höra varifrån din passion för naturvetenskap kommer och hur dina tidigare erfarenheter har påverkat dig.",
+  "upload": {
+    "label": "Ladda upp personligt brev"
+  }
   },
   "cv": {
     "title": "CV",
@@ -19,25 +19,29 @@
   },
   "essay": {
     "title": "Essäsvar",
-      "subtitle": "Max 300 ord på vardera",
-      "description": "1. Ange två eller tre naturvetenskapliga, tekniska, eller matematiska ämnen du tycker om och berätta varför. Du får gärna vara specifik. Vi kommer anpassa ditt forskningsprojekt till de intressen du beskriver i denna fråga.\n2. Välj och besvara **en** av nedanstående frågor:\n    * Berätta om något du gjort som du anser demonstrerar din potential att bli en ledande forskare inom naturvetenskap, teknik och/eller matematik.\n    * Berätta om något eller någon som inspirerar dig. Hur har det/den/de påverkat dig, dina mål, dina drömmar om framtiden och hur du uppfattar din omgivning?\n    * Beskriv hur du jobbar/har jobbat för att utveckla någon av dina egenskaper och hur det har hjälpt/hjälper dig?\n    * Beskriv ett problem du har löst eller en utmaning du vill lösa. Det kan vara en intellektuell utmaning, en forskningsfråga, ett etiskt dilemma – något som du bryr dig om, oavsett omfattningen. Förklara dess betydelse för dig och vilka utmaningar du ställts/skulle ställas inför och hur du löste/skulle lösa detta problem.\n\n**Du ska svara på båda frågor i en och samma pdf.**",
-      "upload": {
-        "label": "Ladda upp essäsvar"
-      }
+    "subtitle": "Max 300 ord på vardera",
+    "description": "1. Ange två eller tre naturvetenskapliga, tekniska, eller matematiska ämnen du tycker om och berätta varför. Du får gärna vara specifik. Vi kommer anpassa ditt forskningsprojekt till de intressen du beskriver i denna fråga.\n2. Välj och besvara **en** av nedanstående frågor:\n    * Berätta om något du gjort som du anser demonstrerar din potential att bli en ledande forskare inom naturvetenskap, teknik och/eller matematik.\n    * Berätta om något eller någon som inspirerar dig. Hur har det/den/de påverkat dig, dina mål, dina drömmar om framtiden och hur du uppfattar din omgivning?\n    * Beskriv hur du jobbar/har jobbat för att utveckla någon av dina egenskaper och hur det har hjälpt/hjälper dig?\n    * Beskriv ett problem du har löst eller en utmaning du vill lösa. Det kan vara en intellektuell utmaning, en forskningsfråga, ett etiskt dilemma – något som du bryr dig om, oavsett omfattningen. Förklara dess betydelse för dig och vilka utmaningar du ställts/skulle ställas inför och hur du löste/skulle lösa detta problem.\n\n**Du ska svara på båda frågor i en och samma pdf.**",
+    "upload": {
+      "label": "Ladda upp essäsvar"
+    }
   },
   "grades": {
     "title": "Betyg",
-      "description": "Scanna in och bifoga slutbetyg för de gymnasiekurser du avslutat. Detta går att få ifrån skolans expedition och ska vara **signerat av rektor eller ansvarig lärare**.",
-      "upload": {
-        "label": "Ladda upp betyg"
-      }
+    "subtitle": "",
+    "description": "Scanna in och bifoga slutbetyg för de gymnasiekurser du avslutat. Detta går att få ifrån skolans expedition och ska vara **signerat av rektor eller ansvarig lärare**.",
+    "upload": {
+      "label": "Ladda upp betyg"
+    }
   },
   "survey": {
     "title": "Formulär",
+    "subtitle": "",
     "description": "Vi som arrangerar Rays vill veta varifrån du kommer, på vilken gymnasieskola du studerar, hur du hört talas om Rays samt vad du tycker om ansökningsprocessen. Allt detta för att vi ska kunna bli ännu bättre på att marknadsföra oss samt utveckla ansökningprocessen. Fyll därför i formuläret nedan och klicka på skicka för att spara ditt svar."
   },
   "recommendation": {
     "title": "Rekommendationsbrev",
+    "subtitle": "",
     "description": "Rekommendationsbrev från lärare, tränare eller liknande. Exempel på frågor som kan behandlas i en rekommendation är hur eleven hanterar utmaningar och ansvar, och varför eleven har potential att bli en framtida ledare inom forskning. Rekommendationsbrev skall komponeras, signeras och skickas av läraren, tränaren eller liknande. [Mer info hittas här.](https://raysforexcellence.se/rekommendationsbev)\n\nGenom att skriva in en e-post nedan kommer en länk att skickas till mottagaren som kan ladda upp sitt rekommendationsbrev. Du kommer att kunna skicka om och ändra emailet så länge mottagaren inte har laddat upp sitt brev. Så fort mottagaren har laddat upp brevet är den låst till din ansökan.\n\n**Du bör helst skicka in minst 1 och max 3 rekommendationsbrev.**"
-  }
+  },
+  "GDPR": "** RAYS Application Portal GDPR **\n\nNär du skapar ett konto godkänner du att:\n\n-   RESEARCH ACADEMY FOR YOUNG SCIENTISTS (RAYS), nedan kallat RAYS, och Digital Ungdom får spara dina personuppgifter upp till ett (1) år.\n\n-   RAYS och Digital Ungdom får spara all uppladdad data på hemsidan upp till ett (1) år.\n\nDu har rätt att:\n\n-   Slippa få dina personuppgifter utlämnade till tredje parter.\n\n-   Få ut en utskrift med all information som RAYS sparat om dig.\n\n-   Få dina uppgifter rättade om de är fel.\n\n-   Få uppgifter om dig raderade.\n\nDet görs genom att skicka e-post till [application@raysforexcellence.se] (mailto:ansokan@raysforexcellence.se) och berätta vad du vill.\n\nRAYS använder dina personuppgifter till att:\n\n-   Ta fram relevant statistik för RAYS.\n\n-   Kontakta dig med eventuell relevant information.\n\n-   Välja ut sökande i antagningsprocessen.\n\n-   Publicera information om de antagna.\n\nRAYS ansvarar för att:\n\n-   Aldrig lämna ut dina personuppgifter utan att du har godkänt det.\n\n-   Vara försiktiga så att ingen utanför föreningen tar del av dina personuppgifter.\n\nHar ni frågor om RAYS och dataskyddet för dina uppgifter kontakta\nkansliet via e-post\n[application@raysforexcellence.se] (mailto:ansokan@raysforexcellence.se)."
 }

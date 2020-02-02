@@ -20,7 +20,7 @@ const ChangeLanguage = () => {
   return (
     <div
       style={{
-        position: 'absolute',
+        position: 'fixed',
         top: 10,
         right: 10
       }}

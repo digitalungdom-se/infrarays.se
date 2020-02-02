@@ -7,6 +7,7 @@ import theme from 'config/theme.json';
 import 'resources/app.css';
 import { darken, desaturate } from 'polished';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import ChangeLanguage from 'features/ChangeLanguage';
 import store, { persistor } from './store';
 

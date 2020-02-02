@@ -5,7 +5,7 @@ import { Form, Alert, Spinner, InputGroup } from 'react-bootstrap';
 import Upload from 'components/portal/Upload';
 import { useParams } from 'react-router-dom';
 import useFetch from 'utils/useFetch';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import ContactPerson from 'components/portal/ContactPerson';
 
 const esc = encodeURIComponent;
@@ -53,30 +53,28 @@ const UploadState = ({ name, setSuccess, updateFileName = () => {} }) => {
 };
 
 const Recommendation = () => {
-  const [success, setSuccess] = useState();
+  const [success, setSuccess] = useState(false);
   const [fileName, updateFileName] = useState();
-  // const [error, setError] = useState();
   const { userID, recommendationID } = useParams();
 
   const { response, error, isLoading } = useFetch(
     `/api/user/recommendation?${query({ userID, recommendationID })}`
   );
 
-  // const response = {
-  //   recommendationInfo: {
-  //     name: 'douglas bengtsson',
-  //     fileName: 'application.pdf'
-  //   },
-  //   type: 'success'
-  // };
-
   let name = '';
   if (response?.type === 'success') {
-    name = response.recommendationInfo.name;
+    if (!fileName && response.recommendationInfo.fileName)
+      updateFileName(response.recommendationInfo.fileName);
+    name = response.recommendationInfo.name
+      .split(' ')
+      .map(n => n[0].toUpperCase() + n.substring(1, n.length))
+      .join(' ');
   }
 
+  const { t } = useTranslation();
+
   return (
-    <CenterCard maxWidth="480px" title="Ladda upp rekommendationsbrev">
+    <CenterCard maxWidth="480px" title={t('Upload LoR')}>
       {isLoading ? (
         <Spinner
           animation="border"
@@ -92,43 +90,41 @@ const Recommendation = () => {
         />
       ) : (
         <Form>
-          <h4>
-            För{' '}
-            {name &&
-              name
-                .split(' ')
-                .map(n => n[0].toUpperCase() + n.substring(1, n.length))
-                .join(' ')}
-          </h4>
-          {error !== null && (
-            <Alert variant="danger">
-              Kunde inte hitta någon elev som tillhör denna länk
-            </Alert>
-          )}
+          {error !== null ||
+            (response?.type === 'fail' && (
+              <Alert variant="danger">
+                Kunde inte hitta någon elev som tillhör denna länk
+              </Alert>
+            ))}
           {error === null && (
             <>
-              <p>
-                Tack för att du vill skriva ett rekommendationsbrev!
-                Rekommendationsbrevet skall skrivas, signeras och skickas av
-                elevens lärare, tränare eller liknande. Max 1 sida per brev.
-                Eleven kommer inte att kunna se brevet, men kommer att få
-                notifikation när det är uppladdat. Det får max vara 5 MB.
-              </p>
-              {(response?.recommendationInfo.fileName || success) && (
+              <Trans i18nKey="LoR-description" name={name}>
+                .<h4>For {{ name }}</h4>
+                <p>
+                  Thank you for taking interest in writing a letter of
+                  recommendation! The letter must be written, signed and sent by
+                  the students teacher, coach or such. Maximum 1 page per
+                  letter. The student will not be able to see the letter, but
+                  will receive a notification once it is uploaded. The file size
+                  limit is 5 MB.
+                </p>
+              </Trans>
+              {fileName && (
                 <>
                   <b>Du är klar!</b>
                   <br />
                   <ContactPerson
-                    email={response?.recommendationInfo.fileName || fileName}
+                    email={fileName || response?.recommendationInfo?.fileName}
                     status="received"
                     cooldown={0}
                   />
                 </>
               )}
-              {response?.recommendationInfo.fileName === undefined &&
+              {response?.recommendationInfo?.fileName === undefined &&
+                response?.type !== 'fail' &&
                 !success && (
                   <UploadState
-                    name={response?.recommendationInfo.fileName}
+                    name={response?.recommendationInfo?.fileName}
                     setSuccess={setSuccess}
                     updateFileName={name => updateFileName(name)}
                   />

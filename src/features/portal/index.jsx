@@ -29,21 +29,21 @@ export default () => {
   const survey = useSelector(state => state.app?.survey);
   const progress = (files ? Object.keys(files).length : 0) + (survey ? 1 : 0);
 
-  const { i18n } = useTranslation();
-  const { language } = i18n;
-  const t = translation[language];
+  const { t, i18n } = useTranslation();
+  // const { language } = i18n;
+  // const t = translation[language];
 
   const Chapters = () =>
     portal.chapters.map(chapter => (
       <Chapter
         key={chapter.title}
-        title={t[chapter.fileType].title}
-        description={t[chapter.fileType].description}
-        subtitle={t[chapter.fileType].subtitle}
+        title={t(`${chapter.fileType}.title`)}
+        description={t(`${chapter.fileType}.description`)}
+        subtitle={t(`${chapter.fileType}.subtitle`)}
       >
         {chapter.upload && (
           <Upload
-            label={t[chapter.fileType].upload.label}
+            label={t(`${chapter.fileType}.upload.label`)}
             accept={chapter.upload.accept}
             fileType={chapter.fileType}
           />
@@ -58,8 +58,8 @@ export default () => {
       <StyledPlate>
         <Logo center maxWidth="80%" />
         <div>
-          <h1>{t.title}</h1>
-          <ReactMarkdown source={t.introduction} />
+          <h1 style={{ textAlign: 'center' }}>{t('title')}</h1>
+          <ReactMarkdown source={t('introduction')} />
           <ProgressBar
             label={`${(progress / 5) * 100}%`}
             variant="custom"

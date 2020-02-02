@@ -15,6 +15,7 @@
     "cross-fetch": "^3.0.4",
     "file-saver": "^2.0.2",
     "i18next": "^19.0.3",
+    "i18next-browser-languagedetector": "^4.0.1",
     "moment": "^2.24.0",
     "polished": "^3.4.3",
     "prop-types": "^15.7.2",

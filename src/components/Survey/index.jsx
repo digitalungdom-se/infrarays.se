@@ -11,6 +11,7 @@ import Rating from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import { Trans, useTranslation } from 'react-i18next';
 
 const Icon = styled(FontAwesomeIcon)`
   &.full {
@@ -37,24 +38,17 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
   const [process, setProcess] = useState(survey?.applicationProcess);
   const [error, setError] = useState();
   const [portal, setPortal] = useState(survey?.applicationPortal);
+  const { t } = useTranslation();
   return (
     <Accordion defaultActiveKey="1" className={done && 'done'}>
       <Card>
         <StyledHeader className={done ? 'done' : ''}>
           <Accordion.Toggle eventKey="0" as={Button} variant="link">
-            Öppna
+            {t('Open (verb)')}
           </Accordion.Toggle>
         </StyledHeader>
         <Accordion.Collapse eventKey="0">
           <Card.Body>
-            <p>
-              Vi som arrangerar Rays vill veta varifrån du kommer, på vilken
-              gymnasieskola du studerar, hur du hört talas om Rays samt vad du
-              tycker om ansökningsprocessen. Allt detta för att vi ska kunna bli
-              ännu bättre på att marknadsföra oss samt utveckla
-              ansökningprocessen. Fyll därför i formuläret nedan och klicka på
-              skicka för att spara ditt svar.
-            </p>
             <Form
               onSubmit={e => {
                 e.preventDefault();
@@ -90,7 +84,7 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
               }}
             >
               <Form.Group controlId="form-city">
-                <Form.Label>Vilken stad bor du i?</Form.Label>
+                <Form.Label>{t('What city do you live in?')}</Form.Label>
                 <Form.Control
                   defaultValue={survey?.city}
                   type="text"
@@ -99,7 +93,7 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId="form-school">
-                <Form.Label>Vilken skola går du på?</Form.Label>
+                <Form.Label>{t('Which school do you attend?')}</Form.Label>
                 <Form.Control
                   defaultValue={survey?.school}
                   type="text"
@@ -108,7 +102,7 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId="form-gender">
-                <Form.Label>Kön</Form.Label>
+                <Form.Label>{t('Gender')}</Form.Label>
                 <Form.Control
                   defaultValue={survey?.gender || 'select'}
                   as="select"
@@ -117,19 +111,23 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
                   required
                 >
                   <option value="select" disabled>
-                    Välj ett alternativ
+                    {t('Choose an option')}
                   </option>
-                  <option value="male">Man</option>
-                  <option value="female">Kvinna</option>
-                  <option value="other">Annat</option>
-                  <option value="undisclosed">Vill ej uppge</option>
+                  <option value="male">{t('Male')}</option>
+                  <option value="female">{t('Woman')}</option>
+                  <option value="other">{t('Other')}</option>
+                  <option value="undisclosed">
+                    {t('Prefer not to disclose')}
+                  </option>
                 </Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  Välj ett alternativ!
+                  {t('Please choose an option')}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="form-city">
-                <Form.Label>Vad tycker du om ansökningsprocessen?</Form.Label>
+                <Form.Label>
+                  {t('What are your thoughts on the application process?')}
+                </Form.Label>
                 <FormControl as="div" isInvalid={error?.process}>
                   <Rating
                     initialRating={process}
@@ -141,11 +139,13 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
                   />
                 </FormControl>
                 <Form.Control.Feedback type="invalid">
-                  Du måste betygsätta!
+                  {t('You need to set a score!')}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="form-city">
-                <Form.Label>Vad tycker du om ansökningsportalen?</Form.Label>
+                <Form.Label>
+                  {t('What are your thoughts on the application portal?')}
+                </Form.Label>
                 <FormControl as="div" isInvalid={error?.portal}>
                   <Rating
                     initialRating={portal}
@@ -156,12 +156,12 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
                   />
                 </FormControl>
                 <Form.Control.Feedback type="invalid">
-                  Du måste betygsätta!
+                  {t('You need to set a score!')}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="form-city">
                 <Form.Label>
-                  Hur kan ansökningsprocessen och portalen förbättras?
+                  {t('Improvements on application process and portal')}
                 </Form.Label>
                 <Form.Control
                   defaultValue={survey?.improvement}
@@ -173,7 +173,7 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId="form-city">
-                <Form.Label>Hur hörde du talas om Rays?</Form.Label>
+                <Form.Label>{t('How did you hear about Rays?')}</Form.Label>
                 <Form.Control
                   defaultValue={survey?.informant}
                   name="informant"
@@ -185,7 +185,7 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
               </Form.Group>
               <Button type="submit" disabled={loading}>
                 {loading && <Spinner animation="border" size="sm" />}{' '}
-                {loading ? 'Sparar svar' : 'Spara svar'}
+                {loading ? t('Saving answers') : t('Save answers')}
               </Button>
             </Form>
           </Card.Body>
