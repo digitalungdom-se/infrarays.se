@@ -80,14 +80,17 @@ function ContactPerson({
           type="email"
           name="email"
           defaultValue={email}
-          disabled={status !== 'nothing' || loading}
+          disabled={status === 'received' || diff > 0 || loading}
           placeholder="E-mail"
           required
         />
         <InputGroup.Append>
           <InputGroup.Text>{text[status]}</InputGroup.Text>
           {status !== 'received' && (
-            <Button type="submit" disabled={status === 'received' || diff > 0}>
+            <Button
+              type="submit"
+              disabled={status === 'received' || diff > 0 || loading}
+            >
               {`${button[status]} `}
               {diff > 0 &&
                 `${formattedDiff + (diff > 3600 * 1000 ? 'h' : 'm')}`}

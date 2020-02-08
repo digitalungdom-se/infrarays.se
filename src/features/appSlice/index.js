@@ -52,11 +52,19 @@ const appSlice = createSlice({
       };
     },
     addPersonSuccess(state, action) {
-      state.userData.recommendations.push({
-        email: action.payload.email,
-        received: false,
-        send_date: new Date().toISOString()
-      });
+      if (action.payload.index !== undefined) {
+        state.userData.recommendations[action.payload.index] = {
+          email: action.payload.email,
+          received: false,
+          send_date: new Date().toISOString()
+        };
+      } else {
+        state.userData.recommendations.push({
+          email: action.payload.email,
+          received: false,
+          send_date: new Date().toISOString()
+        });
+      }
     },
     logoutSuccess() {
       return initialState;

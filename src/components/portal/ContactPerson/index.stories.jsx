@@ -16,6 +16,14 @@ export const ThreePeople = () => (
       status="requested"
       cooldown={['day', 1]}
       sendDate={moment()
+        .subtract('day', 2)
+        .toISOString()}
+      email="example@email.com"
+    />
+    <ContactPerson
+      status="requested"
+      cooldown={['day', 1]}
+      sendDate={moment()
         .subtract('hour', 23)
         .subtract('minute', 50)
         .toISOString()}

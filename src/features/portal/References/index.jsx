@@ -14,7 +14,7 @@ const Person = ({ index }) => {
   function handleSubmit(email) {
     setLoading(true);
     let body;
-    if (person?.email) {
+    if (person?.email && email !== person?.email) {
       body = {
         email: person.email,
         newEmail: email
@@ -34,7 +34,7 @@ const Person = ({ index }) => {
       .then(res => {
         setLoading(false);
         if (res.type === 'success') {
-          dispatch(addPersonSuccess({ email }));
+          dispatch(addPersonSuccess({ email, index }));
         }
       });
   }
