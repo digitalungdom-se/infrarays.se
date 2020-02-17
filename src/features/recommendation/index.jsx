@@ -92,9 +92,7 @@ const Recommendation = () => {
         <Form>
           {error !== null ||
             (response?.type === 'fail' && (
-              <Alert variant="danger">
-                Kunde inte hitta någon elev som tillhör denna länk
-              </Alert>
+              <Alert variant="danger">{t("Couldn't find any student")}</Alert>
             ))}
           {error === null && (
             <>
@@ -106,12 +104,19 @@ const Recommendation = () => {
                   the students teacher, coach or such. Maximum 1 page per
                   letter. The student will not be able to see the letter, but
                   will receive a notification once it is uploaded. The file size
-                  limit is 5 MB.
+                  limit is 5 MB.{' '}
                 </p>
+                <a
+                  href={t('LoR-link')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  For more information, see here.
+                </a>
               </Trans>
               {fileName && (
                 <>
-                  <b>Du är klar!</b>
+                  <b>{t("You're done!")}</b>
                   <br />
                   <ContactPerson
                     email={fileName || response?.recommendationInfo?.fileName}
