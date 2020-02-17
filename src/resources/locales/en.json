@@ -55,5 +55,14 @@
   "Deleting account": "Deleting account...",
   "Do you want to delete your account?": "Do you want to delete your account?",
   "Once you have deleted": "Once you have deleted your account it is not possible to recover it. Please confirm that you want to delete your account.",
-  "Cancel": "Cancel"
+  "Cancel": "Cancel",
+  "Log out": "Log out",
+  "Logging out": "Logging out...",
+  "Download application": "Download your application",
+  "Downloading application": "Downloading your application...",
+  "Not requested": "Not requested",
+  "Requested": "Requested",
+  "Letter received": "Letter received",
+  "Send request": "Send request",
+  "Send again": "Send again"
 }

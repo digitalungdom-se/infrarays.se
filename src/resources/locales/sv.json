@@ -56,5 +56,14 @@
   "Deleting account": "Tar bort konto...",
   "Do you want to delete your account?": "Vill du ta bort ditt konto?",
   "Once you have deleted": "När du väl har tagit bort ditt konto går det inte att få tillbaka. Vänligen bekräfta att du vill ta bort det.",
-  "Cancel": "Avbryt"
+  "Cancel": "Avbryt",
+  "Log out": "Logga ut",
+  "Logging out": "Loggar ut...",
+  "Download application": "Ladda ned din ansökan",
+  "Downloading application": "Laddar ned din ansökan...",
+  "Not requested": "Ej förfrågad",
+  "Requested": "Förfrågad",
+  "Letter received": "Brev mottaget",
+  "Send request": "Skicka förfrågan",
+  "Send again": "Skicka igen"
 }

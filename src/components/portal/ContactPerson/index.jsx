@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 import moment from 'moment';
 import { Form, Spinner } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const StyledInputGroup = styled(InputGroup)`
   &.received input,
@@ -46,15 +47,16 @@ function ContactPerson({
       ? Math.round(diff / (3600 * 1000))
       : Math.round(diff / (1000 * 60));
 
+  const { t } = useTranslation();
   const text = {
-    nothing: 'Ej förfrågad',
-    requested: 'Förfrågad',
-    received: 'Brev mottaget'
+    nothing: t('Not requested'),
+    requested: t('Requested'),
+    received: t('Letter received')
   };
 
   const button = {
-    nothing: 'Skicka förfrågan',
-    requested: 'Skicka igen'
+    nothing: t('Send request'),
+    requested: t('Send again')
   };
 
   return (

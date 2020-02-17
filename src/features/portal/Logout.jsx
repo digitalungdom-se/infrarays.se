@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { logoutSuccess } from 'features/appSlice';
 import { useDispatch } from 'react-redux';
 import { Button, Spinner } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const Logout = () => {
   const dispatch = useDispatch();
   const [loggingOut, setLogout] = useState(false);
+  const { t } = useTranslation();
   return (
     <Button
       variant="secondary"
@@ -26,10 +28,10 @@ const Logout = () => {
     >
       {loggingOut ? (
         <span>
-          <Spinner animation="border" size="sm" /> Loggar ut
+          <Spinner animation="border" size="sm" /> {t('Logging out')}
         </span>
       ) : (
-        'Logga ut'
+        t('Log out')
       )}
     </Button>
   );
