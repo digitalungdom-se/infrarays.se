@@ -29,6 +29,17 @@ i18n
   .init({
     resources,
     fallbackLng: 'sv',
+    detection: {
+      order: [
+        'querystring',
+        'cookie',
+        'localStorage',
+        'htmlTag',
+        'navigator',
+        'path',
+        'subdomain'
+      ]
+    },
 
     interpolation: {
       escapeValue: false // react already safes from xss
