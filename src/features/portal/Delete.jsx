@@ -3,11 +3,13 @@ import { logoutSuccess } from 'features/appSlice';
 import { useDispatch } from 'react-redux';
 import { Button, Spinner, Modal, Form, FormControl } from 'react-bootstrap';
 import StyledGroup from 'components/StyledGroup';
+import { useTranslation } from 'react-i18next';
 
 const ConfirmModal = ({ show, onHide }) => {
   const dispatch = useDispatch();
   const [deleting, setDelete] = useState(false);
   const [error, setError] = useState();
+  const { t } = useTranslation();
   return (
     <Modal
       onHide={onHide}
@@ -17,7 +19,7 @@ const ConfirmModal = ({ show, onHide }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Vill du radera ditt konto?
+          {t('Do you want to delete your account?')}
         </Modal.Title>
       </Modal.Header>
       <Form
@@ -47,10 +49,7 @@ const ConfirmModal = ({ show, onHide }) => {
         }}
       >
         <Modal.Body>
-          <p>
-            När du väl har tagit bort ditt konto går det inte att få tillbaka.
-            Vänligen bekräfta att du vill ta bort det.
-          </p>
+          <p>{t('Once you have deleted')}</p>
           {false && (
             <StyledGroup
               className="inputbox"
@@ -71,14 +70,14 @@ const ConfirmModal = ({ show, onHide }) => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={onHide}>Avbryt</Button>
+          <Button onClick={onHide}>{t('Cancel')}</Button>
           <Button type="submit" variant="danger" disabled={deleting}>
             {deleting ? (
               <span>
-                <Spinner animation="border" size="sm" /> Raderar konto
+                <Spinner animation="border" size="sm" /> {t('Deleting account')}
               </span>
             ) : (
-              'Radera konto'
+              t('Delete account')
             )}
           </Button>
         </Modal.Footer>
@@ -89,6 +88,7 @@ const ConfirmModal = ({ show, onHide }) => {
 
 const Delete = () => {
   const [modalVisible, showModal] = useState(false);
+  const { t } = useTranslation();
   return (
     <>
       <ConfirmModal show={modalVisible} onHide={() => showModal(false)} />
@@ -98,7 +98,7 @@ const Delete = () => {
           showModal(true);
         }}
       >
-        Radera konto
+        {t('Delete account')}
       </Button>
     </>
   );

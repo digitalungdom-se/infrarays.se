@@ -51,5 +51,10 @@
   "Other": "Annat",
   "Prefer not to disclose": "Vill ej uppge",
   "LoR-description": "<1>För {{name}}</1><2>Tack för att du vill skriva ett rekommendationsbrev! Rekommendationsbrevet skall skrivas, signeras och skickas av elevens lärare, tränare eller liknande. Max 1 sida per brev. Eleven kommer inte att kunna se brevet, men kommer att få notifikation när det är uppladdat. Det får max vara 5 MB.</2>",
-  "Upload LoR": "Ladda upp rekommendationsbrev"
+  "Upload LoR": "Ladda upp rekommendationsbrev",
+  "Delete account": "Ta bort konto",
+  "Deleting account": "Tar bort konto...",
+  "Do you want to delete your account?": "Vill du ta bort ditt konto?",
+  "Once you have deleted": "När du väl har tagit bort ditt konto går det inte att få tillbaka. Vänligen bekräfta att du vill ta bort det.",
+  "Cancel": "Avbryt"
 }
