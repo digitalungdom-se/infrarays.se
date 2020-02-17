@@ -8,7 +8,6 @@ import ProtectedRoute from './ProtectedRoute';
 const Login = lazy(() => import('features/auth/login'));
 const Portal = lazy(() => import('features/portal'));
 const Register = lazy(() => import('features/auth/register'));
-const Admin = lazy(() => import('features/admin'));
 const ForgotPassword = lazy(() => import('features/forgotPassword'));
 const NoMatch = lazy(() => import('features/nomatch'));
 const Recommendation = lazy(() => import('features/recommendation'));
@@ -64,9 +63,6 @@ function AppRouter() {
           </Route>
           <Route path="/verify">
             <VerifyRouter />
-          </Route>
-          <Route path="/admin">
-            <Admin />
           </Route>
           <Route path="/recommendation/:userID/:recommendationID">
             <Recommendation />
