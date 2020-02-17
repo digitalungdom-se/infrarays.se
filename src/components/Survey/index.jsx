@@ -7,7 +7,7 @@ import {
   FormControl,
   Spinner
 } from 'react-bootstrap';
-import Rating from 'react-rating';
+import Rating from 'components/Rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
@@ -114,7 +114,7 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
                     {t('Choose an option')}
                   </option>
                   <option value="male">{t('Male')}</option>
-                  <option value="female">{t('Woman')}</option>
+                  <option value="female">{t('Female')}</option>
                   <option value="other">{t('Other')}</option>
                   <option value="undisclosed">
                     {t('Prefer not to disclose')}
@@ -134,8 +134,6 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
                     onChange={value => {
                       setProcess(value);
                     }}
-                    emptySymbol={<Icon className="empty icon" icon={faStar} />}
-                    fullSymbol={<Icon className="full icon" icon={faStar} />}
                   />
                 </FormControl>
                 <Form.Control.Feedback type="invalid">
@@ -150,8 +148,6 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
                   <Rating
                     initialRating={portal}
                     onChange={value => setPortal(value)}
-                    emptySymbol={<Icon className="empty icon" icon={faStar} />}
-                    fullSymbol={<Icon className="full icon" icon={faStar} />}
                     name="portal"
                   />
                 </FormControl>
