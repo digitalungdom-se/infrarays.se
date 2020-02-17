@@ -89,6 +89,7 @@ const Login = () => {
               placeholder={t('Password')}
               isInvalid={error?.msg === 'incorrect password'}
               required
+              maxLength="72"
             />
             <Form.Label>{t('Password')}</Form.Label>
             <Form.Control.Feedback type="invalid">

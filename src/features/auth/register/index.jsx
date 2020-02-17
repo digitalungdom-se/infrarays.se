@@ -133,6 +133,7 @@ export default withTranslation()(({ t }) => {
               type="password"
               placeholder={t('Password')}
               name="password"
+              maxLength="72"
             />
             <Form.Label>{t('Password')}</Form.Label>
             <Form.Control.Feedback type="invalid">
