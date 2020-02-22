@@ -50,7 +50,7 @@
   "Female": "Kvinna",
   "Other": "Annat",
   "Prefer not to disclose": "Vill ej uppge",
-  "LoR-description": "<1>För {{name}}</1><2>Tack för att du vill skriva ett rekommendationsbrev! Rekommendationsbrevet skall skrivas, signeras och skickas av elevens lärare, tränare eller liknande. Max 1 sida per brev. Eleven kommer inte att kunna se brevet, men kommer att få notifikation när det är uppladdat. Det får max vara 5 MB.</2><3>För mer information, se här.</3>",
+  "LoR-description": "<1>För {{name}}</1><2>Tack för att du vill skriva ett rekommendationsbrev! Rekommendationsbrevet skall skrivas, signeras och skickas av elevens lärare, tränare eller liknande. Max 1 sida per brev. Eleven kommer inte att kunna se brevet, men kommer att få notifikation när det är uppladdat. Filen måste vara en PDF och får max vara 5 MB stor.</2><3>För mer information, se här.</3>",
   "LoR-link": "https://raysforexcellence.se/rekommendationsbev",
   "You're done!": "Du är klar!",
   "Upload LoR": "Ladda upp rekommendationsbrev",
@@ -68,5 +68,6 @@
   "Requested": "Förfrågad",
   "Letter received": "Brev mottaget",
   "Send request": "Skicka förfrågan",
-  "Send again": "Skicka igen"
+  "Send again": "Skicka igen",
+  "too large": "Filen är för stor!"
 }

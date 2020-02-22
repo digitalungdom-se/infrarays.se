@@ -19,15 +19,17 @@ const UploadState = ({ name, setSuccess, updateFileName = () => {} }) => {
   const [uploading, setUploading] = useState();
   const [uploaded, setUploaded] = useState();
   const { userID, recommendationID } = useParams();
+  const { t } = useTranslation();
   return (
     <Upload
+      accept=".pdf"
       label="Ladda upp rekommendationsbrev"
       uploading={uploading}
       uploaded={name || error?.fileName}
       error={error?.msg}
       onChange={(file, fileName) => {
-        if (file.size > 7 * Math.pow(10, 6)) {
-          setError({ msg: 'too large', fileName });
+        if (file.size > 5 * Math.pow(10, 6)) {
+          setError({ msg: t('too large'), fileName });
           return;
         }
         const body = new FormData();

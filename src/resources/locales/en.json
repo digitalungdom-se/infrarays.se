@@ -49,7 +49,7 @@
   "Female": "Female",
   "Other": "Other",
   "Prefer not to disclose": "Prefer not to disclose",
-  "LoR-description": "<1>For {{name}}</1><2>Thank you for taking interest in writing a letter of recommendation! The letter must be written, signed and sent by the students teacher, coach or such. Maximum 1 page per letter. The student will not be able to see the letter, but will receive a notification once it is uploaded. The file size limit is 5 MB.</2><3>For more information, see here.</3>",
+  "LoR-description": "<1>For {{name}}</1><2>Thank you for taking interest in writing a letter of recommendation! The letter must be written, signed and sent by the students teacher, coach or such. Maximum 1 page per letter. The student will not be able to see the letter, but will receive a notification once it is uploaded. The file must be a PDF and the size limit is 5 MB.</2><3>For more information, see here.</3>",
   "LoR-link": "https://raysforexcellence.se/letter-of-recommendation",
   "You're done!": "You're done!",
   "Upload LoR": "Upload letter of recommendation",
@@ -67,5 +67,6 @@
   "Requested": "Requested",
   "Letter received": "Letter received",
   "Send request": "Send request",
-  "Send again": "Send again"
+  "Send again": "Send again",
+  "too large": "The file is too big!"
 }

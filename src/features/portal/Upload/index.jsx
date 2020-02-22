@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import Upload from 'components/portal/Upload';
 import { useSelector, useDispatch } from 'react-redux';
 import { uploadSuccess } from 'features/appSlice';
+import { useTranslation } from 'react-i18next';
 
 const UploadHook = ({ label, accept, fileType }) => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState();
   const dispatch = useDispatch();
   const uploaded = useSelector(state => state.app.files[fileType]);
+  const { t } = useTranslation();
 
   function handleChange(file, fileName) {
     if (file.size > 7 * Math.pow(10, 6)) {
-      setError({ msg: 'too large', fileName });
+      setError({ msg: t('too large'), fileName });
       return;
     }
     setUploading(true);
