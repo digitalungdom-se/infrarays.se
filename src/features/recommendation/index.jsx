@@ -69,7 +69,7 @@ const Recommendation = () => {
       updateFileName(response.recommendationInfo.fileName);
     name = response.recommendationInfo.name
       .split(' ')
-      .map(n => n[0].toUpperCase() + n.substring(1, n.length))
+      .map(n => (n ? n[0].toUpperCase() + n.substring(1, n.length) : ''))
       .join(' ');
   }
 

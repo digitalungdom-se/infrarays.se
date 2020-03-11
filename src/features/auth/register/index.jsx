@@ -42,8 +42,10 @@ export default withTranslation()(({ t }) => {
             e.preventDefault();
             const email = e.target.email.value;
             const password = e.target.password.value;
-            const firstName = e.target.firstName.value;
-            const surname = e.target.surname.value;
+            const firstName = e.target.firstName.value
+              .replace(/\s+/g, ' ')
+              .trim();
+            const surname = e.target.surname.value.replace(/\s+/g, ' ').trim();
             const birthdate = e.target.birthdate.value;
             const finnish = e.target.finnish.value;
             const isError = {};
