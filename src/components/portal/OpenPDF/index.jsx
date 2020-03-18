@@ -18,15 +18,16 @@ const OpenPDF = ({ url, children }) => {
     // For other browsers:
     // Create a link pointing to the ObjectURL containing the blob.
     const data = window.URL.createObjectURL(newBlob);
-    const link = document.createElement('a');
-    link.href = data;
-    link.target = '_blank';
-    // link.download = 'file.pdf';
-    link.click();
-    setTimeout(function() {
-      // For Firefox it is necessary to delay revoking the ObjectURL
-      window.URL.revokeObjectURL(data);
-    }, 100);
+    window.open(data);
+    // const link = document.createElement('a');
+    // link.href = data;
+    // link.target = '_blank';
+    // // link.download = 'file.pdf';
+    // link.click();
+    // setTimeout(function() {
+    //   // For Firefox it is necessary to delay revoking the ObjectURL
+    //   window.URL.revokeObjectURL(data);
+    // }, 100);
     setLoading(false);
   }
 

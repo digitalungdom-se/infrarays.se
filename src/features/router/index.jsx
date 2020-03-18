@@ -1,7 +1,5 @@
-import React, { useEffect, Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { appSuccess, appFailure } from 'features/appSlice';
-import { useDispatch } from 'react-redux';
 import Loading from 'components/Loading';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -14,34 +12,9 @@ const Recommendation = lazy(() => import('features/recommendation'));
 const ResetPassword = lazy(() => import('features/resetPassword'));
 const VerifyRouter = lazy(() => import('features/auth/verify'));
 const GDPR = lazy(() => import('features/GDPR'));
+const AdminPortal = lazy(() => import('features/admin'));
 
 function AppRouter() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const data = async () =>
-      fetch('/api/auth', {
-        method: 'get',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(res => res.json())
-        .then(res => {
-          if (res.type === 'fail') {
-            res.json = true;
-            throw res;
-          } else dispatch(appSuccess(res));
-        })
-        .catch(err => {
-          if (err.json) {
-            dispatch(appFailure());
-          }
-        });
-    data();
-  });
-
   return (
     <Router>
       <Suspense fallback={<Loading />}>
@@ -69,6 +42,9 @@ function AppRouter() {
           </Route>
           <Route path="/reset/:token">
             <ResetPassword />
+          </Route>
+          <Route path="/admin">
+            <AdminPortal />
           </Route>
           <Route>
             <NoMatch />

@@ -1,13 +1,17 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-export const initialState = {};
+export const initialState = {
+  isAuthorised: false,
+  gradingOrder: []
+};
 
 const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
     appSuccess(state, action) {
+      state.isAuthorised = 'user';
       state.userData = action.payload.userData;
       const files = {};
       action.payload.files.forEach(file => {
@@ -42,6 +46,12 @@ const appSlice = createSlice({
     appFailure() {
       return initialState;
     },
+    adminSuccess(state) {
+      state.isAuthorised = 'admin';
+    },
+    adminFailure() {
+      return initialState;
+    },
     updateSurvey(state, action) {
       state.survey = action.payload.survey;
     },
@@ -68,6 +78,9 @@ const appSlice = createSlice({
     },
     logoutSuccess() {
       return initialState;
+    },
+    updateGradingOrder(state, action) {
+      state.gradingOrder = action.payload;
     }
   }
 });
@@ -75,9 +88,12 @@ const appSlice = createSlice({
 export const {
   appSuccess,
   appFailure,
+  adminSuccess,
+  adminFailure,
   uploadSuccess,
   addPersonSuccess,
-  logoutSuccess
+  logoutSuccess,
+  updateGradingOrder
 } = appSlice.actions;
 
 export default appSlice.reducer;

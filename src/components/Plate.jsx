@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Plate = styled.div`
   padding: 20px 36px;
-  @media(max-width: 400px) {
+  @media (max-width: 400px) {
     padding: 20px 5%;
   }
   background: #fff;

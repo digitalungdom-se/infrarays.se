@@ -1,41 +1,47 @@
 import React, { useState } from 'react';
-import { logoutSuccess } from 'features/appSlice';
+import { updateGradingOrder } from 'features/appSlice';
 import { useDispatch } from 'react-redux';
 import { Button, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
-const Logout = ({ url = '/api/user/logout', style = {} }) => {
+const RandomiseOrder = () => {
   const dispatch = useDispatch();
   const [loggingOut, setLogout] = useState(false);
   const { t } = useTranslation();
   return (
     <Button
-      variant="secondary"
+      variant="success"
       onClick={() => {
         setLogout(true);
-        fetch(url, {
-          method: 'delete'
+        fetch('/api/admin/randomise_grading_order', {
+          method: 'post'
         })
           .then(res => res.json())
           .then(res => {
             setLogout(false);
             if (res.type === 'success') {
-              dispatch(logoutSuccess());
+              dispatch(updateGradingOrder(res.gradingOrder));
             }
+          })
+          .catch(() => {
+            setLogout(false);
+            toast.error('Ett fel uppstod!', {
+              autoClose: false
+            });
           });
       }}
-      style={style}
       disabled={loggingOut}
     >
       {loggingOut ? (
         <span>
-          <Spinner animation="border" size="sm" /> {t('Logging out')}
+          <Spinner animation="border" size="sm" /> {t('Randomising')}
         </span>
       ) : (
-        t('Log out')
+        t('Randomise')
       )}
     </Button>
   );
 };
 
-export default Logout;
+export default RandomiseOrder;

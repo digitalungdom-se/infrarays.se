@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Center from 'components/Center';
 import StyledPlate from 'components/Plate';
 import Chapter from 'components/portal/Chapter';
@@ -8,10 +8,11 @@ import { ButtonGroup, ProgressBar } from 'react-bootstrap';
 import Logo from 'components/Logo';
 import ReactMarkdown from 'react-markdown';
 import portal from 'config/portal.json';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
 import portalEn from 'resources/locales/portal_en.json';
 import portalSv from 'resources/locales/portal_sv.json';
+import { appSuccess, appFailure } from 'features/appSlice';
 import PortalSurvey from './Survey';
 import Upload from './Upload';
 import References from './References';
@@ -25,6 +26,32 @@ const translation = {
 };
 
 export default () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const data = async () =>
+      fetch('/api/auth', {
+        method: 'get',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.type === 'fail') {
+            res.json = true;
+            throw res;
+          } else dispatch(appSuccess(res));
+        })
+        .catch(err => {
+          if (err.json) {
+            dispatch(appFailure());
+          }
+        });
+    data();
+  });
+
   const files = useSelector(state => state.app?.files);
   const survey = useSelector(state => state.app?.survey);
   const progress = (files ? Object.keys(files).length : 0) + (survey ? 1 : 0);
