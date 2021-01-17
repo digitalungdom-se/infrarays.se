@@ -1,22 +1,22 @@
-import React from 'react';
-import { Table, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileDownload, faEdit } from '@fortawesome/free-solid-svg-icons';
-import OpenPDF from 'components/portal/OpenPDF';
+import React from "react";
+import { Table } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
+import OpenPDF from "components/portal/OpenPDF";
 
 class Applications extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      applications: []
+      applications: [],
     };
   }
 
   componentDidMount() {
-    fetch('/api/admin/get/applications')
-      .then(res => res.json())
-      .then(res => {
-        if (res.type === 'fail') {
+    fetch("/api/admin/get/applications")
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.type === "fail") {
           res.json = true;
           throw res;
         } else {
@@ -34,12 +34,12 @@ class Applications extends React.Component {
           <td>{index + 1}</td>
           <td>
             {person.name
-              .split(' ')
-              .map(n => n[0].toUpperCase() + n.substring(1, n.length))
-              .join(' ')}
+              .split(" ")
+              .map((n) => n[0].toUpperCase() + n.substring(1, n.length))
+              .join(" ")}
           </td>
           <td>
-            <a href={`mailto:${person.email}`} target="_blank">
+            <a href={`mailto:${person.email}`} target="_blank" rel="noreferrer">
               {person.email}
             </a>
           </td>

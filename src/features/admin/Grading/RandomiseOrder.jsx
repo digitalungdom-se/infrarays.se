@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { updateGradingOrder } from 'features/appSlice';
-import { useDispatch } from 'react-redux';
-import { Button, Spinner } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { updateGradingOrder } from "features/appSlice";
+import { useDispatch } from "react-redux";
+import { Button, Spinner } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const RandomiseOrder = () => {
   const dispatch = useDispatch();
@@ -14,20 +14,20 @@ const RandomiseOrder = () => {
       variant="success"
       onClick={() => {
         setLogout(true);
-        fetch('/api/admin/randomise_grading_order', {
-          method: 'post'
+        fetch("/api/admin/randomise_grading_order", {
+          method: "post",
         })
-          .then(res => res.json())
-          .then(res => {
+          .then((res) => res.json())
+          .then((res) => {
             setLogout(false);
-            if (res.type === 'success') {
+            if (res.type === "success") {
               dispatch(updateGradingOrder(res.gradingOrder));
             }
           })
           .catch(() => {
             setLogout(false);
-            toast.error('Ett fel uppstod!', {
-              autoClose: false
+            toast.error("Ett fel uppstod!", {
+              autoClose: false,
             });
           });
       }}
@@ -35,10 +35,11 @@ const RandomiseOrder = () => {
     >
       {loggingOut ? (
         <span>
-          <Spinner animation="border" size="sm" /> {t('Randomising')}
+          <Spinner animation="border" size="sm" />
+          {t("Randomising")}
         </span>
       ) : (
-        t('Randomise')
+        t("Randomise")
       )}
     </Button>
   );

@@ -1,14 +1,14 @@
-import React from 'react';
-import { Formik, useFormik } from 'formik';
-import { Form, Alert, Button } from 'react-bootstrap';
-import StyledGroup from 'components/StyledGroup';
-import Center from 'components/Center';
-import Plate from 'components/Plate';
-import Logo from 'components/Logo';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { adminSuccess, adminFailure } from 'features/appSlice';
-import { useHistory } from 'react-router-dom';
+import React from "react";
+import { useFormik } from "formik";
+import { Form, Alert, Button } from "react-bootstrap";
+import StyledGroup from "components/StyledGroup";
+import Center from "components/Center";
+import Plate from "components/Plate";
+import Logo from "components/Logo";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { adminSuccess, adminFailure } from "features/appSlice";
+import { useHistory } from "react-router-dom";
 
 const AdminLogin = () => {
   const { t } = useTranslation();
@@ -19,48 +19,48 @@ const AdminLogin = () => {
     errors,
     isSubmitting,
     handleSubmit,
-    handleChange
+    handleChange,
   } = useFormik({
-    initialValues: { username: '', password: '' },
+    initialValues: { username: "", password: "" },
     onSubmit: (val, { setErrors, setSubmitting }) => {
-      fetch('/api/admin/login', {
-        method: 'post',
+      fetch("/api/admin/login", {
+        method: "post",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(val)
+        body: JSON.stringify(val),
       })
-        .then(res => res.json())
-        .then(res => {
+        .then((res) => res.json())
+        .then((res) => {
           setSubmitting(false);
-          if (res.type === 'fail') {
+          if (res.type === "fail") {
             res.json = true;
             throw res;
           } else {
             dispatch(adminSuccess());
-            history.push('/admin');
+            history.push("/admin");
             return res;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           setSubmitting(false);
           dispatch(adminFailure());
           if (err.json) {
-            if (err?.msg.message === 'no user')
-              return setErrors({ username: 'no user' });
-            if (err?.msg.message === 'incorrect password')
-              return setErrors({ password: 'incorrect password' });
-          } else setErrors({ other: 'fetch error' });
+            if (err?.msg.message === "no user")
+              return setErrors({ username: "no user" });
+            if (err?.msg.message === "incorrect password")
+              return setErrors({ password: "incorrect password" });
+          } else setErrors({ other: "fetch error" });
           return err;
         });
-    }
+    },
   });
   return (
     <Center maxWidth="360px">
       <Plate>
         <Logo center maxWidth="80%" />
-        <h2 style={{ textAlign: 'center', marginBottom: 40 }}>
+        <h2 style={{ textAlign: "center", marginBottom: 40 }}>
           Admin Rays 2020
         </h2>
         <Form onSubmit={handleSubmit}>
@@ -84,20 +84,20 @@ const AdminLogin = () => {
             <Form.Control
               name="password"
               type="password"
-              placeholder={t('Password')}
+              placeholder={t("Password")}
               autoFocus
               isInvalid={Boolean(errors.password)}
               required
               value={values.password}
               onChange={handleChange}
             />
-            <Form.Label>{t('Password')}</Form.Label>
+            <Form.Label>{t("Password")}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {t(errors.password)}
             </Form.Control.Feedback>
           </StyledGroup>
           {errors.other && (
-            <Alert variant="danger" style={{ textAlign: 'center' }}>
+            <Alert variant="danger" style={{ textAlign: "center" }}>
               {t(errors.other)}
             </Alert>
           )}
@@ -107,11 +107,11 @@ const AdminLogin = () => {
               variant="custom"
               type="submit"
               style={{
-                width: '100%'
+                width: "100%",
               }}
               disabled={isSubmitting}
             >
-              {isSubmitting ? t('Logging in') : t('Login')}
+              {isSubmitting ? t("Logging in") : t("Login")}
             </Button>
           </Form.Group>
         </Form>

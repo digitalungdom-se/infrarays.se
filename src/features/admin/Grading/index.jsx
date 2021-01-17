@@ -1,38 +1,38 @@
-import React from 'react';
-import { Table, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileDownload, faEdit } from '@fortawesome/free-solid-svg-icons';
-import OpenPDF from 'components/portal/OpenPDF';
-import { connect } from 'react-redux';
-import { updateGradingOrder } from 'features/appSlice';
-import RandomiseOrder from './RandomiseOrder';
+import React from "react";
+import { Table, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileDownload, faEdit } from "@fortawesome/free-solid-svg-icons";
+import OpenPDF from "components/portal/OpenPDF";
+import { connect } from "react-redux";
+import { updateGradingOrder } from "features/appSlice";
+import RandomiseOrder from "./RandomiseOrder";
 
-const mapStateToProps = state => ({
-  gradingOrder: state.app.gradingOrder
+const mapStateToProps = (state) => ({
+  gradingOrder: state.app.gradingOrder,
 });
 
-const mapDispatchToProps = dispatch => ({
-  update: order => {
+const mapDispatchToProps = (dispatch) => ({
+  update: (order) => {
     dispatch(updateGradingOrder(order));
-  }
+  },
 });
 
 class Applications extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
     };
   }
 
   componentDidMount() {
     const { update } = this.props;
     this.setState({ loading: true });
-    fetch('/api/admin/get/application_order')
-      .then(res => res.json())
-      .then(res => {
+    fetch("/api/admin/get/application_order")
+      .then((res) => res.json())
+      .then((res) => {
         this.setState({ loading: false });
-        if (res.type === 'fail') {
+        if (res.type === "fail") {
           res.json = true;
           throw res;
         } else {
@@ -51,9 +51,9 @@ class Applications extends React.Component {
           <td>{index + 1}</td>
           <td>
             {person.name
-              .split(' ')
-              .map(n => n[0].toUpperCase() + n.substring(1, n.length))
-              .join(' ')}
+              .split(" ")
+              .map((n) => n[0].toUpperCase() + n.substring(1, n.length))
+              .join(" ")}
           </td>
           <td>
             <a
@@ -92,6 +92,7 @@ class Applications extends React.Component {
             </tr>
           </thead>
           <tbody>
+            {loading && "Laddar..."}
             <Rows />
           </tbody>
         </Table>

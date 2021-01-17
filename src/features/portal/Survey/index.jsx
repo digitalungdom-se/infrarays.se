@@ -1,30 +1,28 @@
-import React, { useState } from 'react';
-import Survey from 'components/Survey';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from "react";
+import Survey from "components/Survey";
+import { useSelector } from "react-redux";
 
 const PortalSurvey = ({ done }) => {
-  const dispatch = useDispatch();
-  const survey = useSelector(state => state.app?.survey);
+  const survey = useSelector((state) => state.app?.survey);
   const [loading, setLoading] = useState(false);
   return (
     <Survey
       done={done}
       loading={loading}
       survey={survey}
-      onSubmit={newSurvey => {
+      onSubmit={(newSurvey) => {
         setLoading(true);
-        fetch('/api/user/survey', {
-          method: 'post',
+        fetch("/api/user/survey", {
+          method: "post",
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(newSurvey)
+          body: JSON.stringify(newSurvey),
         })
-          .then(res => res.json())
-          .then(res => {
+          .then((res) => res.json())
+          .then(() => {
             setLoading(false);
-            console.log(res);
           });
       }}
     />

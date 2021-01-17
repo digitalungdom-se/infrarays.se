@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
-import Spinner from 'react-bootstrap/Spinner';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
+import Spinner from "react-bootstrap/Spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
 
 const StyledInputGroup = styled(InputGroup)`
   &.uploaded span {
@@ -39,28 +39,22 @@ export default ({
   uploading,
   displayFileName,
   accept,
-  error
+  error,
 }) => {
-  const [fileName, updateFileName] = useState('');
+  const [fileName, updateFileName] = useState("");
 
   function handleFileChange(e) {
-    const list = e.target.value.split('\\');
+    const list = e.target.value.split("\\");
     const name = list[list.length - 1];
     updateFileName(name);
     return onChange(e.target.files[0], name);
   }
 
-  let extension;
-  if (uploaded) {
-    const split = uploaded.split('.');
-    extension = split[split.length - 1];
-  }
-
   return (
     <StyledInputGroup
-      className={`mb-3 custom-file ${uploaded &&
-        !uploading &&
-        'uploaded'} ${error && 'error'}`}
+      className={`mb-3 custom-file ${uploaded && !uploading && "uploaded"} ${
+        error && "error"
+      }`}
     >
       <FormControl
         type="file"
@@ -76,12 +70,13 @@ export default ({
           (displayFileName ? fileName || label : label)}
         {uploading && (
           <span>
-            <Spinner animation="border" variant="primary" size="sm" /> Laddar
-            upp {fileName}{' '}
+            <Spinner animation="border" variant="primary" size="sm" />
+            Laddar upp
+            {fileName}
           </span>
         )}
         {!uploading && uploaded && (
-          <span style={{ wordWrap: 'break-word', display: 'block' }}>
+          <span style={{ wordWrap: "break-word", display: "block" }}>
             {error ? (
               <FontAwesomeIcon icon={faTimes} color="#721c24" />
             ) : (
