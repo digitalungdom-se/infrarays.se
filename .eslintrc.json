@@ -1,49 +1,27 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "plugin:react/recommended",
-        "plugin:jest/recommended",
-        "airbnb",
-        "prettier",
-        "prettier/react"
-    ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
+    "ecmaVersion": 12,
+    "sourceType": "module",
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "react/prop-types": 0,
+    "react/jsx-one-expression-per-line": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "paths": ["src"]
+      },
     },
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "@typescript-eslint",
-        "prettier"
-    ],
-    "rules": {
-        "prettier/prettier": ["error", { "singleQuote": true }],
-        "jsx-a11y/label-has-associated-control": [ 2, {
-            "labelComponents": ["label"],
-            "labelAttributes": ["label"],
-            "controlComponents": ["CustomInput"],
-            "depth": 3
-        }],
-        "react/jsx-filename-extension": [ 2, {
-            "extensions": [".js", ".jsx", ".ts", ".tsx"]
-        }]
-    },
-    "settings": {
-        "import/resolver": {
-            "node": {
-            "paths": ["src"]
-            }
-        }
-    }
+  },
 }

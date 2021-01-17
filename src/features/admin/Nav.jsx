@@ -7,7 +7,7 @@ export default () => {
   const NavLink = ({ to, children }) => (
     <Link
       to={to}
-      eventKey={to}
+      key={to}
       data-rb-event-key={to}
       className={`nav-link ${location.pathname === to && 'active'}`}
     >
@@ -20,33 +20,23 @@ export default () => {
       variant="pills"
       className="justify-content-center"
       style={{
-        margin: '20px 0',
+        margin: '20px 0'
       }}
     >
       <Nav.Item>
-        <NavLink to="/admin/applications">
-          Ansökningar
-        </NavLink>
+        <NavLink to="/admin">Ansökningar</NavLink>
       </Nav.Item>
       <Nav.Item>
-        <NavLink to="/admin/toplist">
-          Topplista
-        </NavLink>
+        <NavLink to="/admin/toplist">Topplista</NavLink>
       </Nav.Item>
       <Nav.Item>
-        <NavLink to="/admin/settings">
-          Inställningar
-        </NavLink>
+        <NavLink to="/admin/settings">Inställningar</NavLink>
       </Nav.Item>
       <Nav.Item>
-        <NavLink to="/admin/admins">
-          Admins
-        </NavLink>
+        <NavLink to="/admin/administration">Admins</NavLink>
       </Nav.Item>
       <Nav.Item>
-        <NavLink to="/admin/data">
-          Statistik
-        </NavLink>
+        <NavLink to="/admin/data">Statistik</NavLink>
       </Nav.Item>
     </Nav>
   );

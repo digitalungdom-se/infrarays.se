@@ -68,5 +68,9 @@
   "Letter received": "Letter received",
   "Send request": "Send request",
   "Send again": "Send again",
-  "too large": "The file is too big!"
+  "too large": "The file is too big!",
+  "Randomise": "Randomise order",
+  "Randomising": "Randomising order...",
+  "Save": "Save",
+  "Saving": "Saving"
 }

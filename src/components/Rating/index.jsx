@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Icon } from 'resources/star.svg';
@@ -14,17 +15,15 @@ const Star = styled(Icon)`
   }
   width: 1rem;
   height: 1rem;
+  margin-top: -3px;
 `;
 
-const Rating = props => {
-  return (
-    <ReactRating
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-      emptySymbol={<Star className="empty icon" />}
-      fullSymbol={<Star className="full icon" />}
-    />
-  );
-};
-
+const Rating = ({ field, form, ...props }) => (
+  <ReactRating
+    {...field}
+    {...props}
+    emptySymbol={<Star className="empty icon" />}
+    fullSymbol={<Star className="full icon" />}
+  />
+);
 export default Rating;

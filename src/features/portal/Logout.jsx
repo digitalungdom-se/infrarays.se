@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Button, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-const Logout = () => {
+const Logout = ({ url = '/api/user/logout', style = {} }) => {
   const dispatch = useDispatch();
   const [loggingOut, setLogout] = useState(false);
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ const Logout = () => {
       variant="secondary"
       onClick={() => {
         setLogout(true);
-        fetch('/api/user/logout', {
+        fetch(url, {
           method: 'delete'
         })
           .then(res => res.json())
@@ -24,6 +24,7 @@ const Logout = () => {
             }
           });
       }}
+      style={style}
       disabled={loggingOut}
     >
       {loggingOut ? (

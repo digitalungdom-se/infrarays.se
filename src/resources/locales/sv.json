@@ -69,5 +69,9 @@
   "Letter received": "Brev mottaget",
   "Send request": "Skicka förfrågan",
   "Send again": "Skicka igen",
-  "too large": "Filen är för stor!"
+  "too large": "Filen är för stor!",
+  "Randomise": "Slumpa ordning",
+  "Randomising": "Slumpar ordning...",
+  "Save": "Spara",
+  "Saving": "Sparar"
 }

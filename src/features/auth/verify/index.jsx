@@ -1,39 +1,39 @@
-import React from 'react';
-import { useParams, useHistory, Switch, Route } from 'react-router-dom';
-import { Spinner, Alert } from 'react-bootstrap';
-import CenterCard from 'components/CenterCard';
-import useFetch from 'utils/useFetch';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { appSuccess } from 'features/appSlice';
-import { useDispatch } from 'react-redux';
-import { useTranslation, Trans } from 'react-i18next';
+import React from "react";
+import { useParams, useHistory, Switch, Route } from "react-router-dom";
+import { Spinner, Alert } from "react-bootstrap";
+import CenterCard from "components/CenterCard";
+import useFetch from "utils/useFetch";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { appSuccess } from "features/appSlice";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const Verify = () => {
   const { token } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { response, error, isLoading } = useFetch('/api/user/verify', {
-    method: 'post',
+  const { response, error, isLoading } = useFetch("/api/user/verify", {
+    method: "post",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ token })
+    body: JSON.stringify({ token }),
   });
 
-  if (response?.type === 'fail' && response?.errors[0].msg === 'no token') {
-    toast.info('Du är redan verifierad', {
-      position: toast.POSITION.TOP_CENTER
+  if (response?.type === "fail" && response?.errors[0].msg === "no token") {
+    toast.info("Du är redan verifierad", {
+      position: toast.POSITION.TOP_CENTER,
     });
-    history.push('/');
+    history.push("/");
   }
 
-  if (response?.type === 'success' && !isLoading) {
-    toast.success('Verified e-mail!', {
-      position: toast.POSITION.TOP_CENTER
+  if (response?.type === "success" && !isLoading) {
+    toast.success("Verified e-mail!", {
+      position: toast.POSITION.TOP_CENTER,
     });
-    history.push('/');
+    history.push("/");
     dispatch(appSuccess(response));
   }
 
@@ -42,39 +42,39 @@ const Verify = () => {
   return (
     <>
       {isLoading && (
-        <div style={{ textAlign: 'center' }}>
-          {t('Verifying e-mail...')}
+        <div style={{ textAlign: "center" }}>
+          {t("Verifying e-mail...")}
           <Spinner
             animation="border"
             size="lg"
             variant="custom"
             style={{
-              width: '5rem',
-              height: '5rem',
-              fontSize: '2.5rem',
-              margin: '1rem auto',
-              display: 'block'
+              width: "5rem",
+              height: "5rem",
+              fontSize: "2.5rem",
+              margin: "1rem auto",
+              display: "block",
             }}
           />
         </div>
       )}
-      {response?.type === 'fail' && (
+      {response?.type === "fail" && (
         <Alert variant="danger">
-          {response?.errors[0]?.msg === 'no token'}
+          {response?.errors[0]?.msg === "no token"}
           <div i18nKey="verifying-email" token={token}>
             <b>Ogiltig token.</b> Länken som du har klickat på innehåller en
             ogiltig token:
             <code
               style={{
-                textAlign: 'center',
-                display: 'block',
-                paddingBottom: 0
+                textAlign: "center",
+                display: "block",
+                paddingBottom: 0,
               }}
             >
               {token}
             </code>
             Dubbelkolla att du har klickat på rätt länk. Om det inte fungerar
-            ska du kontakta portalansvariga,{' '}
+            ska du kontakta portalansvariga,{" "}
             <a href="mailto:styrelse@digitalungdom.se">
               styrelse@digitalungdom.se
             </a>
@@ -87,23 +87,19 @@ const Verify = () => {
   );
 };
 
-const MustVerify = () => {
-  return <p>Du måste verifiera din e-mail.</p>;
-};
+const MustVerify = () => <p>Du måste verifiera din e-mail.</p>;
 
-const VerifyRouter = () => {
-  return (
-    <CenterCard maxWidth="400px" title="Verify e-mail">
-      <Switch>
-        <Route path="/verify/:token">
-          <Verify />
-        </Route>
-        <Route>
-          <MustVerify />
-        </Route>
-      </Switch>
-    </CenterCard>
-  );
-};
+const VerifyRouter = () => (
+  <CenterCard maxWidth="400px" title="Verify e-mail">
+    <Switch>
+      <Route path="/verify/:token">
+        <Verify />
+      </Route>
+      <Route>
+        <MustVerify />
+      </Route>
+    </Switch>
+  </CenterCard>
+);
 
 export default VerifyRouter;
