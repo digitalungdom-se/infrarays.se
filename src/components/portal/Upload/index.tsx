@@ -32,9 +32,19 @@ const StyledInputGroup = styled(InputGroup)`
   }
 `;
 
-export default ({
+export interface UploadProps {
+  label?: string;
+  onChange?: (file: any, name: string) => any;
+  uploaded?: string;
+  uploading?: boolean;
+  displayFileName?: boolean;
+  accept?: string;
+  error?: string;
+}
+
+const Upload: React.FC<UploadProps> = ({
   label,
-  onChange = () => {},
+  onChange = () => true,
   uploaded,
   uploading,
   displayFileName,
@@ -89,3 +99,5 @@ export default ({
     </StyledInputGroup>
   );
 };
+
+export default Upload;

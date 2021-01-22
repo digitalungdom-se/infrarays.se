@@ -8,9 +8,11 @@ const StyledButton = styled(Button)`
   border: dashed;
 `;
 
-export default ({ onClick, children }) => (
+const AddButton = ({ onClick, children }) => (
   <StyledButton onClick={onClick} variant="outline-primary">
     <FontAwesomeIcon icon={faPlus} />
     {children}
   </StyledButton>
 );
+
+export default AddButton;

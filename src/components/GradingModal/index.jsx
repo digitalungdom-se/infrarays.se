@@ -1,31 +1,24 @@
-import React from 'react';
-import Rating from 'components/Rating';
-import styled from 'styled-components';
-import {
-  InputGroup,
-  FormControl,
-  Form,
-  Button,
-  Spinner
-} from 'react-bootstrap';
-import { Field, Formik } from 'formik';
-import { withTranslation } from 'react-i18next';
+import React from "react";
+import Rating from "components/Rating";
+import { FormControl, Form, Button, Spinner } from "react-bootstrap";
+import { Field, Formik } from "formik";
+import { withTranslation } from "react-i18next";
 
 const StarField = withTranslation()(({ name, t, isInvalid }) => (
   <Form.Group>
-    <Form.Label style={{ display: 'block' }}>{t(`${name}.title`)}</Form.Label>
+    <Form.Label style={{ display: "block" }}>{t(`${name}.title`)}</Form.Label>
     <Form.Control as="span" bsPrefix="null" isInvalid={isInvalid}>
       <Field name={name}>
         {({ field: { value }, form: { setFieldValue } }) => (
           <Rating
             initialRating={value}
-            onChange={value => setFieldValue(name, value)}
+            onChange={(newValue) => setFieldValue(name, newValue)}
           />
         )}
       </Field>
     </Form.Control>
     <Form.Control.Feedback type="invalid">
-      {t('You need to set a score!')}
+      {t("You need to set a score!")}
     </Form.Control.Feedback>
   </Form.Group>
 ));
@@ -40,9 +33,9 @@ const GradingModal = ({
     grades: 0,
     recommendation: 0,
     overall: 0,
-    comment: ''
+    comment: "",
   },
-  onSubmit = () => {}
+  onSubmit,
 }) => (
   <Formik initialValues={initialValues} onSubmit={onSubmit}>
     {({ handleChange, values, handleSubmit, isSubmitting, errors }) => (
@@ -55,7 +48,7 @@ const GradingModal = ({
         <StarField name="recommendation" isInvalid={errors.recommendation} />
         <StarField name="overall" isInvalid={errors.overall} />
         <Form.Group>
-          <Form.Label>{t('comment')}</Form.Label>
+          <Form.Label>{t("comment")}</Form.Label>
           <FormControl
             name="comment"
             as="textarea"
@@ -67,10 +60,10 @@ const GradingModal = ({
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? (
             <>
-              <Spinner animation="border" size="sm" /> {t('Saving')}
+              <Spinner animation="border" size="sm" /> {t("Saving")}
             </>
           ) : (
-            t('Save')
+            t("Save")
           )}
         </Button>
       </Form>

@@ -24,7 +24,7 @@ const StyledHeader = styled(Card.Header)`
   }
 `;
 
-export default ({ loading, done, survey, onSubmit = () => {} }) => {
+const Survey = ({ loading, done, survey, onSubmit }) => {
   const [process, setProcess] = useState(survey?.applicationProcess);
   const [error, setError] = useState();
   const [portal, setPortal] = useState(survey?.applicationPortal);
@@ -180,3 +180,5 @@ export default ({ loading, done, survey, onSubmit = () => {} }) => {
     </Accordion>
   );
 };
+
+export default Survey;

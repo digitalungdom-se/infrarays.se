@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 import {
   Form,
   FormGroup,
   InputGroup,
   FormControl,
   Button,
-  Spinner
-} from 'react-bootstrap';
-import { Formik } from 'formik';
-import styled from 'styled-components';
+  Spinner,
+} from "react-bootstrap";
+import { Formik } from "formik";
+import styled from "styled-components";
 
 const StyledInputGroup = styled(InputGroup)`
   &.received input,
@@ -34,25 +34,23 @@ const StyledInputGroup = styled(InputGroup)`
 `;
 
 const AdminContact = ({
-  name = '',
-  email = '',
+  name = "",
+  email = "",
   superAdmin = false,
   status,
   initialErrors = {},
-  loading
 }) => (
   <Formik
     initialErrors={initialErrors}
     initialValues={{ name, email, superAdmin }}
     onSubmit={(values, { setSubmitting }) => {
-      console.log(values);
       setSubmitting(true);
     }}
   >
     {({ handleChange, values, handleSubmit, isSubmitting, errors }) => (
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <StyledInputGroup className={status || ''}>
+          <StyledInputGroup className={status || ""}>
             <FormControl
               onChange={handleChange}
               value={values.name}
@@ -76,9 +74,9 @@ const AdminContact = ({
               {Boolean(status) && superAdmin && (
                 <InputGroup.Text>Superadmin</InputGroup.Text>
               )}
-              {status !== 'received' && (
+              {status !== "received" && (
                 <FormGroup as="span" className="input-group-text">
-                  Superadmin{' '}
+                  Superadmin{" "}
                   <Form.Check
                     name="superAdmin"
                     onChange={handleChange}
@@ -87,14 +85,14 @@ const AdminContact = ({
                   />
                 </FormGroup>
               )}
-              {status !== 'received' && (
+              {status !== "received" && (
                 <Button
                   type="submit"
                   disabled={isSubmitting || Boolean(status)}
                 >
-                  {(status === 'loading' || isSubmitting) && (
+                  {(status === "loading" || isSubmitting) && (
                     <>
-                      <Spinner animation="border" size="sm" />{' '}
+                      <Spinner animation="border" size="sm" />{" "}
                     </>
                   )}
                   Skicka förfrågan
