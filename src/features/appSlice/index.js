@@ -11,6 +11,12 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
+    authSuccess(state) {
+      state.isAuthorised = true;
+    },
+    authFail(state) {
+      state.isAuthorised = false;
+    },
     appSuccess(state, action) {
       state.isAuthorised = "user";
       state.userData = action.payload.userData;
@@ -87,6 +93,8 @@ const appSlice = createSlice({
 });
 
 export const {
+  authSuccess,
+  authFail,
   appSuccess,
   appFailure,
   adminSuccess,

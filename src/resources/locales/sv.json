@@ -28,6 +28,7 @@
   "choose an option": "Välj ett alternativ!",
   "invalid date": "Ogiltigt format för datum",
   "Please verify e-mail!": "Besök din e-mails inkorg för att verifiera ditt konto!",
+  "Successfully registered!": "Du är nu registererad!",
   "Verifying e-mail...": "Verifierar din e-mail...",
   "verifying-email": "<1>Ogiltig token.</1> Länken som du har klickat på innehåller en ogiltig token:<2>{{token}}</2> Dubbelkolla att du har klickat på rätt länk. Om det inte fungerar ska du kontakta portalansvariga,<3>styrelse@digitalungdom.se</3>.",
   "You have reset your password!": "Du har nu bytt lösenord!",

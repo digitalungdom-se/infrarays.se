@@ -11,7 +11,11 @@ import React from "react";
 import Router from "features/router";
 import { ToastContainer } from "react-toastify";
 import theme from "config/theme.json";
+import axios from "axios";
 import store, { persistor } from "./store";
+
+axios.defaults.baseURL =
+  process.env.REACT_APP_API_URL || "https://devapi.infrarays.digitalungdom.se";
 
 const StyledApp = styled.div`
   background: ${(props) => props.theme.bg};
