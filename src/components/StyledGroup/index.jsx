@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import Form from 'react-bootstrap/Form';
-import PropTypes from 'prop-types';
+import styled from "styled-components";
+import Form from "react-bootstrap/Form";
+import PropTypes from "prop-types";
 
 const StyledGroup = styled(Form.Group)`
   & {
@@ -14,11 +14,11 @@ const StyledGroup = styled(Form.Group)`
   }
 
   & > input {
-    padding: ${props => props.y}rem ${props => props.x}rem;
+    padding: ${(props) => props.y}rem ${(props) => props.x}rem;
   }
 
   & > label {
-    padding: ${props => props.y / 2}rem ${props => props.x}rem;
+    padding: ${(props) => props.y / 2}rem ${(props) => props.x}rem;
   }
 
   & > label {
@@ -56,29 +56,29 @@ const StyledGroup = styled(Form.Group)`
     color: transparent;
   }
 
-  & input:not(:placeholder-shown):not([type='date']) {
+  & input:not(:placeholder-shown):not([type="date"]) {
     padding-top: calc(
-      ${props => props.y}rem + ${props => props.y}rem * (1 / 3)
+      ${(props) => props.y}rem + ${(props) => props.y}rem * (1 / 3)
     );
-    padding-bottom: calc(${props => props.y}rem * (2 / 3));
+    padding-bottom: calc(${(props) => props.y}rem * (2 / 3));
   }
 
   & input:not(:placeholder-shown) ~ label {
-    padding-top: calc(${props => props.y / 2}rem * (1 / 3));
-    padding-bottom: calc(${props => props.y}rem * (2 / 3));
+    padding-top: calc(${(props) => props.y / 2}rem * (1 / 3));
+    padding-bottom: calc(${(props) => props.y}rem * (2 / 3));
     font-size: 12px;
-    color: ${props => props.theme.brand || '#777'};
+    color: ${(props) => props.theme.brand || "#777"};
   }
 `;
 
 StyledGroup.defaultProps = {
   x: 0.75,
-  y: 1.5
+  y: 1.5,
 };
 
 StyledGroup.propTypes = {
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };
 
 export default StyledGroup;

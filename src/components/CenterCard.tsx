@@ -24,9 +24,7 @@ const CenterCard = ({
     <Plate>
       <StyledTitle>{title}</StyledTitle>
       {title && <hr />}
-      {children && (
-        <div style={{ width: "90%", minWidth: 300 }}>{children}</div>
-      )}
+      {children && <div style={{ width: "100%" }}>{children}</div>}
     </Plate>
   </Center>
 );
