@@ -1,23 +1,24 @@
-import React, { useEffect } from "react";
-import Center from "components/Center";
-import StyledPlate from "components/Plate";
-import Chapter from "components/portal/Chapter";
-import Alert from "react-bootstrap/Alert";
 import { ButtonGroup, ProgressBar } from "react-bootstrap";
-import Logo from "components/Logo";
-import ReactMarkdown from "react-markdown";
-import portal from "config/portal.json";
-import { useSelector, useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { appSuccess, appFailure } from "features/appSlice";
-import PortalSurvey from "./Survey";
-import Upload from "./Upload";
-import References from "./References";
-import Logout from "./Logout";
+import React, { useEffect } from "react";
+import { appFailure, appSuccess } from "features/appSlice";
+import { useDispatch, useSelector } from "react-redux";
+
+import Alert from "react-bootstrap/Alert";
+import Center from "components/Center";
+import Chapter from "components/portal/Chapter";
 import Delete from "./Delete";
 import Download from "./Download";
+import Logo from "components/Logo";
+import Logout from "./Logout";
+import PortalSurvey from "./Survey";
+import ReactMarkdown from "react-markdown";
+import References from "./References";
+import StyledPlate from "components/Plate";
+import Upload from "./Upload";
+import portal from "config/portal.json";
+import { useTranslation } from "react-i18next";
 
-export default () => {
+const Hook = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -105,3 +106,5 @@ export default () => {
     </Center>
   );
 };
+
+export default Hook;

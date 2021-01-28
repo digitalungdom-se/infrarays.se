@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 
 import Button from "react-bootstrap/Button";
 import CenterCard from "components/CenterCard";
@@ -8,23 +8,32 @@ import FormLabel from "react-bootstrap/FormLabel";
 import React from "react";
 import StyledGroup from "components/StyledGroup";
 
+interface Values {
+  code: string;
+}
+
 interface LoginWithCodeProps {
-  onSubmit?: () => void;
+  onSubmit?: (
+    values: Values,
+    formikHelpers: FormikHelpers<Values>
+  ) => void | Promise<any>;
   t?: (s: string) => string;
+  email?: string;
 }
 
 const LoginWithCode: React.FC<LoginWithCodeProps> = ({
   onSubmit = console.log,
   t = (s) => s,
+  email,
 }) => (
-  <CenterCard title="Login">
+  <CenterCard title="Login" maxWidth="400px">
+    {email}
     <Formik initialValues={{ code: "" }} onSubmit={onSubmit}>
       {({ values, handleChange, isSubmitting, errors }) => (
         <Form>
           <StyledGroup>
             <FormControl
               name="email"
-              type="email"
               placeholder="Code"
               autoFocus
               isInvalid={Boolean(errors.code)}

@@ -1,12 +1,12 @@
+import { Alert, Form, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import CenterCard from "components/CenterCard";
-import { Form, Alert, Spinner } from "react-bootstrap";
-import Upload from "components/portal/Upload";
-import { useParams } from "react-router-dom";
-import useFetch from "utils/useFetch";
-import { useTranslation, Trans } from "react-i18next";
 import ContactPerson from "components/portal/ContactPerson";
+import Upload from "components/portal/Upload";
+import useFetch from "utils/useFetch";
+import { useParams } from "react-router-dom";
 
 const esc = encodeURIComponent;
 export const query = (params) =>
@@ -14,7 +14,7 @@ export const query = (params) =>
     .map((k) => `${esc(k)}=${esc(params[k])}`)
     .join("&");
 
-const UploadState = ({ name, setSuccess, updateFileName = () => {} }) => {
+const UploadState = ({ name, setSuccess, updateFileName = () => null }) => {
   const [error, setError] = useState();
   const [uploading, setUploading] = useState();
   const [uploaded, setUploaded] = useState();

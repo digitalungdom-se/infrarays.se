@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { action } from "@storybook/addon-actions";
+
 import Upload from "./index";
+import { action } from "@storybook/addon-actions";
 
 export default {
   title: "Upload",
@@ -16,7 +17,7 @@ export const UploadHook = () => {
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState("");
 
-  function handleChange(file, fileName) {
+  function handleChange(file: any, fileName: string) {
     action("file-change")(file, fileName);
     setUploading(true);
     setTimeout(() => {
@@ -27,7 +28,7 @@ export const UploadHook = () => {
 
   return (
     <Upload
-      title="Ladda upp personligt brev"
+      // title="Ladda upp personligt brev"
       onChange={handleChange}
       uploading={uploading}
       uploaded={uploaded}

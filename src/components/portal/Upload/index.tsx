@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Spinner from "react-bootstrap/Spinner";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FormControl from "react-bootstrap/FormControl";
+import InputGroup from "react-bootstrap/InputGroup";
+import Spinner from "react-bootstrap/Spinner";
 import styled from "styled-components";
 
 const StyledInputGroup = styled(InputGroup)`
@@ -53,7 +54,7 @@ const Upload: React.FC<UploadProps> = ({
 }) => {
   const [fileName, updateFileName] = useState("");
 
-  function handleFileChange(e) {
+  function handleFileChange(e: any) {
     const list = e.target.value.split("\\");
     const name = list[list.length - 1];
     updateFileName(name);
@@ -71,7 +72,7 @@ const Upload: React.FC<UploadProps> = ({
         className="custom-file-input file-input"
         onChange={handleFileChange}
         accept={accept}
-        isInvalid={error}
+        isInvalid={Boolean(error)}
       />
       <FormControl.Feedback type="invalid">{error}</FormControl.Feedback>
       <InputGroup.Text className="custom-file-label">
