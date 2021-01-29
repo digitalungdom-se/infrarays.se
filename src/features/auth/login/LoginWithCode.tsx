@@ -33,11 +33,13 @@ const LoginWithCode: React.FC<LoginWithCodeProps> = ({
         <Form>
           <StyledGroup>
             <FormControl
-              name="email"
+              name="code"
               placeholder="Code"
               autoFocus
               isInvalid={Boolean(errors.code)}
               disabled={isSubmitting}
+              value={values.code}
+              onChange={handleChange}
             />
             <FormLabel>Code</FormLabel>
             <FormControl.Feedback type="invalid">

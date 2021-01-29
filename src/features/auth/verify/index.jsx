@@ -2,11 +2,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { Alert, Spinner } from "react-bootstrap";
 import { Route, Switch, useHistory, useParams } from "react-router-dom";
-import { ServerTokenResponse, TokenStorage } from "utils/tokenInterceptor";
 
-import Axios from "axios";
 import CenterCard from "components/CenterCard";
-import LoginWithCode from "features/auth/login/LoginWithCode";
 import React from "react";
 import { appSuccess } from "features/appSlice";
 import { toast } from "react-toastify";
@@ -94,35 +91,12 @@ const Verify = () => {
 
 const MustVerify = () => <p>Du måste verifiera din e-mail.</p>;
 
-export const loginWithCode = (email, loginCode, onSuccess) =>
-  Axios.post(
-    "/user/oauth/token",
-    {
-      grant_type: "client_credentials",
-    },
-    {
-      headers: { Authorization: `Email ${btoa(email + ":" + loginCode)}` },
-    }
-  )
-    .then((res) => {
-      TokenStorage.storeTokens(res.data);
-      onSuccess();
-    })
-    .catch(console.error);
-
 const VerifyRouter = () => (
   <Switch>
-    <Route
-      path="/verify/login/:email"
-      render={({ match }) => (
-        <LoginWithCode
-          email={atob(match.params.email)}
-          onSubmit={(values, { setSubmitting }) => {
-            loginWithCode(atob(match.params.email, values.code));
-          }}
-        />
-      )}
-    />
+    {/* <Route
+      path="/verify/login/:email">
+        <LoginWithCodeRoute>
+      </Route> */}
     <Route path="/verify/:token">
       <Verify />
     </Route>

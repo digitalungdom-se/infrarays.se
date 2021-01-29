@@ -30,7 +30,7 @@ const Login = () => {
               email,
             })
               .then(() => {
-                history.push(`/verifylogin/${btoa(email)}`);
+                history.push(`/login/${btoa(email)}`);
                 setLogin(false);
               })
               .catch(() => {

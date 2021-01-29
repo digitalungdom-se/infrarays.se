@@ -4,6 +4,7 @@ import { appFailure, appSuccess } from "features/appSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Alert from "react-bootstrap/Alert";
+import Axios from "axios";
 import Center from "components/Center";
 import Chapter from "components/portal/Chapter";
 import Delete from "./Delete";
@@ -22,31 +23,20 @@ const Hook = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const data = async () =>
-      fetch("/api/auth", {
-        method: "get",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+    Axios.get("/application/@me/file")
+      .then((res) => {
+        dispatch(appSuccess(res));
       })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.type === "fail") {
-            res.json = true;
-            throw res;
-          } else dispatch(appSuccess(res));
-        })
-        .catch((err) => {
-          if (err.json) {
-            dispatch(appFailure());
-          }
-        });
-    data();
+      .catch((err) => {
+        if (err.json) {
+          dispatch(appFailure());
+        }
+      });
   });
 
   const files = useSelector((state) => state.app?.files);
   const survey = useSelector((state) => state.app?.survey);
+
   const progress = (files ? Object.keys(files).length : 0) + (survey ? 1 : 0);
 
   const { t } = useTranslation();
@@ -68,7 +58,7 @@ const Hook = () => {
             fileType={chapter.fileType}
           />
         )}
-        {chapter.contactPeople && <References />}
+        {/* {chapter.contactPeople && <References />} */}
         {chapter.survey && <PortalSurvey done={survey !== undefined} />}
       </Chapter>
     ));

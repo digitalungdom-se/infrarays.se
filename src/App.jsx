@@ -1,8 +1,10 @@
+import "utils/tokenInterceptor";
 import "resources/app.css";
 import "react-toastify/dist/ReactToastify.min.css";
 
 import store, { persistor } from "./store";
 
+import AuthenticatedLayer from "features/auth/AuthenticatedLayer";
 import ChangeLanguage from "features/ChangeLanguage";
 import CustomThemeProvider from "components/CustomThemeProvider";
 import { PersistGate } from "redux-persist/integration/react";
@@ -32,13 +34,15 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <CustomThemeProvider>
-          <StyledApp>
-            <ChangeLanguage />
-            <ToastContainer />
-            <Router />
-          </StyledApp>
-        </CustomThemeProvider>
+        <AuthenticatedLayer>
+          <CustomThemeProvider>
+            <StyledApp>
+              <ChangeLanguage />
+              <ToastContainer />
+              <Router />
+            </StyledApp>
+          </CustomThemeProvider>
+        </AuthenticatedLayer>
       </PersistGate>
     </Provider>
   );
