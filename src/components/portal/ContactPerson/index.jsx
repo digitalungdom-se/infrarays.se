@@ -1,11 +1,12 @@
-import React from 'react';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
-import styled from 'styled-components';
-import moment from 'moment';
-import { Form, Spinner } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { Form, Spinner } from "react-bootstrap";
+
+import Button from "react-bootstrap/Button";
+import FormControl from "react-bootstrap/FormControl";
+import InputGroup from "react-bootstrap/InputGroup";
+import React from "react";
+import moment from "moment";
+import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const StyledInputGroup = styled(InputGroup)`
   &.received input,
@@ -32,36 +33,35 @@ const StyledInputGroup = styled(InputGroup)`
 
 function ContactPerson({
   email,
-  status,
   loading,
-  sendDate = '1970-01-01',
-  cooldown = ['day', 1],
-  handleSubmit
+  sendDate = "1970-01-01",
+  cooldown = ["day", 1],
+  handleSubmit,
+  received = false,
 }) {
   // https://stackoverflow.com/questions/13262621/how-do-i-use-format-on-a-moment-js-duration
-  const diff = moment(sendDate)
-    .add(cooldown[0], cooldown[1])
-    .diff(moment());
+  const diff = moment(sendDate).add(cooldown[0], cooldown[1]).diff(moment());
   const formattedDiff =
     diff > 3600 * 1000
       ? Math.round(diff / (3600 * 1000))
       : Math.round(diff / (1000 * 60));
 
   const { t } = useTranslation();
+  const status = email ? (received ? "received" : "requested") : "nothing";
   const text = {
-    nothing: t('Not requested'),
-    requested: t('Requested'),
-    received: t('Letter received')
+    nothing: t("Not requested"),
+    requested: t("Requested"),
+    received: t("Letter received"),
   };
 
   const button = {
-    nothing: t('Send request'),
-    requested: t('Send again')
+    nothing: t("Send request"),
+    requested: t("Send again"),
   };
 
   return (
     <Form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         const newEmail = e.target.email.value;
         handleSubmit(newEmail);
@@ -82,20 +82,17 @@ function ContactPerson({
           type="email"
           name="email"
           defaultValue={email}
-          disabled={status === 'received' || diff > 0 || loading}
+          disabled={received || diff > 0 || loading}
           placeholder="E-mail"
           required
         />
         <InputGroup.Append>
           <InputGroup.Text>{text[status]}</InputGroup.Text>
-          {status !== 'received' && (
-            <Button
-              type="submit"
-              disabled={status === 'received' || diff > 0 || loading}
-            >
+          {!received && (
+            <Button type="submit" disabled={received || diff > 0 || loading}>
               {`${button[status]} `}
               {diff > 0 &&
-                `${formattedDiff + (diff > 3600 * 1000 ? 'h' : 'm')}`}
+                `${formattedDiff + (diff > 3600 * 1000 ? "h" : "m")}`}
             </Button>
           )}
         </InputGroup.Append>

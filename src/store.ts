@@ -15,16 +15,19 @@ import {
 } from "@reduxjs/toolkit";
 
 import app from "features/appSlice";
+import auth from "features/auth/authSlice";
 import portal from "features/portal/portalSlice";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
 const persistConfig = {
   key: "root",
+  whitelist: ["auth"],
   storage,
 };
 
 const rootReducer = combineReducers({
   app,
+  auth,
   portal,
 });
 

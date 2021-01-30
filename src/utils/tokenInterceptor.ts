@@ -1,4 +1,4 @@
-import { authSuccess, authFail } from "features/appSlice";
+import { authFail, authSuccess } from "features/auth/authSlice";
 
 import axios from "axios";
 import store from "store";

@@ -21,15 +21,28 @@ export type FileInfo = {
   mime: string;
 };
 
+type Recommendation = {
+  id: string;
+  code: string;
+  applicantId: string;
+  email: string;
+  lastSent: string;
+  received: null | string;
+  fileId: null | string;
+  index: number;
+};
+
 interface PortalState {
   files: Partial<Record<FileType, FileInfo>>;
+  recommendations: Recommendation[];
 }
 
 export const initialState: PortalState = {
   files: {},
+  recommendations: [],
 };
 
-const appSlice = createSlice({
+const authSlice = createSlice({
   name: "portal",
   initialState,
   reducers: {
@@ -39,6 +52,12 @@ const appSlice = createSlice({
     uploadSuccess(state, action: PayloadAction<FileInfo>) {
       state.files[action.payload.type] = action.payload;
     },
+    addPersonSuccess(state, action: PayloadAction<Recommendation[]>) {
+      action.payload.forEach(
+        (recommendation) =>
+          (state.recommendations[recommendation.index] = recommendation)
+      );
+    },
   },
 });
 
@@ -47,7 +66,12 @@ export const selectSingleFile = (
   state: RootState,
   name: FileType
 ): FileInfo | undefined => state.portal.files[name];
+export const selectRecommendation = (
+  state: RootState,
+  recommendationIndex: number
+): Recommendation | undefined =>
+  state.portal.recommendations[recommendationIndex];
 
-export const { setFiles, uploadSuccess } = appSlice.actions;
+export const { setFiles, uploadSuccess, addPersonSuccess } = authSlice.actions;
 
-export default appSlice.reducer;
+export default authSlice.reducer;

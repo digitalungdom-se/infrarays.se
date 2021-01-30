@@ -2,7 +2,7 @@ import { Redirect, Route } from "react-router-dom";
 
 import PropTypes from "prop-types";
 import React from "react";
-import { selectAuthenticated } from "features/appSlice";
+import { selectAuthenticated } from "features/auth/authSlice";
 import { useSelector } from "react-redux";
 
 function ProtectedRoute({ shouldBeAuthenticated, children, admin, ...rest }) {

@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { appSuccess, selectAuthenticated } from "./../appSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Axios from "axios";
+import { appSuccess } from "./../appSlice";
+import { selectAuthenticated } from "features/auth/authSlice";
 
 interface AuthenticatedLayerProps {
   children: React.ReactElement;

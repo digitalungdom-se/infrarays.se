@@ -24,7 +24,7 @@ const Chapters: React.FC<WithTranslation> = ({ t }): React.ReactElement => (
             fileType={chapter.fileType as FileType}
           />
         )}
-        {/* {chapter.contactPeople && <References />} */}
+        {chapter.contactPeople && <References />}
         {/* {chapter.survey && <PortalSurvey done={survey !== undefined} />} */}
       </Chapter>
     ))}
