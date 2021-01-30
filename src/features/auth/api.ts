@@ -1,7 +1,4 @@
-import {
-  ServerTokenResponse,
-  TokenStorage,
-} from "./../../utils/tokenInterceptor";
+import { ServerTokenResponse, TokenStorage } from "utils/tokenInterceptor";
 
 import Axios from "axios";
 

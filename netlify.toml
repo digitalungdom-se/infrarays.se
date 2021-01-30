@@ -1,0 +1,10 @@
+[context.production.environment]
+  CI = false
+
+[context.deploy-preview.environment]
+  CI = false
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

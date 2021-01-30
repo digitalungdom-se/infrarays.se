@@ -15,6 +15,7 @@ import {
 } from "@reduxjs/toolkit";
 
 import app from "features/appSlice";
+import portal from "features/portal/portalSlice";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
 const persistConfig = {
@@ -24,6 +25,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   app,
+  portal,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
