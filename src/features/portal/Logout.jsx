@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { logoutSuccess } from 'features/appSlice';
-import { useDispatch } from 'react-redux';
-import { Button, Spinner } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { Button, Spinner } from "react-bootstrap";
+import React, { useState } from "react";
 
-const Logout = ({ url = '/api/user/logout', style = {} }) => {
+import { TokenStorage } from "utils/tokenInterceptor";
+import { logoutSuccess } from "features/appSlice";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+
+const Logout = ({ url = "/api/user/logout", style = {} }) => {
   const dispatch = useDispatch();
   const [loggingOut, setLogout] = useState(false);
   const { t } = useTranslation();
@@ -13,26 +15,17 @@ const Logout = ({ url = '/api/user/logout', style = {} }) => {
       variant="secondary"
       onClick={() => {
         setLogout(true);
-        fetch(url, {
-          method: 'delete'
-        })
-          .then(res => res.json())
-          .then(res => {
-            setLogout(false);
-            if (res.type === 'success') {
-              dispatch(logoutSuccess());
-            }
-          });
+        TokenStorage.clear();
       }}
       style={style}
       disabled={loggingOut}
     >
       {loggingOut ? (
         <span>
-          <Spinner animation="border" size="sm" /> {t('Logging out')}
+          <Spinner animation="border" size="sm" /> {t("Logging out")}
         </span>
       ) : (
-        t('Log out')
+        t("Log out")
       )}
     </Button>
   );

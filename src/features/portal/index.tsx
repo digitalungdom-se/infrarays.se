@@ -1,5 +1,5 @@
 import { ButtonGroup, ProgressBar } from "react-bootstrap";
-import { FileInfo, setFiles } from "./portalSlice";
+import { FileInfo, setFiles, setSurvey } from "./portalSlice";
 import React, { useEffect } from "react";
 import { appFailure, appSuccess } from "features/appSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,7 @@ import Logo from "components/Logo";
 import Logout from "./Logout";
 import ReactMarkdown from "react-markdown";
 import StyledPlate from "components/Plate";
+import { addPersonSuccess } from "features/portal/portalSlice";
 import { useTranslation } from "react-i18next";
 
 const Hook = () => {
@@ -29,6 +30,9 @@ const Hook = () => {
           dispatch(appFailure());
         }
       });
+    Axios.get("/application/@me/recommendation").then((res) =>
+      dispatch(addPersonSuccess(res.data))
+    );
   });
 
   // const files = useSelector((state) => state.app?.files);

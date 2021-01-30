@@ -3,6 +3,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "store";
+import { SurveyAnswers } from "components/Survey";
 
 export type FileType =
   | "CV"
@@ -35,11 +36,13 @@ type Recommendation = {
 interface PortalState {
   files: Partial<Record<FileType, FileInfo>>;
   recommendations: Recommendation[];
+  survey?: SurveyAnswers;
 }
 
 export const initialState: PortalState = {
   files: {},
   recommendations: [],
+  survey: undefined,
 };
 
 const authSlice = createSlice({
@@ -58,6 +61,9 @@ const authSlice = createSlice({
           (state.recommendations[recommendation.index] = recommendation)
       );
     },
+    setSurvey(state, action: PayloadAction<SurveyAnswers>) {
+      state.survey = action.payload;
+    },
   },
 });
 
@@ -72,6 +78,14 @@ export const selectRecommendation = (
 ): Recommendation | undefined =>
   state.portal.recommendations[recommendationIndex];
 
-export const { setFiles, uploadSuccess, addPersonSuccess } = authSlice.actions;
+export const selectSurvey = (state: RootState): SurveyAnswers | undefined =>
+  state.portal.survey;
+
+export const {
+  setFiles,
+  uploadSuccess,
+  addPersonSuccess,
+  setSurvey,
+} = authSlice.actions;
 
 export default authSlice.reducer;

@@ -4,12 +4,24 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "store";
 
+interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  type: "APPLICANT" | "ADMIN" | "SUPER_ADMIN";
+  verified: boolean;
+  created: string;
+}
+
 interface AuthState {
   isAuthorised: boolean;
+  user: User | null;
 }
 
 export const initialState: AuthState = {
   isAuthorised: false,
+  user: null,
 };
 
 const authSlice = createSlice({
@@ -21,6 +33,10 @@ const authSlice = createSlice({
     },
     authFail(state) {
       state.isAuthorised = false;
+      state.user = null;
+    },
+    userInfoSuccess(state, action: PayloadAction<User>) {
+      state.user = action.payload;
     },
   },
 });
@@ -28,6 +44,6 @@ const authSlice = createSlice({
 export const selectAuthenticated = (state: RootState) =>
   state.auth.isAuthorised;
 
-export const { authSuccess, authFail } = authSlice.actions;
+export const { authSuccess, authFail, userInfoSuccess } = authSlice.actions;
 
 export default authSlice.reducer;

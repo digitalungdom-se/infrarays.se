@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
+import { selectAuthenticated, userInfoSuccess } from "features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Axios from "axios";
-import { appSuccess } from "./../appSlice";
-import { selectAuthenticated } from "features/auth/authSlice";
 
 interface AuthenticatedLayerProps {
   children: React.ReactElement;
@@ -19,7 +18,7 @@ export default function AuthenticatedLayer(
     if (isAuthenticated)
       Axios.get("/user/@me")
         .then((res) => {
-          dispatch(appSuccess(res));
+          dispatch(userInfoSuccess(res.data));
         })
         .catch(console.error);
   }, [dispatch, isAuthenticated]);

@@ -1,14 +1,15 @@
+import ReactRating, { RatingComponentProps } from "react-rating";
+
+import { ReactComponent as Icon } from "resources/star.svg";
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import styled from 'styled-components';
-import { ReactComponent as Icon } from 'resources/star.svg';
-import ReactRating from 'react-rating';
+import React from "react";
+import styled from "styled-components";
 
 // https://stackoverflow.com/questions/39056537
 
 const Star = styled(Icon)`
   &.full path {
-    fill: ${props => props.theme.brand || 'gold'};
+    fill: ${(props) => props.theme.brand || "gold"};
   }
   &.empty path {
     fill: gray;
@@ -18,9 +19,8 @@ const Star = styled(Icon)`
   margin-top: -3px;
 `;
 
-const Rating = ({ field, form, ...props }) => (
+const Rating = (props: RatingComponentProps) => (
   <ReactRating
-    {...field}
     {...props}
     emptySymbol={<Star className="empty icon" />}
     fullSymbol={<Star className="full icon" />}

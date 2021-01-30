@@ -6,13 +6,13 @@ import ContactPerson from "components/portal/ContactPerson";
 import { RootState } from "store";
 import { addPersonSuccess } from "features/portal/portalSlice";
 import { selectRecommendation } from "features/portal/portalSlice";
-import useAxios from "axios-hooks";
 
 interface PersonProps {
   recommendationIndex: number;
+  initialLoading?: boolean;
 }
 
-const Person = ({ recommendationIndex }: PersonProps) => {
+const Person = ({ recommendationIndex, initialLoading }: PersonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const recommendation = useSelector((state: RootState) =>
     selectRecommendation(state, recommendationIndex)
@@ -31,7 +31,7 @@ const Person = ({ recommendationIndex }: PersonProps) => {
     <ContactPerson
       handleSubmit={handleSubmit}
       email={recommendation?.email}
-      loading={loading}
+      loading={loading || initialLoading}
       received={Boolean(recommendation?.received)}
       sendDate={recommendation?.lastSent || "1970-01-01"}
       cooldown={["day", 1]}
@@ -40,11 +40,6 @@ const Person = ({ recommendationIndex }: PersonProps) => {
 };
 
 const References = () => {
-  const [{ data, loading, error }, refetch] = useAxios(
-    "/application/@me/recommendation"
-  );
-  const dispatch = useDispatch();
-  if (data) dispatch(addPersonSuccess(data));
   const map = [];
   for (let i = 0; i < 3; i += 1) {
     map[i] = <Person key={`email-person-${i}`} recommendationIndex={i} />;

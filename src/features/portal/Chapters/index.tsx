@@ -25,7 +25,7 @@ const Chapters: React.FC<WithTranslation> = ({ t }): React.ReactElement => (
           />
         )}
         {chapter.contactPeople && <References />}
-        {/* {chapter.survey && <PortalSurvey done={survey !== undefined} />} */}
+        {chapter.survey && <PortalSurvey />}
       </Chapter>
     ))}
   </>
