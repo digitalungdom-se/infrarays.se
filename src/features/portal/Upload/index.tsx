@@ -1,22 +1,26 @@
+import { FileInfo, FileType, selectSingleFile } from "../portalSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Axios from "axios";
+import { RootState } from "store";
 import Upload from "components/portal/Upload";
-import { uploadSuccess } from "features/appSlice";
+import { uploadSuccess } from "../portalSlice";
 import { useTranslation } from "react-i18next";
 
 interface UploadHookProps {
   label?: string;
   accept?: string;
-  fileType: string;
+  fileType: FileType;
 }
 
 const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<any>();
   const dispatch = useDispatch();
-  const uploaded: any = useSelector<any>((state) => state.app.files[fileType]);
+  const fileInfo = useSelector((state: RootState) =>
+    selectSingleFile(state, fileType)
+  );
   const { t } = useTranslation();
 
   function handleChange(file: any, fileName: string) {
@@ -27,26 +31,12 @@ const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
     setUploading(true);
     const form = new FormData();
     form.append("file", file, fileName);
-    Axios({
-      method: "POST",
-      url: `application/@me/file/${fileType.toUpperCase()}`,
+    Axios.post<FileInfo>(`application/@me/file/${fileType}`, form, {
       headers: { "Content-Type": "multipart/form-data" },
-      data: form,
     }).then((res) => {
       setUploading(false);
-      dispatch(uploadSuccess({ fileName, fileType }));
-      // if (res.type === "success") {
-      //   dispatch(uploadSuccess({ fileName, fileType }));
-      // } else {
-      //   res.json = true;
-      //   throw res;
-      // }
+      dispatch(uploadSuccess(res.data));
     });
-    // .catch((err) => {
-    //   if (err.json) {
-    //     setError({ msg: err?.errors[0].msg, fileName });
-    //   }
-    // });
   }
 
   return (
@@ -55,7 +45,7 @@ const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
       accept={accept}
       onChange={handleChange}
       uploading={uploading}
-      uploaded={uploaded?.name || error?.fileName}
+      uploaded={fileInfo?.name || error?.fileName}
       // time={uploaded?.time}
       error={error?.msg}
     />

@@ -1,6 +1,7 @@
 import { WithTranslation, withTranslation } from "react-i18next";
 
 import Chapter from "components/portal/Chapter";
+import { FileType } from "../portalSlice";
 import PortalSurvey from "../Survey";
 import React from "react";
 import References from "../References";
@@ -20,7 +21,7 @@ const Chapters: React.FC<WithTranslation> = ({ t }): React.ReactElement => (
           <Upload
             label={t(`${chapter.fileType}.upload.label`)}
             accept={chapter.upload.accept}
-            fileType={chapter.fileType}
+            fileType={chapter.fileType as FileType}
           />
         )}
         {/* {chapter.contactPeople && <References />} */}

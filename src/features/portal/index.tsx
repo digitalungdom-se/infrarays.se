@@ -1,4 +1,5 @@
 import { ButtonGroup, ProgressBar } from "react-bootstrap";
+import { FileInfo, setFiles } from "./portalSlice";
 import React, { useEffect } from "react";
 import { appFailure, appSuccess } from "features/appSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,9 +20,9 @@ const Hook = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    Axios.get("/application/@me/file")
+    Axios.get<FileInfo[]>("/application/@me/file")
       .then((res) => {
-        dispatch(appSuccess(res));
+        dispatch(setFiles(res.data));
       })
       .catch((err) => {
         if (err.json) {
@@ -30,7 +31,7 @@ const Hook = () => {
       });
   });
 
-  const files = useSelector((state) => state.app?.files);
+  // const files = useSelector((state) => state.app?.files);
 
   // const progress = (files ? Object.keys(files).length : 0) + (survey ? 1 : 0);
 
@@ -39,18 +40,18 @@ const Hook = () => {
   // const t = translation[language];
 
   return (
-    <Center noTop>
+    <Center>
       <StyledPlate>
-        <Logo center maxWidth="80%" />
+        <Logo center />
         <div>
           <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
-          <ReactMarkdown source={t("introduction")} />
+          <ReactMarkdown source={t("introduction") || ""} />
           {/* <ProgressBar
             label={`${(progress / 5) * 100}%`}
             variant="custom"
             now={(progress / 5) * 100}
           /> */}
-          <hr styled="color:#b8b8b8" size="1" />
+          <hr style={{ color: "#b8b8b8" }} />
         </div>
         <div>
           <Chapters />
