@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { logoutSuccess } from 'features/appSlice';
-import { useDispatch } from 'react-redux';
-import { Button, Spinner, Modal, Form, FormControl } from 'react-bootstrap';
-import StyledGroup from 'components/StyledGroup';
-import { useTranslation } from 'react-i18next';
+import { Button, Form, FormControl, Modal, Spinner } from "react-bootstrap";
+import React, { useState } from "react";
+
+import Axios from "axios";
+import StyledGroup from "components/StyledGroup";
+import { TokenStorage } from "utils/tokenInterceptor";
+import { logoutSuccess } from "features/appSlice";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const ConfirmModal = ({ show, onHide }) => {
   const dispatch = useDispatch();
@@ -19,69 +22,34 @@ const ConfirmModal = ({ show, onHide }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {t('Do you want to delete your account?')}
+          {t("Do you want to delete your account?")}
         </Modal.Title>
       </Modal.Header>
-      <Form
-        onSubmit={e => {
-          e.preventDefault();
-          const password = e.target?.password?.value;
-          setDelete(true);
-          fetch('/api/user/application', {
-            method: 'delete',
-            body: JSON.stringify({ password })
-          })
-            .then(res => res.json())
-            .then(res => {
-              setDelete(false);
-              if (res.type === 'success') {
-                dispatch(logoutSuccess());
-              } else {
-                res.json = true;
-                throw res;
-              }
-            })
-            .catch(err => {
-              if (err.json) {
-                setError(err.msg);
-              }
+      <Modal.Body>
+        <p>{t("Once you have deleted")}</p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={onHide}>{t("Cancel")}</Button>
+        <Button
+          type="submit"
+          variant="danger"
+          disabled={deleting}
+          onClick={() => {
+            setDelete(true);
+            Axios.delete("/user/@me").then(() => {
+              TokenStorage.clear();
             });
-        }}
-      >
-        <Modal.Body>
-          <p>{t('Once you have deleted')}</p>
-          {false && (
-            <StyledGroup
-              className="inputbox"
-              style={{ margin: '0 auto' }}
-              controlId="form-password"
-            >
-              <FormControl
-                isInvalid={error}
-                type="password"
-                placeholder="Lösenord"
-                name="password"
-              />
-              <Form.Label>Lösenord</Form.Label>
-              <Form.Control.Feedback type="invalid">
-                {error}
-              </Form.Control.Feedback>
-            </StyledGroup>
+          }}
+        >
+          {deleting ? (
+            <span>
+              <Spinner animation="border" size="sm" /> {t("Deleting account")}
+            </span>
+          ) : (
+            t("Delete account")
           )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={onHide}>{t('Cancel')}</Button>
-          <Button type="submit" variant="danger" disabled={deleting}>
-            {deleting ? (
-              <span>
-                <Spinner animation="border" size="sm" /> {t('Deleting account')}
-              </span>
-            ) : (
-              t('Delete account')
-            )}
-          </Button>
-        </Modal.Footer>
-      </Form>
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 };
@@ -98,7 +66,7 @@ const Delete = () => {
           showModal(true);
         }}
       >
-        {t('Delete account')}
+        {t("Delete account")}
       </Button>
     </>
   );

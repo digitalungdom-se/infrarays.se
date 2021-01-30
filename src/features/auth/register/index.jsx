@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import { useHistory, Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-
-import StyledGroup from "components/StyledGroup";
-import Center from "components/Center";
-import Plate from "components/Plate";
-import Logo from "components/Logo";
 import "./signup.css";
-import { withTranslation, Trans } from "react-i18next";
 
-import { Spinner, Alert } from "react-bootstrap";
+import { Alert, Spinner } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { Trans, withTranslation } from "react-i18next";
+
+import Axios from "axios";
+import Button from "react-bootstrap/Button";
+import Center from "components/Center";
+import Form from "react-bootstrap/Form";
+import Logo from "components/Logo";
+import MaskedInput from "react-maskedinput";
+import Plate from "components/Plate";
+import StyledGroup from "components/StyledGroup";
 import moment from "moment";
 import { toast } from "react-toastify";
-import MaskedInput from "react-maskedinput";
-import axios from "axios";
 
 const MaskedField = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -59,24 +59,27 @@ export default withTranslation()(({ t }) => {
               setError(isError);
             } else {
               setLoading(true);
-              axios
-                .post("/user", {
-                  email,
-                  firstName,
-                  lastName,
-                  birthdate,
-                  finnish: finnish === "Yes",
-                })
+              Axios.post("/application", {
+                email,
+                firstName,
+                lastName,
+                birthdate,
+                finnish: finnish === "Yes",
+              })
                 .then(() => {
-                  push("/verify");
-                  toast.success(t("Successfully registered!"), {
-                    position: "top-center",
-                    autoClose: false,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                  });
+                  Axios.post("/user/send_email_login_code", { email }).then(
+                    () => {
+                      push(`/login/${btoa(email)}`);
+                      toast.success(t("Successfully registered!"), {
+                        position: "top-center",
+                        autoClose: false,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                      });
+                    }
+                  );
                 })
                 .catch(() => {
                   setLoading(false);
