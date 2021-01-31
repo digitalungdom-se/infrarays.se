@@ -75,5 +75,7 @@
   "Randomise": "Slumpa ordning",
   "Randomising": "Slumpar ordning...",
   "Save": "Spara",
-  "Saving": "Sparar"
+  "Saving": "Sparar",
+  "Check your email": "Kolla din email ({{email}}) för en inloggningskod. Klistra in koden nedanför och logga in.",
+  "Login code": "Inloggningskod"
 }

@@ -7,6 +7,7 @@ import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
 import React from "react";
 import StyledGroup from "components/StyledGroup";
+import { Trans } from "react-i18next";
 
 interface Values {
   code: string;
@@ -26,22 +27,27 @@ const LoginWithCode: React.FC<LoginWithCodeProps> = ({
   t = (s) => s,
   email,
 }) => (
-  <CenterCard title="Login" maxWidth="400px">
-    {email}
+  <CenterCard title={t("Login")} maxWidth="400px">
     <Formik initialValues={{ code: "" }} onSubmit={onSubmit}>
       {({ values, handleChange, isSubmitting, errors }) => (
         <Form>
+          <div style={{ marginBottom: 20 }}>
+            <Trans i18nKey="Check your email">
+              Check your email ({{ email }}) for a login code. Paste it down
+              below and log in.
+            </Trans>
+          </div>
           <StyledGroup>
             <FormControl
               name="code"
-              placeholder="Code"
+              placeholder={t("Login code")}
               autoFocus
               isInvalid={Boolean(errors.code)}
               disabled={isSubmitting}
               value={values.code}
               onChange={handleChange}
             />
-            <FormLabel>Code</FormLabel>
+            <FormLabel>{t("Login code")}</FormLabel>
             <FormControl.Feedback type="invalid">
               {errors?.code !== undefined && t(errors.code)}
             </FormControl.Feedback>

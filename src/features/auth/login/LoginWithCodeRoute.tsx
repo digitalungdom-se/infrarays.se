@@ -6,6 +6,7 @@ import LoginWithCode from "./LoginWithCode";
 import React from "react";
 import { appSuccess } from "features/appSlice";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export const loginWithCode = (email: string, loginCode: string) =>
   Axios.post(
@@ -25,9 +26,11 @@ export const loginWithCode = (email: string, loginCode: string) =>
 const LoginWithCodeRoute = () => {
   const { emailInBase64 } = useParams<{ emailInBase64: string }>();
   const history = useHistory();
+  const { t } = useTranslation();
   return (
     <LoginWithCode
       email={atob(emailInBase64)}
+      t={t}
       onSubmit={(values) => {
         loginWithCode(atob(emailInBase64), values.code);
         history.push("/");

@@ -74,5 +74,7 @@
   "Randomise": "Randomise order",
   "Randomising": "Randomising order...",
   "Save": "Save",
-  "Saving": "Saving"
+  "Saving": "Saving",
+  "Check your email": "Check your email ({{ email }}) for a login code. Paste it down below and log in.",
+  "Login code": "Login code"
 }
