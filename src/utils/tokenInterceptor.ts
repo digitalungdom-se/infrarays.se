@@ -37,14 +37,15 @@ export class TokenStorage {
             grant_type: "refresh_token",
           })
           .then((response) => {
+            console.log(response);
             this.updatingToken = false;
             this.storeTokens(response.data);
             resolve(response.data.access_token);
           })
           .catch((error) => {
             this.updatingToken = false;
-            this.clear();
-            reject(error);
+            this.removeTokensAndNotify();
+            console.error(error);
           });
       }
     );
@@ -93,16 +94,19 @@ export class TokenStorage {
   public static clear(): void {
     axios
       .post("/user/oauth/revoke", { token: this.getRefreshToken() })
-      .then(() => {
-        toast.info(i18n.t("Logged out"), {
-          position: "bottom-center",
-        });
-        localStorage.removeItem(TokenStorage.LOCAL_STORAGE_ACCESS_TOKEN);
-        localStorage.removeItem(TokenStorage.LOCAL_STORAGE_REFRESH_TOKEN);
-        localStorage.removeItem(TokenStorage.LOCAL_STORAGE_TOKEN_EXPIRY);
-        store.dispatch(authFail());
-      })
+      .then(this.removeTokensAndNotify)
       .catch(console.error);
+  }
+
+  private static removeTokensAndNotify(): void {
+    console.log("Removing tokens...");
+    toast.info(i18n.t("Logged out"), {
+      position: "bottom-center",
+    });
+    localStorage.removeItem(TokenStorage.LOCAL_STORAGE_ACCESS_TOKEN);
+    localStorage.removeItem(TokenStorage.LOCAL_STORAGE_REFRESH_TOKEN);
+    localStorage.removeItem(TokenStorage.LOCAL_STORAGE_TOKEN_EXPIRY);
+    store.dispatch(authFail());
   }
 
   private static getRefreshToken(): string | null {
