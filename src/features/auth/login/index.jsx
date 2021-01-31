@@ -39,7 +39,7 @@ const Login = () => {
               });
           }}
         >
-          <StyledGroup controlId="form-email">
+          <StyledGroup controlId="form-email" style={{ marginTop: 50 }}>
             <Form.Control
               name="email"
               type="email"

@@ -48,6 +48,12 @@
       "description": "Vi som arrangerar Rays vill veta varifrån du kommer, på vilken gymnasieskola du studerar, hur du hört talas om Rays samt vad du tycker om ansökningsprocessen. Allt detta för att vi ska kunna bli ännu bättre på att marknadsföra oss samt utveckla ansökningprocessen. Fyll därför i formuläret nedan och klicka på skicka för att spara ditt svar."
     },
     {
+      "title": "Appendix",
+      "fileType": "APPENDIX",
+      "description": "Appendix",
+      "appendix": true
+    },
+    {
       "title": "Rekommendationsbrev",
       "fileType": "RECOMMENDATION_LETTER",
       "description": "Rekommendationsbrev från lärare, tränare eller liknande. Exempel på frågor som kan behandlas i en rekommendation är hur eleven hanterar utmaningar och ansvar, och varför eleven har potential att bli en framtida ledare inom forskning. Rekommendationsbrev skall komponeras, signeras och skickas av läraren, tränaren eller liknande. [Mer info hittas här.](https://raysforexcellence.se/rekommendationsbev)\n\nGenom att skriva in en e-post nedan kommer en länk att skickas till mottagaren som kan ladda upp sitt rekommendationsbrev. Du kommer att kunna skicka om och ändra emailet så länge mottagaren inte har laddat upp sitt brev. Så fort mottagaren har laddat upp brevet är den låst till din ansökan.\n\n**Du bör helst skicka in minst 1 och max 3 rekommendationsbrev.**",

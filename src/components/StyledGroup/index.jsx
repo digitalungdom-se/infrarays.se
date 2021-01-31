@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import Form from "react-bootstrap/Form";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const StyledGroup = styled(Form.Group)`
   & {

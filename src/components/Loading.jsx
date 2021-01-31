@@ -1,17 +1,17 @@
-import React from 'react';
-import CenterCard from 'components/CenterCard';
-import Spinner from 'react-bootstrap/Spinner';
+import CenterCard from "components/CenterCard";
+import React from "react";
+import Spinner from "react-bootstrap/Spinner";
 
 const Loading = () => (
   <CenterCard maxWidth="360px">
     <Spinner
       animation="border"
       style={{
-        margin: '0 auto',
-        display: 'block',
-        fontSize: '3rem',
-        width: '10rem',
-        height: '10rem'
+        margin: "0 auto",
+        display: "block",
+        fontSize: "3rem",
+        width: "5rem",
+        height: "5rem",
       }}
     />
   </CenterCard>

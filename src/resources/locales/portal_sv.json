@@ -1,5 +1,5 @@
 {
-  "title": "Ansökan för Rays 2020",
+  "title": "Ansökan för Rays 2021",
   "introduction": "Tack för att du vill ansöka till Rays! Vi kommer att läsa alla ansökningar och återkomma så snart vi kan. Du ser nedan vilka uppgifter vi vill att du sänder in. Den **31 mars klockan 23:59** stänger möjligheten att ladda uppansökningar och då kommer din ansökan automatiskt att skickas in till Rays. För att din ansökan ska skickas måste du ha laddat upp alla filer samt fyllt i formuläret. Fram till detta datum kan du uppdatera en del genom att bara ladda upp en ny fil igen. Din gamla fil kommer då ersättas med den nya. Alla filer måste vara i pdf-format och de specifika begränsningarna för filstorlek och antalet ord står bredvid varje uppladdningsdel. Filstorleken är 5 MB per del.\n\nVi som arrangerar Rays önskar dig ett stort lycka till och ser fram emot att få läsa din ansökan! [För mer information tryck här!](http://raysforexcellence.se/ansok/)",
   "COVER_LETTER": {
     "title": "Personligt brev",
@@ -42,6 +42,11 @@
     "title": "Rekommendationsbrev",
     "subtitle": "",
     "description": "Rekommendationsbrev från lärare, tränare eller liknande. Exempel på frågor som kan behandlas i en rekommendation är hur eleven hanterar utmaningar och ansvar, och varför eleven har potential att bli en framtida ledare inom forskning. Rekommendationsbrev skall komponeras, signeras och skickas av läraren, tränaren eller liknande. [Mer info hittas här.](https://raysforexcellence.se/rekommendationsbev)\n\nGenom att skriva in en e-post nedan kommer en länk att skickas till mottagaren som kan ladda upp sitt rekommendationsbrev. Du kommer att kunna skicka om och ändra emailet så länge mottagaren inte har laddat upp sitt brev. Så fort mottagaren har laddat upp brevet är den låst till din ansökan.\n\n**Du bör helst skicka in minst 1 och max 3 rekommendationsbrev.**"
+  },
+  "APPENDIX": {
+    "title": "Bilagor",
+    "subtitle": "",
+    "description": "Snart kommer vi lägga till en funktion för att lägga till bilagor. Var vänlig och kolla in portalen igen i framtiden om du skulle vilja lägga upp en bilaga. **Detta är inte nödvändigt men har efterfrågats av några.**"
   },
   "GDPR": "** RAYS Application Portal GDPR **\n\nNär du skapar ett konto godkänner du att:\n\n-   RESEARCH ACADEMY FOR YOUNG SCIENTISTS (RAYS), nedan kallat RAYS, och Digital Ungdom får spara dina personuppgifter upp till ett (1) år.\n\n-   RAYS och Digital Ungdom får spara all uppladdad data på hemsidan upp till ett (1) år.\n\nDu har rätt att:\n\n-   Slippa få dina personuppgifter utlämnade till tredje parter.\n\n-   Få ut en utskrift med all information som RAYS sparat om dig.\n\n-   Få dina uppgifter rättade om de är fel.\n\n-   Få uppgifter om dig raderade.\n\nDet görs genom att skicka e-post till [application@raysforexcellence.se] (mailto:ansokan@raysforexcellence.se) och berätta vad du vill.\n\nRAYS använder dina personuppgifter till att:\n\n-   Ta fram relevant statistik för RAYS.\n\n-   Kontakta dig med eventuell relevant information.\n\n-   Välja ut sökande i antagningsprocessen.\n\n-   Publicera information om de antagna.\n\nRAYS ansvarar för att:\n\n-   Aldrig lämna ut dina personuppgifter utan att du har godkänt det.\n\n-   Vara försiktiga så att ingen utanför föreningen tar del av dina personuppgifter.\n\nHar ni frågor om RAYS och dataskyddet för dina uppgifter kontakta\nkansliet via e-post\n[application@raysforexcellence.se] (mailto:ansokan@raysforexcellence.se)."
 }
