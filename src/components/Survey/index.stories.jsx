@@ -1,29 +1,28 @@
-import React from 'react';
-import Plate from 'components/Plate';
-import { Form, Button } from 'react-bootstrap';
-import MaskedInput from 'react-maskedinput';
-import Survey from './index';
+import React from "react";
+import Plate from "components/Plate";
+import { Form, Button } from "react-bootstrap";
+import MaskedInput from "react-maskedinput";
+import Survey from "./index";
 
 export default {
-  title: 'Survey',
+  title: "Survey",
   decorators: [
-    Story => (
-      <div style={{ padding: 50, background: '#f6f6f6' }}>
+    (Story) => (
+      <div style={{ padding: 50, background: "#f6f6f6" }}>
         <Plate>
           <Story />
         </Plate>
       </div>
-    )
-  ]
+    ),
+  ],
 };
 
 export const withText = () => <Survey>Hey!</Survey>;
 
 export const MaskedInputField = () => (
   <Form
-    onSubmit={e => {
+    onSubmit={(e) => {
       e.preventDefault();
-      console.log(e.target.birthdate.value);
     }}
   >
     <Form.Group controlId="formPlaintextEmail">

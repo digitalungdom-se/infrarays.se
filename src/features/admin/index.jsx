@@ -1,17 +1,18 @@
-import React, { lazy } from 'react';
-import Center from 'components/Center';
-import Plate from 'components/Plate';
-import Logo from 'components/Logo';
-import { Switch, Route } from 'react-router-dom';
-import ProtectedRoute from 'features/router/ProtectedRoute';
-import Logout from 'features/portal/Logout';
-import Nav from './Nav';
+import React, { lazy } from "react";
+import { Route, Switch } from "react-router-dom";
 
-const AdminLogin = lazy(() => import('features/admin/login'));
-const TopList = lazy(() => import('features/admin/TopList'));
-const NoMatch = lazy(() => import('features/nomatch'));
-const Administration = lazy(() => import('features/admin/Administration'));
-const Grading = lazy(() => import('features/admin/Grading'));
+import Center from "components/Center";
+import Logo from "components/Logo";
+import Logout from "features/portal/Logout";
+import Nav from "./Nav";
+import Plate from "components/Plate";
+import ProtectedRoute from "features/router/ProtectedRoute";
+
+const AdminLogin = lazy(() => import("features/admin/login"));
+const TopList = lazy(() => import("features/admin/TopList"));
+const NoMatch = lazy(() => import("features/nomatch"));
+const Administration = lazy(() => import("features/admin/Administration"));
+const Grading = lazy(() => import("features/admin/Grading"));
 
 const Authorised = () => (
   <Center>
@@ -34,14 +35,14 @@ const Authorised = () => (
       </Switch>
       <Logout
         url="/api/admin/logout"
-        style={{ float: 'right', display: 'block', clear: 'both' }}
+        style={{ float: "right", display: "block", clear: "both" }}
       />
-      <div style={{ clear: 'both' }} />
+      <div style={{ clear: "both" }} />
     </Plate>
   </Center>
 );
 
-export default () => (
+const AdminRouter = () => (
   <Switch>
     <ProtectedRoute admin shouldBeAuthenticated={false} path="/admin/login">
       <AdminLogin />
@@ -51,3 +52,5 @@ export default () => (
     </ProtectedRoute>
   </Switch>
 );
+
+export default AdminRouter;

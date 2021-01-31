@@ -1,10 +1,12 @@
-import React from "react";
+import { Redirect, Route } from "react-router-dom";
+
 import PropTypes from "prop-types";
-import { Route, Redirect } from "react-router-dom";
+import React from "react";
+import { selectAuthenticated } from "features/auth/authSlice";
 import { useSelector } from "react-redux";
 
 function ProtectedRoute({ shouldBeAuthenticated, children, admin, ...rest }) {
-  const isAuthenticated = useSelector((state) => state.app.isAuthorised);
+  const isAuthenticated = useSelector(selectAuthenticated);
   if (admin === false && isAuthenticated === "admin") {
     return <Redirect to="/admin" />;
   }

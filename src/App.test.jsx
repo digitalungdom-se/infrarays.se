@@ -4,6 +4,6 @@ import App from "./App";
 
 test('renders "Utvecklat av Digital Ungdom"', () => {
   const { getByText } = render(<App />);
-  const element = getByText(/Logga in/i);
+  const element = getByText(/Svenska/i);
   expect(element).toBeInTheDocument();
 });

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Button, Spinner } from 'react-bootstrap';
-import FileSaver from 'file-saver';
-import { useTranslation } from 'react-i18next';
+import { Button, Spinner } from "react-bootstrap";
+import React, { useState } from "react";
+
+import Axios from "axios";
+import FileSaver from "file-saver";
+import { useTranslation } from "react-i18next";
 
 const Download = ({ style }) => {
   const [downloading, setDownload] = useState(false);
@@ -11,24 +13,25 @@ const Download = ({ style }) => {
       style={style}
       onClick={() => {
         setDownload(true);
-        fetch('/api/user/application', {
-          method: 'get'
-        })
-          .then(res => res.blob())
-          .then(blob => {
+        Axios.get("/application/@me/pdf", { responseType: "blob" }).then(
+          (res) => {
             setDownload(false);
-            FileSaver.saveAs(blob, 'application.pdf');
-          });
+            FileSaver.saveAs(
+              res.data,
+              res.headers["content-disposition"].split("filename=")[1]
+            );
+          }
+        );
       }}
       disabled={downloading}
     >
       {downloading ? (
         <span>
-          <Spinner animation="border" size="sm" />{' '}
-          {t('Downloading application')}
+          <Spinner animation="border" size="sm" />{" "}
+          {t("Downloading application")}
         </span>
       ) : (
-        t('Download application')
+        t("Download application")
       )}
     </Button>
   );

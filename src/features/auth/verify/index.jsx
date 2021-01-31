@@ -1,12 +1,14 @@
-import React from "react";
-import { useParams, useHistory, Switch, Route } from "react-router-dom";
-import { Spinner, Alert } from "react-bootstrap";
-import CenterCard from "components/CenterCard";
-import useFetch from "utils/useFetch";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { Alert, Spinner } from "react-bootstrap";
+import { Route, Switch, useHistory, useParams } from "react-router-dom";
+
+import CenterCard from "components/CenterCard";
+import React from "react";
 import { appSuccess } from "features/appSlice";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import useFetch from "utils/useFetch";
 import { useTranslation } from "react-i18next";
 
 const Verify = () => {
@@ -90,16 +92,20 @@ const Verify = () => {
 const MustVerify = () => <p>Du måste verifiera din e-mail.</p>;
 
 const VerifyRouter = () => (
-  <CenterCard maxWidth="400px" title="Verify e-mail">
-    <Switch>
-      <Route path="/verify/:token">
-        <Verify />
-      </Route>
-      <Route>
+  <Switch>
+    {/* <Route
+      path="/verify/login/:email">
+        <LoginWithCodeRoute>
+      </Route> */}
+    <Route path="/verify/:token">
+      <Verify />
+    </Route>
+    <Route>
+      <CenterCard maxWidth="400px" title="Verify e-mail">
         <MustVerify />
-      </Route>
-    </Switch>
-  </CenterCard>
+      </CenterCard>
+    </Route>
+  </Switch>
 );
 
 export default VerifyRouter;

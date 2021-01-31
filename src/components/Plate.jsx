@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Plate = styled.div`
   padding: 20px 36px;
@@ -12,6 +12,8 @@ const Plate = styled.div`
   -o-box-shadow: 0 0 3px #ccc;
   box-shadow: 0 0 3px #ccc;
   border-radius: 8px;
+
+  min-width: 300px;
 
   /* display: block; */
 `;

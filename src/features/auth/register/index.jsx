@@ -1,18 +1,20 @@
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
-import StyledGroup from "components/StyledGroup";
-import Center from "components/Center";
-import Plate from "components/Plate";
-import Logo from "components/Logo";
 import "./signup.css";
-import { withTranslation, Trans } from "react-i18next";
 
-import { Spinner, Alert } from "react-bootstrap";
+import { Alert, Spinner } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { Trans, withTranslation } from "react-i18next";
+
+import Axios from "axios";
+import Button from "react-bootstrap/Button";
+import Center from "components/Center";
+import Form from "react-bootstrap/Form";
+import Logo from "components/Logo";
+import MaskedInput from "react-maskedinput";
+import Plate from "components/Plate";
+import StyledGroup from "components/StyledGroup";
 import moment from "moment";
 import { toast } from "react-toastify";
-import MaskedInput from "react-maskedinput";
 
 const MaskedField = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -21,8 +23,8 @@ const MaskedField = (props) => (
 
 export default withTranslation()(({ t }) => {
   const [error, setError] = useState();
-  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { push } = useHistory();
   return (
     <Center maxWidth="850px">
       <Plate>
@@ -38,17 +40,15 @@ export default withTranslation()(({ t }) => {
           onSubmit={(e) => {
             e.preventDefault();
             const email = e.target.email.value;
-            const password = e.target.password.value;
             const firstName = e.target.firstName.value
               .replace(/\s+/g, " ")
               .trim();
-            const surname = e.target.surname.value.replace(/\s+/g, " ").trim();
+            const lastName = e.target.lastName.value
+              .replace(/\s+/g, " ")
+              .trim();
             const birthdate = e.target.birthdate.value;
             const finnish = e.target.finnish.value;
             const isError = {};
-            if (password.length > 72) {
-              isError.password = "password can be max 72 chars";
-            }
             if (finnish === "") {
               isError.finnish = "choose an option";
             }
@@ -59,58 +59,55 @@ export default withTranslation()(({ t }) => {
               setError(isError);
             } else {
               setLoading(true);
-              fetch("/api/user/register", {
-                method: "post",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  email,
-                  password,
-                  name: `${firstName} ${surname}`,
-                  birthdate,
-                  finnish: finnish === "Yes",
-                }),
+              Axios.post("/application", {
+                email,
+                firstName,
+                lastName,
+                birthdate,
+                finnish: finnish === "Yes",
               })
-                .then((res) => res.json())
-                .then((res) => {
-                  setLoading(false);
-                  if (res.type === "success") {
-                    setSuccess(true);
-                    toast.success(t("Please verify e-mail!"), {
-                      position: "top-center",
-                      autoClose: false,
-                      hideProgressBar: false,
-                      closeOnClick: true,
-                      pauseOnHover: true,
-                      draggable: true,
-                    });
-                    setError(null);
-                  } else {
-                    res.json = true;
-                    throw res;
-                  }
+                .then(() => {
+                  Axios.post("/user/send_email_login_code", { email }).then(
+                    () => {
+                      push(`/login/${btoa(email)}`);
+                      toast.success(t("Successfully registered!"), {
+                        position: "top-center",
+                        autoClose: false,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                      });
+                    }
+                  );
                 })
-                .catch((err) => {
+                .catch(() => {
                   setLoading(false);
-                  if (err.json) {
-                    const errors = {};
-                    err.errors.forEach((err1) => {
-                      errors[err1.param] = err1.msg;
-                    });
-                    setError(errors);
-                  } else {
-                    setError({ fetchError: "fetch error" });
-                  }
+                  setError({ email: "email exists" });
                 });
             }
           }}
         >
+          <StyledGroup className="inputbox" controlId="form-firstname">
+            <Form.Control
+              required
+              type="text"
+              placeholder={t("First name")}
+              name="firstName"
+            />
+            <Form.Label>{t("First name")}</Form.Label>
+          </StyledGroup>
+          <StyledGroup className="inputbox" controlId="form-lastname">
+            <Form.Control
+              required
+              type="text"
+              placeholder={t("Surname")}
+              name="lastName"
+            />
+            <Form.Label>{t("Surname")}</Form.Label>
+          </StyledGroup>
           <StyledGroup className="inputbox" controlId="form-email">
             <Form.Control
-              disabled={success}
-              isValid={success}
               isInvalid={error?.email}
               required
               type="email"
@@ -123,49 +120,9 @@ export default withTranslation()(({ t }) => {
               {t(error?.email)}
             </Form.Control.Feedback>
           </StyledGroup>
-          <StyledGroup className="inputbox" controlId="form-password">
-            <Form.Control
-              disabled={success}
-              isValid={success}
-              isInvalid={error?.password}
-              required
-              type="password"
-              placeholder={t("Password")}
-              name="password"
-              maxLength="72"
-            />
-            <Form.Label>{t("Password")}</Form.Label>
-            <Form.Control.Feedback type="invalid">
-              {t(error?.password)}
-            </Form.Control.Feedback>
-          </StyledGroup>
-          <StyledGroup className="inputbox" controlId="form-firstname">
-            <Form.Control
-              disabled={success}
-              isValid={success}
-              required
-              type="text"
-              placeholder={t("First name")}
-              name="firstName"
-            />
-            <Form.Label>{t("First name")}</Form.Label>
-          </StyledGroup>
-          <StyledGroup className="inputbox" controlId="form-lastname">
-            <Form.Control
-              disabled={success}
-              isValid={success}
-              required
-              type="text"
-              placeholder={t("Surname")}
-              name="surname"
-            />
-            <Form.Label>{t("Surname")}</Form.Label>
-          </StyledGroup>
           <StyledGroup className="inputbox" controlId="form-birthdate">
             <Form.Control
               as={MaskedField}
-              disabled={success}
-              isValid={success}
               required
               type="text"
               placeholder={t("Date of birth")}
@@ -179,8 +136,6 @@ export default withTranslation()(({ t }) => {
           </StyledGroup>
           <Form.Group controlId="form-finland" className="inputbox">
             <Form.Control
-              disabled={success}
-              isValid={success}
               as="div"
               style={{
                 height: 50,
@@ -206,7 +161,6 @@ export default withTranslation()(({ t }) => {
                 type="radio"
                 id="custom-inline-radio-1"
                 name="finnish"
-                disabled={success}
               />
               <Form.Check
                 custom
@@ -216,7 +170,6 @@ export default withTranslation()(({ t }) => {
                 type="radio"
                 id="custom-inline-radio-2"
                 name="finnish"
-                disabled={success}
               />
             </Form.Control>
             <Form.Control.Feedback type="invalid">
