@@ -43,7 +43,7 @@ function AppRouter() {
           {/* <Route path="/verify">
             <VerifyRouter />
           </Route> */}
-          <Route path="/recommendation/:userID/:recommendationID">
+          <Route path="/recommendation/:recommendationCode">
             <Recommendation />
           </Route>
           <Route path="/reset/:token">

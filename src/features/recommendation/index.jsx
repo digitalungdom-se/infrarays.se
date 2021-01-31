@@ -5,6 +5,8 @@ import { Trans, useTranslation } from "react-i18next";
 import CenterCard from "components/CenterCard";
 import ContactPerson from "components/portal/ContactPerson";
 import Upload from "components/portal/Upload";
+import axios from "axios";
+import useAxios from "axios-hooks";
 import useFetch from "utils/useFetch";
 import { useParams } from "react-router-dom";
 
@@ -14,18 +16,18 @@ export const query = (params) =>
     .map((k) => `${esc(k)}=${esc(params[k])}`)
     .join("&");
 
-const UploadState = ({ name, setSuccess, updateFileName = () => null }) => {
+const UploadState = ({ uploadedFileName, setSuccess }) => {
   const [error, setError] = useState();
   const [uploading, setUploading] = useState();
   const [uploaded, setUploaded] = useState();
-  const { userID, recommendationID } = useParams();
+  const { recommendationCode } = useParams();
   const { t } = useTranslation();
   return (
     <Upload
       accept=".pdf"
       label="Ladda upp rekommendationsbrev"
       uploading={uploading}
-      uploaded={name || error?.fileName || uploaded}
+      uploaded={error?.fileName || uploaded || uploadedFileName}
       error={error?.msg}
       onChange={(file, fileName) => {
         if (file.size > 5 * 10 ** 6) {
@@ -35,19 +37,12 @@ const UploadState = ({ name, setSuccess, updateFileName = () => null }) => {
         const body = new FormData();
         body.append("file", file, fileName);
         setUploading(true);
-        fetch(`/api/user/upload/recommendation/${userID}/${recommendationID}`, {
-          method: "post",
-          body,
-        })
-          .then((res) => res.json())
+        axios
+          .post(`/application/recommendation/${recommendationCode}`, body)
           .then((res) => {
             setUploading(false);
-            if (res.type === "success") {
-              setUploaded(fileName);
-              setUploading(false);
-              setSuccess(true);
-              updateFileName(fileName);
-            }
+            setError({ fileName: null });
+            setUploaded(res.data.name);
           });
       }}
     />
@@ -55,29 +50,20 @@ const UploadState = ({ name, setSuccess, updateFileName = () => null }) => {
 };
 
 const Recommendation = () => {
-  const [success, setSuccess] = useState(false);
-  const [fileName, updateFileName] = useState();
-  const { userID, recommendationID } = useParams();
+  const { recommendationCode } = useParams();
 
-  const { response, error, isLoading } = useFetch(
-    `/api/user/recommendation?${query({ userID, recommendationID })}`
+  const [{ response, error, loading }] = useAxios(
+    `/application/recommendation/${recommendationCode}`
   );
-
-  let name = "";
-  if (response?.type === "success") {
-    if (!fileName && response.recommendationInfo.fileName)
-      updateFileName(response.recommendationInfo.fileName);
-    name = response.recommendationInfo.name
-      .split(" ")
-      .map((n) => (n ? n[0].toUpperCase() + n.substring(1, n.length) : ""))
-      .join(" ");
-  }
 
   const { t } = useTranslation();
 
+  const name =
+    response?.data.applicantFirstName + " " + response?.data.applicantLastName;
+
   return (
     <CenterCard maxWidth="480px" title={t("Upload LoR")}>
-      {isLoading ? (
+      {loading ? (
         <Spinner
           animation="border"
           size="lg"
@@ -98,7 +84,7 @@ const Recommendation = () => {
             ))}
           {error === null && (
             <>
-              <Trans i18nKey="LoR-description" name={name}>
+              <Trans i18nKey="LoR-description">
                 .<h4>For {{ name }}</h4>
                 <p>
                   Thank you for taking interest in writing a letter of
@@ -116,26 +102,10 @@ const Recommendation = () => {
                   For more information, see here.
                 </a>
               </Trans>
-              {fileName && (
-                <>
-                  <b>{t("You're done!")}</b>
-                  <br />
-                  <ContactPerson
-                    email={fileName || response?.recommendationInfo?.fileName}
-                    status="received"
-                    cooldown={0}
-                  />
-                </>
-              )}
-              {response?.recommendationInfo?.fileName === undefined &&
-                response?.type !== "fail" &&
-                !success && (
-                  <UploadState
-                    name={response?.recommendationInfo?.fileName}
-                    setSuccess={setSuccess}
-                    updateFileName={(newName) => updateFileName(newName)}
-                  />
-                )}
+              <UploadState
+                uploadedFileName={response?.data.fileName}
+                recommendationCode={recommendationCode}
+              />
             </>
           )}
         </Form>
