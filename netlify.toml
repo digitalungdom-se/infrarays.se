@@ -1,3 +1,12 @@
+[context.production.environment]
+  REACT_APP_API_URL = "https://api.infrarays.digitalungdom.se"
+
+[context.deploy-preview.environment]
+  REACT_APP_API_URL = "https://devapi.infrarays.digitalungdom.se"
+
+[context.branch-deploy.environment]
+  REACT_APP_API_URL = "https://devapi.infrarays.digitalungdom.se"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
