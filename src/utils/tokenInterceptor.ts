@@ -1,7 +1,9 @@
 import { authFail, authSuccess } from "features/auth/authSlice";
 
 import axios from "axios";
+import i18n from "i18n";
 import store from "store";
+import { toast } from "react-toastify";
 
 export interface ServerTokenResponse {
   access_token: string;
@@ -41,6 +43,7 @@ export class TokenStorage {
           })
           .catch((error) => {
             this.updatingToken = false;
+            this.clear();
             reject(error);
           });
       }
@@ -91,6 +94,9 @@ export class TokenStorage {
     axios
       .post("/user/oauth/revoke", { token: this.getRefreshToken() })
       .then(() => {
+        toast.info(i18n.t("Logged out"), {
+          position: "bottom-center",
+        });
         localStorage.removeItem(TokenStorage.LOCAL_STORAGE_ACCESS_TOKEN);
         localStorage.removeItem(TokenStorage.LOCAL_STORAGE_REFRESH_TOKEN);
         localStorage.removeItem(TokenStorage.LOCAL_STORAGE_TOKEN_EXPIRY);
