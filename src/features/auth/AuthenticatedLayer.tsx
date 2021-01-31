@@ -13,7 +13,6 @@ export default function AuthenticatedLayer(
 ): React.ReactElement {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectAuthenticated);
-  console.log(isAuthenticated);
   useEffect(() => {
     if (isAuthenticated)
       Axios.get("/user/@me")

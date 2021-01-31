@@ -16,11 +16,16 @@ function useSurvey(): [SurveyAnswers | undefined, boolean] {
 
 const PortalSurvey = () => {
   const [survey, loading] = useSurvey();
+  const dispatch = useDispatch();
   if (loading) return <div></div>;
   return (
     <Survey
       survey={survey}
-      onSubmit={(newSurvey) => Axios.post("/application/@me/survey", newSurvey)}
+      onSubmit={(newSurvey) => {
+        return Axios.post("/application/@me/survey", newSurvey).then(() => {
+          dispatch(setSurvey(newSurvey));
+        });
+      }}
     />
   );
 };

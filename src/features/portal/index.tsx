@@ -1,5 +1,5 @@
 import { ButtonGroup, ProgressBar } from "react-bootstrap";
-import { FileInfo, setFiles, setSurvey } from "./portalSlice";
+import { FileInfo, selectProgress, setFiles, setSurvey } from "./portalSlice";
 import React, { useEffect } from "react";
 import { appFailure, appSuccess } from "features/appSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,14 +34,9 @@ const Hook = () => {
       dispatch(addPersonSuccess(res.data))
     );
   });
-
-  // const files = useSelector((state) => state.app?.files);
-
-  // const progress = (files ? Object.keys(files).length : 0) + (survey ? 1 : 0);
+  const progress = useSelector(selectProgress);
 
   const { t } = useTranslation();
-  // const { language } = i18n;
-  // const t = translation[language];
 
   return (
     <Center>
@@ -50,21 +45,21 @@ const Hook = () => {
         <div>
           <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
           <ReactMarkdown source={t("introduction") || ""} />
-          {/* <ProgressBar
+          <ProgressBar
             label={`${(progress / 5) * 100}%`}
             variant="custom"
             now={(progress / 5) * 100}
-          /> */}
+          />
           <hr style={{ color: "#b8b8b8" }} />
         </div>
         <div>
           <Chapters />
           <div style={{ padding: "20px 0" }}>
-            {/* {progress === 5 && (
+            {progress === 5 && (
               <Alert variant="success">
                 Din ansökan är fullständig och är mottagen för Rays.
               </Alert>
-            )} */}
+            )}
             <ButtonGroup>
               <Delete />
               <Logout />

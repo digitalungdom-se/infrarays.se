@@ -64,6 +64,9 @@ const authSlice = createSlice({
     setSurvey(state, action: PayloadAction<SurveyAnswers>) {
       state.survey = action.payload;
     },
+    clearPortal(state) {
+      state = initialState;
+    },
   },
 });
 
@@ -77,15 +80,24 @@ export const selectRecommendation = (
   recommendationIndex: number
 ): Recommendation | undefined =>
   state.portal.recommendations[recommendationIndex];
-
 export const selectSurvey = (state: RootState): SurveyAnswers | undefined =>
   state.portal.survey;
+export const selectProgress = (state: RootState): number => {
+  let i = 0;
+  const check: FileType[] = ["CV", "COVER_LETTER", "GRADES", "ESSAY"];
+  check.forEach((name: FileType) => {
+    if (state.portal.files[name] !== undefined) i++;
+  });
+  if (state.portal.survey !== undefined) i++;
+  return i;
+};
 
 export const {
   setFiles,
   uploadSuccess,
   addPersonSuccess,
   setSurvey,
+  clearPortal,
 } = authSlice.actions;
 
 export default authSlice.reducer;

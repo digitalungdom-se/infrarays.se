@@ -1,6 +1,7 @@
 import { authFail, authSuccess } from "features/auth/authSlice";
 
 import axios from "axios";
+import { clearPortal } from "features/portal/portalSlice";
 import i18n from "i18n";
 import store from "store";
 import { toast } from "react-toastify";
@@ -107,6 +108,7 @@ export class TokenStorage {
     localStorage.removeItem(TokenStorage.LOCAL_STORAGE_REFRESH_TOKEN);
     localStorage.removeItem(TokenStorage.LOCAL_STORAGE_TOKEN_EXPIRY);
     store.dispatch(authFail());
+    store.dispatch(clearPortal());
   }
 
   private static getRefreshToken(): string | null {
