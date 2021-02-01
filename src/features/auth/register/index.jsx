@@ -177,20 +177,19 @@ export default withTranslation()(({ t }) => {
             </Form.Control.Feedback>
           </Form.Group>
           <div
-            className="gdpr"
             style={{
-              padding: 10,
-              fontSize: 12,
-              width: "50%",
-              minWidth: 300,
+              display: "block",
+              marginTop: 30,
+              marginBottom: 30,
+              fontSize: "0.8rem",
+              width: "100%",
+              maxWidth: 300,
             }}
           >
-            <span>
-              <Trans i18nKey="TOS">
-                By creating an account you accept how we handle your data.
-                <Link to="/gdpr"> Read more.</Link>
-              </Trans>
-            </span>
+            <Trans i18nKey="TOS">
+              By creating an account you accept how we handle your data.
+              <Link to="/gdpr"> Read more.</Link>
+            </Trans>
           </div>
           {error?.fetchError && (
             <Alert
