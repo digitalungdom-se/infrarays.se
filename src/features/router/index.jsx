@@ -4,6 +4,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Loading from "components/Loading";
 import ProtectedRoute from "./ProtectedRoute";
 
+const AutomaticLogin = lazy(() => import("features/auth/login/AutomaticLogin"));
 const Login = lazy(() => import("features/auth/login"));
 const Portal = lazy(() => import("features/portal"));
 const Register = lazy(() => import("features/auth/register"));
@@ -34,20 +35,21 @@ function AppRouter() {
           <Route path="/gdpr">
             <GDPR />
           </Route>
-          <Route path="/forgot-password">
-            <ForgotPassword />
-          </Route>
-          <Route path="/login/:emailInBase64">
+          <ProtectedRoute
+            shouldBeAuthenticated={false}
+            path="/login/:emailInBase64"
+            exact
+          >
             <LoginWithCodeRoute />
-          </Route>
-          {/* <Route path="/verify">
-            <VerifyRouter />
-          </Route> */}
+          </ProtectedRoute>
+          <ProtectedRoute
+            shouldBeAuthenticated={false}
+            path="/login/email/:token"
+          >
+            <AutomaticLogin />
+          </ProtectedRoute>
           <Route path="/recommendation/:recommendationCode">
             <Recommendation />
-          </Route>
-          <Route path="/reset/:token">
-            <ResetPassword />
           </Route>
           <Route path="/admin">
             <AdminPortal />

@@ -33,9 +33,10 @@ const Login = () => {
                 history.push(`/login/${btoa(email)}`);
                 setLogin(false);
               })
-              .catch(() => {
+              .catch((err) => {
                 setLogin(false);
-                setError({ email: "no user" });
+                if (!err.request.status) setError({ msg: "fetch error" });
+                else setError({ email: "no user" });
               });
           }}
         >

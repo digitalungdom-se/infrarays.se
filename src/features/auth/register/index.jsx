@@ -81,9 +81,11 @@ export default withTranslation()(({ t }) => {
                     }
                   );
                 })
-                .catch(() => {
+                .catch((err) => {
                   setLoading(false);
-                  setError({ email: "email exists" });
+                  if (!err.request.status)
+                    setError({ fetchError: "fetch error" });
+                  else setError({ email: "email exists" });
                 });
             }
           }}

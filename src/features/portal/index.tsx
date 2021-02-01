@@ -25,11 +25,7 @@ const Hook = () => {
       .then((res) => {
         dispatch(setFiles(res.data));
       })
-      .catch((err) => {
-        if (err.json) {
-          dispatch(appFailure());
-        }
-      });
+      .catch(console.error);
     Axios.get("/application/@me/recommendation").then((res) =>
       dispatch(addPersonSuccess(res.data))
     );

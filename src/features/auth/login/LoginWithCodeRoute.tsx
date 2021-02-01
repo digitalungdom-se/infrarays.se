@@ -30,9 +30,10 @@ const LoginWithCodeRoute = () => {
       onSubmit={(values, { setErrors, setSubmitting }) => {
         loginWithCode(atob(emailInBase64), values.code)
           .then(() => history.push("/"))
-          .catch(() => {
-            setErrors({ code: "Wrong code" });
+          .catch((err) => {
             setSubmitting(false);
+            if (err.request.status) setErrors({ code: "Wrong code" });
+            else setErrors({ code: "fetch error" });
           });
       }}
     />

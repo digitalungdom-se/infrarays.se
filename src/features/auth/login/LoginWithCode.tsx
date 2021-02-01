@@ -1,11 +1,13 @@
 import { Form, Formik, FormikHelpers } from "formik";
 
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import CenterCard from "components/CenterCard";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
 import React from "react";
+import ReactMarkdown from "react-markdown";
 import StyledGroup from "components/StyledGroup";
 import { Trans } from "react-i18next";
 
@@ -49,7 +51,7 @@ const LoginWithCode: React.FC<LoginWithCodeProps> = ({
             />
             <FormLabel>{t("Login code")}</FormLabel>
             <FormControl.Feedback type="invalid">
-              {errors?.code !== undefined && t(errors.code)}
+              <ReactMarkdown source={t(errors.code || "")} />
             </FormControl.Feedback>
           </StyledGroup>
           <FormGroup>
