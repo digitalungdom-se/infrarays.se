@@ -131,8 +131,8 @@ export class TokenStorage {
 axios.interceptors.request.use((request) => {
   return new Promise((resolve) => {
     if (TokenStorage.isAuthenticated() === false) return resolve(request);
-    request.headers["Authorization"] = TokenStorage.getAuthenticationBearer();
     if (TokenStorage.isTokenExpired() === false) {
+      request.headers["Authorization"] = TokenStorage.getAuthenticationBearer();
       return resolve(request);
     } else {
       if (request.url === "/user/oauth/token") return resolve(request);
