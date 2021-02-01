@@ -92,6 +92,7 @@ export default withTranslation()(({ t }) => {
         >
           <StyledGroup className="inputbox" controlId="form-firstname">
             <Form.Control
+              autoFocus
               required
               type="text"
               placeholder={t("First name")}
@@ -114,7 +115,6 @@ export default withTranslation()(({ t }) => {
               required
               type="email"
               placeholder="E-mail"
-              autoFocus
               name="email"
             />
             <Form.Label>E-mail</Form.Label>
