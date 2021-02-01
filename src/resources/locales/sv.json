@@ -78,5 +78,6 @@
   "Saving": "Sparar",
   "Check your email": "Kolla din email ({{email}}) för en inloggningskod. Klistra in koden nedanför och logga in.",
   "Login code": "Inloggningskod",
-  "Wrong code": "Fel eller utgången kod. Vänligen dubbelkolla eller pröva logga in igen."
+  "Wrong code": "Fel eller utgången kod. Vänligen dubbelkolla eller pröva logga in igen.",
+  "Application complete": "Din ansökan är fullständig och är mottagen av Rays."
 }

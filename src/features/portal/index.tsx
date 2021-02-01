@@ -1,7 +1,6 @@
 import { ButtonGroup, ProgressBar } from "react-bootstrap";
-import { FileInfo, selectProgress, setFiles, setSurvey } from "./portalSlice";
+import { FileInfo, selectProgress, setFiles } from "./portalSlice";
 import React, { useEffect } from "react";
-import { appFailure, appSuccess } from "features/appSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Alert from "react-bootstrap/Alert";
@@ -15,6 +14,7 @@ import Logout from "./Logout";
 import ReactMarkdown from "react-markdown";
 import StyledPlate from "components/Plate";
 import { addPersonSuccess } from "features/portal/portalSlice";
+import { appFailure } from "features/appSlice";
 import { useTranslation } from "react-i18next";
 
 const Hook = () => {
@@ -50,15 +50,18 @@ const Hook = () => {
             variant="custom"
             now={(progress / 5) * 100}
           />
+          {progress === 5 && (
+            <Alert variant="success" style={{ marginTop: 10 }}>
+              {t("Application complete")}
+            </Alert>
+          )}
           <hr style={{ color: "#b8b8b8" }} />
         </div>
         <div>
           <Chapters />
           <div style={{ padding: "20px 0" }}>
             {progress === 5 && (
-              <Alert variant="success">
-                Din ansökan är fullständig och är mottagen för Rays.
-              </Alert>
+              <Alert variant="success">{t("Application complete")}</Alert>
             )}
             <ButtonGroup>
               <Delete />

@@ -109,8 +109,6 @@ export const selectAuthenticated = (state: RootState) =>
   state.app.auth.isAuthorised;
 
 export const {
-  authSuccess,
-  authFail,
   appSuccess,
   appFailure,
   adminSuccess,
