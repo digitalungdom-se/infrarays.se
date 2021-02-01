@@ -38,7 +38,6 @@ export class TokenStorage {
             grant_type: "refresh_token",
           })
           .then((response) => {
-            console.log(response);
             this.updatingToken = false;
             this.storeTokens(response.data);
             resolve(response.data.access_token);

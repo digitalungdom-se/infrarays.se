@@ -77,5 +77,6 @@
   "Save": "Spara",
   "Saving": "Sparar",
   "Check your email": "Kolla din email ({{email}}) för en inloggningskod. Klistra in koden nedanför och logga in.",
-  "Login code": "Inloggningskod"
+  "Login code": "Inloggningskod",
+  "Wrong code": "Fel eller utgången kod. Vänligen dubbelkolla eller pröva logga in igen."
 }

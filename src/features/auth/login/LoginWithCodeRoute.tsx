@@ -1,11 +1,9 @@
-import { ServerTokenResponse, TokenStorage } from "utils/tokenInterceptor";
 import { useHistory, useParams } from "react-router-dom";
 
 import Axios from "axios";
 import LoginWithCode from "./LoginWithCode";
 import React from "react";
-import { appSuccess } from "features/appSlice";
-import { useDispatch } from "react-redux";
+import { TokenStorage } from "utils/tokenInterceptor";
 import { useTranslation } from "react-i18next";
 
 export const loginWithCode = (email: string, loginCode: string) =>
@@ -17,11 +15,9 @@ export const loginWithCode = (email: string, loginCode: string) =>
     {
       headers: { Authorization: `Email ${btoa(email + ":" + loginCode)}` },
     }
-  )
-    .then((res) => {
-      TokenStorage.storeTokens(res.data);
-    })
-    .catch(console.error);
+  ).then((res) => {
+    TokenStorage.storeTokens(res.data);
+  });
 
 const LoginWithCodeRoute = () => {
   const { emailInBase64 } = useParams<{ emailInBase64: string }>();
@@ -31,9 +27,13 @@ const LoginWithCodeRoute = () => {
     <LoginWithCode
       email={atob(emailInBase64)}
       t={t}
-      onSubmit={(values) => {
-        loginWithCode(atob(emailInBase64), values.code);
-        history.push("/");
+      onSubmit={(values, { setErrors, setSubmitting }) => {
+        loginWithCode(atob(emailInBase64), values.code)
+          .then(() => history.push("/"))
+          .catch(() => {
+            setErrors({ code: "Wrong code" });
+            setSubmitting(false);
+          });
       }}
     />
   );
