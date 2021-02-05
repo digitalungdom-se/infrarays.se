@@ -25,7 +25,8 @@ const UploadState = ({ uploadedFileName, setSuccess }) => {
   return (
     <Upload
       accept=".pdf"
-      label="Ladda upp rekommendationsbrev"
+      label={t("Upload LoR")}
+      uploadLabel={t("Choose file")}
       uploading={uploading}
       uploaded={error?.fileName || uploaded || uploadedFileName}
       error={error?.msg}

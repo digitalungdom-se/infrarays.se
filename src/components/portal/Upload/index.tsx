@@ -33,6 +33,21 @@ const StyledInputGroup = styled(InputGroup)`
   }
 `;
 
+interface StyledFormControlProps {
+  label?: string;
+}
+
+const StyledFormControl = styled(FormControl)<StyledFormControlProps>`
+  ${(props) =>
+    props
+      ? `& ~ .custom-file-label::after {content: "${
+          props.label || "Choose file"
+        }";`
+      : `&:lang(sv) ~ .custom-file-label::after {
+    content: "Välj fil";
+  }`}
+`;
+
 export interface UploadProps {
   label?: string;
   onChange?: (file: any, name: string) => any;
@@ -41,6 +56,7 @@ export interface UploadProps {
   displayFileName?: boolean;
   accept?: string;
   error?: string;
+  uploadLabel?: string;
 }
 
 const Upload: React.FC<UploadProps> = ({
@@ -51,6 +67,7 @@ const Upload: React.FC<UploadProps> = ({
   displayFileName,
   accept,
   error,
+  uploadLabel,
 }) => {
   const [fileName, updateFileName] = useState("");
 
@@ -67,12 +84,13 @@ const Upload: React.FC<UploadProps> = ({
         error && "error"
       }`}
     >
-      <FormControl
+      <StyledFormControl
         type="file"
         className="custom-file-input file-input"
         onChange={handleFileChange}
         accept={accept}
         isInvalid={Boolean(error)}
+        label={uploadLabel}
       />
       <FormControl.Feedback type="invalid">{error}</FormControl.Feedback>
       <InputGroup.Text className="custom-file-label">
