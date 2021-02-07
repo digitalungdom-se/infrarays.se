@@ -225,22 +225,6 @@ export default withTranslation()(({ t }) => {
               Already have an account?
               <Link to="/login">Login here!</Link>
             </Trans>
-            <div>
-              <span style={{ fontSize: 12 }}>
-                <Trans i18nKey="Developed by">
-                  Developed by
-                  <a
-                    href="https://digitalungdom.se/"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    styled="text-decoration: none"
-                  >
-                    {" "}
-                    Digital Ungdom
-                  </a>
-                </Trans>
-              </span>
-            </div>
           </div>
         </Form>
       </Plate>
