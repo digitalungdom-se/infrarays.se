@@ -19,17 +19,16 @@ import styled from "styled-components";
 const StyledApp = styled.div`
   background: ${(props) => props.theme.bg};
 
-  /* https://stackoverflow.com/questions/396145/how-to-vertically-center-a-div-for-all-browsers */
-  /* display: table;
-  position: absolute;
-  top: 0;
-  left: 0;
-  */
+  display: table;
   height: 100%;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+
+  #content {
+    padding-bottom: 2.5rem;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 axios.defaults.baseURL =
@@ -42,12 +41,12 @@ function App() {
         <AuthenticatedLayer>
           <CustomThemeProvider>
             <StyledApp>
-              <div>
-                <ChangeLanguage />
-                <ToastContainer />
+              <ChangeLanguage />
+              <ToastContainer />
+              <div id="content">
                 <Router />
-                <DevelopedBy />
               </div>
+              <DevelopedBy />
             </StyledApp>
           </CustomThemeProvider>
         </AuthenticatedLayer>
