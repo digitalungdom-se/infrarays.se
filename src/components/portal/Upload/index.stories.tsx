@@ -26,16 +26,17 @@ export const UploadHook = () => {
     }, 1000);
   }
 
+  const onChangeDelay: () => Promise<void> = () =>
+    new Promise((res, rej) => setTimeout(() => res(), 1000));
+
   return (
     <Upload
       // title="Ladda upp personligt brev"
       onChange={handleChange}
       uploading={uploading}
       uploaded={uploaded}
+      onDelete={onChangeDelay}
+      onDownload={onChangeDelay}
     />
   );
-};
-
-UploadHook.story = {
-  name: "Upload with Hooks",
 };
