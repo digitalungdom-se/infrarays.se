@@ -12,9 +12,8 @@ const Middle = styled.div<{ minWidth?: minWidth }>`
   }
   height: 100%;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: table-cell;
+  vertical-align: middle;
 `;
 
 const Inner = styled.div<{ minWidth?: minWidth; maxWidth?: maxWidth }>`

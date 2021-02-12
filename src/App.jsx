@@ -19,15 +19,14 @@ import styled from "styled-components";
 const StyledApp = styled.div`
   background: ${(props) => props.theme.bg};
 
-  display: table;
   height: 100%;
   width: 100%;
-  position: relative;
+  overflow: auto;
 
   #content {
-    padding-bottom: 2.5rem;
     width: 100%;
-    height: 100%;
+    min-height: calc(100% - 2.5rem);
+    display: table;
   }
 `;
 
