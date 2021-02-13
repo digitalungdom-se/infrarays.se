@@ -1,4 +1,9 @@
-import { FileInfo, FileType, selectSingleFile } from "../portalSlice";
+import {
+  FileInfo,
+  FileType,
+  deleteFileSuccess,
+  selectSingleFileByFileType,
+} from "../portalSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -6,8 +11,8 @@ import Axios from "axios";
 import FileSaver from "file-saver";
 import { RootState } from "store";
 import Upload from "components/portal/Upload";
+import { setFiles } from "../portalSlice";
 import { showFile } from "components/portal/OpenPDF";
-import { uploadSuccess } from "../portalSlice";
 import { useTranslation } from "react-i18next";
 
 interface UploadHookProps {
@@ -21,7 +26,7 @@ const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
   const [error, setError] = useState<any>();
   const dispatch = useDispatch();
   const fileInfo = useSelector((state: RootState) =>
-    selectSingleFile(state, fileType)
+    selectSingleFileByFileType(state, fileType)
   );
   const { t } = useTranslation();
 
@@ -37,21 +42,30 @@ const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       setUploading(false);
-      dispatch(uploadSuccess(res.data));
+      dispatch(setFiles([res.data]));
     });
   }
 
   const handleDownload = () =>
-    Axios.get(`application/@me/file/${fileInfo?.id}`).then((res) => {
-      console.log(res);
-      FileSaver.saveAs(res.data);
-      // showFile(res.data);
-      // FileSaver.saveAs(
-      //   res.data,
-      //   res.headers["content-disposition"].split("filename=")[1]
-      // );
+    Axios.get(`application/@me/file/${fileInfo?.id}`, {
+      responseType: "blob",
+    }).then((res) => {
+      console.log(res.headers);
+      const utf8FileName = res.headers["content-disposition"].split(
+        "filename*=UTF-8''"
+      )[1];
+      FileSaver.saveAs(
+        res.data,
+        utf8FileName === undefined
+          ? res.headers["content-disposition"].split("filename=")[1]
+          : decodeURIComponent(utf8FileName)
+      );
     });
-  // .then((blob) => showFile(blob));
+
+  const handleDelete = () =>
+    Axios.delete(`/application/@me/file/${fileInfo?.id}`).then(() => {
+      dispatch(deleteFileSuccess((fileInfo as FileInfo).id));
+    });
 
   return (
     <Upload
@@ -63,6 +77,7 @@ const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
       // time={uploaded?.time}
       onDownload={handleDownload}
       error={error?.msg}
+      onDelete={handleDelete}
     />
   );
 };

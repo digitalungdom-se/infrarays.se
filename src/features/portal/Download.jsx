@@ -16,7 +16,6 @@ const Download = ({ style }) => {
         Axios.get("/application/@me/pdf", { responseType: "blob" }).then(
           (res) => {
             setDownload(false);
-            console.log(res);
             FileSaver.saveAs(
               res.data,
               res.headers["content-disposition"].split("filename=")[1]
