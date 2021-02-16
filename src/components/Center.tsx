@@ -8,9 +8,11 @@ export type maxWidth = string | number;
 
 const Middle = styled.div<{ minWidth?: minWidth }>`
   @media (min-width: ${(props) => props.minWidth || "400px"}) {
-    display: table-cell;
     padding: 5% 0;
   }
+  height: 100%;
+  width: 100%;
+  display: table-cell;
   vertical-align: middle;
 `;
 

@@ -7,6 +7,7 @@ import store, { persistor } from "./store";
 import AuthenticatedLayer from "features/auth/AuthenticatedLayer";
 import ChangeLanguage from "features/ChangeLanguage";
 import CustomThemeProvider from "components/CustomThemeProvider";
+import DevelopedBy from "components/DevelopedBy";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import React from "react";
@@ -18,13 +19,15 @@ import styled from "styled-components";
 const StyledApp = styled.div`
   background: ${(props) => props.theme.bg};
 
-  /* https://stackoverflow.com/questions/396145/how-to-vertically-center-a-div-for-all-browsers */
-  display: table;
-  position: absolute;
-  top: 0;
-  left: 0;
   height: 100%;
   width: 100%;
+  overflow: auto;
+
+  #content {
+    width: 100%;
+    min-height: calc(100% - 2.5rem);
+    display: table;
+  }
 `;
 
 axios.defaults.baseURL =
@@ -39,7 +42,10 @@ function App() {
             <StyledApp>
               <ChangeLanguage />
               <ToastContainer />
-              <Router />
+              <div id="content">
+                <Router />
+              </div>
+              <DevelopedBy />
             </StyledApp>
           </CustomThemeProvider>
         </AuthenticatedLayer>
