@@ -81,5 +81,6 @@
   "Wrong code": "Wrong or expired code. Please double check or try [log in again](/login).",
   "Application complete": "Your application is complete and has been received by Rays.",
   "Bad link": "Bad link",
-  "Bad link description": "You've clicked on a link that is either expired or incorrect. Try to login again from the [startpage](/login)."
+  "Bad link description": "You've clicked on a link that is either expired or incorrect. Try to login again from the [startpage](/login).",
+  "Cant connect to server": "Cannot connect to server. Please reload this page and check your internet connection. If the problem persists, please revisit the site later. We are deeply sorry for any inconvenience caused."
 }
