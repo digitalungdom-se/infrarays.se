@@ -25,6 +25,9 @@ const StyledDiv = styled.div`
     /* ursprungligen 25% mörkare "darkened", numera 7% */
     background-color: ${({ theme }) => darken(0.07, theme.brand)};
   }
+
+  height: 100%;
+  width: 100%;
 `;
 
 const CustomThemeProvider: React.FC = ({ children }) => (
