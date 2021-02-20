@@ -27,11 +27,13 @@ export const UploadHook = () => {
   }
 
   const onChangeDelay: () => Promise<void> = () =>
-    new Promise((res, rej) => setTimeout(() => res(), 1000));
+    new Promise((res) => setTimeout(() => res(), 1000));
+  const handleCancel = () => setUploaded("");
 
   return (
     <Upload
-      // title="Ladda upp personligt brev"
+      error={uploaded.split(".png").length > 1 ? "Fel" : undefined}
+      onCancel={handleCancel}
       onChange={handleChange}
       uploading={uploading}
       uploaded={uploaded}

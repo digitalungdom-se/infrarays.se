@@ -57,9 +57,16 @@ const portalSlice = createSlice({
       action.payload.forEach((file) => {
         state.files[file.id] = file;
         if (state.filesByType[file.type])
-          state.filesByType[file.type]?.push(file.id);
+          state.filesByType[file.type]?.unshift(file.id);
         else state.filesByType[file.type] = [file.id];
       });
+    },
+    replaceFile(state, action: PayloadAction<FileInfo>) {
+      const file = action.payload;
+      state.files[file.id] = file;
+      if (state.filesByType[file.type])
+        state.filesByType[file.type] = [file.id];
+      else state.filesByType[file.type] = [file.id];
     },
     uploadSuccess(state, action: PayloadAction<FileInfo>) {
       const file = action.payload;
@@ -123,7 +130,7 @@ export const selectProgress = (state: RootState): number => {
   let i = 0;
   const check: FileType[] = ["CV", "COVER_LETTER", "GRADES", "ESSAY"];
   check.forEach((name: FileType) => {
-    if (state.portal.files[name] !== undefined) i++;
+    if (state.portal.filesByType[name] !== undefined) i++;
   });
   if (state.portal.survey !== undefined) i++;
   return i;
@@ -136,6 +143,7 @@ export const {
   setSurvey,
   clearPortal,
   deleteFileSuccess,
+  replaceFile,
 } = portalSlice.actions;
 
 export default portalSlice.reducer;

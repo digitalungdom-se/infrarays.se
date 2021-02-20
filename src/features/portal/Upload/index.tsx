@@ -11,7 +11,7 @@ import Axios from "axios";
 import FileSaver from "file-saver";
 import { RootState } from "store";
 import Upload from "components/portal/Upload";
-import { setFiles } from "../portalSlice";
+import { replaceFile } from "../portalSlice";
 import { showFile } from "components/portal/OpenPDF";
 import { useTranslation } from "react-i18next";
 
@@ -42,7 +42,7 @@ const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       setUploading(false);
-      dispatch(setFiles([res.data]));
+      dispatch(replaceFile(res.data));
     });
   }
 
@@ -67,16 +67,18 @@ const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
       dispatch(deleteFileSuccess((fileInfo as FileInfo).id));
     });
 
+  const handleCancel = () => setError(null);
+
   return (
     <Upload
       label={label}
       accept={accept}
       onChange={handleChange}
       uploading={uploading}
-      uploaded={fileInfo?.name || error?.fileName}
-      // time={uploaded?.time}
+      uploaded={error?.fileName || fileInfo?.name}
+      onCancel={handleCancel}
       onDownload={handleDownload}
-      error={error?.msg}
+      error={error ? error.msg : undefined}
       onDelete={handleDelete}
     />
   );
