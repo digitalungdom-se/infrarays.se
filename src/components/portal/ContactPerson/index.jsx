@@ -38,6 +38,7 @@ function ContactPerson({
   cooldown = ["day", 1],
   handleSubmit,
   received = false,
+  disabled,
 }) {
   // https://stackoverflow.com/questions/13262621/how-do-i-use-format-on-a-moment-js-duration
   const diff = moment(sendDate).add(cooldown[0], cooldown[1]).diff(moment());
@@ -82,7 +83,7 @@ function ContactPerson({
           type="email"
           name="email"
           defaultValue={email}
-          disabled={received || diff > 0 || loading}
+          disabled={received || diff > 0 || loading || disabled}
           placeholder="E-mail"
           required
         />

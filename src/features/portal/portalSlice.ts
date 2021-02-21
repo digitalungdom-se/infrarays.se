@@ -112,12 +112,11 @@ export const selectSingleFileByFileType = (
 export const selectFilesByFileType = (
   state: RootState,
   type: FileType
-): FileInfo | FileInfo[] | undefined => {
+): FileInfo[] | undefined => {
   const array = state.portal.filesByType[type]?.map(
     (fileID) => state.portal.files[fileID]
   );
   if (array === undefined || type === "APPENDIX") return array;
-  return array[0];
 };
 export const selectRecommendation = (
   state: RootState,

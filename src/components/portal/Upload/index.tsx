@@ -14,6 +14,10 @@ const StyledInputGroup = styled(InputGroup)`
   &.uploaded .form-control {
     color: #155724;
     background-color: #d4edda;
+  }
+
+  &.uploaded .form-control,
+  &.error .form-control {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -68,9 +72,8 @@ const StyledFormControl = styled(FormControl)<StyledFormControlProps>`
   }`}
 `;
 
-export interface UploadProps {
+export interface MostUploadProps {
   label?: string;
-  onChange?: (file: any, name: string) => any;
   onDownload?: () => Promise<void>;
   onDelete?: () => Promise<void>;
   onCancel?: () => void;
@@ -82,6 +85,16 @@ export interface UploadProps {
   uploadLabel?: string;
   disabled?: boolean;
 }
+
+export type UploadProps =
+  | ({
+      multiple: true;
+      onChange?: (files: FileList, list: string[]) => any;
+    } & MostUploadProps)
+  | ({
+      multiple?: false;
+      onChange?: (file: any, name: string) => any;
+    } & MostUploadProps);
 
 const Upload: React.FC<UploadProps> = ({
   label,
@@ -96,6 +109,7 @@ const Upload: React.FC<UploadProps> = ({
   error,
   uploadLabel,
   disabled,
+  multiple,
 }) => {
   const [fileName, updateFileName] = useState("");
   const [downloading, setDownloading] = useState<boolean>(false);
@@ -116,14 +130,48 @@ const Upload: React.FC<UploadProps> = ({
   function handleFileChange(e: any) {
     const list = e.target.value.split("\\");
     const name = list[list.length - 1];
-    updateFileName(name);
-    return onChange(e.target.files[0], name);
+    if (multiple) {
+      updateFileName(list.join(", "));
+      return onChange(e.target.files, list);
+    } else {
+      updateFileName(list[list.length - 1]);
+      return onChange(e.target.files[0], list[list.length - 1]);
+    }
   }
 
   const { t } = useTranslation();
   const showDropdown =
     (error && Boolean(onCancel)) ||
     (uploaded && (Boolean(onDownload) || Boolean(onDelete)));
+
+  const newLabel = (
+    <>
+      {!uploading && !uploaded && (displayFileName ? fileName || label : label)}
+      {uploading && (
+        <span>
+          <Spinner animation="border" variant="primary" size="sm" /> Laddar upp{" "}
+          {fileName || uploaded}
+        </span>
+      )}
+      {!uploading && uploaded && (
+        <span
+          style={{
+            display: "block",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {error ? (
+            <FontAwesomeIcon icon={faTimes} color="#721c24" />
+          ) : (
+            <FontAwesomeIcon icon={faCheck} color="green" />
+          )}
+          {` ${uploaded}`}
+        </span>
+      )}
+    </>
+  );
 
   return (
     <>
@@ -133,47 +181,20 @@ const Upload: React.FC<UploadProps> = ({
         }`}
       >
         {disabled && uploaded ? (
-          <StyledFormControl value={uploaded} disabled />
+          <div className="form-control">{newLabel}</div>
         ) : (
           <div className="custom-file">
             <StyledFormControl
+              disabled={disabled}
               type="file"
               className="custom-file-input file-input"
               onChange={handleFileChange}
               accept={accept}
               isInvalid={Boolean(error)}
               label={uploadLabel}
-              // disabled={disabled}
+              multiple={multiple}
             />
-            <span className="custom-file-label">
-              {!uploading &&
-                !uploaded &&
-                (displayFileName ? fileName || label : label)}
-              {uploading && (
-                <span>
-                  <Spinner animation="border" variant="primary" size="sm" />
-                  Laddar upp
-                  {fileName}
-                </span>
-              )}
-              {!uploading && uploaded && (
-                <span
-                  style={{
-                    display: "block",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {error ? (
-                    <FontAwesomeIcon icon={faTimes} color="#721c24" />
-                  ) : (
-                    <FontAwesomeIcon icon={faCheck} color="green" />
-                  )}
-                  {` ${uploaded}`}
-                </span>
-              )}
-            </span>
+            <span className="custom-file-label">{newLabel}</span>
           </div>
         )}
         {showDropdown && (
@@ -251,7 +272,11 @@ const Upload: React.FC<UploadProps> = ({
         )}
       </StyledInputGroup>
       <FormControl.Feedback
-        style={{ display: error ? "block" : "none" }}
+        style={{
+          display: error ? "block" : "none",
+          marginTop: "-1rem",
+          marginBottom: "1rem",
+        }}
         type="invalid"
       >
         {error}

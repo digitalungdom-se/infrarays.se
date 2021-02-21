@@ -19,9 +19,15 @@ interface UploadHookProps {
   label?: string;
   accept?: string;
   fileType: FileType;
+  disabled?: boolean;
 }
 
-const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
+const UploadHook: React.FC<UploadHookProps> = ({
+  disabled,
+  label,
+  accept,
+  fileType,
+}) => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<any>();
   const dispatch = useDispatch();
@@ -31,7 +37,7 @@ const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
   const { t } = useTranslation();
 
   function handleChange(file: any, fileName: string) {
-    if (file.size > 7 * 10 ** 6) {
+    if (file.size > 5 * 10 ** 6) {
       setError({ msg: t("too large"), fileName });
       return;
     }
@@ -80,6 +86,7 @@ const UploadHook: React.FC<UploadHookProps> = ({ label, accept, fileType }) => {
       onDownload={handleDownload}
       error={error ? error.msg : undefined}
       onDelete={handleDelete}
+      disabled={disabled}
     />
   );
 };
