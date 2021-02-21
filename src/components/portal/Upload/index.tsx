@@ -10,9 +10,13 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 const StyledInputGroup = styled(InputGroup)`
-  &.uploaded span {
+  &.uploaded span,
+  &.uploaded .form-control {
     color: #155724;
     background-color: #d4edda;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   &.uploaded span::after,
@@ -30,9 +34,11 @@ const StyledInputGroup = styled(InputGroup)`
     border-color: #c3e6cb;
   }
 
-  &.error span {
+  &.error span,
+  &.error .form-control {
     color: #bd2130;
     background-color: #f8d7da;
+    border-color: #bd2130;
   }
 
   &.error span::after,
@@ -74,6 +80,7 @@ export interface UploadProps {
   accept?: string;
   error?: string;
   uploadLabel?: string;
+  disabled?: boolean;
 }
 
 const Upload: React.FC<UploadProps> = ({
@@ -88,6 +95,7 @@ const Upload: React.FC<UploadProps> = ({
   accept,
   error,
   uploadLabel,
+  disabled,
 }) => {
   const [fileName, updateFileName] = useState("");
   const [downloading, setDownloading] = useState<boolean>(false);
@@ -124,45 +132,50 @@ const Upload: React.FC<UploadProps> = ({
           error && "error"
         }`}
       >
-        <div className="custom-file">
-          <StyledFormControl
-            type="file"
-            className="custom-file-input file-input"
-            onChange={handleFileChange}
-            accept={accept}
-            isInvalid={Boolean(error)}
-            label={uploadLabel}
-          />
-          <span className="custom-file-label">
-            {!uploading &&
-              !uploaded &&
-              (displayFileName ? fileName || label : label)}
-            {uploading && (
-              <span>
-                <Spinner animation="border" variant="primary" size="sm" />
-                Laddar upp
-                {fileName}
-              </span>
-            )}
-            {!uploading && uploaded && (
-              <span
-                style={{
-                  display: "block",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {error ? (
-                  <FontAwesomeIcon icon={faTimes} color="#721c24" />
-                ) : (
-                  <FontAwesomeIcon icon={faCheck} color="green" />
-                )}
-                {` ${uploaded}`}
-              </span>
-            )}
-          </span>
-        </div>
+        {disabled && uploaded ? (
+          <StyledFormControl value={uploaded} disabled />
+        ) : (
+          <div className="custom-file">
+            <StyledFormControl
+              type="file"
+              className="custom-file-input file-input"
+              onChange={handleFileChange}
+              accept={accept}
+              isInvalid={Boolean(error)}
+              label={uploadLabel}
+              // disabled={disabled}
+            />
+            <span className="custom-file-label">
+              {!uploading &&
+                !uploaded &&
+                (displayFileName ? fileName || label : label)}
+              {uploading && (
+                <span>
+                  <Spinner animation="border" variant="primary" size="sm" />
+                  Laddar upp
+                  {fileName}
+                </span>
+              )}
+              {!uploading && uploaded && (
+                <span
+                  style={{
+                    display: "block",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {error ? (
+                    <FontAwesomeIcon icon={faTimes} color="#721c24" />
+                  ) : (
+                    <FontAwesomeIcon icon={faCheck} color="green" />
+                  )}
+                  {` ${uploaded}`}
+                </span>
+              )}
+            </span>
+          </div>
+        )}
         {showDropdown && (
           <InputGroup.Append>
             <Dropdown show={open} onToggle={onToggle}>
