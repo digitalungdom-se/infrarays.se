@@ -12,7 +12,6 @@ import FileSaver from "file-saver";
 import { RootState } from "store";
 import Upload from "components/portal/Upload";
 import { replaceFile } from "../portalSlice";
-import { showFile } from "components/portal/OpenPDF";
 import { useTranslation } from "react-i18next";
 
 interface UploadHookProps {

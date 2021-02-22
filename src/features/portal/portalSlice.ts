@@ -85,7 +85,7 @@ const portalSlice = createSlice({
       state.survey = action.payload;
     },
     clearPortal(state) {
-      state = initialState;
+      Object.assign(state, initialState);
     },
     deleteFileSuccess(state, action: PayloadAction<FileID>) {
       const file = state.files[action.payload];
@@ -129,7 +129,11 @@ export const selectProgress = (state: RootState): number => {
   let i = 0;
   const check: FileType[] = ["CV", "COVER_LETTER", "GRADES", "ESSAY"];
   check.forEach((name: FileType) => {
-    if (state.portal.filesByType[name] !== undefined) i++;
+    if (
+      state.portal.filesByType[name] !== undefined &&
+      state.portal.filesByType[name]?.length
+    )
+      i++;
   });
   if (state.portal.survey !== undefined) i++;
   return i;
