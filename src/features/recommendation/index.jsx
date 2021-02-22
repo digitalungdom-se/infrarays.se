@@ -83,6 +83,9 @@ const Recommendation = () => {
             (response?.type === "fail" && (
               <Alert variant="danger">{t("Couldn't find any student")}</Alert>
             ))}
+          {error && (
+            <Alert variant="danger">{t("Cant connect to server")}</Alert>
+          )}
           {error === null && (
             <>
               <Trans i18nKey="LoR-description">
