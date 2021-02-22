@@ -56,15 +56,18 @@ const UploadHook: React.FC<UploadHookProps> = ({
     Axios.get(`application/@me/file/${fileInfo?.id}`, {
       responseType: "blob",
     }).then((res) => {
-      console.log(res.headers);
       const utf8FileName = res.headers["content-disposition"].split(
         "filename*=UTF-8''"
+      )[1];
+      const decodedName = decodeURIComponent(utf8FileName);
+      const normalName = res.headers["content-disposition"].split(
+        "filename="
       )[1];
       FileSaver.saveAs(
         res.data,
         utf8FileName === undefined
-          ? res.headers["content-disposition"].split("filename=")[1]
-          : decodeURIComponent(utf8FileName)
+          ? normalName.substring(0, normalName.length - 4)
+          : decodedName.substring(0, decodedName.length - 4)
       );
     });
 
