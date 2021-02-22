@@ -90,6 +90,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
       error={error ? error.msg : undefined}
       onDelete={handleDelete}
       disabled={disabled}
+      uploadLabel={t("Choose file")}
     />
   );
 };
