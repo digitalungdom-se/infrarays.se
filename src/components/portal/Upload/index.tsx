@@ -35,7 +35,7 @@ const StyledInputGroup = styled(InputGroup)`
   }
 
   &.uploaded span {
-    border-color: #c3e6cb;
+    border-color: rgb(40, 167, 69);
   }
 
   &.error span,
@@ -228,10 +228,10 @@ const Upload: React.FC<UploadProps> = ({
                           variant="primary"
                           size="sm"
                         />{" "}
-                        {t("Downloading")}
+                        {t("Downloading file")}
                       </>
                     ) : (
-                      t("Download")
+                      t("Download file")
                     )}
                   </Dropdown.Item>
                 )}
@@ -259,10 +259,10 @@ const Upload: React.FC<UploadProps> = ({
                           variant="primary"
                           size="sm"
                         />{" "}
-                        {t("Deleting")}
+                        {t("Deleting file")}
                       </>
                     ) : (
-                      t("Delete")
+                      t("Delete file")
                     )}
                   </Dropdown.Item>
                 )}
