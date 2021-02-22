@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { authSuccess, userInfoSuccess } from "features/auth/authSlice";
 
 import Axios from "axios";
+import { TokenStorage } from "utils/tokenInterceptor";
 import { useDispatch } from "react-redux";
 
 interface AuthenticatedLayerProps {
@@ -18,7 +19,7 @@ export default function AuthenticatedLayer(
         dispatch(authSuccess());
         dispatch(userInfoSuccess(res.data));
       })
-      .catch(console.error);
+      .catch(TokenStorage.clear);
   }, [dispatch]);
   return props.children;
 }
