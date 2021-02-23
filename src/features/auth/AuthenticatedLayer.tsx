@@ -19,7 +19,7 @@ export default function AuthenticatedLayer(
         dispatch(authSuccess());
         dispatch(userInfoSuccess(res.data));
       })
-      .catch(() => TokenStorage.clear());
+      .catch(console.error);
   }, [dispatch]);
   return props.children;
 }
