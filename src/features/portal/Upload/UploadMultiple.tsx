@@ -62,6 +62,7 @@ const UploadMultiple: React.FC<UploadMultipleProps> = ({
       uploading: true && !error,
       error,
     });
+    if (error) return;
     const form = new FormData();
     form.append("file", file, fileName);
     Axios.post<FileInfo>(`application/@me/file/${fileType}`, form, {
