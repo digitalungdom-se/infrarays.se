@@ -65,8 +65,8 @@ const UploadHook: React.FC<UploadHookProps> = ({
       FileSaver.saveAs(
         res.data,
         utf8FileName === undefined
-          ? normalName.substring(0, normalName.length - 4)
-          : decodedName.substring(0, decodedName.length - 4)
+          ? normalName.substring(1, normalName.length - 1)
+          : decodedName.substring(1, decodedName.length - 1)
       );
     });
 

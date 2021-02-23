@@ -14,6 +14,7 @@ const StyledInputGroup = styled(InputGroup)`
   &.uploaded .form-control {
     color: #155724;
     background-color: #d4edda;
+    border-color: #28a745;
   }
 
   &.uploaded .form-control,

@@ -105,8 +105,6 @@ const UploadMultiple: React.FC<UploadMultipleProps> = ({
 
   const handleCancel = () => setUploadingFile(undefined);
 
-  console.log(uploadedFiles?.length);
-
   return (
     <>
       {/* {uploadingFiles?.map((file: any) => (
