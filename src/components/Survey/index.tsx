@@ -21,15 +21,23 @@ const validationSchema = Yup.object().shape({
   informant: Yup.string(),
 });
 
-const StyledHeader = styled(Card.Header)`
+const StyledCard = styled(Card)`
   &.done {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+    background: rgba(40, 167, 69, 0.1);
+    border-color: rgb(40, 167, 69);
   }
 
-  &.done .btn {
+  &.done .card-header {
     color: #155724;
+    background-color: #d4edda;
+  }
+
+  &.done .card-header .btn {
+    color: #155724;
+  }
+
+  & .form-label {
+    /* font-weight: 400; */
   }
 `;
 
@@ -70,12 +78,12 @@ const Survey = ({ survey, onSubmit }: SurveyProps) => {
 
   return (
     <Accordion defaultActiveKey="1" className={survey ? "done" : ""}>
-      <Card>
-        <StyledHeader className={survey ? "done" : ""}>
+      <StyledCard className={survey ? "done" : ""}>
+        <Card.Header>
           <Accordion.Toggle eventKey="0" as={Button} variant="link">
             {t("Open (verb)")}
           </Accordion.Toggle>
-        </StyledHeader>
+        </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Card.Body>
             <Formik
@@ -237,7 +245,7 @@ const Survey = ({ survey, onSubmit }: SurveyProps) => {
             </Formik>
           </Card.Body>
         </Accordion.Collapse>
-      </Card>
+      </StyledCard>
     </Accordion>
   );
 };

@@ -14,21 +14,26 @@ const StyledInputGroup = styled(InputGroup)`
     /* green */
     color: #155724;
     background-color: #d4edda;
-    border-color: #c3e6cb;
+    border-color: rgb(40, 167, 69);
   }
 
   &.requested .input-group-append span {
     color: #1a237e;
     background-color: #c5cae9;
-    border-color: #c5cae9;
   }
 
-  &.requested .input-group-prepend span {
+  /* &.requested .form-control {
+    background: #e6efff;
   }
 
-  &.requested .input-group-prepend + input {
-    border-left: 0;
+  &.requested .form-control,
+  &.requested .input-group-append span {
+    border-color: #6770cb;
   }
+
+  &.requested .input-group-append .btn {
+    border-color: #1a237e;
+  } */
 `;
 
 function ContactPerson({
@@ -38,6 +43,7 @@ function ContactPerson({
   cooldown = ["day", 1],
   handleSubmit,
   received = false,
+  disabled,
 }) {
   // https://stackoverflow.com/questions/13262621/how-do-i-use-format-on-a-moment-js-duration
   const diff = moment(sendDate).add(cooldown[0], cooldown[1]).diff(moment());
@@ -82,7 +88,7 @@ function ContactPerson({
           type="email"
           name="email"
           defaultValue={email}
-          disabled={received || diff > 0 || loading}
+          disabled={received || diff > 0 || loading || disabled}
           placeholder="E-mail"
           required
         />

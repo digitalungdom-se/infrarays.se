@@ -1,6 +1,6 @@
 import { ButtonGroup, ProgressBar } from "react-bootstrap";
 import { FileInfo, selectProgress, setFiles } from "./portalSlice";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Alert from "react-bootstrap/Alert";
@@ -14,22 +14,25 @@ import Logout from "./Logout";
 import ReactMarkdown from "react-markdown";
 import StyledPlate from "components/Plate";
 import { addPersonSuccess } from "features/portal/portalSlice";
-import { appFailure } from "features/appSlice";
 import { useTranslation } from "react-i18next";
 
 const Hook = () => {
   const dispatch = useDispatch();
+  const [filesLoading, setFilesLoading] = useState<boolean>(true);
+  const [referencesLoading, setReferencesLoading] = useState<boolean>(true);
 
   useEffect(() => {
     Axios.get<FileInfo[]>("/application/@me/file")
       .then((res) => {
         dispatch(setFiles(res.data));
+        setFilesLoading(false);
       })
       .catch(console.error);
-    Axios.get("/application/@me/recommendation").then((res) =>
-      dispatch(addPersonSuccess(res.data))
-    );
-  });
+    Axios.get("/application/@me/recommendation").then((res) => {
+      dispatch(addPersonSuccess(res.data));
+      setReferencesLoading(false);
+    });
+  }, []);
   const progress = useSelector(selectProgress);
 
   const { t } = useTranslation();
@@ -54,7 +57,10 @@ const Hook = () => {
           <hr style={{ color: "#b8b8b8" }} />
         </div>
         <div>
-          <Chapters />
+          <Chapters
+            filesLoading={filesLoading}
+            referencesLoading={referencesLoading}
+          />
           <div style={{ padding: "20px 0" }}>
             {progress === 5 && (
               <Alert variant="success">{t("Application complete")}</Alert>

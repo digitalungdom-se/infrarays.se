@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { authSuccess, userInfoSuccess } from "features/auth/authSlice";
 
 import Axios from "axios";
+import { TokenStorage } from "utils/tokenInterceptor";
 import { useDispatch } from "react-redux";
 
 interface AuthenticatedLayerProps {

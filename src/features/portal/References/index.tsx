@@ -10,9 +10,14 @@ import { selectRecommendation } from "features/portal/portalSlice";
 interface PersonProps {
   recommendationIndex: number;
   initialLoading?: boolean;
+  disabled?: boolean;
 }
 
-const Person = ({ recommendationIndex, initialLoading }: PersonProps) => {
+const Person = ({
+  recommendationIndex,
+  initialLoading,
+  disabled,
+}: PersonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const recommendation = useSelector((state: RootState) =>
     selectRecommendation(state, recommendationIndex)
@@ -35,14 +40,25 @@ const Person = ({ recommendationIndex, initialLoading }: PersonProps) => {
       received={Boolean(recommendation?.received)}
       sendDate={recommendation?.lastSent || "1970-01-01"}
       cooldown={["day", 1]}
+      disabled={disabled}
     />
   );
 };
 
-const References = () => {
+interface ReferencesProps {
+  loading?: boolean;
+}
+
+const References = ({ loading }: ReferencesProps) => {
   const map = [];
   for (let i = 0; i < 3; i += 1) {
-    map[i] = <Person key={`email-person-${i}`} recommendationIndex={i} />;
+    map[i] = (
+      <Person
+        key={`email-person-${i}`}
+        recommendationIndex={i}
+        disabled={loading}
+      />
+    );
   }
   return <>{map}</>;
 };

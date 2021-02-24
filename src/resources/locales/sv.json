@@ -83,5 +83,9 @@
   "Application complete": "Din ansökan är fullständig och är mottagen av Rays.",
   "Bad link": "Dålig länk",
   "Bad link description": "Du har klickat på en länk som antingen är utgången eller felaktig. Försök att logga in igen från [startsidan](/login).",
+  "Download file": "Ladda ned fil",
+  "Downloading file": "Laddar ned fil",
+  "Delete file": "Radera fil",
+  "Deleting file": "Raderar fil",
   "Cant connect to server": "Kan inte ansluta till servern. Var vänlig ladda om sidan och kolla din internetanslutning. Om problemet kvarstår, var vänlig och besök sidan lite senare. Vi ber om ursäkt för de problem som detta orsakar dig."
 }
