@@ -18,9 +18,10 @@ interface LogoProps {
   center?: boolean;
   style?: CSSProperties;
   maxHeight?: string | number;
+  maxWidth?: string | number;
 }
 
-const Logo: React.FC<LogoProps> = ({ maxHeight, style, center }) => (
+const Logo: React.FC<LogoProps> = ({ maxHeight, maxWidth, center }) => (
   <StyledImg
     maxHeight={maxHeight}
     src={logo}

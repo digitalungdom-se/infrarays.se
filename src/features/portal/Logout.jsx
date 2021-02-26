@@ -6,7 +6,7 @@ import { logoutSuccess } from "features/appSlice";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-const Logout = ({ url = "/api/user/logout", style = {} }) => {
+const Logout = ({ style = {} }) => {
   const dispatch = useDispatch();
   const [loggingOut, setLogout] = useState(false);
   const { t } = useTranslation();
