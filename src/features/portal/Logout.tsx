@@ -2,7 +2,6 @@ import { Button, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
 import { TokenStorage } from "utils/tokenInterceptor";
-import { logoutSuccess } from "features/appSlice";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 

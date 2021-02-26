@@ -16,8 +16,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   ...rest
 }) => {
   const userType = useSelector(selectUserType);
-  if (admin !== true && (userType === "ADMIN" || userType === "SUPER_ADMIN"))
+  if (
+    admin !== true &&
+    shouldBeAuthenticated &&
+    (userType === "ADMIN" || userType === "SUPER_ADMIN")
+  )
     return <Redirect to="/admin" />;
+
   return (
     <Route
       {...rest}

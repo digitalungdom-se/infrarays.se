@@ -1,6 +1,10 @@
 import { Button, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
+
 export function showFile(blob, callback) {
   // It is necessary to create a new blob object with mime-type explicitly set
   // otherwise only Chrome works like it should
@@ -31,15 +35,22 @@ export function showFile(blob, callback) {
 
 const OpenPDF = ({ url, children }) => {
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
   return (
     <Button
       variant="primary"
       onClick={() => {
         setLoading(true);
         setTimeout(() => {
-          fetch(url)
-            .then((r) => r.blob())
-            .then((blob) => showFile(blob, setLoading(false)));
+          axios
+            .get(url, { responseType: "blob" })
+            .then((res) => {
+              showFile(res.data, setLoading(false));
+            })
+            .catch(() => {
+              toast.error(t("Couldnt get file"));
+              setLoading(false);
+            });
           // TODO Add catch
         }, 1000);
       }}

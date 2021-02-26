@@ -14,6 +14,7 @@ import {
   getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 
+import admin from "features/admin/adminSlice";
 import app from "features/appSlice";
 import auth from "features/auth/authSlice";
 import portal from "features/portal/portalSlice";
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   app,
   auth,
   portal,
+  admin,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

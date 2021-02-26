@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { updateGradingOrder } from "features/appSlice";
-import { useDispatch } from "react-redux";
 import { Button, Spinner } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+import React, { useState } from "react";
+
+import axios from "axios";
 import { toast } from "react-toastify";
+import { updateGradingOrder } from "../adminSlice";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const RandomiseOrder = () => {
   const dispatch = useDispatch();
@@ -14,15 +16,11 @@ const RandomiseOrder = () => {
       variant="success"
       onClick={() => {
         setLogout(true);
-        fetch("/api/admin/randomise_grading_order", {
-          method: "post",
-        })
-          .then((res) => res.json())
+        axios
+          .post("/admin/grading/randomise")
           .then((res) => {
             setLogout(false);
-            if (res.type === "success") {
-              dispatch(updateGradingOrder(res.gradingOrder));
-            }
+            dispatch(updateGradingOrder(res.data));
           })
           .catch(() => {
             setLogout(false);
