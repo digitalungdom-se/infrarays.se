@@ -86,16 +86,16 @@ class Grading extends React.Component<GradingProps, GradingState> {
 
     return (
       <div>
-        <>
-          <p>För att börja bedöma behöver du slumpa ordningen.</p>
-          <RandomiseOrder />
-          <BootstrapTable
-            striped
-            bordered
-            keyField="index"
-            data={orderedApplications}
-            columns={columns}
-            noDataIndication={() => (
+        <p>För att börja bedöma behöver du slumpa ordningen.</p>
+        <RandomiseOrder />
+        <BootstrapTable
+          striped
+          bordered
+          keyField="index"
+          data={orderedApplications}
+          columns={columns}
+          noDataIndication={() =>
+            loading ? (
               <Spinner
                 animation="border"
                 style={{
@@ -106,40 +106,12 @@ class Grading extends React.Component<GradingProps, GradingState> {
                   height: "5rem",
                 }}
               />
-            )}
-          />
-          {/* <Table striped bordered hover responsive>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Förnamn</th>
-                <th>Efternamn</th>
-                <th>Visa</th>
-                <th>Betygsätt</th>
-              </tr>
-            </thead>
-            <tbody>
-              {!loading &&
-                orderedApplications?.map((applicant, index) => (
-                  <tr key={index + "applicant"}>
-                    <td>{index + 1}</td>
-                    <td>{applicant.firstName}</td>
-                    <td>{applicant.lastName}</td>
-                    <td>
-                      <OpenPDF url={`/application/${applicant.id}/pdf`}>
-                        <FontAwesomeIcon icon={faFileDownload} />
-                      </OpenPDF>
-                    </td>
-                    <td>
-                      <Button>
-                        <FontAwesomeIcon icon={faEdit} />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table> */}
-        </>
+            ) : (
+              "No data"
+            )
+          }
+          rowClasses={(row, rowIndex) => (row.done ? "done" : "")}
+        />
       </div>
     );
   }

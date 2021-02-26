@@ -1,18 +1,19 @@
-import React from "react";
 import {
+  Button,
   Form,
+  FormControl,
   FormGroup,
   InputGroup,
-  FormControl,
-  Button,
   Spinner,
 } from "react-bootstrap";
+
 import { Formik } from "formik";
+import React from "react";
 import styled from "styled-components";
 
 const StyledInputGroup = styled(InputGroup)`
-  &.received input,
-  &.received span {
+  &.verified input,
+  &.verified span {
     /* green */
     color: #155724;
     background-color: #d4edda;
@@ -33,32 +34,63 @@ const StyledInputGroup = styled(InputGroup)`
   }
 `;
 
-const AdminContact = ({
-  name = "",
+interface AdminContactFields {
+  firstName: string;
+  lastName: string;
+  email: string;
+  superAdmin: boolean;
+}
+
+interface AdminContactProps extends Partial<AdminContactFields> {
+  status?: "VERIFIED" | "REQUESTED" | "LOADING";
+  initialErrors?: any;
+  onSubmit?: (values: AdminContactFields) => Promise<void | string>;
+}
+
+const AdminContact: React.FC<AdminContactProps> = ({
+  firstName = "",
+  lastName = "",
   email = "",
   superAdmin = false,
   status,
   initialErrors = {},
+  onSubmit,
 }) => (
   <Formik
     initialErrors={initialErrors}
-    initialValues={{ name, email, superAdmin }}
-    onSubmit={(values, { setSubmitting }) => {
+    initialValues={{ firstName, lastName, email, superAdmin }}
+    onSubmit={(values, { setSubmitting, setErrors }) => {
       setSubmitting(true);
+      if (onSubmit)
+        onSubmit(values)
+          .then(() => setSubmitting(false))
+          .catch(() => {
+            setErrors({ email: "already exists" });
+            setSubmitting(false);
+          });
     }}
   >
     {({ handleChange, values, handleSubmit, isSubmitting, errors }) => (
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <StyledInputGroup className={status || ""}>
+          <StyledInputGroup className={status ? status.toLowerCase() : ""}>
             <FormControl
               onChange={handleChange}
-              value={values.name}
+              value={values.firstName}
               disabled={isSubmitting || Boolean(status)}
-              name="name"
+              name="firstName"
               required
               type="text"
-              placeholder="För- och efternamn"
+              placeholder="Förnamn"
+            />
+            <FormControl
+              onChange={handleChange}
+              value={values.lastName}
+              disabled={isSubmitting || Boolean(status)}
+              name="lastName"
+              required
+              type="text"
+              placeholder="Efternamn"
             />
             <FormControl
               onChange={handleChange}
@@ -74,7 +106,7 @@ const AdminContact = ({
               {Boolean(status) && superAdmin && (
                 <InputGroup.Text>Superadmin</InputGroup.Text>
               )}
-              {status !== "received" && (
+              {!status && (
                 <FormGroup as="span" className="input-group-text">
                   Superadmin{" "}
                   <Form.Check
@@ -85,7 +117,7 @@ const AdminContact = ({
                   />
                 </FormGroup>
               )}
-              {status !== "received" && (
+              {!status && (
                 <Button
                   type="submit"
                   disabled={isSubmitting || Boolean(status)}
