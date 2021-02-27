@@ -83,8 +83,6 @@ class TopList extends React.Component<TopListProps, TopListState> {
       index,
     }));
 
-    console.log(dataWithIndex);
-
     return (
       <BootstrapTable
         striped

@@ -42,15 +42,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
   componentDidMount() {
     if (Boolean(this.props.applications.length) === false) {
       axios.get<ApplicationInfo[]>("/application").then((res) => {
-        // const applications: Record<string, ApplicationInfo> = {};
         this.props.setApplications(res.data);
-        // res.data.forEach(
-        //   (applicant) => (applications[applicant.id] = applicant)
-        // );
-        // this.setState({
-        //   applications,
-        //   loading: [false, this.state.loading[1]],
-        // });
       });
       axios.get<OrderItem[]>("/admin/grading").then((res) => {
         this.props.updateGradingOrder(res.data);
@@ -65,7 +57,6 @@ class Grading extends React.Component<GradingProps, GradingState> {
       ...application,
       index,
     }));
-    console.log(this.props.applications);
 
     const columns = [
       {
@@ -89,11 +80,14 @@ class Grading extends React.Component<GradingProps, GradingState> {
           </OpenPDF>
         ),
       },
-      // {
-      //   dataField: "id",
-      //   text: "Bedöm",
-      //   formatter: (id: string) => <Grade id={id} />,
-      // },
+      {
+        dataField: "dummy_field",
+        text: "Bedöm",
+        isDummyField: true,
+        formatter: (id: string, row: any) => (
+          <Grade key={id + "grade"} id={row.id} />
+        ),
+      },
     ];
 
     return (

@@ -17,14 +17,24 @@ export interface OrderItem {
   done: boolean;
 }
 
+type NumericalGradeField =
+  | "cv"
+  | "coverLetter"
+  | "essays"
+  | "grades"
+  | "recommendations"
+  | "overall";
+
+export type GradeFormValues = Record<NumericalGradeField, number> & {
+  comment: string;
+};
+
 type GradingField =
   | "cv"
   | "coverLetter"
   | "grades"
   | "recommendations"
   | "overall";
-
-type GradingInfo = Record<GradingField, number>;
 
 interface ApplicationBaseInfo {
   id: string;
@@ -37,7 +47,7 @@ interface ApplicationBaseInfo {
   school: string;
 }
 
-export type ApplicationInfo = Partial<GradingInfo> & ApplicationBaseInfo;
+export type ApplicationInfo = Partial<GradeFormValues> & ApplicationBaseInfo;
 
 interface AdminInfo {
   id: string;
@@ -49,11 +59,18 @@ interface AdminInfo {
   created: string;
 }
 
+export interface Grading extends GradeFormValues {
+  applicantId: string;
+  adminId: string;
+  id: string;
+}
+
 interface AdminState {
   gradingOrder: OrderItem[];
   topOrder: TopOrderItem[];
   applications: Record<string, ApplicationInfo>;
   admins: AdminInfo[];
+  grades: Record<string, Grading[]>;
 }
 
 export const initialState: AdminState = {
@@ -61,6 +78,7 @@ export const initialState: AdminState = {
   topOrder: [],
   applications: {},
   admins: [],
+  grades: {},
 };
 
 const adminSlice = createSlice({
@@ -96,6 +114,18 @@ const adminSlice = createSlice({
     updateGradingOrder(state, action: PayloadAction<OrderItem[]>) {
       state.gradingOrder = action.payload;
     },
+    setGrades(
+      state,
+      action: PayloadAction<{ grades: Grading[]; applicantId: string }>
+    ) {
+      state.grades[action.payload.applicantId] = action.payload.grades;
+    },
+    setMyGrade(state, action: PayloadAction<Grading>) {
+      const gradeIndex = state.grades[action.payload.applicantId].findIndex(
+        (grade) => grade.adminId === action.payload.adminId
+      );
+      state.grades[action.payload.applicantId][gradeIndex] = action.payload;
+    },
   },
 });
 
@@ -110,6 +140,30 @@ export const selectApplicationsByTop = (state: RootState): ApplicationInfo[] =>
     (orderItem) => state.admin.applications[orderItem.applicantId]
   );
 
+export const selectMyGrading = (
+  state: RootState,
+  id: string
+): GradeFormValues | undefined => {
+  const relevantGrades = state.admin.grades[id];
+  if (relevantGrades) {
+    const myGrading = relevantGrades.find(
+      (grading) => grading.adminId === state.auth.user?.id
+    );
+    if (myGrading)
+      return {
+        cv: myGrading?.cv,
+        coverLetter: myGrading?.coverLetter,
+        essays: myGrading?.essays,
+        grades: myGrading?.grades,
+        recommendations: myGrading?.recommendations,
+        overall: myGrading?.overall,
+        comment: myGrading?.comment,
+      };
+    return undefined;
+  }
+  return undefined;
+};
+
 export const selectApplicationsByGradingOrder = (
   state: RootState
 ): ApplicationInfo[] =>
@@ -121,6 +175,8 @@ export const {
   updateGradingOrder,
   setApplications,
   setAdmins,
+  setGrades,
+  setMyGrade,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

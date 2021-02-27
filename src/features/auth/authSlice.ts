@@ -49,6 +49,9 @@ export const selectAuthenticated = (state: RootState): boolean =>
 export const selectUserType = (state: RootState): UserType | undefined =>
   state.auth.user?.type;
 
+export const selectUserID = (state: RootState): string | undefined =>
+  state.auth.user?.id;
+
 export const { authSuccess, authFail, userInfoSuccess } = authSlice.actions;
 
 export default authSlice.reducer;
