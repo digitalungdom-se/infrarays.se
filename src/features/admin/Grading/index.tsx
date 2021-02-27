@@ -96,6 +96,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
         <RandomiseOrder />
         <BootstrapTable
           striped
+          wrapperClasses="table-responsive"
           bordered
           keyField="id"
           data={dataWithIndex}

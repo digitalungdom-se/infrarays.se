@@ -86,6 +86,7 @@ class TopList extends React.Component<TopListProps, TopListState> {
     return (
       <BootstrapTable
         striped
+        wrapperClasses="table-responsive"
         bordered
         keyField="index"
         data={dataWithIndex}
