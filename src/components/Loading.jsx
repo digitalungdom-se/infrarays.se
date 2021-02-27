@@ -1,9 +1,9 @@
-import CenterCard from "components/CenterCard";
+import Center from "./Center";
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 
 const Loading = () => (
-  <CenterCard maxWidth="360px">
+  <Center maxWidth="100%">
     <Spinner
       animation="border"
       style={{
@@ -14,7 +14,7 @@ const Loading = () => (
         height: "5rem",
       }}
     />
-  </CenterCard>
+  </Center>
 );
 
 export default Loading;

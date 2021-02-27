@@ -87,5 +87,7 @@
   "Delete file": "Delete file",
   "Deleting file": "Deleting file",
   "Cant connect to server": "Cannot connect to server. Please reload this page and check your internet connection. If the problem persists, please revisit the site later. We are deeply sorry for any inconvenience caused.",
-  "Couldnt get file": "Couldn't get file right now. Please try again later."
+  "Couldnt get file": "Couldn't get file right now. Please try again later.",
+  "comment": "Comment",
+  "overall": "Overall review"
 }

@@ -88,5 +88,7 @@
   "Delete file": "Radera fil",
   "Deleting file": "Raderar fil",
   "Cant connect to server": "Kan inte ansluta till servern. Var vänlig ladda om sidan och kolla din internetanslutning. Om problemet kvarstår, var vänlig och besök sidan lite senare. Vi ber om ursäkt för de problem som detta orsakar dig.",
-  "Couldnt get file": "Kunde inte hämta filen just nu. Försök igen senare."
+  "Couldnt get file": "Kunde inte hämta filen just nu. Försök igen senare.",
+  "comment": "Kommentar",
+  "overall": "Helhetsbedömning"
 }

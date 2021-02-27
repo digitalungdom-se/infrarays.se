@@ -6,8 +6,8 @@ import {
   InputGroup,
   Spinner,
 } from "react-bootstrap";
+import { Formik, setNestedObjectValues } from "formik";
 
-import { Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 
@@ -59,11 +59,14 @@ const AdminContact: React.FC<AdminContactProps> = ({
   <Formik
     initialErrors={initialErrors}
     initialValues={{ firstName, lastName, email, superAdmin }}
-    onSubmit={(values, { setSubmitting, setErrors }) => {
+    onSubmit={(values, { setSubmitting, setErrors, setValues }) => {
       setSubmitting(true);
       if (onSubmit)
         onSubmit(values)
-          .then(() => setSubmitting(false))
+          .then(() => {
+            setValues({ firstName, lastName, email, superAdmin });
+            setSubmitting(false);
+          })
           .catch(() => {
             setErrors({ email: "already exists" });
             setSubmitting(false);

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { selectAdmins, setAdmins } from "../adminSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 import AddButton from "components/AddButton";
 import AdminContact from "components/AdminContact";
 import { Spinner } from "react-bootstrap";
 import axios from "axios";
+import { number } from "prop-types";
 import { selectUserType } from "features/auth/authSlice";
 import useAxios from "axios-hooks";
-import { useSelector } from "react-redux";
 
 interface AdminInfo {
   id: string;
@@ -23,23 +25,37 @@ const Administration: React.FC = () => {
     url: "/admin",
     params: { skip: 0, limit: 10 },
   });
-  const [numberOfEmptyFields, addMoreFields] = useState<number>(0);
+  const dispatch = useDispatch();
+
+  const [numberOfEmptyFields, setEmptyFields] = useState<number[]>([]);
   const userType = useSelector(selectUserType);
-  const emptyFields = [];
-  for (let i = 0; i < numberOfEmptyFields; i++) {
+  const admins = useSelector(selectAdmins);
+  if (data && admins.length === 0) dispatch(setAdmins(data));
+  const emptyFields: React.ReactElement[] = [];
+  numberOfEmptyFields.forEach((i) => {
     emptyFields.push(
       <AdminContact
         key={i + "admin"}
-        onSubmit={(values) => axios.post("/admin", values)}
+        onSubmit={(values) =>
+          axios
+            .post<AdminInfo>("/admin", {
+              ...values,
+              type: values.superAdmin ? "SUPER_ADMIN" : "ADMIN",
+            })
+            .then((res) => {
+              setEmptyFields(numberOfEmptyFields.filter((x) => x !== i));
+              dispatch(setAdmins([res.data]));
+            })
+        }
       />
     );
-  }
+  });
 
   return (
     <div style={{ padding: 20 }}>
       <h1>Administration</h1>
       <p>För att lägga till en admin</p>
-      {data?.map((admin) => (
+      {admins.map((admin) => (
         <AdminContact
           key={admin.id}
           firstName={admin.firstName}
@@ -54,7 +70,12 @@ const Administration: React.FC = () => {
           {emptyFields}
           <AddButton
             disabled={loading}
-            onClick={() => addMoreFields(numberOfEmptyFields + 1)}
+            onClick={() =>
+              setEmptyFields([
+                ...numberOfEmptyFields,
+                numberOfEmptyFields.length + 1,
+              ])
+            }
             style={{ width: "100%" }}
           >
             {loading && <Spinner animation="border" size="sm" />} Lägg till

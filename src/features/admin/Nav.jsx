@@ -31,9 +31,6 @@ const Nav = () => {
         <BootstrapNavLink to="/admin/toplist">Topplista</BootstrapNavLink>
       </BootstrapNav.Item>
       <BootstrapNav.Item>
-        <BootstrapNavLink to="/admin/settings">Inställningar</BootstrapNavLink>
-      </BootstrapNav.Item>
-      <BootstrapNav.Item>
         <BootstrapNavLink to="/admin/administration">Admins</BootstrapNavLink>
       </BootstrapNav.Item>
       <BootstrapNav.Item>

@@ -1,21 +1,21 @@
-import { Button, Table } from "react-bootstrap";
 import { ConnectedProps, connect } from "react-redux";
 import {
   OrderItem,
-  selectGradingOrder,
+  selectApplicationsByGradingOrder,
+  setApplications,
   updateGradingOrder,
 } from "../adminSlice";
-import { faEdit, faFileDownload } from "@fortawesome/free-solid-svg-icons";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Loading from "components/Loading";
+import Grade from "./Grade";
 import OpenPDF from "components/portal/OpenPDF";
 import RandomiseOrder from "./RandomiseOrder";
 import React from "react";
 import { RootState } from "store";
 import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
+import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 
 interface ApplicationInfo {
   id: string;
@@ -40,25 +40,32 @@ class Grading extends React.Component<GradingProps, GradingState> {
   };
 
   componentDidMount() {
-    axios.get<ApplicationInfo[]>("/application").then((res) => {
-      const applications: Record<string, ApplicationInfo> = {};
-      res.data.forEach((applicant) => (applications[applicant.id] = applicant));
-      this.setState({ applications, loading: [false, this.state.loading[1]] });
-    });
-    axios.get<OrderItem[]>("/admin/grading").then((res) => {
-      this.props.updateGradingOrder(res.data);
-      this.setState({ loading: [this.state.loading[0], false] });
-    });
+    if (Boolean(this.props.applications.length) === false) {
+      axios.get<ApplicationInfo[]>("/application").then((res) => {
+        // const applications: Record<string, ApplicationInfo> = {};
+        this.props.setApplications(res.data);
+        // res.data.forEach(
+        //   (applicant) => (applications[applicant.id] = applicant)
+        // );
+        // this.setState({
+        //   applications,
+        //   loading: [false, this.state.loading[1]],
+        // });
+      });
+      axios.get<OrderItem[]>("/admin/grading").then((res) => {
+        this.props.updateGradingOrder(res.data);
+        this.setState({ loading: [this.state.loading[0], false] });
+      });
+    }
   }
 
   render() {
     const loading = this.state.loading[0] || this.state.loading[1];
-    const applications: Record<string, ApplicationInfo> = this.state
-      .applications;
-    const orderedApplications = this.props.order.map((orderItem, index) => ({
-      ...applications[orderItem.applicantId],
+    const dataWithIndex = this.props.applications.map((application, index) => ({
+      ...application,
       index,
     }));
+    console.log(this.props.applications);
 
     const columns = [
       {
@@ -82,6 +89,11 @@ class Grading extends React.Component<GradingProps, GradingState> {
           </OpenPDF>
         ),
       },
+      // {
+      //   dataField: "id",
+      //   text: "Bedöm",
+      //   formatter: (id: string) => <Grade id={id} />,
+      // },
     ];
 
     return (
@@ -91,8 +103,8 @@ class Grading extends React.Component<GradingProps, GradingState> {
         <BootstrapTable
           striped
           bordered
-          keyField="index"
-          data={orderedApplications}
+          keyField="id"
+          data={dataWithIndex}
           columns={columns}
           noDataIndication={() =>
             loading ? (
@@ -110,7 +122,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
               "No data"
             )
           }
-          rowClasses={(row, rowIndex) => (row.done ? "done" : "")}
+          rowClasses={(row) => (row.done ? "done" : "")}
         />
       </div>
     );
@@ -119,10 +131,11 @@ class Grading extends React.Component<GradingProps, GradingState> {
 
 const mapDispatch = {
   updateGradingOrder,
+  setApplications,
 };
 
 const mapState = (state: RootState) => ({
-  order: selectGradingOrder(state),
+  applications: selectApplicationsByGradingOrder(state),
 });
 
 const connector = connect(mapState, mapDispatch);
