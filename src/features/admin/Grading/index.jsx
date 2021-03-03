@@ -1,11 +1,12 @@
-import React from "react";
-import { Table, Button } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
+import { faEdit, faFileDownload } from "@fortawesome/free-solid-svg-icons";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileDownload, faEdit } from "@fortawesome/free-solid-svg-icons";
 import OpenPDF from "components/portal/OpenPDF";
+import RandomiseOrder from "./RandomiseOrder";
+import React from "react";
 import { connect } from "react-redux";
 import { updateGradingOrder } from "features/appSlice";
-import RandomiseOrder from "./RandomiseOrder";
 
 const mapStateToProps = (state) => ({
   gradingOrder: state.app.gradingOrder,
