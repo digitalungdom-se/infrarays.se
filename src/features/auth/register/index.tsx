@@ -4,18 +4,19 @@ import { Alert, FormControlProps, Spinner } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { Link, useHistory } from "react-router-dom";
 import MaskedInput, { MaskedInputProps } from "react-maskedinput";
-import React from "react";
 import { Trans, WithTranslation, withTranslation } from "react-i18next";
 
 import Axios from "axios";
 import Button from "react-bootstrap/Button";
 import Center from "components/Center";
+import CopyLoginCode from "../login/CopyLoginCode";
 import FormCheck from "react-bootstrap/FormCheck";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
 import Logo from "components/Logo";
 import Plate from "components/Plate";
+import React from "react";
 import StyledGroup from "components/StyledGroup";
 import moment from "moment";
 import { toast } from "react-toastify";
@@ -70,14 +71,19 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                 Axios.post("/user/send_email_login_code", { email }).then(
                   (res) => {
                     push(`/login/${btoa(email)}`);
-                    toast.success(t("Successfully registered!"), {
-                      position: "top-center",
-                      autoClose: false,
-                      hideProgressBar: false,
-                      closeOnClick: true,
-                      pauseOnHover: true,
-                      draggable: true,
-                    });
+                    if (
+                      res.data &&
+                      res.config.baseURL ===
+                        "https://devapi.infrarays.digitalungdom.se"
+                    )
+                      toast(<CopyLoginCode code={res.data} />, {
+                        position: "top-center",
+                        autoClose: false,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                      });
                   }
                 );
               })
