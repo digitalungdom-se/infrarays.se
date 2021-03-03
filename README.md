@@ -42,7 +42,3 @@ To install these extensions please see [Visual Studio Code's documentation](http
 - [sort-imports](https://github.com/amatiasq/vsc-sort-imports)
 
 Sidenote: Many required extensions are already built-in in VSCode / VSCodium, such as: [TypeScript Language Basics](https://open-vsx.org/extension/vscode/typescript). The necessity for these extensions are not documented.
-
-### License 📝
-
-This repository is [GNU AFFERO GENERAL PUBLIC LICENSE](./LICENSE).
