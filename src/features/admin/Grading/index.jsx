@@ -6,16 +6,13 @@ import OpenPDF from "components/portal/OpenPDF";
 import RandomiseOrder from "./RandomiseOrder";
 import React from "react";
 import { connect } from "react-redux";
-import { updateGradingOrder } from "features/appSlice";
 
 const mapStateToProps = (state) => ({
   gradingOrder: state.app.gradingOrder,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  update: (order) => {
-    dispatch(updateGradingOrder(order));
-  },
+  update: (order) => null,
 });
 
 class Applications extends React.Component {
