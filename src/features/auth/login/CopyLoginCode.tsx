@@ -1,16 +1,25 @@
+import React, { useState } from "react";
+
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import React from "react";
+
 interface CopyLoginCodeProps {
   code: string;
 }
 
 const CopyLoginCode = ({ code }: CopyLoginCodeProps): React.ReactElement => {
+  const [copied, setCopied] = useState<boolean>(false);
   return (
-    <CopyToClipboard text={code}>
+    <CopyToClipboard text={code} onCopy={() => setCopied(true)}>
       <span style={{ color: "black" }}>
-        Klicka på koden för att kopiera!
-        <br />
-        <code>{code}</code>
+        {copied ? (
+          "Kopierad!"
+        ) : (
+          <>
+            Klicka på koden för att kopiera!
+            <br />
+            <code>{code}</code>
+          </>
+        )}
       </span>
     </CopyToClipboard>
   );

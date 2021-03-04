@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { Recommendation, addPersonSuccess } from "features/portal/portalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Axios from "axios";
 import ContactPerson from "components/portal/ContactPerson";
 import { RootState } from "store";
-import { addPersonSuccess } from "features/portal/portalSlice";
 import { selectRecommendation } from "features/portal/portalSlice";
+import { toast } from "react-toastify";
 
 interface PersonProps {
   recommendationIndex: number;
@@ -25,12 +26,35 @@ const Person = ({
   const dispatch = useDispatch();
   function handleSubmit(email: string) {
     setLoading(true);
-    Axios.post(`/application/@me/recommendation/${recommendationIndex}`, {
-      email,
-    }).then((res) => {
-      setLoading(false);
-      dispatch(addPersonSuccess([res.data]));
-    });
+    Axios.post<Recommendation>(
+      `/application/@me/recommendation/${recommendationIndex}`,
+      {
+        email,
+      }
+    )
+      .then((res) => {
+        setLoading(false);
+        dispatch(addPersonSuccess([res.data]));
+        if (
+          res.data.code &&
+          res.config.baseURL === "https://devapi.infrarays.digitalungdom.se"
+        )
+          toast(
+            <span
+              style={{ color: "black" }}
+              onClick={() => {
+                window.open(`/recommendation/${res.data.code}`, "_blank");
+              }}
+            >
+              Klicka för att öppna uppladningslänk!
+            </span>,
+            {
+              position: "bottom-center",
+              autoClose: false,
+            }
+          );
+      })
+      .catch(console.error);
   }
   return (
     <ContactPerson

@@ -43,6 +43,7 @@ const Login = (): React.ReactElement => {
                   toast(<CopyLoginCode code={res.data} />, {
                     position: "bottom-center",
                     autoClose: false,
+                    closeOnClick: false,
                   });
                 }
                 history.push(`/login/${btoa(email)}`);

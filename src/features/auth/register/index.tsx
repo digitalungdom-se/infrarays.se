@@ -80,9 +80,9 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                         position: "top-center",
                         autoClose: false,
                         hideProgressBar: false,
-                        closeOnClick: true,
                         pauseOnHover: true,
                         draggable: true,
+                        closeOnClick: false,
                       });
                   }
                 );
