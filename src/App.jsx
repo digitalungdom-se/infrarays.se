@@ -25,7 +25,7 @@ const StyledApp = styled.div`
 
   #content {
     width: 100%;
-    min-height: calc(100% - 2.5rem);
+    min-height: calc(100% - 4rem);
     display: table;
   }
 `;
