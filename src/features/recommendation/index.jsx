@@ -3,11 +3,9 @@ import React, { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 import CenterCard from "components/CenterCard";
-import ContactPerson from "components/portal/ContactPerson";
 import Upload from "components/portal/Upload";
 import axios from "axios";
 import useAxios from "axios-hooks";
-import useFetch from "utils/useFetch";
 import { useParams } from "react-router-dom";
 
 const esc = encodeURIComponent;
@@ -89,13 +87,19 @@ const Recommendation = () => {
           {error === null && (
             <>
               <Trans i18nKey="LoR-description">
-                .<h4>For {{ name }}</h4>
+                <h4>For {{ name }}</h4>
                 <p>
                   Thank you for taking interest in writing a letter of
-                  recommendation! The letter must be written, signed and sent by
-                  the students teacher, coach or such. Maximum 1 page per
-                  letter. The student will not be able to see the letter, but
-                  will receive a notification once it is uploaded. The file size
+                  recommendation!
+                </p>
+                <p>
+                  The letter must be written, signed and sent by the
+                  student&apos;s teacher, coach or such. Maximum 1 page per
+                  letter.
+                </p>
+                <p>
+                  The student will not be able to see the letter, but will
+                  receive a notification once it is uploaded. The file size
                   limit is 5 MB.{" "}
                 </p>
                 <a
