@@ -1,6 +1,6 @@
 # infrarays.se 
 
-Welcome to the repository for the application portal [website](https://ansok.raysforexcellence.se/) for the organization Rays for excellence, created by Digital Ungdom.
+Welcome to the repository for the front-end of the application portal [website](https://ansok.raysforexcellence.se/) made for the organization [Rays for excellence](raysforexcellence.se) and created by [Digital Ungdom](www.digitalungdom.se). The back-end of infrarays.se can be found [here](https://github.com/digitalungdom-se/infrarays-api)
 
 ## Installation 📥
 
