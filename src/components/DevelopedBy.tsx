@@ -6,19 +6,17 @@ import styled from "styled-components";
 
 const StyledDiv = styled.div`
   text-align: center;
-  height: 3rem; /* Footer height */
+  height: 4rem; /* Footer height */
   & > div {
     img {
-      height: 3rem;
+      height: 4rem;
       vertical-align: top;
     }
-    margin: 0;
+    margin-bottom: -0.25rem;
     display: inline-block;
     height: 100%;
     & > span {
-      /* line-height: 1rem; */
-      padding: 0;
-      margin: 0;
+      padding-top: 0.4rem;
       display: inline-block;
     }
     span > a {
@@ -47,7 +45,7 @@ const DevelopedBy: React.FC<WithTranslation> = () => (
           </Trans>
         </div>
         <a
-          href="https://www.digitalungdom.se/"
+          href="https://github.com/digitalungdom-se/infrarays.se"
           rel="noopener noreferrer"
           target="_blank"
         >
