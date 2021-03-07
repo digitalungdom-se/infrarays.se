@@ -93,8 +93,9 @@ const Recommendation = () => {
                   recommendation!
                 </p>
                 <p>
-                  The letter must be written, signed and sent by the student's
-                  teacher, coach or such. Maximum 1 page per letter.
+                  The letter must be written, signed and sent by the
+                  student&apos;s teacher, coach or such. Maximum 1 page per
+                  letter.
                 </p>
                 <p>
                   The student will not be able to see the letter, but will
