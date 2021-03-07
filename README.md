@@ -1,6 +1,6 @@
 # infrarays.se
 
-Welcome to the repository for the application portal [website](https://ansok.raysforexcellence.se/) for the organization Rays for excellence, created by Digital Ungdom. The API repository is [infrarays-api](https://github.com/digitalungdom-se/infrarays-api). A development front-end server is set up at [dev--infrarays.netlify.app](https://dev--infrarays.netlify.app) and the development API is found at [devapi.infrarays.digitalungdom.se](https://devapi.infrarays.digitalungdom.se).
+Welcome to the repository for the application portal [website](https://ansok.raysforexcellence.se/) for the organization [Rays for excellence](raysforexcellence.se), created by [Digital Ungdom](www.digitalungdom.se). The API repository is [infrarays-api](https://github.com/digitalungdom-se/infrarays-api). A development front-end server is set up at [dev--infrarays.netlify.app](https://dev--infrarays.netlify.app) and the development API is found at [devapi.infrarays.digitalungdom.se](https://devapi.infrarays.digitalungdom.se).
 
 ## Technologies and packages used
 
