@@ -31,6 +31,7 @@ const MaskedField = (props: MaskedFieldProps) => (
 
 const Register: React.FC<WithTranslation> = ({ t }) => {
   const { push } = useHistory();
+  const toastId = React.useRef<React.ReactText>(null);
   return (
     <Center maxWidth="850px">
       <Plate>
@@ -75,15 +76,22 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                       res.data &&
                       res.config.baseURL ===
                         "https://devapi.infrarays.digitalungdom.se"
-                    )
-                      toast(<CopyLoginCode code={res.data} />, {
-                        position: "top-center",
-                        autoClose: false,
-                        hideProgressBar: false,
-                        pauseOnHover: true,
-                        draggable: true,
-                        closeOnClick: false,
-                      });
+                    ) {
+                      const update = () =>
+                        toast.update(toastId.current as string, {
+                          autoClose: 5000,
+                        });
+                      const notify = () =>
+                        ((toastId.current as React.ReactText) = toast(
+                          <CopyLoginCode code={res.data} onCopy={update} />,
+                          {
+                            position: "bottom-center",
+                            autoClose: false,
+                            closeOnClick: false,
+                          }
+                        ));
+                      notify();
+                    }
                   }
                 );
               })

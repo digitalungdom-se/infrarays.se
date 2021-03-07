@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 const Login = (): React.ReactElement => {
   const history = useHistory();
   const { t } = useTranslation();
+  const toastId = React.useRef<React.ReactText>(null);
 
   return (
     <Center maxWidth="360px">
@@ -40,11 +41,20 @@ const Login = (): React.ReactElement => {
                   res.config.baseURL ===
                     "https://devapi.infrarays.digitalungdom.se"
                 ) {
-                  toast(<CopyLoginCode code={res.data} />, {
-                    position: "bottom-center",
-                    autoClose: false,
-                    closeOnClick: false,
-                  });
+                  const update = () =>
+                    toast.update(toastId.current as string, {
+                      autoClose: 5000,
+                    });
+                  const notify = () =>
+                    ((toastId.current as React.ReactText) = toast(
+                      <CopyLoginCode code={res.data} onCopy={update} />,
+                      {
+                        position: "bottom-center",
+                        autoClose: false,
+                        closeOnClick: false,
+                      }
+                    ));
+                  notify();
                 }
                 history.push(`/login/${btoa(email)}`);
                 setSubmitting(false);
