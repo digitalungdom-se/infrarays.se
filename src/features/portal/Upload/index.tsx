@@ -47,6 +47,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       setUploading(false);
+      setError(undefined);
       dispatch(replaceFile(res.data));
     });
   }
