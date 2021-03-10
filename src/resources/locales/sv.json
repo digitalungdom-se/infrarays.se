@@ -89,5 +89,6 @@
   "Deleting file": "Raderar fil",
   "Cant connect to server": "Kan inte ansluta till servern. Var vänlig ladda om sidan och kolla din internetanslutning. Om problemet kvarstår, var vänlig och besök sidan lite senare. Vi ber om ursäkt för de problem som detta orsakar dig.",
   "Click to copy": "Klicka koden för att kopiera!",
-  "Copied": "Kopierad!"
+  "Copied": "Kopierad!",
+  "Click to open link": "Klicka här för att öppna uppladdningslänk!"
 }

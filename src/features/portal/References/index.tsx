@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Recommendation, addPersonSuccess } from "features/portal/portalSlice";
+import { Trans, withTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import Axios from "axios";
@@ -7,6 +8,19 @@ import ContactPerson from "components/portal/ContactPerson";
 import { RootState } from "store";
 import { selectRecommendation } from "features/portal/portalSlice";
 import { toast } from "react-toastify";
+
+const UploadLink = ({ code }: { code: string }) => (
+  <a
+    href={`/recommendation/${code}`}
+    rel="noopener noreferrer"
+    target="_blank"
+    style={{ color: "black" }}
+  >
+    <Trans i18nKey="Click to open link" />
+  </a>
+);
+
+const TranslatedUploadLink = withTranslation()(UploadLink);
 
 interface PersonProps {
   recommendationIndex: number;
@@ -39,20 +53,10 @@ const Person = ({
           res.data.code &&
           res.config.baseURL === "https://devapi.infrarays.digitalungdom.se"
         )
-          toast(
-            <span
-              style={{ color: "black" }}
-              onClick={() => {
-                window.open(`/recommendation/${res.data.code}`, "_blank");
-              }}
-            >
-              Klicka för att öppna uppladningslänk!
-            </span>,
-            {
-              position: "bottom-center",
-              autoClose: false,
-            }
-          );
+          toast(<TranslatedUploadLink code={res.data.code} />, {
+            position: "bottom-center",
+            autoClose: false,
+          });
       })
       .catch(console.error);
   }
