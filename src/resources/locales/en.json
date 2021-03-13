@@ -86,5 +86,8 @@
   "Downloading file": "Downloading file",
   "Delete file": "Delete file",
   "Deleting file": "Deleting file",
-  "Cant connect to server": "Cannot connect to server. Please reload this page and check your internet connection. If the problem persists, please revisit the site later. We are deeply sorry for any inconvenience caused."
+  "Cant connect to server": "Cannot connect to server. Please reload this page and check your internet connection. If the problem persists, please revisit the site later. We are deeply sorry for any inconvenience caused.",
+  "Click to copy": "Click the code to copy!",
+  "Copied": "Copied!",
+  "Click to open link": "Click here to open upload link!"
 }

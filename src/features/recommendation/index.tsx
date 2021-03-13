@@ -1,4 +1,4 @@
-import { Alert, Form, Spinner } from "react-bootstrap";
+import { Alert, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -8,17 +8,21 @@ import axios from "axios";
 import useAxios from "axios-hooks";
 import { useParams } from "react-router-dom";
 
-const esc = encodeURIComponent;
-export const query = (params) =>
-  Object.keys(params)
-    .map((k) => `${esc(k)}=${esc(params[k])}`)
-    .join("&");
+interface UploadStateProps {
+  uploadedFileName: string;
+  recommendationCode: string;
+}
 
-const UploadState = ({ uploadedFileName, setSuccess }) => {
-  const [error, setError] = useState();
-  const [uploading, setUploading] = useState();
-  const [uploaded, setUploaded] = useState();
-  const { recommendationCode } = useParams();
+const UploadState = ({
+  uploadedFileName,
+  recommendationCode,
+}: UploadStateProps) => {
+  const [error, setError] = useState<{
+    fileName?: string;
+    msg?: string;
+  }>();
+  const [uploading, setUploading] = useState<boolean>();
+  const [uploaded, setUploaded] = useState<string>();
   const { t } = useTranslation();
   return (
     <Upload
@@ -28,7 +32,7 @@ const UploadState = ({ uploadedFileName, setSuccess }) => {
       uploading={uploading}
       uploaded={error?.fileName || uploaded || uploadedFileName}
       error={error?.msg}
-      onChange={(file, fileName) => {
+      onChange={(file: File, fileName: string) => {
         if (file.size > 5 * 10 ** 6) {
           setError({ msg: t("too large"), fileName });
           return;
@@ -40,7 +44,7 @@ const UploadState = ({ uploadedFileName, setSuccess }) => {
           .post(`/application/recommendation/${recommendationCode}`, body)
           .then((res) => {
             setUploading(false);
-            setError({ fileName: null });
+            setError(undefined);
             setUploaded(res.data.name);
           });
       }}
@@ -48,8 +52,8 @@ const UploadState = ({ uploadedFileName, setSuccess }) => {
   );
 };
 
-const Recommendation = () => {
-  const { recommendationCode } = useParams();
+const Recommendation = (): React.ReactElement => {
+  const { recommendationCode } = useParams<{ recommendationCode: string }>();
 
   const [{ response, error, loading }] = useAxios(
     `/application/recommendation/${recommendationCode}`
@@ -65,7 +69,6 @@ const Recommendation = () => {
       {loading ? (
         <Spinner
           animation="border"
-          size="lg"
           variant="custom"
           style={{
             width: "5rem",
@@ -76,14 +79,13 @@ const Recommendation = () => {
           }}
         />
       ) : (
-        <Form>
-          {error !== null ||
-            (response?.type === "fail" && (
+        <>
+          {error &&
+            ((!!error.isAxiosError && !error.response) === false ? (
               <Alert variant="danger">{t("Couldn't find any student")}</Alert>
+            ) : (
+              <Alert variant="danger">{t("Cant connect to server")}</Alert>
             ))}
-          {error && (
-            <Alert variant="danger">{t("Cant connect to server")}</Alert>
-          )}
           {error === null && (
             <>
               <Trans i18nKey="LoR-description">
@@ -116,7 +118,7 @@ const Recommendation = () => {
               />
             </>
           )}
-        </Form>
+        </>
       )}
     </CenterCard>
   );

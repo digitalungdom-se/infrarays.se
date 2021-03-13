@@ -1,17 +1,17 @@
-import { Button, Form, FormControl, Modal, Spinner } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
 import Axios from "axios";
-import StyledGroup from "components/StyledGroup";
 import { TokenStorage } from "utils/tokenInterceptor";
-import { logoutSuccess } from "features/appSlice";
-import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-const ConfirmModal = ({ show, onHide }) => {
-  const dispatch = useDispatch();
+interface ConfirmModalProps {
+  show: boolean;
+  onHide: () => void;
+}
+
+const ConfirmModal = ({ show, onHide }: ConfirmModalProps) => {
   const [deleting, setDelete] = useState(false);
-  const [error, setError] = useState();
   const { t } = useTranslation();
   return (
     <Modal
