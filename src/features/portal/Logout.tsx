@@ -1,12 +1,15 @@
 import { Button, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
+import { CSSProperties } from "styled-components";
 import { TokenStorage } from "utils/tokenInterceptor";
-import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-const Logout = ({ style = {} }) => {
-  const dispatch = useDispatch();
+interface LogoutProps {
+  style?: CSSProperties;
+}
+
+const Logout = ({ style }: LogoutProps): React.ReactElement => {
   const [loggingOut, setLogout] = useState(false);
   const { t } = useTranslation();
   return (

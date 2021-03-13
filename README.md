@@ -1,68 +1,59 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# infrarays.se
 
-## Available Scripts
+Welcome to the repository for the application portal [website](https://ansok.raysforexcellence.se/) for the organization [Rays for excellence](raysforexcellence.se), created by [Digital Ungdom](www.digitalungdom.se). The API repository is [infrarays-api](https://github.com/digitalungdom-se/infrarays-api). A development front-end server is set up at [dev--infrarays.netlify.app](https://dev--infrarays.netlify.app) and the development API is found at [devapi.infrarays.digitalungdom.se](https://devapi.infrarays.digitalungdom.se).
 
-In the project directory, you can run:
+## Technologies and packages used
 
-### `yarn start`
+Below are listed some technologies and packages that are used in the project. Keep in mind that these are only a couple of the many exciting packages that make this application!
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- TypeScript
+- Internationalization (i18next)
+- Redux (@reduxjs/toolkit)
+- Formik
+- Axios (for customizing API url)
+- styled-components
+- Storybook
+- ESLint + Prettier
+- Bootstrap
+- react-router-dom
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Installation 📥
 
-### `yarn test`
+To start the development website you need to have [Node.js](https://nodejs.org/en/download/) installed.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Download the project by using `git clone https://github.com/digitalungdom-se/infrarays.se.git`
 
-### `yarn build`
+- To install our packages and dependencies use `npm install`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Finally, start the project by using `npm run start`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Boom, _easy_, **no questions asked**. We at Digital Ungdom like it that way!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Contribute 🖋️
 
-### `yarn eject`
+So you want to contribute? **Good**, the world needs more scientists like you.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### But how? 🤔
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If you find a typo, bug or want to add a feature, create an [issue](https://github.com/digitalungdom-se/infrarays.se/issues) or add a [pull request](https://github.com/digitalungdom-se/infrarays.se/pulls) with the code you want to add! We will take a look at what you sent in and reward you with gold and glory (or maybe just some stickers) if you help our noble cause.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Recommended IDE 💾
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+[VSCodium](https://vscodium.com/) is the recommended integrated development environment, VSCode will work as well. This is due to the fact that several helpful addons that are used in project’s development are only available to VSCodium and VSCode.
 
-## Learn More
+#### Recommended extensions for VSCodium
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To install these extensions please see [Visual Studio Code's documentation](https://code.visualstudio.com/docs/introvideos/extend). If you prefer not to visit sites with proprietary software, do the following steps:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Open the command palette and choose `Extensions: Install extensions`.
+2. Search for your extension.
+3. Click / select it.
+4. Press install.
 
-### Code Splitting
+##### Extensions for linting purposes
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- [ESLint](https://open-vsx.org/extension/dbaeumer/vscode-eslint)
+- [Prettier - Code formatter](https://open-vsx.org/extension/esbenp/prettier-vscode)
+- [sort-imports](https://github.com/amatiasq/vsc-sort-imports)
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Sidenote: Many required extensions are already built-in in VSCode / VSCodium, such as: [TypeScript Language Basics](https://open-vsx.org/extension/vscode/typescript). The necessity for these extensions are not documented.

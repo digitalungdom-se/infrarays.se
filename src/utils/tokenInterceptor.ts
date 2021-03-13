@@ -100,7 +100,7 @@ export class TokenStorage {
 
   private static removeTokensAndNotify(): void {
     console.log("Removing tokens...");
-    toast.info(i18n.t("Logged out"), {
+    toast(i18n.t("Logged out"), {
       position: "bottom-center",
     });
     localStorage.removeItem(TokenStorage.LOCAL_STORAGE_ACCESS_TOKEN);
