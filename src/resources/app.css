@@ -10,3 +10,7 @@ body,
 .Toastify__progress-bar--default {
   background: #dc0c05 !important;
 }
+
+.Toastify__toast-body {
+  color: black;
+}

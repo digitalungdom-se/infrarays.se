@@ -22,7 +22,7 @@ const CopyLoginCode = ({
         if (onCopy) onCopy();
       }}
     >
-      <span style={{ color: "black" }}>
+      <span>
         {copied ? (
           t("Copied")
         ) : (
