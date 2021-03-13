@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 const RandomiseOrder = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const [randomising, setRandomising] = useState < boolean > false;
+  const [randomising, setRandomising] = useState<boolean>(false);
   const { t } = useTranslation();
   return (
     <Button
