@@ -8,10 +8,8 @@ const AutomaticLogin = lazy(() => import("features/auth/login/AutomaticLogin"));
 const Login = lazy(() => import("features/auth/login"));
 const Portal = lazy(() => import("features/portal"));
 const Register = lazy(() => import("features/auth/register"));
-const ForgotPassword = lazy(() => import("features/forgotPassword"));
 const NoMatch = lazy(() => import("features/nomatch"));
 const Recommendation = lazy(() => import("features/recommendation"));
-const ResetPassword = lazy(() => import("features/resetPassword"));
 const LoginWithCodeRoute = lazy(() =>
   import("features/auth/login/LoginWithCodeRoute")
 );
