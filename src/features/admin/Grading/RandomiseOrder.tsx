@@ -7,31 +7,31 @@ import { updateGradingOrder } from "../adminSlice";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-const RandomiseOrder = () => {
+const RandomiseOrder = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const [loggingOut, setLogout] = useState(false);
+  const [randomising, setRandomising] = useState < boolean > false;
   const { t } = useTranslation();
   return (
     <Button
       variant="success"
       onClick={() => {
-        setLogout(true);
+        setRandomising(true);
         axios
           .post("/admin/grading/randomise")
           .then((res) => {
-            setLogout(false);
+            setRandomising(false);
             dispatch(updateGradingOrder(res.data));
           })
           .catch(() => {
-            setLogout(false);
+            setRandomising(false);
             toast.error("Ett fel uppstod!", {
               autoClose: false,
             });
           });
       }}
-      disabled={loggingOut}
+      disabled={randomising}
     >
-      {loggingOut ? (
+      {randomising ? (
         <span>
           <Spinner animation="border" size="sm" />
           {t("Randomising")}

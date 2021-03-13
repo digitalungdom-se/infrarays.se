@@ -2,7 +2,7 @@ import Center from "./Center";
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 
-const Loading = () => (
+const Loading = (): React.ReactElement => (
   <Center maxWidth="100%">
     <Spinner
       animation="border"
