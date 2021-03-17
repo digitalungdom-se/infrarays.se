@@ -4,7 +4,6 @@ import Axios from "axios";
 import LoginWithCode from "./LoginWithCode";
 import React from "react";
 import { TokenStorage } from "utils/tokenInterceptor";
-import { useTranslation } from "react-i18next";
 
 export const loginWithCode = (email: string, loginCode: string) =>
   Axios.post(
@@ -22,11 +21,9 @@ export const loginWithCode = (email: string, loginCode: string) =>
 const LoginWithCodeRoute = () => {
   const { emailInBase64 } = useParams<{ emailInBase64: string }>();
   const history = useHistory();
-  const { t } = useTranslation();
   return (
     <LoginWithCode
       email={atob(emailInBase64)}
-      t={t}
       onSubmit={(values, { setErrors, setSubmitting }) => {
         loginWithCode(atob(emailInBase64), values.code)
           .then(() => history.push("/"))
