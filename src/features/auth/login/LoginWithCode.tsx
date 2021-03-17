@@ -1,4 +1,5 @@
 import { Form, Formik, FormikHelpers } from "formik";
+import { Trans, WithTranslation, withTranslation } from "react-i18next";
 
 import Button from "react-bootstrap/Button";
 import CenterCard from "components/CenterCard";
@@ -8,24 +9,22 @@ import FormLabel from "react-bootstrap/FormLabel";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import StyledGroup from "components/StyledGroup";
-import { Trans } from "react-i18next";
 
 interface Values {
   code: string;
 }
 
-interface LoginWithCodeProps {
+interface LoginWithCodeProps extends WithTranslation {
   onSubmit?: (
     values: Values,
     formikHelpers: FormikHelpers<Values>
   ) => void | Promise<any>;
-  t?: (s: string) => string;
   email?: string;
 }
 
 const LoginWithCode: React.FC<LoginWithCodeProps> = ({
   onSubmit = console.log,
-  t = (s) => s,
+  t,
   email,
 }) => (
   <CenterCard title={t("Login")} maxWidth="400px">
@@ -50,7 +49,7 @@ const LoginWithCode: React.FC<LoginWithCodeProps> = ({
             />
             <FormLabel>{t("Login code")}</FormLabel>
             <FormControl.Feedback type="invalid">
-              <ReactMarkdown source={t(errors.code || "")} />
+              {errors.code && <ReactMarkdown source={t(errors.code) || ""} />}
             </FormControl.Feedback>
           </StyledGroup>
           <FormGroup>
@@ -72,4 +71,4 @@ const LoginWithCode: React.FC<LoginWithCodeProps> = ({
   </CenterCard>
 );
 
-export default LoginWithCode;
+export default withTranslation()(LoginWithCode);
