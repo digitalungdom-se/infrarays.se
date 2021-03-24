@@ -1,6 +1,21 @@
-# infrarays.se 
+# infrarays.se
 
-Welcome to the repository for the application portal [website](https://ansok.raysforexcellence.se/) for the organization Rays for excellence, created by Digital Ungdom.
+Welcome to the repository for the application portal [website](https://ansok.raysforexcellence.se/) for the organization [Rays for excellence](raysforexcellence.se), created by [Digital Ungdom](www.digitalungdom.se). The API repository is [infrarays-api](https://github.com/digitalungdom-se/infrarays-api). A development front-end server is set up at [dev--infrarays.netlify.app](https://dev--infrarays.netlify.app) and the development API is found at [devapi.infrarays.digitalungdom.se](https://devapi.infrarays.digitalungdom.se).
+
+## Technologies and packages used
+
+Below are listed some technologies and packages that are used in the project. Keep in mind that these are only a couple of the many exciting packages that make this application!
+
+- TypeScript
+- Internationalization (i18next)
+- Redux (@reduxjs/toolkit)
+- Formik
+- Axios (for customizing API url)
+- styled-components
+- Storybook
+- ESLint + Prettier
+- Bootstrap
+- react-router-dom
 
 ## Installation 📥
 

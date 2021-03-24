@@ -24,9 +24,9 @@ export type FileInfo = {
   mime: string;
 };
 
-type Recommendation = {
+export type Recommendation = {
   id: string;
-  code: string;
+  code?: string;
   applicantId: string;
   email: string;
   lastSent: string;

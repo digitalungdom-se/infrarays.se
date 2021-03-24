@@ -8,7 +8,6 @@ import Nav from "./Nav";
 import Plate from "components/Plate";
 import ProtectedRoute from "features/router/ProtectedRoute";
 
-const AdminLogin = lazy(() => import("features/admin/login"));
 const TopList = lazy(() => import("features/admin/TopList"));
 const NoMatch = lazy(() => import("features/nomatch"));
 const Administration = lazy(() => import("features/admin/Administration"));
@@ -44,9 +43,6 @@ const Authorised = () => (
 
 const AdminRouter = () => (
   <Switch>
-    <ProtectedRoute admin shouldBeAuthenticated={false} path="/admin/login">
-      <AdminLogin />
-    </ProtectedRoute>
     <ProtectedRoute admin path="/admin">
       <Authorised />
     </ProtectedRoute>

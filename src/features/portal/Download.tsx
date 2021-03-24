@@ -2,10 +2,15 @@ import { Button, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
 import Axios from "axios";
+import CSS from "csstype";
 import FileSaver from "file-saver";
 import { useTranslation } from "react-i18next";
 
-const Download = ({ style }) => {
+interface DownloadProps {
+  style: CSS.Properties;
+}
+
+const Download = ({ style }: DownloadProps) => {
   const [downloading, setDownload] = useState(false);
   const { t } = useTranslation();
   return (

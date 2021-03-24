@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { updateGradingOrder } from "features/appSlice";
-import { useDispatch } from "react-redux";
 import { Button, Spinner } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+import React, { useState } from "react";
+
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const RandomiseOrder = () => {
   const dispatch = useDispatch();
@@ -20,9 +20,6 @@ const RandomiseOrder = () => {
           .then((res) => res.json())
           .then((res) => {
             setLogout(false);
-            if (res.type === "success") {
-              dispatch(updateGradingOrder(res.gradingOrder));
-            }
           })
           .catch(() => {
             setLogout(false);
