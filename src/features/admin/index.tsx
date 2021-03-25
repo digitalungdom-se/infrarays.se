@@ -11,6 +11,7 @@ import Spinner from "react-bootstrap/Spinner";
 const TopList = lazy(() => import("features/admin/TopList"));
 const NoMatch = lazy(() => import("features/nomatch"));
 const Administration = lazy(() => import("features/admin/Administration"));
+const Statistics = lazy(() => import("features/admin/Statistics"));
 const Grading = lazy(() => import("features/admin/Grading"));
 
 const Admin: React.FC = () => (
@@ -43,6 +44,9 @@ const Admin: React.FC = () => (
           </Route>
           <Route path="/admin/administration">
             <Administration />
+          </Route>
+          <Route path="/admin/statistics">
+            <Statistics />
           </Route>
           <Route>
             <NoMatch />

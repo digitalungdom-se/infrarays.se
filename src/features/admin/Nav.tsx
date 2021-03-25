@@ -31,7 +31,7 @@ const Nav = (): React.ReactElement => (
     <BootstrapNavLink to="/admin">Ansökningar</BootstrapNavLink>
     <BootstrapNavLink to="/admin/toplist">Topplista</BootstrapNavLink>
     <BootstrapNavLink to="/admin/administration">Admins</BootstrapNavLink>
-    <BootstrapNavLink to="/admin/data">Statistik</BootstrapNavLink>
+    <BootstrapNavLink to="/admin/statistics">Statistik</BootstrapNavLink>
   </BootstrapNav>
 );
 
