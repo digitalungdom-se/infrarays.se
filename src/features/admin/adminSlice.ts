@@ -140,10 +140,15 @@ export const selectApplicationsByTop = (state: RootState): ApplicationInfo[] =>
     (orderItem) => state.admin.applications[orderItem.applicantId]
   );
 
+interface GradingData extends GradeFormValues {
+  firstName: string;
+  lastName: string;
+}
+
 export const selectMyGrading = (
   state: RootState,
   id: string
-): GradeFormValues | undefined => {
+): GradingData | undefined => {
   const relevantGrades = state.admin.grades[id];
   if (relevantGrades) {
     const myGrading = relevantGrades.find(
@@ -151,6 +156,8 @@ export const selectMyGrading = (
     );
     if (myGrading)
       return {
+        firstName: state.admin.applications[myGrading.applicantId].firstName,
+        lastName: state.admin.applications[myGrading.applicantId].lastName,
         cv: myGrading?.cv,
         coverLetter: myGrading?.coverLetter,
         essays: myGrading?.essays,
@@ -168,7 +175,14 @@ export const selectApplicationsByGradingOrder = (
   state: RootState
 ): ApplicationInfo[] =>
   state.admin.gradingOrder
-    .map((orderItem) => state.admin.applications[orderItem.applicantId])
+    .map((orderItem) => ({
+      ...state.admin.applications[orderItem.applicantId],
+      done: state.admin.grades[orderItem.applicantId]
+        ? state.admin.grades[orderItem.applicantId].findIndex(
+            (grade) => grade.adminId === state.auth.user?.id
+          ) !== -1
+        : false,
+    }))
     .filter((val) => val);
 
 export const {

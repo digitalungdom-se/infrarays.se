@@ -14,7 +14,7 @@ interface StarFieldProps extends WithTranslation {
 const StarField = withTranslation()(
   ({ name, t, isInvalid, label }: StarFieldProps) => (
     <Form.Group>
-      <Form.Label style={{ display: "block" }}>
+      <Form.Label style={{ display: "block", fontWeight: "bold" }}>
         {label || t(`${name}.title`)}
       </Form.Label>
       <Form.Control as="span" bsPrefix="null" isInvalid={isInvalid}>
@@ -30,6 +30,7 @@ const StarField = withTranslation()(
       <Form.Control.Feedback type="invalid">
         {t("You need to set a score!")}
       </Form.Control.Feedback>
+      <hr />
     </Form.Group>
   )
 );

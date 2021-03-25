@@ -107,7 +107,6 @@ class TopList extends React.Component<TopListProps, TopListState> {
             "No data"
           )
         }
-        rowClasses={(row) => (row.done ? "done" : "")}
       />
     );
   }

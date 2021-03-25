@@ -20,12 +20,12 @@ const Grade: React.FC<GradeProps> = ({ id }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const myGrading = useSelector((state: RootState) =>
+  const gradingData = useSelector((state: RootState) =>
     selectMyGrading(state, id)
   );
   const handleClick = () => {
     setOpen(!open);
-    if (!open && myGrading === undefined) {
+    if (!open && gradingData === undefined) {
       setLoading(true);
       axios.get<Grading[]>(`/application/${id}/grade`).then((res) => {
         dispatch(setGrades({ grades: res.data, applicantId: id }));
@@ -33,6 +33,13 @@ const Grade: React.FC<GradeProps> = ({ id }) => {
       });
     }
   };
+  let name, initialValues;
+  if (gradingData) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { firstName, lastName, ...myGrading } = gradingData;
+    name = firstName + " " + lastName;
+    initialValues = myGrading;
+  }
 
   return (
     <>
@@ -47,7 +54,7 @@ const Grade: React.FC<GradeProps> = ({ id }) => {
         <Modal.Body>
           {open && !loading && (
             <GradingModal
-              initialValues={myGrading}
+              initialValues={initialValues}
               onSubmit={(values) =>
                 handleSubmit(id, values).then((res) => {
                   setOpen(false);
@@ -55,6 +62,7 @@ const Grade: React.FC<GradeProps> = ({ id }) => {
                   return res;
                 })
               }
+              name={name}
             />
           )}
         </Modal.Body>

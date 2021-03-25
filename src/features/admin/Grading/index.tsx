@@ -92,8 +92,10 @@ class Grading extends React.Component<GradingProps, GradingState> {
 
     return (
       <div>
-        <p>För att börja bedöma behöver du slumpa ordningen.</p>
-        <RandomiseOrder />
+        <div style={{ marginBottom: "2rem" }}>
+          <p>För att börja bedöma behöver du slumpa ordningen.</p>
+          <RandomiseOrder />
+        </div>
         <BootstrapTable
           striped
           wrapperClasses="table-responsive"
@@ -117,7 +119,10 @@ class Grading extends React.Component<GradingProps, GradingState> {
               "No data"
             )
           }
-          rowClasses={(row) => (row.done ? "done" : "")}
+          rowClasses={(row) => {
+            console.log(row);
+            return row.done ? "done" : "";
+          }}
         />
       </div>
     );
