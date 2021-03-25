@@ -105,38 +105,42 @@ const AdminContact: React.FC<AdminContactProps> = ({
               type="email"
               placeholder="email@example.org"
             />
-            <InputGroup.Append>
-              {Boolean(status) && superAdmin && (
-                <InputGroup.Text>Superadmin</InputGroup.Text>
-              )}
-              {!status && (
-                <FormGroup as="span" className="input-group-text">
-                  Superadmin{" "}
-                  <Form.Check
-                    name="superAdmin"
-                    onChange={handleChange}
-                    checked={values.superAdmin}
+            {(Boolean(status) || superAdmin) && (
+              <InputGroup.Append>
+                {Boolean(status) && superAdmin && (
+                  <InputGroup.Text>Superadmin</InputGroup.Text>
+                )}
+                {!status && (
+                  <FormGroup as="span" className="input-group-text">
+                    Superadmin{" "}
+                    <Form.Check
+                      name="superAdmin"
+                      onChange={handleChange}
+                      checked={values.superAdmin}
+                      disabled={isSubmitting || Boolean(status)}
+                    />
+                  </FormGroup>
+                )}
+                {!status && (
+                  <Button
+                    type="submit"
                     disabled={isSubmitting || Boolean(status)}
-                  />
-                </FormGroup>
-              )}
-              {!status && (
-                <Button
-                  type="submit"
-                  disabled={isSubmitting || Boolean(status)}
-                >
-                  {(status === "loading" || isSubmitting) && (
-                    <>
-                      <Spinner animation="border" size="sm" />{" "}
-                    </>
-                  )}
-                  Skicka förfrågan
-                </Button>
-              )}
-            </InputGroup.Append>
-            <Form.Control.Feedback type="invalid">
-              {errors?.email}
-            </Form.Control.Feedback>
+                  >
+                    {(status === "loading" || isSubmitting) && (
+                      <>
+                        <Spinner animation="border" size="sm" />{" "}
+                      </>
+                    )}
+                    Skicka förfrågan
+                  </Button>
+                )}
+              </InputGroup.Append>
+            )}
+            {errors?.email && (
+              <Form.Control.Feedback type="invalid">
+                {errors.email}
+              </Form.Control.Feedback>
+            )}
           </StyledInputGroup>
         </FormGroup>
       </Form>

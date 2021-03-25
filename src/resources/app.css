@@ -14,3 +14,7 @@ body,
 .Toastify__toast-body {
   color: black;
 }
+
+.white {
+  background: white;
+}

@@ -6,7 +6,6 @@ import AddButton from "components/AddButton";
 import AdminContact from "components/AdminContact";
 import { Spinner } from "react-bootstrap";
 import axios from "axios";
-import { number } from "prop-types";
 import { selectUserType } from "features/auth/authSlice";
 import useAxios from "axios-hooks";
 

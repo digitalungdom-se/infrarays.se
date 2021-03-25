@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+import Grade from "./Grading/Grade";
 import { RootState } from "store";
 
 export interface TopOrderItem {
@@ -69,7 +70,7 @@ interface AdminState {
   gradingOrder: OrderItem[];
   topOrder: TopOrderItem[];
   applications: Record<string, ApplicationInfo>;
-  admins: AdminInfo[];
+  admins: Record<string, AdminInfo>;
   grades: Record<string, Grading[]>;
 }
 
@@ -77,7 +78,7 @@ export const initialState: AdminState = {
   gradingOrder: [],
   topOrder: [],
   applications: {},
-  admins: [],
+  admins: {},
   grades: {},
 };
 
@@ -109,7 +110,9 @@ const adminSlice = createSlice({
       state.topOrder = topOrder;
     },
     setAdmins(state, action: PayloadAction<AdminInfo[]>) {
-      state.admins = [...state.admins, ...action.payload];
+      action.payload.forEach((admin) => {
+        state.admins[admin.id] = admin;
+      });
     },
     updateGradingOrder(state, action: PayloadAction<OrderItem[]>) {
       state.gradingOrder = action.payload;
@@ -133,7 +136,7 @@ export const selectGradingOrder = (state: RootState): OrderItem[] =>
   state.admin.gradingOrder;
 
 export const selectAdmins = (state: RootState): AdminInfo[] =>
-  state.admin.admins;
+  Object.keys(state.admin.admins).map((adminID) => state.admin.admins[adminID]);
 
 export const selectApplicationsByTop = (state: RootState): ApplicationInfo[] =>
   state.admin.topOrder.map(
@@ -144,6 +147,15 @@ interface GradingData extends GradeFormValues {
   firstName: string;
   lastName: string;
 }
+
+export const selectGradesByApplicant = (userID: string) => (
+  state: RootState
+): GradingData[] | undefined =>
+  state.admin.grades[userID]?.map((grade) => ({
+    ...grade,
+    firstName: state.admin.admins[grade.adminId]?.firstName,
+    lastName: state.admin.admins[grade.adminId]?.lastName,
+  }));
 
 export const selectMyGrading = (
   state: RootState,

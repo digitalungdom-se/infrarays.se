@@ -7,12 +7,24 @@ import { ConnectedProps, connect } from "react-redux";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import GradingData from "components/GradingData";
 import OpenPDF from "components/portal/OpenPDF";
 import React from "react";
 import { RootState } from "store";
 import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
+import { useGrades } from "../adminHooks";
+
+interface GradingDataRowProps {
+  id: string;
+}
+
+const GradingDataRow = ({ id }: GradingDataRowProps) => {
+  const { data, loading } = useGrades(id);
+  if (loading) return <div>Loading</div>;
+  return <GradingData applicationGrades={data} />;
+};
 
 interface TopListState {
   loading: boolean;
@@ -40,12 +52,8 @@ class TopList extends React.Component<TopListProps, TopListState> {
         text: "#",
       },
       {
-        dataField: "firstName",
-        text: "Förnamn",
-      },
-      {
-        dataField: "lastName",
-        text: "Efternamn",
+        dataField: "name",
+        text: "Namn",
       },
       {
         dataField: "cv",
@@ -64,6 +72,10 @@ class TopList extends React.Component<TopListProps, TopListState> {
         text: "BT",
       },
       {
+        dataField: "recommendations",
+        text: "RB",
+      },
+      {
         dataField: "overall",
         text: "Ö",
       },
@@ -80,8 +92,22 @@ class TopList extends React.Component<TopListProps, TopListState> {
 
     const dataWithIndex = this.props.applications.map((application, index) => ({
       ...application,
+      name: application.firstName + " " + application.lastName,
       index,
     }));
+
+    const nonExpandable = this.props.applications
+      .map(({ overall }, i) => ({ overall, i }))
+      .filter((application) => !application.overall)
+      .map(({ i }) => i);
+
+    const expandRow = {
+      renderer: (row: any) => <GradingDataRow id={row.id} />,
+      showExpandColumn: true,
+      expandByColumnOnly: true,
+      nonExpandable,
+      className: "white",
+    };
 
     return (
       <BootstrapTable
@@ -91,6 +117,7 @@ class TopList extends React.Component<TopListProps, TopListState> {
         keyField="index"
         data={dataWithIndex}
         columns={columns}
+        expandRow={expandRow}
         noDataIndication={() =>
           loading ? (
             <Spinner
