@@ -37,6 +37,9 @@ const UploadState = ({
           setError({ msg: t("too large"), fileName });
           return;
         }
+        if (fileName.substring(fileName.length - 4) !== ".pdf") {
+          setError({ msg: t("Only PDF", fileName) });
+        }
         const body = new FormData();
         body.append("file", file, fileName);
         setUploading(true);
@@ -46,6 +49,9 @@ const UploadState = ({
             setUploading(false);
             setError(undefined);
             setUploaded(res.data.name);
+          })
+          .catch(() => {
+            setError(t("Couldn't upload"));
           });
       }}
     />
