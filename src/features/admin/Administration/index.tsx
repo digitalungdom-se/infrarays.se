@@ -53,7 +53,12 @@ const Administration: React.FC = () => {
   return (
     <div style={{ padding: 20 }}>
       <h1>Administration</h1>
-      <p>För att lägga till en admin</p>
+      <p>
+        För att lägga till en admin behöver du vara superadmin. En superadmin
+        kan tekniskt sätt göra vad som helst, det vill säga ta bort andra admins
+        eller ansökningar. En vanlig admin kan endast läsa och bedöma
+        ansökningar.
+      </p>
       {admins.map((admin) => (
         <AdminContact
           key={admin.id}
