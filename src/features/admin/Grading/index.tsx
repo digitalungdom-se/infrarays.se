@@ -102,7 +102,10 @@ class Grading extends React.Component<GradingProps, GradingState> {
     return (
       <div>
         <div style={{ marginBottom: "2rem" }}>
-          <p>För att börja bedöma behöver du slumpa ordningen.</p>
+          <p>
+            För att börja bedöma eller se nya ansökningar behöver du slumpa
+            ordningen.
+          </p>
           <RandomiseOrder />
         </div>
         <BootstrapTable
@@ -113,7 +116,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
           data={dataWithIndex}
           columns={columns}
           noDataIndication={() =>
-            loading ? (
+            this.state.loading[1] ? (
               <Spinner
                 animation="border"
                 style={{

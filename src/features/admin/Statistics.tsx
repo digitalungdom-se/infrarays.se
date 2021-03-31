@@ -1,6 +1,8 @@
 import React from "react";
+import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
 import useAxios from "axios-hooks";
+import { useTranslation } from "react-i18next";
 
 interface UseStatistics {
   loading: boolean;
@@ -12,7 +14,7 @@ type StatisticalValue = "average";
 
 interface NumericalStatistic {
   average: number;
-  count: Record<Grade, number>;
+  count: Record<string | number, number>;
 }
 
 interface Statistics {
@@ -122,27 +124,29 @@ interface NumericalTableProps {
 }
 
 function NumericalTable({ answers, title, isNumeric }: NumericalTableProps) {
+  const { t } = useTranslation();
   return (
     <>
-      <h3>{title}</h3>
+      <h4>{title}</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Field</th>
+            <th>{isNumeric ? "Betyg" : "Svar"}</th>
             <th>Antal</th>
           </tr>
         </thead>
         <tbody>
-          {((Object.keys(answers.count) as unknown) as Grade[]).map((n, i) => (
+          {Object.keys(answers.count).map((n, i) => (
             <tr key={title + "-" + n + "-" + i}>
-              <td>{n}</td>
+              {console.log(t(n), n)}
+              <td>{t(n)}</td>
               <td>{answers.count[n]}</td>
             </tr>
           ))}
           {isNumeric &&
             (["average"] as StatisticalValue[]).map((key) => (
               <tr key={title + "-" + key + "-"}>
-                <td>{key}</td>
+                <td>{t(key)}</td>
                 <td>{Math.round(answers[key] * 100) / 100}</td>
               </tr>
             ))}
@@ -154,24 +158,46 @@ function NumericalTable({ answers, title, isNumeric }: NumericalTableProps) {
 
 function StatisticsPage(): React.ReactElement {
   const { loading, data, error } = useStatistics();
-  if (loading) return <div>Loading...</div>;
+  const { t } = useTranslation();
+  if (loading)
+    return (
+      <Spinner
+        animation="border"
+        style={{
+          margin: "5rem auto",
+          display: "block",
+          fontSize: "3rem",
+          width: "5rem",
+          height: "5rem",
+        }}
+      />
+    );
   return (
     <div>
       <NumericalTable
         isNumeric
-        title="Process"
+        title={t("What are your thoughts on the application process?")}
         answers={data.applicationProcess}
       />
       <NumericalTable
         isNumeric
-        title="Portal"
+        title={t("What are your thoughts on the application portal?")}
         answers={data.applicationPortal}
       />
-      <NumericalTable title="Gender" answers={data.gender} />
-      <StringTable title="Stad" answers={data.city} />
-      <StringTable title="Skola" answers={data.school} />
-      <StringTable title="Förbättring" answers={data.improvement} />
-      <StringTable title="Informant" answers={data.informant} />
+      <NumericalTable title={t("Gender")} answers={data.gender} />
+      <StringTable title={t("What city do you live in?")} answers={data.city} />
+      <StringTable
+        title={t("Which school do you attend?")}
+        answers={data.school}
+      />
+      <StringTable
+        title={t("Improvements on application process and portal")}
+        answers={data.improvement}
+      />
+      <StringTable
+        title={t("How did you hear about Rays?")}
+        answers={data.informant}
+      />
     </div>
   );
 }
