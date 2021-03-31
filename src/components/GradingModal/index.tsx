@@ -131,7 +131,7 @@ const GradingModal: React.FC<GradingModalProps> = ({
             type="text"
             value={values.comment}
             onChange={handleChange}
-            maxLength={8192}
+            maxLength={255}
           />
         </Form.Group>
         <Button type="submit" disabled={isSubmitting}>
