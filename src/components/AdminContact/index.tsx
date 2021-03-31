@@ -17,7 +17,7 @@ const StyledInputGroup = styled(InputGroup)`
     /* green */
     color: #155724;
     background-color: #d4edda;
-    border-color: #c3e6cb;
+    border-color: #28a745;
   }
 
   &.requested .input-group-append span {
@@ -105,7 +105,7 @@ const AdminContact: React.FC<AdminContactProps> = ({
               type="email"
               placeholder="email@example.org"
             />
-            {(Boolean(status) || superAdmin) && (
+            {(superAdmin || status === undefined) && (
               <InputGroup.Append>
                 {Boolean(status) && superAdmin && (
                   <InputGroup.Text>Superadmin</InputGroup.Text>

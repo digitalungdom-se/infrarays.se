@@ -15,7 +15,7 @@ const Statistics = lazy(() => import("features/admin/Statistics"));
 const Grading = lazy(() => import("features/admin/Grading"));
 
 const Admin: React.FC = () => (
-  <Center maxWidth="820px">
+  <div style={{ maxWidth: 820, margin: "4rem auto" }}>
     <Plate>
       <Logo center maxWidth="80%" />
       <Nav />
@@ -56,7 +56,7 @@ const Admin: React.FC = () => (
       <Logout style={{ float: "right", display: "block", clear: "both" }} />
       <div style={{ clear: "both" }} />
     </Plate>
-  </Center>
+  </div>
 );
 
 export default Admin;

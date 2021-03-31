@@ -38,12 +38,12 @@ export function showFile(blob, name, callback) {
   if (callback) callback();
 }
 
-const OpenPDF = ({ url, children }) => {
+const OpenPDF = ({ url, children, variant = "primary" }) => {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   return (
     <Button
-      variant="primary"
+      variant={variant}
       onClick={() => {
         setLoading(true);
         setTimeout(() => {

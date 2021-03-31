@@ -1,4 +1,9 @@
-import { selectGradesByApplicant, setAdmins, setGrades } from "./adminSlice";
+import {
+  selectAdmins,
+  selectGradesByApplicant,
+  setAdmins,
+  setGrades,
+} from "./adminSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import useAxios from "axios-hooks";
@@ -11,7 +16,7 @@ interface UseGrades {
 }
 
 export function useGrades(applicantId: string): UseGrades {
-  useAdmins();
+  const admins = useAdmins();
   const [{ loading, data, error }] = useAxios(
     `/application/${applicantId}/grade`
   );
@@ -20,11 +25,13 @@ export function useGrades(applicantId: string): UseGrades {
     if (data) dispatch(setGrades({ grades: data, applicantId }));
   }, [data]);
   const gradesByApplicant = useSelector(selectGradesByApplicant(applicantId));
-  return {
-    loading,
-    data: gradesByApplicant,
+  const result = {
+    loading: admins.loading || loading,
+    data: admins.loading ? null : gradesByApplicant,
     error,
   };
+  console.log(result);
+  return result;
 }
 
 interface AdminInfo {
@@ -46,5 +53,6 @@ export function useAdmins(): UseGrades {
   useEffect(() => {
     if (data) dispatch(setAdmins(data));
   }, [data]);
-  return { loading, data, error };
+  const admins = useSelector(selectAdmins);
+  return { loading, data: admins, error };
 }

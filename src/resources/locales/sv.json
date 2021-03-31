@@ -93,5 +93,8 @@
   "overall": "Helhetsbedömning",
   "Click to copy": "Klicka koden för att kopiera!",
   "Copied": "Kopierad!",
-  "Click to open link": "Klicka här för att öppna uppladdningslänk!"
+  "Click to open link": "Klicka här för att öppna uppladdningslänk!",
+  "Application has closed": "Ansökningsperioden har stängt",
+  "Couldn't upload": "Kunde inte ladda upp fil",
+  "Only PDF": "Filen måste vara en PDF"
 }

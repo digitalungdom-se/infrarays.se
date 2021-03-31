@@ -23,7 +23,7 @@ const StyledApp = styled.div`
   width: 100%;
   overflow: auto;
 
-  #content {
+  #centered {
     width: 100%;
     min-height: calc(100% - 2.5rem);
     display: table;
@@ -42,7 +42,7 @@ function App() {
             <StyledApp>
               <ChangeLanguage />
               <ToastContainer />
-              <div id="content">
+              <div id="centered">
                 <Router />
               </div>
               <DevelopedBy />

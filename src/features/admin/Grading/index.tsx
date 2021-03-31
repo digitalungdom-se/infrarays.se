@@ -1,3 +1,5 @@
+import "./grading.css";
+
 import { ConnectedProps, connect } from "react-redux";
 import {
   OrderItem,
@@ -74,8 +76,11 @@ class Grading extends React.Component<GradingProps, GradingState> {
       {
         dataField: "id",
         text: "Visa",
-        formatter: (id: string) => (
-          <OpenPDF url={`/application/${id}/pdf`}>
+        formatter: (id: string, row: any) => (
+          <OpenPDF
+            variant={row.done ? "success" : undefined}
+            url={`/application/${id}/pdf`}
+          >
             <FontAwesomeIcon icon={faFileDownload} />
           </OpenPDF>
         ),
@@ -85,7 +90,11 @@ class Grading extends React.Component<GradingProps, GradingState> {
         text: "Bedöm",
         isDummyField: true,
         formatter: (id: string, row: any) => (
-          <Grade key={id + "grade"} id={row.id} />
+          <Grade
+            key={id + "grade"}
+            id={row.id}
+            variant={row.done ? "success" : undefined}
+          />
         ),
       },
     ];
@@ -119,10 +128,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
               "No data"
             )
           }
-          rowClasses={(row) => {
-            console.log(row);
-            return row.done ? "done" : "";
-          }}
+          rowClasses={(row) => (row.done ? "done" : "")}
         />
       </div>
     );

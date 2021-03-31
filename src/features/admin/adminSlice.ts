@@ -128,6 +128,10 @@ const adminSlice = createSlice({
         (grade) => grade.adminId === action.payload.adminId
       );
       state.grades[action.payload.applicantId][gradeIndex] = action.payload;
+      const orderIndex = state.gradingOrder.findIndex(
+        (orderItem) => orderItem.applicantId === action.payload.applicantId
+      );
+      state.gradingOrder[orderIndex].done = true;
     },
   },
 });
@@ -189,11 +193,7 @@ export const selectApplicationsByGradingOrder = (
   state.admin.gradingOrder
     .map((orderItem) => ({
       ...state.admin.applications[orderItem.applicantId],
-      done: state.admin.grades[orderItem.applicantId]
-        ? state.admin.grades[orderItem.applicantId].findIndex(
-            (grade) => grade.adminId === state.auth.user?.id
-          ) !== -1
-        : false,
+      done: orderItem.done,
     }))
     .filter((val) => val);
 

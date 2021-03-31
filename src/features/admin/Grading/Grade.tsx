@@ -4,6 +4,7 @@ import GradingModal, { GradeFormValues } from "components/GradingModal";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { ButtonProps } from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RootState } from "store";
 import axios from "axios";
@@ -11,12 +12,13 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 interface GradeProps {
   id: string;
+  variant?: ButtonProps["variant"];
 }
 
 const handleSubmit = (id: string, values: GradeFormValues) =>
   axios.post(`/application/${id}/grade`, values);
 
-const Grade: React.FC<GradeProps> = ({ id }) => {
+const Grade: React.FC<GradeProps> = ({ id, variant = "primary" }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ const Grade: React.FC<GradeProps> = ({ id }) => {
 
   return (
     <>
-      <Button onClick={handleClick}>
+      <Button onClick={handleClick} variant={variant}>
         {loading ? (
           <Spinner animation="border" size="sm" />
         ) : (
