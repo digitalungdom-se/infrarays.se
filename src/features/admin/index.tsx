@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Center from "components/Center";
+import Delete from "features/portal/Delete";
 import Logo from "components/Logo";
 import Logout from "features/portal/Logout";
 import Nav from "./Nav";
@@ -54,6 +55,7 @@ const Admin: React.FC = () => (
         </Switch>
       </Suspense>
       <Logout style={{ float: "right", display: "block", clear: "both" }} />
+      <Delete />
       <div style={{ clear: "both" }} />
     </Plate>
   </div>

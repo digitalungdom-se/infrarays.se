@@ -75,7 +75,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
       },
       {
         dataField: "id",
-        text: "Visa",
+        text: "PDF",
         formatter: (id: string, row: any) => (
           <OpenPDF
             variant={row.done ? "success" : undefined}
