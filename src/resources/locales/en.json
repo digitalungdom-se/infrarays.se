@@ -9,7 +9,7 @@
   "Invalid value": "Invalid format",
   "email exists": "Email is already registered",
   "not verified": "Verify your e-mail first.",
-  "fetch error": "Network error.",
+  "Network error": "Network error.",
   "Register here": "Register here",
   "First name": "First name",
   "Surname": "Surname",

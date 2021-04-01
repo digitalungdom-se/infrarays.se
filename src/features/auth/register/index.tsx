@@ -1,25 +1,26 @@
 import "./signup.css";
 
-import { Alert, FormControlProps, Spinner } from "react-bootstrap";
 import { Form, Formik } from "formik";
+import FormControl, { FormControlProps } from "react-bootstrap/FormControl";
 import { Link, useHistory } from "react-router-dom";
 import MaskedInput, { MaskedInputProps } from "react-maskedinput";
 import { Trans, WithTranslation, withTranslation } from "react-i18next";
 
-import Axios from "axios";
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Center from "components/Center";
-import CopyLoginCode from "../login/CopyLoginCode";
 import FormCheck from "react-bootstrap/FormCheck";
-import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
 import Logo from "components/Logo";
 import Plate from "components/Plate";
 import React from "react";
+import Spinner from "react-bootstrap/Spinner";
 import StyledGroup from "components/StyledGroup";
 import moment from "moment";
-import { toast } from "react-toastify";
+import { register } from "api/register";
+import sendLoginCodeAndShowCode from "api/sendLoginCode";
+import useShowCode from "utils/showCode";
 
 type MaskedFieldProps = Omit<FormControlProps, "size"> &
   Omit<MaskedInputProps, "mask" | "name">;
@@ -31,9 +32,9 @@ const MaskedField = (props: MaskedFieldProps) => (
 
 const Register: React.FC<WithTranslation> = ({ t }) => {
   const { push } = useHistory();
-  const toastId = React.useRef<React.ReactText>(null);
+  const showCode = useShowCode();
   const applicationHasClosed =
-    moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
+    moment.utc().month(2).endOf("month").diff(Date.now()) > 0;
   return (
     <Center maxWidth="850px">
       <Plate>
@@ -63,44 +64,24 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
               return;
             }
             setSubmitting(true);
-            Axios.post("/application", {
+            const form = {
               email,
               firstName,
               lastName,
               birthdate,
               finnish: finnish === "Yes",
-            })
+            };
+            register(form)
               .then(() => {
-                Axios.post("/user/send_email_login_code", { email }).then(
-                  (res) => {
-                    push(`/login/${btoa(email)}`);
-                    if (
-                      res.data &&
-                      res.config.baseURL ===
-                        "https://devapi.infrarays.digitalungdom.se"
-                    ) {
-                      const update = () =>
-                        toast.update(toastId.current as string, {
-                          autoClose: 5000,
-                        });
-                      const notify = () =>
-                        ((toastId.current as React.ReactText) = toast(
-                          <CopyLoginCode code={res.data} onCopy={update} />,
-                          {
-                            position: "bottom-center",
-                            autoClose: false,
-                            closeOnClick: false,
-                          }
-                        ));
-                      notify();
-                    }
-                  }
-                );
+                sendLoginCodeAndShowCode(email).then((code) => {
+                  push(`/login/${btoa(email)}`);
+                  code && showCode(code);
+                });
               })
-              .catch((err) => {
+              .catch((error) => {
                 setSubmitting(false);
-                if (!err.request.status) setErrors({ dummy: "fetch error" });
-                else setErrors({ email: "email exists" });
+                if (error.general) setErrors({ dummy: error.general.message });
+                else setErrors(error.params);
               });
           }}
         >
