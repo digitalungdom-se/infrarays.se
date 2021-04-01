@@ -1,36 +1,37 @@
 import { Button, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
+import axios from "axios";
 import { toast } from "react-toastify";
+import { updateGradingOrder } from "../adminSlice";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-const RandomiseOrder = () => {
+const RandomiseOrder = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const [loggingOut, setLogout] = useState(false);
+  const [randomising, setRandomising] = useState<boolean>(false);
   const { t } = useTranslation();
   return (
     <Button
       variant="success"
       onClick={() => {
-        setLogout(true);
-        fetch("/api/admin/randomise_grading_order", {
-          method: "post",
-        })
-          .then((res) => res.json())
+        setRandomising(true);
+        axios
+          .post("/admin/grading/randomise")
           .then((res) => {
-            setLogout(false);
+            setRandomising(false);
+            dispatch(updateGradingOrder(res.data));
           })
           .catch(() => {
-            setLogout(false);
+            setRandomising(false);
             toast.error("Ett fel uppstod!", {
               autoClose: false,
             });
           });
       }}
-      disabled={loggingOut}
+      disabled={randomising}
     >
-      {loggingOut ? (
+      {randomising ? (
         <span>
           <Spinner animation="border" size="sm" />
           {t("Randomising")}

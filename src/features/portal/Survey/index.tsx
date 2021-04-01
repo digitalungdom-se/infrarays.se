@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Axios from "axios";
 import React from "react";
+import moment from "moment";
 import useAxios from "axios-hooks";
 
 function useSurvey(): [SurveyAnswers | undefined, boolean] {
@@ -18,6 +19,8 @@ const PortalSurvey = () => {
   const [survey, loading] = useSurvey();
   const dispatch = useDispatch();
   if (loading) return <div></div>;
+  const applicationHasClosed =
+    moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
   return (
     <Survey
       survey={survey}
@@ -26,6 +29,7 @@ const PortalSurvey = () => {
           dispatch(setSurvey(newSurvey));
         });
       }}
+      disabled={applicationHasClosed}
     />
   );
 };

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
+import React from "react";
+import { Table } from "react-bootstrap";
 
 const GradingData = ({ applicationGrades = [] }) => (
   <>
@@ -16,14 +16,14 @@ const GradingData = ({ applicationGrades = [] }) => (
         </tr>
       </thead>
       <tbody>
-        {applicationGrades.map(grade => (
+        {applicationGrades.map((grade) => (
           <tr key={`${grade.name}-grade`}>
-            <td>{grade.name}</td>
+            <td>{grade.firstName + " " + grade.lastName}</td>
             <td>{grade.cv}</td>
             <td>{grade.coverLetter}</td>
-            <td>{grade.essay}</td>
-            <td>{grade.grade}</td>
-            <td>{grade.recommendation}</td>
+            <td>{grade.essays}</td>
+            <td>{grade.grades}</td>
+            <td>{grade.recommendations}</td>
             <td>{grade.overall}</td>
           </tr>
         ))}
@@ -31,16 +31,18 @@ const GradingData = ({ applicationGrades = [] }) => (
     </Table>
     <Table striped bordered hover>
       <thead>
-        <th>Bedömare</th>
-        <th>Kommentar</th>
+        <tr>
+          <th>Bedömare</th>
+          <th>Kommentar</th>
+        </tr>
       </thead>
       <tbody>
         {applicationGrades.map(
-          grade =>
+          (grade) =>
             Boolean(grade.comment) && (
               <tr key={`${grade.name}-comment`}>
-                <td>{grade.name}</td>
-                <td style={{ wordBreak: 'break-all' }}>{grade.comment}</td>
+                <td>{grade.firstName + " " + grade.lastName}</td>
+                <td style={{ wordBreak: "break-all" }}>{grade.comment}</td>
               </tr>
             )
         )}
