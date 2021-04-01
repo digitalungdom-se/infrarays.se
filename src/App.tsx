@@ -13,7 +13,6 @@ import { Provider } from "react-redux";
 import React from "react";
 import Router from "features/router";
 import { ToastContainer } from "react-toastify";
-import axios from "axios";
 import styled from "styled-components";
 
 const StyledApp = styled.div`
@@ -29,9 +28,6 @@ const StyledApp = styled.div`
     display: table;
   }
 `;
-
-axios.defaults.baseURL =
-  process.env.REACT_APP_API_URL || "https://devapi.infrarays.digitalungdom.se";
 
 function App() {
   return (

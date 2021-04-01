@@ -4,7 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 import CenterCard from "components/CenterCard";
 import Upload from "components/portal/Upload";
-import axios from "axios";
+import axios from "api/axios";
 import useAxios from "axios-hooks";
 import { useParams } from "react-router-dom";
 

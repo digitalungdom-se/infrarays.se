@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddButton from "components/AddButton";
 import AdminContact from "components/AdminContact";
 import { Spinner } from "react-bootstrap";
-import axios from "axios";
+import axios from "api/axios";
 import { selectUserType } from "features/auth/authSlice";
 import useAxios from "axios-hooks";
 

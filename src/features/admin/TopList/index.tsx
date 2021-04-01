@@ -12,7 +12,8 @@ import OpenPDF from "components/portal/OpenPDF";
 import React from "react";
 import { RootState } from "store";
 import Spinner from "react-bootstrap/Spinner";
-import axios from "axios";
+import axios from "api/axios";
+import { downloadAndOpen } from "api/downloadPDF";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { useGrades } from "../adminHooks";
 
@@ -84,7 +85,7 @@ class TopList extends React.Component<TopListProps, TopListState> {
         dataField: "id",
         text: "Visa",
         formatter: (id: string) => (
-          <OpenPDF url={`/application/${id}/pdf`}>
+          <OpenPDF onDownload={() => downloadAndOpen(id)}>
             <FontAwesomeIcon icon={faFileDownload} />
           </OpenPDF>
         ),

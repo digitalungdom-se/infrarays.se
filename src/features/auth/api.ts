@@ -1,5 +1,7 @@
-import Axios, { AxiosResponse } from "axios";
 import { ServerTokenResponse, TokenStorage } from "utils/tokenInterceptor";
+
+import Axios from "api/axios";
+import { AxiosResponse } from "axios";
 
 export const loginWithCode = (
   email: string,

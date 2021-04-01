@@ -2,7 +2,7 @@ import Survey, { SurveyAnswers } from "components/Survey";
 import { selectSurvey, setSurvey } from "../portalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import Axios from "axios";
+import Axios from "api/axios";
 import React from "react";
 import moment from "moment";
 import useAxios from "axios-hooks";

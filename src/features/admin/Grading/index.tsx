@@ -16,7 +16,8 @@ import RandomiseOrder from "./RandomiseOrder";
 import React from "react";
 import { RootState } from "store";
 import Spinner from "react-bootstrap/Spinner";
-import axios from "axios";
+import axios from "api/axios";
+import { downloadAndOpen } from "api/downloadPDF";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 
 interface ApplicationInfo {
@@ -79,7 +80,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
         formatter: (id: string, row: any) => (
           <OpenPDF
             variant={row.done ? "success" : undefined}
-            url={`/application/${id}/pdf`}
+            onDownload={() => downloadAndOpen(id)}
           >
             <FontAwesomeIcon icon={faFileDownload} />
           </OpenPDF>

@@ -1,7 +1,7 @@
 import { Button, Modal, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
-import Axios from "axios";
+import Axios from "api/axios";
 import { TokenStorage } from "utils/tokenInterceptor";
 import { useTranslation } from "react-i18next";
 

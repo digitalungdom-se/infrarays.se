@@ -1,10 +1,10 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import en from 'resources/locales/en.json';
-import portalEn from 'resources/locales/portal_en.json';
-import sv from 'resources/locales/sv.json';
-import portalSv from 'resources/locales/portal_sv.json';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import LanguageDetector from "i18next-browser-languagedetector";
+import en from "resources/locales/en.json";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import portalEn from "resources/locales/portal_en.json";
+import portalSv from "resources/locales/portal_sv.json";
+import sv from "resources/locales/sv.json";
 
 // the translations
 // (tip move them in a JSON file and import them)
@@ -12,15 +12,15 @@ const resources = {
   en: {
     translation: {
       ...en,
-      ...portalEn
-    }
+      ...portalEn,
+    },
   },
   sv: {
     translation: {
       ...sv,
-      ...portalSv
-    }
-  }
+      ...portalSv,
+    },
+  },
 };
 
 i18n
@@ -28,22 +28,22 @@ i18n
   .use(LanguageDetector)
   .init({
     resources,
-    fallbackLng: 'sv',
+    fallbackLng: "sv",
     detection: {
       order: [
-        'querystring',
-        'cookie',
-        'localStorage',
-        'htmlTag',
-        'navigator',
-        'path',
-        'subdomain'
-      ]
+        "querystring",
+        "cookie",
+        "localStorage",
+        "htmlTag",
+        "navigator",
+        "path",
+        "subdomain",
+      ],
     },
 
     interpolation: {
-      escapeValue: false // react already safes from xss
-    }
+      escapeValue: false, // react already safes from xss
+    },
   });
 
 export default i18n;

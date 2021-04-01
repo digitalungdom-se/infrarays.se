@@ -3,10 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
 
 import Alert from "react-bootstrap/Alert";
-import Axios from "axios";
 import Button from "react-bootstrap/Button";
 import Center from "components/Center";
-import CopyLoginCode from "./CopyLoginCode";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
@@ -14,12 +12,13 @@ import Logo from "components/Logo";
 import Plate from "components/Plate";
 import React from "react";
 import StyledGroup from "components/StyledGroup";
-import { toast } from "react-toastify";
+import { sendLoginCodeAndShowCode } from "api/sendLoginCode";
+import useShowCode from "utils/showCode";
 
 const Login = (): React.ReactElement => {
   const history = useHistory();
   const { t } = useTranslation();
-  const toastId = React.useRef<React.ReactText>(null);
+  const showCode = useShowCode();
 
   return (
     <Center maxWidth="360px">
@@ -32,37 +31,16 @@ const Login = (): React.ReactElement => {
           }}
           onSubmit={({ email }, { setSubmitting, setErrors }) => {
             setSubmitting(true);
-            Axios.post("/user/send_email_login_code", {
-              email,
-            })
-              .then((res) => {
-                if (
-                  res.data &&
-                  res.config.baseURL ===
-                    "https://devapi.infrarays.digitalungdom.se"
-                ) {
-                  const update = () =>
-                    toast.update(toastId.current as string, {
-                      autoClose: 5000,
-                    });
-                  const notify = () =>
-                    ((toastId.current as React.ReactText) = toast(
-                      <CopyLoginCode code={res.data} onCopy={update} />,
-                      {
-                        position: "bottom-center",
-                        autoClose: false,
-                        closeOnClick: false,
-                      }
-                    ));
-                  notify();
-                }
+            sendLoginCodeAndShowCode(email)
+              .then((code) => {
                 history.push(`/login/${btoa(email)}`);
                 setSubmitting(false);
+                code && showCode(code as string);
               })
               .catch((err) => {
+                if (err.general) setErrors({ dummy: err.general.message });
+                else setErrors(err);
                 setSubmitting(false);
-                if (!err.request.status) setErrors({ dummy: "fetch error" });
-                else setErrors({ email: "no user" });
               });
           }}
         >
@@ -84,7 +62,7 @@ const Login = (): React.ReactElement => {
                   {errors.email && t(errors.email)}
                 </FormControl.Feedback>
               </StyledGroup>
-              <FormGroup style={{ paddingTop: 40 }}>
+              <FormGroup style={{ paddingTop: "2rem" }}>
                 {errors.dummy && (
                   <Alert variant="danger" style={{ textAlign: "center" }}>
                     {t(errors.dummy)}
@@ -108,7 +86,7 @@ const Login = (): React.ReactElement => {
       </Plate>
       <Plate
         style={{
-          marginTop: 16,
+          marginTop: "1rem",
           textAlign: "center",
         }}
       >

@@ -3,7 +3,7 @@ import { Recommendation, addPersonSuccess } from "features/portal/portalSlice";
 import { Trans, withTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import Axios from "axios";
+import Axios from "api/axios";
 import ContactPerson from "components/portal/ContactPerson";
 import { RootState } from "store";
 import moment from "moment";
