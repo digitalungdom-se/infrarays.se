@@ -8,7 +8,7 @@ import {
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Axios from "axios";
+import Axios from "api/axios";
 import FileSaver from "file-saver";
 import { RootState } from "store";
 import Upload from "components/portal/Upload";

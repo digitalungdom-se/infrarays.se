@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ButtonProps } from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RootState } from "store";
-import axios from "axios";
+import axios from "api/axios";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 interface GradeProps {

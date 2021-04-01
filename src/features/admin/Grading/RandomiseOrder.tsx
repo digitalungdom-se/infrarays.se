@@ -1,7 +1,7 @@
 import { Button, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
-import axios from "axios";
+import axios from "api/axios";
 import { toast } from "react-toastify";
 import { updateGradingOrder } from "../adminSlice";
 import { useDispatch } from "react-redux";

@@ -1,6 +1,7 @@
 import { authFail, authSuccess } from "features/auth/authSlice";
 
-import axios from "axios";
+import axios from "api/axios";
+// import axios from "axios";
 import { clearPortal } from "features/portal/portalSlice";
 import i18n from "i18n";
 import store from "store";

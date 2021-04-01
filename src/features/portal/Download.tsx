@@ -1,7 +1,7 @@
 import { Button, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
-import Axios from "axios";
+import Axios from "api/axios";
 import CSS from "csstype";
 import FileSaver from "file-saver";
 import { useTranslation } from "react-i18next";

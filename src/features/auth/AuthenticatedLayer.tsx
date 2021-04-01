@@ -5,7 +5,7 @@ import {
   userInfoSuccess,
 } from "features/auth/authSlice";
 
-import Axios from "axios";
+import Axios from "api/axios";
 import { TokenStorage } from "utils/tokenInterceptor";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";

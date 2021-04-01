@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Alert from "react-bootstrap/Alert";
-import Axios from "axios";
+import Axios from "api/axios";
 import Center from "components/Center";
 import Chapters from "./Chapters";
 import Delete from "./Delete";
