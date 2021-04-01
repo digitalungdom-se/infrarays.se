@@ -11,6 +11,7 @@ import Axios from "axios";
 import FileSaver from "file-saver";
 import { RootState } from "store";
 import Upload from "components/portal/Upload";
+import moment from "moment";
 import { replaceFile } from "../portalSlice";
 import { useTranslation } from "react-i18next";
 
@@ -45,11 +46,16 @@ const UploadHook: React.FC<UploadHookProps> = ({
     form.append("file", file, fileName);
     Axios.post<FileInfo>(`application/@me/file/${fileType}`, form, {
       headers: { "Content-Type": "multipart/form-data" },
-    }).then((res) => {
-      setUploading(false);
-      setError(undefined);
-      dispatch(replaceFile(res.data));
-    });
+    })
+      .then((res) => {
+        setUploading(false);
+        setError(undefined);
+        dispatch(replaceFile(res.data));
+      })
+      .catch(() => {
+        setUploading(false);
+        setError({ msg: t("Couldn't upload"), fileName });
+      });
   }
 
   const handleDownload = () =>
@@ -78,6 +84,9 @@ const UploadHook: React.FC<UploadHookProps> = ({
 
   const handleCancel = () => setError(null);
 
+  const applicationHasClosed =
+    moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
+
   return (
     <Upload
       label={label}
@@ -88,8 +97,8 @@ const UploadHook: React.FC<UploadHookProps> = ({
       onCancel={handleCancel}
       onDownload={handleDownload}
       error={error ? error.msg : undefined}
-      onDelete={handleDelete}
-      disabled={disabled}
+      onDelete={applicationHasClosed ? undefined : handleDelete}
+      disabled={disabled || applicationHasClosed}
       uploadLabel={t("Choose file")}
     />
   );

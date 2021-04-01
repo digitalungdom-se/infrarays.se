@@ -61,9 +61,10 @@ interface SurveyProps {
       setSubmitting: (isSubmitting: boolean) => void;
     }
   ) => Promise<void>;
+  disabled?: boolean;
 }
 
-const Survey = ({ survey, onSubmit }: SurveyProps) => {
+const Survey = ({ survey, onSubmit, disabled }: SurveyProps) => {
   const { t } = useTranslation();
 
   const initialValues = {
@@ -133,6 +134,7 @@ const Survey = ({ survey, onSubmit }: SurveyProps) => {
                       name="city"
                       onBlur={handleBlur}
                       required
+                      disabled={disabled}
                     />
                   </FormGroup>
                   <FormGroup controlId="form-school">
@@ -143,6 +145,7 @@ const Survey = ({ survey, onSubmit }: SurveyProps) => {
                       name="school"
                       onChange={handleChange}
                       required
+                      disabled={disabled}
                     />
                   </FormGroup>
                   <FormGroup controlId="form-gender">
@@ -155,6 +158,7 @@ const Survey = ({ survey, onSubmit }: SurveyProps) => {
                       name="gender"
                       isInvalid={Boolean(errors?.gender)}
                       required
+                      disabled={disabled}
                     >
                       <option value="select" disabled>
                         {t("Choose an option")}
@@ -177,12 +181,16 @@ const Survey = ({ survey, onSubmit }: SurveyProps) => {
                     <FormControl
                       as="div"
                       isInvalid={Boolean(errors?.applicationProcess)}
+                      disabled={disabled}
                     >
                       <Rating
                         initialRating={values.applicationProcess}
                         onChange={(value) => {
-                          setFieldValue("applicationProcess", value);
-                          setFieldTouched("applicationProcess", true);
+                          if (disabled) return;
+                          else {
+                            setFieldValue("applicationProcess", value);
+                            setFieldTouched("applicationProcess", true);
+                          }
                         }}
                       />
                     </FormControl>
@@ -197,12 +205,16 @@ const Survey = ({ survey, onSubmit }: SurveyProps) => {
                     <FormControl
                       as="div"
                       isInvalid={Boolean(errors?.applicationPortal)}
+                      disabled={disabled}
                     >
                       <Rating
                         initialRating={values.applicationPortal}
                         onChange={(value) => {
-                          setFieldValue("applicationPortal", value);
-                          setFieldTouched("applicationPortal", true);
+                          if (disabled) return;
+                          else {
+                            setFieldValue("applicationPortal", value);
+                            setFieldTouched("applicationPortal", true);
+                          }
                         }}
                       />
                     </FormControl>
@@ -221,6 +233,7 @@ const Survey = ({ survey, onSubmit }: SurveyProps) => {
                       as="textarea"
                       rows={3}
                       maxLength={10000}
+                      disabled={disabled}
                       required
                     />
                   </FormGroup>
@@ -233,12 +246,21 @@ const Survey = ({ survey, onSubmit }: SurveyProps) => {
                       as="textarea"
                       rows={3}
                       maxLength={10000}
+                      disabled={disabled}
                       required
                     />
                   </FormGroup>
-                  <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting && <Spinner animation="border" size="sm" />}{" "}
-                    {isSubmitting ? t("Saving answers") : t("Save answers")}
+                  <Button type="submit" disabled={isSubmitting || disabled}>
+                    {disabled ? (
+                      t("Application has closed")
+                    ) : isSubmitting ? (
+                      <>
+                        <Spinner animation="border" size="sm" />{" "}
+                        {t("Saving answers")}
+                      </>
+                    ) : (
+                      t("Save answers")
+                    )}
                   </Button>
                 </Form>
               )}

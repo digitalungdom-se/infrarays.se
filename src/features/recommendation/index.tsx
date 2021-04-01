@@ -37,6 +37,7 @@ const UploadState = ({
           setError({ msg: t("too large"), fileName });
           return;
         }
+        console.log(fileName);
         const body = new FormData();
         body.append("file", file, fileName);
         setUploading(true);

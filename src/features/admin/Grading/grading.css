@@ -1,0 +1,21 @@
+tr.done {
+  color: #155724;
+  background-color: #d4edda !important;
+}
+
+.table tr td,
+.table tr th {
+  border-bottom: 0;
+}
+
+.table tr.done:last-of-type td {
+  border-bottom: 1px solid #28a745;
+}
+
+.table tr:last-of-type td {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.table-bordered .done td {
+  border: #28a745 1px solid !important;
+}

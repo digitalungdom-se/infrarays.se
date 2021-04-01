@@ -69,10 +69,20 @@ const UploadMultiple: React.FC<UploadMultipleProps> = ({
     form.append("file", file, fileName);
     Axios.post<FileInfo>(`application/@me/file/${fileType}`, form, {
       headers: { "Content-Type": "multipart/form-data" },
-    }).then((res) => {
-      setUploadingFile(undefined);
-      dispatch(setFiles([res.data]));
-    });
+    })
+      .then((res) => {
+        setUploadingFile(undefined);
+        dispatch(setFiles([res.data]));
+      })
+      .catch(() => {
+        setUploadingFile(undefined);
+        const error = t("Couldn't upload");
+        setUploadingFile({
+          name: file.name,
+          uploading: true && !error,
+          error,
+        });
+      });
   }
 
   // function handleChange(files: FileList, fileName: string[]) {
