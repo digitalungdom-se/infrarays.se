@@ -10,6 +10,7 @@ export const api = axios.create({
 interface FormattedRequests {
   post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T>;
   get<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  delete<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
   patch<T>(
     url: string,
     data?: unknown,
@@ -31,6 +32,11 @@ const format: FormattedRequests = {
   patch: (url, data, config) =>
     api
       .patch(url, data, config)
+      .then((res) => res.data)
+      .catch(formatErrors),
+  delete: (url, config) =>
+    api
+      .delete(url, config)
       .then((res) => res.data)
       .catch(formatErrors),
 };
