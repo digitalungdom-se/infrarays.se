@@ -5,27 +5,21 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "store";
 
-export type Recommendation = {
-  id: string;
-  code?: string;
-  applicantId: string;
-  email: string;
-  lastSent: string;
-  received: null | string;
-  fileId: null | string;
-  index: number;
-};
+type FilesByType = Partial<Record<FileType, FileInfo[]>>;
 
+type FileIDsByType = Partial<Record<FileType, FileID[]>>;
 interface PortalState {
   files: Record<FileID, FileInfo>;
+  fileIDsByApplicantAndType: Partial<Record<string, FileIDsByType>>;
   filesByType: Partial<Record<FileType, FileID[]>>;
-  recommendations: Recommendation[];
+  fileTypesByApplicants: Record<string, FilesByType>;
 }
 
 export const initialState: PortalState = {
   files: {},
+  fileIDsByApplicantAndType: {},
   filesByType: {},
-  recommendations: [],
+  fileTypesByApplicants: {},
 };
 
 const filesSlice = createSlice({
@@ -34,58 +28,51 @@ const filesSlice = createSlice({
   reducers: {
     setFiles(state, action: PayloadAction<FileInfo[]>) {
       action.payload.forEach((file) => {
-        state.files[file.id] = file;
-        if (state.filesByType[file.type])
-          state.filesByType[file.type]?.unshift(file.id);
-        else state.filesByType[file.type] = [file.id];
+        if (state.fileTypesByApplicants[file.userId] === undefined) {
+          state.fileTypesByApplicants[file.userId] = {};
+        }
+        if (state.fileTypesByApplicants[file.userId][file.type])
+          state.fileTypesByApplicants[file.userId][file.type]?.push(file);
+        else state.fileTypesByApplicants[file.userId][file.type] = [file];
       });
     },
     replaceFile(state, action: PayloadAction<FileInfo>) {
       const file = action.payload;
-      state.files[file.id] = file;
-      if (state.filesByType[file.type])
-        state.filesByType[file.type] = [file.id];
-      else state.filesByType[file.type] = [file.id];
+      state.fileTypesByApplicants[file.userId][file.type] = [file];
     },
     uploadSuccess(state, action: PayloadAction<FileInfo>) {
       const file = action.payload;
-      state.files[file.id] = file;
-      if (state.filesByType[file.type])
-        state.filesByType[file.type]?.push(file.id);
-      else state.filesByType[file.type] = [file.id];
+      const files = state.fileTypesByApplicants[file.userId][file.type];
+      if (files) files.push(file);
+      else state.fileTypesByApplicants[file.userId][file.type] = [file];
     },
     deleteFileSuccess(state, action: PayloadAction<FileID>) {
-      const file = state.files[action.payload];
-      const index = state.filesByType[file.type]?.indexOf(action.payload);
-      if (index !== undefined && index > -1) {
-        (state.filesByType[file.type] as FileID[]).splice(index, 1);
-      }
+      const deletedFile = state.files[action.payload];
+      const files =
+        state.fileTypesByApplicants[deletedFile.userId][deletedFile.type];
+      files?.filter((file) => file !== deletedFile);
     },
   },
 });
 
-export const selectAllFiles = (state: RootState): FileInfo[] =>
-  state.portal.files;
-
-export const selectSingleFileByFileType = (
-  state: RootState,
-  type: FileType
-): FileInfo | undefined => {
-  if (state.portal.filesByType[type]) {
-    const files = state.portal.filesByType[type];
-    if (files) return state.portal.files[files[0]];
-    else return undefined;
-  }
-  return undefined;
+export const selectApplicantFilesLoaded = (applicantID?: string) => (
+  state: RootState
+): boolean => {
+  const id = applicantID || state.auth.user?.id;
+  if (!id) return false;
+  const fileTypesByApplicants = state.files.fileTypesByApplicants[id];
+  return Boolean(fileTypesByApplicants);
 };
-export const selectFilesByFileType = (
-  state: RootState,
-  type: FileType
-): FileInfo[] | undefined => {
-  const array = state.portal.filesByType[type]?.map(
-    (fileID) => state.portal.files[fileID]
-  );
-  if (array === undefined || type === "APPENDIX") return array;
+
+export const selectFilesByFileTypeAndApplicant = (
+  type: FileType,
+  applicantID?: string
+) => (state: RootState): FileInfo[] => {
+  const id = applicantID || state.auth.user?.id;
+  if (!id) return [];
+  const fileTypes = state.files.fileTypesByApplicants[id];
+  if (fileTypes) return fileTypes[type] || [];
+  return [];
 };
 
 export const {

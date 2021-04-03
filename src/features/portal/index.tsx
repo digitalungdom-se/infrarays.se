@@ -1,5 +1,5 @@
 import { ButtonGroup, ProgressBar } from "react-bootstrap";
-import { FileInfo, selectProgress, setFiles } from "./portalSlice";
+import { FileInfo, selectProgress } from "./portalSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,6 +14,7 @@ import Logout from "./Logout";
 import ReactMarkdown from "react-markdown";
 import StyledPlate from "components/Plate";
 import { addPersonSuccess } from "features/portal/portalSlice";
+import { setFiles } from "features/files/filesSlice";
 import { useTranslation } from "react-i18next";
 
 const Hook = () => {

@@ -5,8 +5,7 @@ import { FileType } from "../portalSlice";
 import PortalSurvey from "../Survey";
 import React from "react";
 import References from "../References";
-import Upload from "../Upload";
-import UploadMultiple from "../Upload/UploadMultiple";
+import Upload from "features/files/Upload";
 import portal from "config/portal.json";
 
 interface ChaptersProps extends WithTranslation {
@@ -27,20 +26,12 @@ const Chapters: React.FC<ChaptersProps> = ({
         description={t(`${chapter.fileType}.description`)}
         subtitle={t(`${chapter.fileType}.subtitle`)}
       >
-        {chapter.upload && chapter.upload.multiple === undefined && (
+        {chapter.upload && (
           <Upload
-            label={t(`${chapter.fileType}.upload.label`)}
             accept={chapter.upload.accept}
             fileType={chapter.fileType as FileType}
             disabled={filesLoading}
-          />
-        )}
-        {chapter.upload?.multiple && (
-          <UploadMultiple
-            label={t(`${chapter.fileType}.upload.label`)}
-            accept={chapter.upload.accept}
-            fileType={chapter.fileType as FileType}
-            disabled={filesLoading}
+            multiple={chapter.upload.multiple}
           />
         )}
         {chapter.contactPeople && <References loading={referencesLoading} />}

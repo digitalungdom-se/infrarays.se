@@ -94,7 +94,7 @@ export type UploadProps =
     } & MostUploadProps)
   | ({
       multiple?: false;
-      onChange?: (file: any, name: string) => any;
+      onChange?: (file: File, name: string) => any;
     } & MostUploadProps);
 
 const Upload: React.FC<UploadProps> = ({
