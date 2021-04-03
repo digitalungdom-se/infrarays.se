@@ -71,7 +71,7 @@ function useStatistics(): UseStatistics {
   if (data) {
     data.forEach((answer) => {
       statistics.applicationPortal.count[answer.applicationPortal]++;
-      statistics.applicationProcess.count[answer.applicationPortal]++;
+      statistics.applicationProcess.count[answer.applicationProcess]++;
       statistics.gender.count[answer.gender]++;
       statistics.city.push(answer.city);
       statistics.school.push(answer.school);
