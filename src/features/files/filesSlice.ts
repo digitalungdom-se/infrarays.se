@@ -7,18 +7,11 @@ import { RootState } from "store";
 
 type FilesByType = Partial<Record<FileType, FileInfo[]>>;
 
-type FileIDsByType = Partial<Record<FileType, FileID[]>>;
-interface PortalState {
-  files: Record<FileID, FileInfo>;
-  fileIDsByApplicantAndType: Partial<Record<string, FileIDsByType>>;
-  filesByType: Partial<Record<FileType, FileID[]>>;
+interface FilesState {
   fileTypesByApplicants: Record<string, FilesByType>;
 }
 
-export const initialState: PortalState = {
-  files: {},
-  fileIDsByApplicantAndType: {},
-  filesByType: {},
+export const initialState: FilesState = {
   fileTypesByApplicants: {},
 };
 
@@ -46,11 +39,13 @@ const filesSlice = createSlice({
       if (files) files.push(file);
       else state.fileTypesByApplicants[file.userId][file.type] = [file];
     },
-    deleteFileSuccess(state, action: PayloadAction<FileID>) {
-      const deletedFile = state.files[action.payload];
-      const files =
-        state.fileTypesByApplicants[deletedFile.userId][deletedFile.type];
-      files?.filter((file) => file !== deletedFile);
+    deleteFileSuccess(
+      state,
+      action: PayloadAction<[FileID, FileType, FileID]>
+    ) {
+      const [applicantID, fileType, fileID] = action.payload;
+      const files = state.fileTypesByApplicants[applicantID][fileType];
+      files?.filter((file) => file.id !== fileID);
     },
   },
 });

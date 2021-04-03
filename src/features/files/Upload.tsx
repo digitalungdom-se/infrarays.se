@@ -49,7 +49,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
   const handleDelete = (fileID: string, applicantID: string) =>
     deleteFile(fileID, applicantID)
       .then(() => {
-        dispatch(deleteFileSuccess(fileID));
+        dispatch(deleteFileSuccess([applicantID, fileType, fileID]));
       })
       .catch((err) => {
         toast.error(err.message);
