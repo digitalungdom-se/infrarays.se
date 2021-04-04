@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import Grade from "./Grading/Grade";
 import { RootState } from "store";
 
 export interface TopOrderItem {

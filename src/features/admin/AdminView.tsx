@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import Center from "components/Center";
 import Delete from "features/portal/Delete";
 import Logo from "components/Logo";
 import Logout from "features/portal/Logout";
@@ -9,11 +8,11 @@ import Nav from "./Nav";
 import Plate from "components/Plate";
 import Spinner from "react-bootstrap/Spinner";
 
-const TopList = lazy(() => import("features/admin/TopList"));
+const TopList = lazy(() => import("./TopList"));
 const NoMatch = lazy(() => import("features/nomatch"));
-const Administration = lazy(() => import("features/admin/Administration"));
-const Statistics = lazy(() => import("features/admin/Statistics"));
-const Grading = lazy(() => import("features/admin/Grading"));
+const Administration = lazy(() => import("./Administration"));
+const Statistics = lazy(() => import("./Statistics"));
+const GradingView = lazy(() => import("./GradingView"));
 
 const Admin: React.FC = () => (
   <div style={{ maxWidth: 820, margin: "4rem auto" }}>
@@ -38,7 +37,7 @@ const Admin: React.FC = () => (
       >
         <Switch>
           <Route exact path="/admin">
-            <Grading />
+            <GradingView />
           </Route>
           <Route path="/admin/toplist">
             <TopList />

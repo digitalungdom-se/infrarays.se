@@ -4,7 +4,7 @@ import AddButton from "components/AddButton";
 import AdminContact from "components/AdminContact";
 import { Spinner } from "react-bootstrap";
 import { selectUserType } from "features/auth/authSlice";
-import { useAdmins } from "../adminHooks";
+import { useAdmins } from "./adminHooks";
 import { useSelector } from "react-redux";
 
 const Administration: React.FC = () => {

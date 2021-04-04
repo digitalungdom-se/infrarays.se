@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import axios from "api/axios";
 import { toast } from "react-toastify";
-import { updateGradingOrder } from "../adminSlice";
+import { updateGradingOrder } from "./adminSlice";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 

@@ -14,7 +14,7 @@ const LoginWithCodeRoute = lazy(
   () => import("features/auth/login/LoginWithCodeRoute")
 );
 const GDPR = lazy(() => import("features/GDPR"));
-const AdminPortal = lazy(() => import("features/admin"));
+const AdminPortal = lazy(() => import("features/admin/AdminView"));
 
 const AppRouter: React.FC = () => (
   <Router>

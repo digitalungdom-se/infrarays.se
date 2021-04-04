@@ -6,11 +6,11 @@ export type NumericalGradeField =
   | "recommendations"
   | "overall";
 
-export type Grades = Record<NumericalGradeField, number> & {
+export type ApplicationGrade = Record<NumericalGradeField, number> & {
   comment: string;
 };
 
-export interface Grading extends Grades {
+export interface Grading extends ApplicationGrade {
   applicantId: string;
   adminId: string;
   id: string;

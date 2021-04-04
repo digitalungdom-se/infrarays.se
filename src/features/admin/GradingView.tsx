@@ -1,4 +1,4 @@
-import "./grading.css";
+import "./table.css";
 
 import { ConnectedProps, connect } from "react-redux";
 import {
@@ -6,13 +6,13 @@ import {
   selectApplicationsByGradingOrder,
   setApplications,
   updateGradingOrder,
-} from "../adminSlice";
+} from "./adminSlice";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Grade from "./Grade";
+import OpenGradingModalButton from "./OpenGradingModalButton";
 import OpenPDF from "components/portal/OpenPDF";
-import RandomiseOrder from "./RandomiseOrder";
+import RandomiseGradingOrder from "./RandomiseGradingOrder";
 import React from "react";
 import { RootState } from "store";
 import Spinner from "react-bootstrap/Spinner";
@@ -91,7 +91,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
         text: "Bedöm",
         isDummyField: true,
         formatter: (id: string, row: any) => (
-          <Grade
+          <OpenGradingModalButton
             key={id + "grade"}
             id={row.id}
             variant={row.done ? "success" : undefined}
@@ -107,7 +107,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
             För att börja bedöma eller se nya ansökningar behöver du slumpa
             ordningen.
           </p>
-          <RandomiseOrder />
+          <RandomiseGradingOrder />
         </div>
         <BootstrapTable
           striped

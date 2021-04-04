@@ -2,7 +2,7 @@ import {
   ApplicationInfo,
   selectApplicationsByTop,
   setApplications,
-} from "../adminSlice";
+} from "./adminSlice";
 import { ConnectedProps, connect } from "react-redux";
 
 import BootstrapTable from "react-bootstrap-table-next";
@@ -15,7 +15,7 @@ import Spinner from "react-bootstrap/Spinner";
 import axios from "api/axios";
 import { downloadAndOpen } from "api/downloadPDF";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
-import { useGrades } from "../adminHooks";
+import { useGrades } from "./adminHooks";
 
 interface GradingDataRowProps {
   id: string;

@@ -1,5 +1,5 @@
 import { Button, Modal, Spinner } from "react-bootstrap";
-import { Grading, selectMyGrading, setGrades, setMyGrade } from "../adminSlice";
+import { Grading, selectMyGrading, setGrades, setMyGrade } from "./adminSlice";
 import GradingModal, { GradeFormValues } from "components/GradingModal";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
