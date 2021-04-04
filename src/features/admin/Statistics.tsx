@@ -1,3 +1,4 @@
+import DownloadStatistics from "./DownloadStatistics";
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
@@ -8,6 +9,7 @@ interface UseStatistics {
   loading: boolean;
   data: any;
   error: any;
+  array?: SurveyAnswers[];
 }
 
 type StatisticalValue = "average";
@@ -89,6 +91,7 @@ function useStatistics(): UseStatistics {
   return {
     loading,
     data: statistics,
+    array: data,
     error,
   };
 }
@@ -138,7 +141,6 @@ function NumericalTable({ answers, title, isNumeric }: NumericalTableProps) {
         <tbody>
           {Object.keys(answers.count).map((n, i) => (
             <tr key={title + "-" + n + "-" + i}>
-              {console.log(t(n), n)}
               <td>{t(n)}</td>
               <td>{answers.count[n]}</td>
             </tr>
@@ -157,7 +159,7 @@ function NumericalTable({ answers, title, isNumeric }: NumericalTableProps) {
 }
 
 function StatisticsPage(): React.ReactElement {
-  const { loading, data, error } = useStatistics();
+  const { loading, data, array, error } = useStatistics();
   const { t } = useTranslation();
   if (loading)
     return (
@@ -174,6 +176,7 @@ function StatisticsPage(): React.ReactElement {
     );
   return (
     <div>
+      {array && <DownloadStatistics data={array} />}
       <NumericalTable
         isNumeric
         title={t("What are your thoughts on the application process?")}
