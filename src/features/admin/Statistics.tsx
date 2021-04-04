@@ -177,7 +177,6 @@ function StatisticsPage(): React.ReactElement {
   return (
     <div>
       {array && <DownloadStatistics data={array} />}
-      <br />
       <NumericalTable
         isNumeric
         title={t("What are your thoughts on the application process?")}
