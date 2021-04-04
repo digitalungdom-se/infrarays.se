@@ -13,6 +13,10 @@ export interface Applicant extends User {
   type: "APPLICANT";
 }
 
+export type ServerUserFields = "id" | "created" | "verified";
+
+export type NewAdmin = Omit<Admin, ServerUserFields>;
+
 export interface Admin extends User {
   type: "ADMIN" | "SUPER_ADMIN";
 }

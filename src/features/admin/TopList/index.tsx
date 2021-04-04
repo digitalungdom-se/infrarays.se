@@ -19,10 +19,11 @@ import { useGrades } from "../adminHooks";
 
 interface GradingDataRowProps {
   id: string;
+  [field: string]: any;
 }
 
-const GradingDataRow = ({ id }: GradingDataRowProps) => {
-  console.log("render grading");
+const GradingDataRow = ({ id, ...props }: GradingDataRowProps) => {
+  console.log("render grading", props);
   const { data, loading } = useGrades(id);
   if (loading) return <div>Loading</div>;
   return <GradingData applicationGrades={data} />;
