@@ -4,12 +4,14 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "store";
 
+type UserType = "APPLICANT" | "ADMIN" | "SUPER_ADMIN";
+
 interface User {
   id: string;
   email: string;
   firstName: string;
   lastName: string;
-  type: "APPLICANT" | "ADMIN" | "SUPER_ADMIN";
+  type: UserType;
   verified: boolean;
   created: string;
 }
@@ -41,8 +43,14 @@ const authSlice = createSlice({
   },
 });
 
-export const selectAuthenticated = (state: RootState) =>
+export const selectAuthenticated = (state: RootState): boolean =>
   state.auth.isAuthorised;
+
+export const selectUserType = (state: RootState): UserType | undefined =>
+  state.auth.user?.type;
+
+export const selectUserID = (state: RootState): string | undefined =>
+  state.auth.user?.id;
 
 export const { authSuccess, authFail, userInfoSuccess } = authSlice.actions;
 

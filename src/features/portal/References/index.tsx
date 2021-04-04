@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 import ContactPerson from "components/portal/ContactPerson";
 import { RootState } from "store";
+import moment from "moment";
 import { selectRecommendation } from "features/portal/portalSlice";
 import { toast } from "react-toastify";
 
@@ -38,6 +39,8 @@ const Person = ({
     selectRecommendation(state, recommendationIndex)
   );
   const dispatch = useDispatch();
+  const applicationHasClosed =
+    moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
   function handleSubmit(email: string) {
     setLoading(true);
     Axios.post<Recommendation>(
@@ -68,7 +71,7 @@ const Person = ({
       received={Boolean(recommendation?.received)}
       sendDate={recommendation?.lastSent || "1970-01-01"}
       cooldown={["day", 1]}
-      disabled={disabled}
+      disabled={disabled || applicationHasClosed}
     />
   );
 };
