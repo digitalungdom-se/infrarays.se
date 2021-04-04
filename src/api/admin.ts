@@ -1,6 +1,6 @@
 import { Admin, NewAdmin } from "types/user";
+import { Application, IndividualGrading, OrderItem } from "types/grade";
 
-import { Grading } from "types/grade";
 import api from "./axios";
 
 export const getAdmins = (): Promise<Admin[]> =>
@@ -9,8 +9,16 @@ export const getAdmins = (): Promise<Admin[]> =>
 export const getGradesConfig = (applicantID: string): string =>
   `/application/${applicantID}/grade`;
 
-export const getGradesByApplicant = (applicantID: string): Promise<Grading[]> =>
-  api.format.get<Grading[]>(getGradesConfig(applicantID));
+export const getGradesByApplicant = (
+  applicantID: string
+): Promise<IndividualGrading[]> =>
+  api.format.get<IndividualGrading[]>(getGradesConfig(applicantID));
+
+export const getApplications = (): Promise<Application[]> =>
+  api.format.get<Application[]>("/application");
+
+export const getGradingOrder = (): Promise<OrderItem[]> =>
+  api.format.get<OrderItem[]>("/admin/grading");
 
 export const addAdmin = (admin: NewAdmin): Promise<Admin> =>
   api.format.post<Admin>("/admin", admin);

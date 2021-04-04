@@ -9,17 +9,12 @@ import {
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Grading } from "types/grade";
-import useAxios from "api/useAxios";
+import { IndividualGrading } from "types/grade";
+import useApi from "hooks/useApi";
 
-interface UseGrades {
-  loading: boolean;
-  data: any;
-  error: any;
-}
 export function useGrades(applicantId: string): UseGrades {
   useAdmins();
-  const [{ loading, data, error }] = useAxios<Grading[]>(
+  const [{ loading, data, error }] = useApi<IndividualGrading[]>(
     getGradesConfig(applicantId)
   );
   const dispatch = useDispatch();
@@ -42,7 +37,7 @@ interface UseAdmins extends UseHook<Admin[]> {
 }
 
 export function useAdmins(): UseAdmins {
-  const [{ loading, data, error }] = useAxios<Admin[]>({
+  const [{ loading, data, error }] = useApi<Admin[]>({
     url: "/admin",
     params: { skip: 0, limit: 20 },
   });

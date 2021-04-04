@@ -1,8 +1,8 @@
 import "./table.css";
 
 import { ConnectedProps, connect } from "react-redux";
+import { getApplications, getGradingOrder } from "api/admin";
 import {
-  OrderItem,
   selectApplicationsByGradingOrder,
   setApplications,
   updateGradingOrder,
@@ -16,7 +16,6 @@ import RandomiseGradingOrder from "./RandomiseGradingOrder";
 import React from "react";
 import { RootState } from "store";
 import Spinner from "react-bootstrap/Spinner";
-import axios from "api/axios";
 import { downloadAndOpen } from "api/downloadPDF";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 
@@ -44,18 +43,17 @@ class Grading extends React.Component<GradingProps, GradingState> {
 
   componentDidMount() {
     if (Boolean(this.props.applications.length) === false) {
-      axios.get<ApplicationInfo[]>("/application").then((res) => {
-        this.props.setApplications(res.data);
+      getApplications().then((res) => {
+        this.props.setApplications(res);
       });
-      axios.get<OrderItem[]>("/admin/grading").then((res) => {
-        this.props.updateGradingOrder(res.data);
+      getGradingOrder().then((res) => {
+        this.props.updateGradingOrder(res);
         this.setState({ loading: [this.state.loading[0], false] });
       });
     }
   }
 
   render() {
-    const loading = this.state.loading[0] || this.state.loading[1];
     const dataWithIndex = this.props.applications.map((application, index) => ({
       ...application,
       index,

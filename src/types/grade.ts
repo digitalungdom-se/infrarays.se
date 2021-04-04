@@ -1,3 +1,11 @@
+import { Admin, Applicant } from "./user";
+
+export interface Application extends Applicant {
+  city: string;
+  school: string;
+  done?: boolean;
+}
+
 export type NumericalGradeField =
   | "cv"
   | "coverLetter"
@@ -6,12 +14,36 @@ export type NumericalGradeField =
   | "recommendations"
   | "overall";
 
-export type ApplicationGrade = Record<NumericalGradeField, number> & {
+export type ApplicationGrade = {
   comment: string;
+  cv: number;
+  coverLetter: number;
+  essays: number;
+  grades: number;
+  recommendations: number;
+  overall: number;
 };
 
-export interface Grading extends ApplicationGrade {
+export interface IndividualGrading extends ApplicationGrade {
   applicantId: string;
   adminId: string;
   id: string;
+}
+
+export type IndividualGradingWithName = ApplicationGrade &
+  Pick<Admin, "firstName" | "lastName">;
+
+export type GradedApplication = ApplicationGrade & Application;
+
+export interface TopOrderItem {
+  applicantId: string;
+  score: number;
+}
+
+export interface OrderItem {
+  id: string;
+  adminId: string;
+  applicantId: string;
+  gradingOrder: number;
+  done: boolean;
 }
