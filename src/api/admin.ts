@@ -1,5 +1,10 @@
 import { Admin, NewAdmin } from "types/user";
-import { Application, IndividualGrading, OrderItem } from "types/grade";
+import {
+  Application,
+  GradedApplication,
+  IndividualGrading,
+  OrderItem,
+} from "types/grade";
 
 import api from "./axios";
 
@@ -14,8 +19,9 @@ export const getGradesByApplicant = (
 ): Promise<IndividualGrading[]> =>
   api.format.get<IndividualGrading[]>(getGradesConfig(applicantID));
 
-export const getApplications = (): Promise<Application[]> =>
-  api.format.get<Application[]>("/application");
+export const getApplications = (): Promise<
+  (Application | GradedApplication)[]
+> => api.format.get<Application[]>("/application");
 
 export const getGradingOrder = (): Promise<OrderItem[]> =>
   api.format.get<OrderItem[]>("/admin/grading");

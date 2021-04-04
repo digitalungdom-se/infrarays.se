@@ -1,7 +1,7 @@
 import { Button, Modal, Spinner } from "react-bootstrap";
-import { Grading, selectMyGrading, setGrades, setMyGrade } from "./adminSlice";
 import GradingModal, { GradeFormValues } from "components/GradingModal";
 import React, { useState } from "react";
+import { selectMyGrading, setGrades, setMyGrade } from "./adminSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ButtonProps } from "react-bootstrap/Button";
@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RootState } from "store";
 import axios from "api/axios";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { getGradesByApplicant } from "api/admin";
 
 interface GradeProps {
   id: string;
@@ -29,8 +30,8 @@ const Grade: React.FC<GradeProps> = ({ id, variant = "primary" }) => {
     setOpen(!open);
     if (!open && gradingData === undefined) {
       setLoading(true);
-      axios.get<Grading[]>(`/application/${id}/grade`).then((res) => {
-        dispatch(setGrades({ grades: res.data, applicantId: id }));
+      getGradesByApplicant(id).then((grades) => {
+        dispatch(setGrades({ grades, applicantId: id }));
         setLoading(false);
       });
     }

@@ -1,10 +1,11 @@
 import { Admin, Applicant } from "./user";
 
-export interface Application extends Applicant {
-  city: string;
-  school: string;
-  done?: boolean;
-}
+export type Application = Applicant &
+  Partial<ApplicationGrade> & {
+    city: string;
+    school: string;
+    done?: boolean;
+  };
 
 export type NumericalGradeField =
   | "cv"

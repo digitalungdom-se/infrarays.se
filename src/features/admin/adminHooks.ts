@@ -1,4 +1,5 @@
 import { Admin, NewAdmin } from "types/user";
+import { IndividualGrading, IndividualGradingWithName } from "types/grade";
 import { addAdmin, getGradesConfig } from "api/admin";
 import {
   selectAdmins,
@@ -6,13 +7,13 @@ import {
   setAdmins,
   setGrades,
 } from "./adminSlice";
+import useApi, { UseApi } from "hooks/useApi";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { IndividualGrading } from "types/grade";
-import useApi from "hooks/useApi";
-
-export function useGrades(applicantId: string): UseGrades {
+export function useGrades(
+  applicantId: string
+): UseApi<IndividualGradingWithName[]> {
   useAdmins();
   const [{ loading, data, error }] = useApi<IndividualGrading[]>(
     getGradesConfig(applicantId)
@@ -26,13 +27,7 @@ export function useGrades(applicantId: string): UseGrades {
   return { loading, data: grades, error };
 }
 
-interface UseHook<T> {
-  loading: boolean;
-  error: any;
-  data: T;
-}
-
-interface UseAdmins extends UseHook<Admin[]> {
+interface UseAdmins extends UseApi<Admin[]> {
   addAdmin: (admin: NewAdmin) => Promise<Admin>;
 }
 

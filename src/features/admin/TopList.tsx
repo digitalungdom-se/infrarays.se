@@ -1,9 +1,5 @@
-import {
-  ApplicationInfo,
-  selectApplicationsByTop,
-  setApplications,
-} from "./adminSlice";
 import { ConnectedProps, connect } from "react-redux";
+import { selectApplicationsByTop, setApplications } from "./adminSlice";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,9 +8,9 @@ import OpenPDF from "components/portal/OpenPDF";
 import React from "react";
 import { RootState } from "store";
 import Spinner from "react-bootstrap/Spinner";
-import axios from "api/axios";
 import { downloadAndOpen } from "api/downloadPDF";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
+import { getApplications } from "api/admin";
 import { useGrades } from "./adminHooks";
 
 interface GradingDataRowProps {
@@ -39,8 +35,8 @@ class TopList extends React.Component<TopListProps, TopListState> {
 
   componentDidMount() {
     if (Boolean(this.props.applications.length) === false)
-      axios.get<ApplicationInfo[]>("/application").then((res) => {
-        this.props.setApplications(res.data);
+      getApplications().then((applications) => {
+        this.props.setApplications(applications);
         this.setState({ loading: false });
       });
   }

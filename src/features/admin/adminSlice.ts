@@ -95,7 +95,9 @@ export const selectGradingOrder = (state: RootState): OrderItem[] =>
 export const selectAdmins = (state: RootState): Admin[] =>
   Object.keys(state.admin.admins).map((adminID) => state.admin.admins[adminID]);
 
-export const selectApplicationsByTop = (state: RootState): Application[] =>
+export const selectApplicationsByTop = (
+  state: RootState
+): (Application | GradedApplication)[] =>
   state.admin.topOrder.map(
     (orderItem) => state.admin.applications[orderItem.applicantId]
   );
