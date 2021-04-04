@@ -1,14 +1,5 @@
-import { RootState } from "store";
-import { TypedUseSelectorHook } from "react-redux";
-
-interface UseHook<T> {
+export interface UseHook<T, E> {
   loading: boolean;
-  error: any;
+  error: E;
   data: T;
 }
-
-interface UseWithRedux {
-  selector: TypedUseSelectorHook<RootState>;
-}
-
-// export function useWithRedux(selector) {}

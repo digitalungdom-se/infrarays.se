@@ -22,8 +22,7 @@ interface GradingDataRowProps {
   [field: string]: any;
 }
 
-const GradingDataRow = ({ id, ...props }: GradingDataRowProps) => {
-  console.log("render grading", props);
+const GradingDataRow = ({ id }: GradingDataRowProps) => {
   const { data, loading } = useGrades(id);
   if (loading) return <div>Loading</div>;
   return <GradingData applicationGrades={data} />;
