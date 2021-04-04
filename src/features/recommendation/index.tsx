@@ -39,6 +39,7 @@ const UploadState = ({
         }
         if (fileName.substring(fileName.length - 4) !== ".pdf") {
           setError({ msg: t("Only PDF", fileName) });
+          return;
         }
         const body = new FormData();
         body.append("file", file, fileName);
