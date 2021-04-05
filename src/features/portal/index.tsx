@@ -18,6 +18,8 @@ const Portal = (): React.ReactElement => {
       <StyledPlate>
         <Logo center />
         <Introduction />
+        <Progress />
+        <hr style={{ color: "#b8b8b8" }} />
         <div>
           <FileChapters />
           <SurveyChapter />
