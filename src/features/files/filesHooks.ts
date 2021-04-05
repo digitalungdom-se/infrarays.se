@@ -2,6 +2,7 @@ import { FileInfo, FileType } from "types/files";
 import {
   deleteFile,
   downloadFile as downloadIndividualFile,
+  getFilesConfiguration,
   uploadFile,
 } from "api/files";
 import {
@@ -34,20 +35,28 @@ type UseFiles = (
 
 export const useFiles: UseFiles = (applicantID = "@me", type?: FileType) => {
   const dispatch = useDispatch();
+  // if applicantID is @me then we don't want to call redux with
+  // any function as it will automatically replace with the user id
   const id = applicantID === "@me" ? undefined : applicantID;
-  const filesLoaded = useSelector(selectApplicantFilesLoaded(id));
+
+  // if the function is not called with any file type, there are no files to get
   const files =
     type === undefined
       ? undefined
       : useSelector(selectFilesByFileTypeAndApplicant(type, id));
-  // console.log(type, id, files);
-  const [{ loading, data }] = useApi<FileInfo[]>({
-    url: `/application/${applicantID}/file`,
-  });
+
+  // use an API hook to load in the data with a configured get request.
+  const [{ loading, data }] = useApi<FileInfo[]>(
+    getFilesConfiguration(applicantID)
+  );
+
+  // if files are already loaded in redux we don't want to dispatch them again
+  const filesLoaded = useSelector(selectApplicantFilesLoaded(id));
   if (filesLoaded === false && data) {
     dispatch(setFiles(data));
   }
 
+  // callback to remove a file and delete it from the store
   const removeFile = useCallback(
     (fileID) =>
       deleteFile(fileID, applicantID).then(() => {
@@ -56,10 +65,12 @@ export const useFiles: UseFiles = (applicantID = "@me", type?: FileType) => {
     [dispatch, type]
   );
 
+  // callback to upload a file and add it to the store
   const addFile = useCallback(
-    (fileType, file, fileName, replace) =>
+    (fileType, file, fileName, replace?: boolean) =>
       uploadFile(fileType, file, fileName).then((res) => {
-        if (replace > 1) dispatch(replaceFile(res));
+        // replace if nece
+        if (replace) dispatch(replaceFile(res));
         else dispatch(setFiles([res]));
       }),
     [dispatch, type]
