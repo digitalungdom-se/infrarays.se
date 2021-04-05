@@ -100,5 +100,6 @@
   "Application has closed": "Application period has closed",
   "Couldn't upload": "Couldn't upload file",
   "Only PDF": "The file must be a PDF",
-  "average": "Average"
+  "average": "Average",
+  "Uploading": "Uploading"
 }

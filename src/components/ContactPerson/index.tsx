@@ -97,7 +97,9 @@ function ContactPerson({
               {status !== "received" && (
                 <Button
                   type="submit"
-                  disabled={Boolean(received || diff > 0 || loading)}
+                  disabled={Boolean(
+                    received || diff > 0 || loading || disabled
+                  )}
                 >
                   {button[status]}{" "}
                   {diff > 0 &&

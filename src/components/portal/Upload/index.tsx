@@ -118,8 +118,8 @@ const Upload: React.FC<UploadProps> = ({
       {!uploading && !uploaded && label}
       {uploading && (
         <span>
-          <Spinner animation="border" variant="primary" size="sm" /> Laddar upp{" "}
-          {fileName || uploaded}
+          <Spinner animation="border" variant="primary" size="sm" />{" "}
+          {t("Laddar upp")} {fileName || uploaded}
         </span>
       )}
       {!uploading && uploaded && (
