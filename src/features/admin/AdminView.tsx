@@ -9,7 +9,7 @@ import Plate from "components/Plate";
 import Spinner from "react-bootstrap/Spinner";
 
 const TopList = lazy(() => import("./TopList"));
-const NoMatch = lazy(() => import("features/nomatch"));
+const NoMatch = lazy(() => import("components/NoMatch"));
 const Administration = lazy(() => import("./Administration"));
 const Statistics = lazy(() => import("./Statistics"));
 const GradingView = lazy(() => import("./GradingView"));

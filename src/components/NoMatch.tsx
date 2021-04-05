@@ -1,8 +1,8 @@
-import Center from "components/Center";
-import Plate from "components/Plate";
+import Center from "./Center";
+import Plate from "./Plate";
 import React from "react";
-import Star from "components/Star";
-import StyledTitle from "components/StyledTitle";
+import Star from "./Star";
+import StyledTitle from "./StyledTitle";
 import { Trans } from "react-i18next";
 
 const NoMatch = (): React.ReactElement => (

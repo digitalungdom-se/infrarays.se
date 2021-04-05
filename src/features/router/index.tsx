@@ -8,7 +8,7 @@ const AutomaticLogin = lazy(() => import("features/auth/login/AutomaticLogin"));
 const Login = lazy(() => import("features/auth/login"));
 const Portal = lazy(() => import("features/portal"));
 const Register = lazy(() => import("features/auth/register"));
-const NoMatch = lazy(() => import("features/nomatch"));
+const NoMatch = lazy(() => import("components/NoMatch"));
 const Recommendation = lazy(
   () => import("features/files/UploadRecommendationLetter")
 );
