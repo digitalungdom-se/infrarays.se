@@ -46,7 +46,8 @@ export const downloadFullPDF = (applicantID = "@me"): Promise<void> =>
 export const deleteFile = (
   fileID: string,
   applicantID = "@me"
-): Promise<void> => api.delete(`/application/${applicantID}/file/${fileID}`);
+): Promise<void> =>
+  api.format.delete(`/application/${applicantID}/file/${fileID}`);
 
 export const uploadFile = (
   fileType: FileType,
@@ -54,11 +55,15 @@ export const uploadFile = (
   fileName: string,
   applicantID = "@me"
 ): Promise<FileInfo> => {
+  // create FormData to append file with desired file name
   const form = new FormData();
   form.append("file", file, fileName);
-  return api
-    .post<FileInfo>(`application/${applicantID}/file/${fileType}`, form, {
+  // format the results, useful if there are errors!
+  return api.format.post<FileInfo>(
+    `application/${applicantID}/file/${fileType}`,
+    form,
+    {
       headers: { "Content-Type": "multipart/form-data" },
-    })
-    .then((res) => res.data);
+    }
+  );
 };
