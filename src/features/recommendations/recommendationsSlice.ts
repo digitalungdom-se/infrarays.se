@@ -25,10 +25,16 @@ const recommendationsSlice = createSlice({
         }
       });
     },
+    clearRecommendations(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
-export const { addPersonSuccess } = recommendationsSlice.actions;
+export const {
+  addPersonSuccess,
+  clearRecommendations,
+} = recommendationsSlice.actions;
 
 export const selectApplicantRecommendations = (applicantID?: string) => (
   state: RootState

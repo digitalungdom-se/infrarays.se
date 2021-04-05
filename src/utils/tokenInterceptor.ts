@@ -2,6 +2,8 @@ import { authFail, authSuccess } from "features/auth/authSlice";
 
 import { ServerTokenResponse } from "types/tokens";
 import axios from "api/axios";
+import { clearFiles } from "features/files/filesSlice";
+import { clearRecommendations } from "features/recommendations/recommendationsSlice";
 import { clearSurvey } from "features/survey/surveySlice";
 import i18n from "i18n";
 import store from "store";
@@ -100,6 +102,8 @@ export class TokenStorage {
     localStorage.removeItem(TokenStorage.LOCAL_STORAGE_TOKEN_EXPIRY);
     store.dispatch(authFail());
     store.dispatch(clearSurvey());
+    store.dispatch(clearFiles());
+    store.dispatch(clearRecommendations());
   }
 
   private static getRefreshToken(): string | null {

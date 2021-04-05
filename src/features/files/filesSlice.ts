@@ -50,8 +50,19 @@ const filesSlice = createSlice({
       const files = state.fileTypesByApplicants[applicantID][fileType];
       files?.filter((file) => file.id !== fileID);
     },
+    clearFiles(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
+
+export const {
+  setFiles,
+  uploadSuccess,
+  deleteFileSuccess,
+  replaceFile,
+  clearFiles,
+} = filesSlice.actions;
 
 export const selectApplicantFilesLoaded = (applicantID?: string) => (
   state: RootState
@@ -72,12 +83,5 @@ export const selectFilesByFileTypeAndApplicant = (
   if (fileTypes) return fileTypes[type] || [];
   return [];
 };
-
-export const {
-  setFiles,
-  uploadSuccess,
-  deleteFileSuccess,
-  replaceFile,
-} = filesSlice.actions;
 
 export default filesSlice.reducer;

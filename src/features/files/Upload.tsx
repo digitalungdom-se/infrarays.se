@@ -1,17 +1,11 @@
 import React, { useState } from "react";
-import { deleteFile, downloadFile, uploadFile } from "api/files";
-import {
-  deleteFileSuccess,
-  replaceFile,
-  selectFilesByFileTypeAndApplicant,
-  setFiles,
-} from "./filesSlice";
-import { useDispatch, useSelector } from "react-redux";
 
 import { FileType } from "types/files";
 import Upload from "components/portal/Upload";
+import { downloadFile } from "api/files";
 import hasApplicationClosed from "utils/hasApplicationClosed";
 import { toast } from "react-toastify";
+import { useFiles } from "./filesHooks";
 import { useTranslation } from "react-i18next";
 
 interface UploadHookProps {
@@ -34,26 +28,19 @@ const UploadHook: React.FC<UploadHookProps> = ({
   disabled,
   accept,
   fileType,
-  applicantID,
   maxFileSize = 5 * 10 ** 6,
   multiple = 1,
   alwaysAbleToUpload,
+  applicantID,
 }) => {
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFileInfo[]>([]);
-  const dispatch = useDispatch();
-  const files = useSelector(
-    selectFilesByFileTypeAndApplicant(fileType, applicantID)
-  );
+  const { removeFile, data: files, addFile } = useFiles(applicantID, fileType);
   const { t } = useTranslation();
 
   const handleDelete = (fileID: string, applicantID: string) =>
-    deleteFile(fileID, applicantID)
-      .then(() => {
-        dispatch(deleteFileSuccess([applicantID, fileType, fileID]));
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
+    removeFile(fileID, applicantID).catch((err) => {
+      toast.error(err.message);
+    });
 
   const handleUpload = (file: File, fileName: string) => {
     if (file.size > maxFileSize) {
@@ -66,10 +53,8 @@ const UploadHook: React.FC<UploadHookProps> = ({
       ]);
     } else {
       setUploadingFiles([{ name: file.name, uploading: true }]);
-      uploadFile(fileType, file, fileName)
-        .then((res) => {
-          if (multiple > 1) dispatch(replaceFile(res));
-          else dispatch(setFiles([res]));
+      addFile(fileType, file, fileName)
+        .then(() => {
           setUploadingFiles([]);
         })
         .catch((err) => {
