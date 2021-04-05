@@ -1,11 +1,11 @@
-import React from "react";
 import Center from "components/Center";
 import Plate from "components/Plate";
+import React from "react";
 import Star from "components/Star";
 import StyledTitle from "components/StyledTitle";
 import { Trans } from "react-i18next";
 
-const NoMatch = () => (
+const NoMatch = (): React.ReactElement => (
   <Center maxWidth="450px">
     <Plate>
       <StyledTitle>

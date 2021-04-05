@@ -1,31 +1,24 @@
 import { Button, Modal, Spinner } from "react-bootstrap";
-import GradingModal, { GradeFormValues } from "components/GradingModal";
 import React, { useState } from "react";
+import { getGradesByApplicant, postApplicationGrade } from "api/admin";
 import { selectMyGrading, setGrades, setMyGrade } from "./adminSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ButtonProps } from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { RootState } from "store";
-import axios from "api/axios";
+import GradingModal from "components/GradingModal";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { getGradesByApplicant } from "api/admin";
 
 interface GradeProps {
   id: string;
   variant?: ButtonProps["variant"];
 }
 
-const handleSubmit = (id: string, values: GradeFormValues) =>
-  axios.post(`/application/${id}/grade`, values);
-
 const Grade: React.FC<GradeProps> = ({ id, variant = "primary" }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const gradingData = useSelector((state: RootState) =>
-    selectMyGrading(state, id)
-  );
+  const gradingData = useSelector(selectMyGrading(id));
   const handleClick = () => {
     setOpen(!open);
     if (!open && gradingData === undefined) {
@@ -59,10 +52,9 @@ const Grade: React.FC<GradeProps> = ({ id, variant = "primary" }) => {
             <GradingModal
               initialValues={initialValues}
               onSubmit={(values) =>
-                handleSubmit(id, values).then((res) => {
+                postApplicationGrade(id, values).then((res) => {
                   setOpen(false);
-                  dispatch(setMyGrade(res.data));
-                  return res;
+                  dispatch(setMyGrade(res));
                 })
               }
               name={name}

@@ -30,26 +30,24 @@ export class TokenStorage {
   }
 
   public static getNewToken(): Promise<string> {
-    const getNewTokenPromise: Promise<string> = new Promise(
-      (resolve, reject): void => {
-        this.updatingToken = true;
-        axios
-          .post<ServerTokenResponse>("/user/oauth/token", {
-            refresh_token: this.getRefreshToken(),
-            grant_type: "refresh_token",
-          })
-          .then((response) => {
-            this.updatingToken = false;
-            this.storeTokens(response.data);
-            resolve(response.data.access_token);
-          })
-          .catch((error) => {
-            this.updatingToken = false;
-            this.removeTokensAndNotify();
-            console.error(error);
-          });
-      }
-    );
+    const getNewTokenPromise: Promise<string> = new Promise((resolve): void => {
+      this.updatingToken = true;
+      axios
+        .post<ServerTokenResponse>("/user/oauth/token", {
+          refresh_token: this.getRefreshToken(),
+          grant_type: "refresh_token",
+        })
+        .then((response) => {
+          this.updatingToken = false;
+          this.storeTokens(response.data);
+          resolve(response.data.access_token);
+        })
+        .catch((error) => {
+          this.updatingToken = false;
+          this.removeTokensAndNotify();
+          console.error(error);
+        });
+    });
     this.updateTokenPromise = getNewTokenPromise;
     return getNewTokenPromise;
   }

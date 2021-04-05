@@ -1,4 +1,3 @@
-import { Properties as CSSProperties } from "csstype";
 import React from "react";
 import logo from "resources/rays.png";
 import styled from "styled-components";

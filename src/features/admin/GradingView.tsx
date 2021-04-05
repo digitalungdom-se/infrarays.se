@@ -8,6 +8,7 @@ import {
   updateGradingOrder,
 } from "./adminSlice";
 
+import { Application } from "types/grade";
 import BootstrapTable from "react-bootstrap-table-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OpenGradingModalButton from "./OpenGradingModalButton";
@@ -75,7 +76,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
       {
         dataField: "id",
         text: "PDF",
-        formatter: (id: string, row: any) => (
+        formatter: (id: string, row: Application) => (
           <OpenPDF
             variant={row.done ? "success" : undefined}
             onDownload={() => downloadAndOpen(id)}
@@ -88,7 +89,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
         dataField: "dummy_field",
         text: "Bedöm",
         isDummyField: true,
-        formatter: (id: string, row: any) => (
+        formatter: (id: string, row: Application) => (
           <OpenGradingModalButton
             key={id + "grade"}
             id={row.id}

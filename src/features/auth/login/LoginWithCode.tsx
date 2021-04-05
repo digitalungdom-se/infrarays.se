@@ -18,7 +18,7 @@ interface LoginWithCodeProps extends WithTranslation {
   onSubmit?: (
     values: Values,
     formikHelpers: FormikHelpers<Values>
-  ) => void | Promise<any>;
+  ) => void | Promise<void>;
   email?: string;
 }
 

@@ -64,7 +64,11 @@ interface SurveyProps {
   disabled?: boolean;
 }
 
-const Survey = ({ survey, onSubmit, disabled }: SurveyProps) => {
+const Survey = ({
+  survey,
+  onSubmit,
+  disabled,
+}: SurveyProps): React.ReactElement => {
   const { t } = useTranslation();
 
   const initialValues = {

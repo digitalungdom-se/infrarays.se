@@ -1,7 +1,14 @@
+import { IndividualGradingWithName } from "types/grade";
 import React from "react";
 import { Table } from "react-bootstrap";
 
-const GradingData = ({ applicationGrades = [] }) => (
+interface GradingDataProps {
+  applicationGrades?: IndividualGradingWithName[];
+}
+
+const GradingData = ({
+  applicationGrades = [],
+}: GradingDataProps): React.ReactElement => (
   <>
     <Table striped bordered hover>
       <thead>
@@ -17,7 +24,7 @@ const GradingData = ({ applicationGrades = [] }) => (
       </thead>
       <tbody>
         {applicationGrades.map((grade) => (
-          <tr key={`${grade.name}-grade`}>
+          <tr key={`${grade.firstName}-grade`}>
             <td>{grade.firstName + " " + grade.lastName}</td>
             <td>{grade.cv}</td>
             <td>{grade.coverLetter}</td>
@@ -40,7 +47,7 @@ const GradingData = ({ applicationGrades = [] }) => (
         {applicationGrades.map(
           (grade) =>
             Boolean(grade.comment) && (
-              <tr key={`${grade.name}-comment`}>
+              <tr key={`${grade.firstName}-comment`}>
                 <td>{grade.firstName + " " + grade.lastName}</td>
                 <td style={{ wordBreak: "break-all" }}>{grade.comment}</td>
               </tr>

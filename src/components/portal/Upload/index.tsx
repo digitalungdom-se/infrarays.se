@@ -73,7 +73,7 @@ const StyledFormControl = styled(FormControl)<StyledFormControlProps>`
   }`}
 `;
 
-export interface MostUploadProps {
+export interface UploadProps {
   label?: string;
   onDownload?: () => Promise<void>;
   onDelete?: () => Promise<void>;
@@ -85,17 +85,8 @@ export interface MostUploadProps {
   error?: string;
   uploadLabel?: string;
   disabled?: boolean;
+  onChange?: (file: File, name: string) => void;
 }
-
-export type UploadProps =
-  | ({
-      multiple: true;
-      onChange?: (files: FileList, list: string[]) => any;
-    } & MostUploadProps)
-  | ({
-      multiple?: false;
-      onChange?: (file: any, name: string) => any;
-    } & MostUploadProps);
 
 const Upload: React.FC<UploadProps> = ({
   label,
@@ -110,7 +101,6 @@ const Upload: React.FC<UploadProps> = ({
   error,
   uploadLabel,
   disabled,
-  multiple,
 }) => {
   const [fileName, updateFileName] = useState("");
   const [downloading, setDownloading] = useState<boolean>(false);
@@ -128,16 +118,11 @@ const Upload: React.FC<UploadProps> = ({
     setOpen(isOpen);
   };
 
-  function handleFileChange(e: any) {
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const list = e.target.value.split("\\");
-    const name = list[list.length - 1];
-    if (multiple) {
-      updateFileName(list.join(", "));
-      return onChange(e.target.files, list);
-    } else {
-      updateFileName(list[list.length - 1]);
+    updateFileName(list[list.length - 1]);
+    if (e.target.files)
       return onChange(e.target.files[0], list[list.length - 1]);
-    }
   }
 
   const { t } = useTranslation();
@@ -193,7 +178,6 @@ const Upload: React.FC<UploadProps> = ({
               accept={accept}
               isInvalid={Boolean(error)}
               label={uploadLabel}
-              multiple={multiple}
             />
             <span className="custom-file-label">{newLabel}</span>
           </div>

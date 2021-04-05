@@ -10,7 +10,7 @@ interface DownloadProps {
   style: CSS.Properties;
 }
 
-const Download = ({ style }: DownloadProps) => {
+const Download = ({ style }: DownloadProps): React.ReactElement => {
   const [downloading, setDownload] = useState(false);
   const { t } = useTranslation();
   return (

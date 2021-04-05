@@ -50,7 +50,7 @@ export type GradeFormValues = Record<NumericalGradeField, number> & {
 interface GradingModalProps extends WithTranslation {
   name?: string;
   initialValues?: GradeFormValues;
-  onSubmit?: (values: GradeFormValues) => Promise<any>;
+  onSubmit?: (values: GradeFormValues) => Promise<void>;
 }
 
 const GradingModal: React.FC<GradingModalProps> = ({

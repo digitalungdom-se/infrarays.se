@@ -3,6 +3,7 @@ import { selectApplicationsByTop, setApplications } from "./adminSlice";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { GradedApplication } from "types/grade";
 import GradingData from "components/GradingData";
 import OpenPDF from "components/portal/OpenPDF";
 import React from "react";
@@ -13,12 +14,7 @@ import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { getApplications } from "api/admin";
 import { useGrades } from "./adminHooks";
 
-interface GradingDataRowProps {
-  id: string;
-  [field: string]: any;
-}
-
-const GradingDataRow = ({ id }: GradingDataRowProps) => {
+const GradingDataRow = ({ id }: Pick<GradedApplication, "id">) => {
   const { data, loading } = useGrades(id);
   if (loading) return <div>Loading</div>;
   return <GradingData applicationGrades={data} />;
@@ -100,7 +96,7 @@ class TopList extends React.Component<TopListProps, TopListState> {
       .map(({ i }) => i);
 
     const expandRow = {
-      renderer: (row: any) => <GradingDataRow id={row.id} />,
+      renderer: (row: GradedApplication) => <GradingDataRow id={row.id} />,
       showExpandColumn: true,
       expandByColumnOnly: true,
       nonExpandable,

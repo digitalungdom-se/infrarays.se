@@ -1,6 +1,6 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const Button = styled.button`
   border: none;
@@ -15,20 +15,20 @@ const Button = styled.button`
   }
 `;
 
-const ChangeLanguage = () => {
+const ChangeLanguage = (): React.ReactElement => {
   const { i18n } = useTranslation();
   return (
     <div
       style={{
-        position: 'fixed',
+        position: "fixed",
         top: 10,
-        right: 10
+        right: 10,
       }}
     >
-      <Button type="button" onClick={() => i18n.changeLanguage('sv')}>
+      <Button type="button" onClick={() => i18n.changeLanguage("sv")}>
         Svenska
       </Button>
-      <Button type="button" onClick={() => i18n.changeLanguage('en')}>
+      <Button type="button" onClick={() => i18n.changeLanguage("en")}>
         English
       </Button>
     </div>

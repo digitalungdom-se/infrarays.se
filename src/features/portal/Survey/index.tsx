@@ -15,7 +15,7 @@ function useSurvey(): [SurveyAnswers | undefined, boolean] {
   return [survey, loading];
 }
 
-const PortalSurvey = () => {
+const PortalSurvey = (): React.ReactElement => {
   const [survey, loading] = useSurvey();
   const dispatch = useDispatch();
   if (loading) return <div></div>;

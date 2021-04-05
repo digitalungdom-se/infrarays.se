@@ -54,7 +54,7 @@ const ConfirmModal = ({ show, onHide }: ConfirmModalProps) => {
   );
 };
 
-const Delete = () => {
+const Delete = (): React.ReactElement => {
   const [modalVisible, showModal] = useState(false);
   const { t } = useTranslation();
   return (

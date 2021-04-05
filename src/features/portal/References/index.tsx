@@ -4,7 +4,7 @@ import { Trans, withTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import Axios from "api/axios";
-import ContactPerson from "components/portal/ContactPerson";
+import ContactPerson from "components/ContactPerson";
 import { RootState } from "store";
 import moment from "moment";
 import { selectRecommendation } from "features/portal/portalSlice";
@@ -65,12 +65,11 @@ const Person = ({
   }
   return (
     <ContactPerson
-      handleSubmit={handleSubmit}
+      onSubmit={handleSubmit}
       email={recommendation?.email}
       loading={loading || initialLoading}
       received={Boolean(recommendation?.received)}
       sendDate={recommendation?.lastSent || "1970-01-01"}
-      cooldown={["day", 1]}
       disabled={disabled || applicationHasClosed}
     />
   );
@@ -80,7 +79,7 @@ interface ReferencesProps {
   loading?: boolean;
 }
 
-const References = ({ loading }: ReferencesProps) => {
+const References = ({ loading }: ReferencesProps): React.ReactElement => {
   const map = [];
   for (let i = 0; i < 3; i += 1) {
     map[i] = (

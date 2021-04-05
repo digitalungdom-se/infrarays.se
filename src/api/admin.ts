@@ -1,6 +1,7 @@
 import { Admin, NewAdmin } from "types/user";
 import {
   Application,
+  ApplicationGrade,
   GradedApplication,
   IndividualGrading,
   OrderItem,
@@ -25,6 +26,12 @@ export const getApplications = (): Promise<
 
 export const getGradingOrder = (): Promise<OrderItem[]> =>
   api.format.get<OrderItem[]>("/admin/grading");
+
+export const postApplicationGrade = (
+  applicantID: string,
+  form: ApplicationGrade
+): Promise<IndividualGrading> =>
+  api.format.post<IndividualGrading>(`/application/${applicantID}/grade`, form);
 
 export const addAdmin = (admin: NewAdmin): Promise<Admin> =>
   api.format.post<Admin>("/admin", admin);

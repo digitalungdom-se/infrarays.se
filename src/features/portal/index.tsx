@@ -16,7 +16,7 @@ import StyledPlate from "components/Plate";
 import { addPersonSuccess } from "features/portal/portalSlice";
 import { useTranslation } from "react-i18next";
 
-const Hook = () => {
+const Hook = (): React.ReactElement => {
   const dispatch = useDispatch();
   const [filesLoading, setFilesLoading] = useState<boolean>(true);
   const [referencesLoading, setReferencesLoading] = useState<boolean>(true);

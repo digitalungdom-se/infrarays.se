@@ -111,9 +111,8 @@ export const selectGradesByApplicant = (userID: string) => (
     lastName: state.admin.admins[grade.adminId]?.lastName,
   }));
 
-export const selectMyGrading = (
-  state: RootState,
-  id: string
+export const selectMyGrading = (id: string) => (
+  state: RootState
 ): IndividualGradingWithName | undefined => {
   const relevantGrades = state.admin.grades[id];
   if (relevantGrades) {

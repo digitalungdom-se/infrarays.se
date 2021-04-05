@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import store, { persistor } from "./store";
 
 import AuthenticatedLayer from "features/auth/AuthenticatedLayer";
+import Background from "components/Background";
 import ChangeLanguage from "features/ChangeLanguage";
 import CustomThemeProvider from "components/CustomThemeProvider";
 import DevelopedBy from "components/DevelopedBy";
@@ -13,36 +14,21 @@ import { Provider } from "react-redux";
 import React from "react";
 import Router from "features/router";
 import { ToastContainer } from "react-toastify";
-import styled from "styled-components";
 
-const StyledApp = styled.div`
-  background: ${(props) => props.theme.bg};
-
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-
-  #centered {
-    width: 100%;
-    min-height: calc(100% - 2.5rem);
-    display: table;
-  }
-`;
-
-function App() {
+function App(): React.ReactElement {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <AuthenticatedLayer>
           <CustomThemeProvider>
-            <StyledApp>
+            <Background>
               <ChangeLanguage />
               <ToastContainer />
               <div id="centered">
                 <Router />
               </div>
               <DevelopedBy />
-            </StyledApp>
+            </Background>
           </CustomThemeProvider>
         </AuthenticatedLayer>
       </PersistGate>

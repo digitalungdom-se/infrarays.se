@@ -1,6 +1,6 @@
 import { WithTranslation, withTranslation } from "react-i18next";
 
-import Chapter from "components/portal/Chapter";
+import Chapter from "components/Chapter";
 import { FileType } from "../portalSlice";
 import PortalSurvey from "../Survey";
 import React from "react";

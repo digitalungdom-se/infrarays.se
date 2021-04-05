@@ -6,8 +6,8 @@ import {
   InputGroup,
   Spinner,
 } from "react-bootstrap";
+import { Formik, FormikErrors } from "formik";
 
-import { Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 
@@ -43,7 +43,7 @@ interface AdminContactFields {
 
 interface AdminContactProps extends Partial<AdminContactFields> {
   status?: "VERIFIED" | "REQUESTED" | "LOADING";
-  initialErrors?: any;
+  initialErrors?: FormikErrors<AdminContactFields>;
   onSubmit?: (values: AdminContactFields) => Promise<void | string>;
 }
 
