@@ -1,10 +1,9 @@
-import { selectSurvey, setSurvey } from "./portalSlice";
+import { selectSurvey, setSurvey } from "./surveySlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import React from "react";
 import Survey from "components/Survey";
 import { SurveyAnswers } from "types/survey";
-import TranslatedChapter from "./TranslatedChapter";
 import moment from "moment";
 import { postSurvey } from "api/survey";
 import useApi from "hooks/useApi";
@@ -32,13 +31,11 @@ const PortalSurvey = (): React.ReactElement => {
   const applicationHasClosed =
     moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
   return (
-    <TranslatedChapter type="SURVEY">
-      <Survey
-        survey={survey}
-        onSubmit={handleSubmit}
-        disabled={applicationHasClosed}
-      />
-    </TranslatedChapter>
+    <Survey
+      survey={survey}
+      onSubmit={handleSubmit}
+      disabled={applicationHasClosed}
+    />
   );
 };
 

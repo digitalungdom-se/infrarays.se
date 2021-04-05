@@ -14,7 +14,7 @@ import { useRecommendations } from "features/recommendations/recommendationHooks
 const UploadLink = ({ code }: { code: string }) => (
   <a
     href={`/recommendation/${code}`}
-    rel="noopener noreferrer"
+    rel="noopewner noreferrer"
     target="_blank"
     style={{ color: "black" }}
   >

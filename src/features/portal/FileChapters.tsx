@@ -1,7 +1,7 @@
 import { WithTranslation, withTranslation } from "react-i18next";
 
 import Chapter from "components/Chapter";
-import { FileType } from "./portalSlice";
+import { FileType } from "types/files";
 import React from "react";
 import Upload from "features/files/Upload";
 import portal from "config/portal.json";
