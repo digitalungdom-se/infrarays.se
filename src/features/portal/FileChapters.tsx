@@ -7,7 +7,7 @@ import Upload from "features/files/Upload";
 import portal from "config/portal.json";
 import { useFiles } from "features/files/filesHooks";
 
-const Chapters = ({ t }: WithTranslation): React.ReactElement => {
+const FileChapters = ({ t }: WithTranslation): React.ReactElement => {
   const { loading } = useFiles();
   return (
     <>
@@ -31,4 +31,4 @@ const Chapters = ({ t }: WithTranslation): React.ReactElement => {
     </>
   );
 };
-export default withTranslation()(Chapters);
+export default withTranslation()(FileChapters);
