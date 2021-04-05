@@ -1,5 +1,9 @@
 import { FileInfo, FileType } from "types/files";
-import { deleteFile, uploadFile } from "api/files";
+import {
+  deleteFile,
+  downloadFile as downloadIndividualFile,
+  uploadFile,
+} from "api/files";
 import {
   deleteFileSuccess,
   replaceFile,
@@ -18,13 +22,14 @@ type UseFiles = (
   applicantID?: string,
   type?: FileType
 ) => UseApi<FileInfo[]> & {
-  removeFile: (fileID: string, applicantID?: string) => Promise<void>;
+  removeFile: (fileID: string) => Promise<void>;
   addFile: (
     fileType: FileType,
     file: File,
     fileName: string,
     replace?: boolean
   ) => Promise<void>;
+  downloadFile: (fileID: string) => Promise<void>;
 };
 
 export const useFiles: UseFiles = (applicantID = "@me", type?: FileType) => {
@@ -44,7 +49,7 @@ export const useFiles: UseFiles = (applicantID = "@me", type?: FileType) => {
   }
 
   const removeFile = useCallback(
-    (fileID, applicantID) =>
+    (fileID) =>
       deleteFile(fileID, applicantID).then(() => {
         type && dispatch(deleteFileSuccess([applicantID, type, fileID]));
       }),
@@ -60,27 +65,19 @@ export const useFiles: UseFiles = (applicantID = "@me", type?: FileType) => {
     [dispatch, type]
   );
 
+  const downloadFile = useCallback(
+    (fileID: string) => downloadIndividualFile(fileID, applicantID),
+    [applicantID]
+  );
+
   return {
     loading,
     data: files,
     removeFile,
     addFile,
+    downloadFile,
   };
 };
-
-// type UseFile= (fileType: FileType, applicantID?: string) => {
-//   data?: FileInfo[];
-// }
-
-// export const useFilesByType(fileType, applicantID = "@me") {
-//   const dispatch = useDispatch();
-//   const files = useSelector(
-//     selectFilesByFileTypeAndApplicant(fileType, applicantID)
-//   );
-//   return {
-//     data: files
-//   }
-// }
 
 export function useRecommendationLetter(
   code: string

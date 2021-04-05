@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { FileType } from "types/files";
 import Upload from "components/portal/Upload";
-import { downloadFile } from "api/files";
 import hasApplicationClosed from "utils/hasApplicationClosed";
 import { toast } from "react-toastify";
 import { useFiles } from "./filesHooks";
@@ -11,7 +10,6 @@ import { useTranslation } from "react-i18next";
 interface UploadHookProps {
   accept?: string;
   fileType: FileType;
-  disabled?: boolean;
   applicantID?: string;
   multiple?: number;
   maxFileSize?: number;
@@ -32,15 +30,15 @@ const UploadHook: React.FC<UploadHookProps> = ({
   alwaysAbleToUpload,
   applicantID,
 }) => {
-  const [uploadingFiles, setUploadingFiles] = useState<UploadingFileInfo[]>([]);
-  const { removeFile, data: files, addFile, loading } = useFiles(
+  const { t } = useTranslation();
+  const { removeFile, data: files, addFile, loading, downloadFile } = useFiles(
     applicantID,
     fileType
   );
-  const { t } = useTranslation();
+  const [uploadingFiles, setUploadingFiles] = useState<UploadingFileInfo[]>([]);
 
-  const handleDelete = (fileID: string, applicantID: string) =>
-    removeFile(fileID, applicantID).catch((err) => {
+  const handleDelete = (fileID: string) =>
+    removeFile(fileID).catch((err) => {
       toast.error(err.message);
     });
 
@@ -83,8 +81,8 @@ const UploadHook: React.FC<UploadHookProps> = ({
           accept={accept}
           disabled={multiple > 1 || disabledUploading}
           uploadLabel={t("Choose file")}
-          onDownload={() => downloadFile(file.id, file.userId)}
-          onDelete={() => handleDelete(file.id, file.userId)}
+          onDownload={() => downloadFile(file.id)}
+          onDelete={() => handleDelete(file.id)}
           onChange={handleUpload}
         />
       ))}
