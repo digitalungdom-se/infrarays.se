@@ -25,7 +25,6 @@ interface UploadingFileInfo {
 }
 
 const UploadHook: React.FC<UploadHookProps> = ({
-  disabled,
   accept,
   fileType,
   maxFileSize = 5 * 10 ** 6,
@@ -34,7 +33,10 @@ const UploadHook: React.FC<UploadHookProps> = ({
   applicantID,
 }) => {
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFileInfo[]>([]);
-  const { removeFile, data: files, addFile } = useFiles(applicantID, fileType);
+  const { removeFile, data: files, addFile, loading } = useFiles(
+    applicantID,
+    fileType
+  );
   const { t } = useTranslation();
 
   const handleDelete = (fileID: string, applicantID: string) =>
@@ -68,7 +70,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
   const handleCancel = () => setUploadingFiles([]);
 
   const closed = hasApplicationClosed();
-  const disabledUploading = (closed && !alwaysAbleToUpload) || disabled;
+  const disabledUploading = (closed && !alwaysAbleToUpload) || loading;
   const label = t(`${fileType}.upload.label`);
 
   return (
