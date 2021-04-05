@@ -53,18 +53,33 @@ const UploadState = ({
   );
 };
 
-const Recommendation = (): React.ReactElement => {
-  const { recommendationCode } = useParams<{ recommendationCode: string }>();
+interface UploadRecommendationLetterProps {
+  recommendationCode: string;
+}
 
+export const UploadRecommendationLetter = ({
+  recommendationCode,
+}: UploadRecommendationLetterProps): React.ReactElement => {
   const [{ response, error, loading }] = useAxios(
     `/application/recommendation/${recommendationCode}`
   );
 
-  const { t } = useTranslation();
+  return (
+    <UploadState
+      uploadedFileName={response?.data.fileName}
+      recommendationCode={recommendationCode}
+    />
+  );
+};
 
+const RecommendationCard = () => {
+  const { recommendationCode } = useParams<{ recommendationCode: string }>();
+  const [{ response, error, loading }] = useAxios(
+    `/application/recommendation/${recommendationCode}`
+  );
+  const { t } = useTranslation();
   const name =
     response?.data.applicantFirstName + " " + response?.data.applicantLastName;
-
   return (
     <CenterCard maxWidth="480px" title={t("Upload LoR")}>
       {loading ? (
@@ -125,4 +140,4 @@ const Recommendation = (): React.ReactElement => {
   );
 };
 
-export default Recommendation;
+export default RecommendationCard;

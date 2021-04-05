@@ -9,7 +9,9 @@ const Login = lazy(() => import("features/auth/login"));
 const Portal = lazy(() => import("features/portal"));
 const Register = lazy(() => import("features/auth/register"));
 const NoMatch = lazy(() => import("features/nomatch"));
-const Recommendation = lazy(() => import("features/recommendation"));
+const Recommendation = lazy(
+  () => import("features/files/UploadRecommendationLetter")
+);
 const LoginWithCodeRoute = lazy(
   () => import("features/auth/login/LoginWithCodeRoute")
 );
