@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { FileType } from "types/files";
 import Upload from "components/portal/Upload";
-import moment from "moment";
+import hasApplicationClosed from "utils/hasApplicationClosed";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
@@ -82,10 +82,8 @@ const UploadHook: React.FC<UploadHookProps> = ({
 
   const handleCancel = () => setUploadingFiles([]);
 
-  const applicationHasClosed =
-    moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
-  const disabledUploading =
-    (applicationHasClosed && !alwaysAbleToUpload) || disabled;
+  const closed = hasApplicationClosed();
+  const disabledUploading = (closed && !alwaysAbleToUpload) || disabled;
   const label = t(`${fileType}.upload.label`);
 
   return (

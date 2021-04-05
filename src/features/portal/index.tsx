@@ -8,7 +8,7 @@ import Logo from "components/Logo";
 import Logout from "./Logout";
 import Progress from "./Progress";
 import React from "react";
-import References from "./References";
+import RecommendationChapter from "./RecommendationChapter";
 import StyledPlate from "components/Plate";
 import SurveyChapter from "./SurveyChapter";
 
@@ -21,7 +21,7 @@ const Portal = (): React.ReactElement => {
         <div>
           <FileChapters />
           <SurveyChapter />
-          <References />
+          <RecommendationChapter />
           <Progress />
           <div style={{ padding: "3rem 0" }}>
             <ButtonGroup>

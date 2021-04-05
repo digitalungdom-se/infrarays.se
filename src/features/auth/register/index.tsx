@@ -17,6 +17,7 @@ import Plate from "components/Plate";
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import StyledGroup from "components/StyledGroup";
+import hasApplicationClosed from "utils/hasApplicationClosed";
 import moment from "moment";
 import { register } from "api/register";
 import sendLoginCodeAndShowCode from "api/sendLoginCode";
@@ -33,8 +34,7 @@ const MaskedField = (props: MaskedFieldProps) => (
 const Register: React.FC<WithTranslation> = ({ t }) => {
   const { push } = useHistory();
   const showCode = useShowCode();
-  const applicationHasClosed =
-    moment.utc().month(2).endOf("month").diff(Date.now()) > 0;
+  const closed = hasApplicationClosed();
   return (
     <Center maxWidth="850px">
       <Plate>
@@ -218,9 +218,9 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                 type="submit"
                 variant="custom"
                 style={{ minWidth: 300, width: "50%", margin: "0 25%" }}
-                disabled={isSubmitting || applicationHasClosed}
+                disabled={isSubmitting || closed}
               >
-                {applicationHasClosed ? (
+                {closed ? (
                   t("Application has closed")
                 ) : isSubmitting ? (
                   <>

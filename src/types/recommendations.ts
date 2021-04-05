@@ -1,11 +1,14 @@
-export type RecommendationRequest = {
+export interface RecommendationRequest extends NewRecommendationRequest {
   applicantId: string;
-  email: string;
   lastSent: string;
   received: null | string;
-  index: number;
   id: string;
   code?: string;
+}
+
+export type NewRecommendationRequest = {
+  email: string;
+  index: number;
 };
 
 export interface RecommendationFile extends RecommendationRequest {
