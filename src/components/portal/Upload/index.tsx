@@ -6,63 +6,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
 import Spinner from "react-bootstrap/Spinner";
+import StyledInputGroup from "components/StyledInputGroup";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-const StyledInputGroup = styled(InputGroup)`
-  &.uploaded span,
-  &.uploaded .form-control {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #28a745;
-  }
-
-  &.uploaded .form-control,
-  &.error .form-control {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  &.uploaded span::after,
-  &.uploaded .input-group-append .dropdown-toggle {
-    color: #fff;
-    background-color: #42c15f;
-    border-color: #28a745;
-  }
-
-  &.uploaded .input-group-append .dropdown-toggle {
-    background-color: rgba(40, 167, 69, 1);
-  }
-
-  &.uploaded span {
-    border-color: rgb(40, 167, 69);
-  }
-
-  &.error span,
-  &.error .form-control {
-    color: #bd2130;
-    background-color: #f8d7da;
-    border-color: #bd2130;
-  }
-
-  &.error span::after,
-  &.error .input-group-append .dropdown-toggle {
-    color: #fff;
-    background-color: #e23d4d;
-    border-color: #bd2130;
-  }
-
-  &.error .input-group-append .dropdown-toggle {
-    background-color: rgba(200, 35, 51, 1);
-  }
-`;
-
-interface StyledFormControlProps {
+interface TranslatedFormControlProps {
   label?: string;
 }
 
-const StyledFormControl = styled(FormControl)<StyledFormControlProps>`
+const TranslatedFormControl = styled(FormControl)<TranslatedFormControlProps>`
   ${(props) =>
     props
       ? `& ~ .custom-file-label::after {content: "${
@@ -74,17 +26,49 @@ const StyledFormControl = styled(FormControl)<StyledFormControlProps>`
 `;
 
 export interface UploadProps {
+  /**
+   * Label for the field, i.e. "Upload CV" or "Upload letter of recommendation"
+   */
   label?: string;
+  /**
+   * Function that returns a promise for downloading file
+   */
   onDownload?: () => Promise<void>;
+  /**
+   * Function that returns a promise for deleting a file
+   */
   onDelete?: () => Promise<void>;
+  /**
+   * Function that returns a cancelling an upload request
+   */
   onCancel?: () => void;
+  /**
+   * The uploaded file name
+   */
   uploaded?: string;
+  /**
+   * Whether the field is uploading or not
+   */
   uploading?: boolean;
-  displayFileName?: boolean;
+  /**
+   * Which files should be accepted
+   */
   accept?: string;
+  /**
+   * Error message
+   */
   error?: string;
+  /**
+   * Label for "Choose file"
+   */
   uploadLabel?: string;
+  /**
+   * Is the field disabled, i.e. should not allow things to be changed
+   */
   disabled?: boolean;
+  /**
+   * Function that is called when a file is chosen
+   */
   onChange?: (file: File, name: string) => void;
 }
 
@@ -96,7 +80,6 @@ const Upload: React.FC<UploadProps> = ({
   onCancel,
   uploaded,
   uploading,
-  displayFileName,
   accept,
   error,
   uploadLabel,
@@ -132,7 +115,7 @@ const Upload: React.FC<UploadProps> = ({
 
   const newLabel = (
     <>
-      {!uploading && !uploaded && (displayFileName ? fileName || label : label)}
+      {!uploading && !uploaded && label}
       {uploading && (
         <span>
           <Spinner animation="border" variant="primary" size="sm" /> Laddar upp{" "}
@@ -170,7 +153,7 @@ const Upload: React.FC<UploadProps> = ({
           <div className="form-control">{newLabel}</div>
         ) : (
           <div className="custom-file">
-            <StyledFormControl
+            <TranslatedFormControl
               disabled={disabled}
               type="file"
               className="custom-file-input file-input"
