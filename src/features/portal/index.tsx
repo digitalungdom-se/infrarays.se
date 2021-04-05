@@ -3,28 +3,21 @@ import Center from "components/Center";
 import Delete from "./Delete";
 import Download from "./Download";
 import FileChapters from "./FileChapters";
+import Introduction from "./Introduction";
 import Logo from "components/Logo";
 import Logout from "./Logout";
 import Progress from "./Progress";
 import React from "react";
-import ReactMarkdown from "react-markdown";
 import References from "./References";
 import StyledPlate from "components/Plate";
 import Survey from "features/survey";
-import { useTranslation } from "react-i18next";
 
-const Hook = (): React.ReactElement => {
-  const { t } = useTranslation();
-
+const Portal = (): React.ReactElement => {
   return (
     <Center>
       <StyledPlate>
         <Logo center />
-        <div>
-          <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
-          <ReactMarkdown source={t("introduction") || ""} />
-          <hr style={{ color: "#b8b8b8" }} />
-        </div>
+        <Introduction />
         <div>
           <FileChapters />
           <Survey />
@@ -43,4 +36,4 @@ const Hook = (): React.ReactElement => {
   );
 };
 
-export default Hook;
+export default Portal;
