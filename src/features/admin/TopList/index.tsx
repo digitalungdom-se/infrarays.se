@@ -59,26 +59,32 @@ class TopList extends React.Component<TopListProps, TopListState> {
       {
         dataField: "cv",
         text: "CV",
+        formatter: (n: number) => n && n.toFixed(2),
       },
       {
         dataField: "coverLetter",
         text: "PB",
+        formatter: (n: number) => n && n.toFixed(2),
       },
       {
         dataField: "essays",
         text: "ES",
+        formatter: (n: number) => n && n.toFixed(2),
       },
       {
         dataField: "grades",
         text: "BT",
+        formatter: (n: number) => n && n.toFixed(2),
       },
       {
         dataField: "recommendations",
         text: "RB",
+        formatter: (n: number) => n && n.toFixed(2),
       },
       {
         dataField: "overall",
         text: "Ö",
+        formatter: (n: number) => n && n.toFixed(2),
       },
       {
         dataField: "id",

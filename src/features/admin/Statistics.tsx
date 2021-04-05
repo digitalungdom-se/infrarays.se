@@ -142,7 +142,7 @@ function NumericalTable({ answers, title, isNumeric }: NumericalTableProps) {
           {Object.keys(answers.count).map((n, i) => (
             <tr key={title + "-" + n + "-" + i}>
               <td>{t(n)}</td>
-              <td>{answers.count[n]}</td>
+              <td>{answers.count[n].toFixed(2)}</td>
             </tr>
           ))}
           {isNumeric &&
