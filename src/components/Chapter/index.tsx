@@ -3,9 +3,9 @@ import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 
 interface ChapterProps {
-  title: string;
-  subtitle: string;
-  description: string;
+  title: string; // title of the chapter
+  subtitle: string; // subtitle of the chapter, used for hints like "Max 2 pages"
+  description: string; // Description will be rendered with Markdown
 }
 
 const StyledDiv = styled.div`
@@ -22,16 +22,14 @@ const Chapter: React.FC<ChapterProps> = ({
   subtitle,
   description,
   children,
-}) => {
-  return (
-    <StyledDiv>
-      <h3>{title}</h3>
-      <h4>{subtitle}</h4>
-      <ReactMarkdown source={description} />
-      <div>{children}</div>
-      <hr />
-    </StyledDiv>
-  );
-};
+}) => (
+  <StyledDiv>
+    <h3>{title}</h3>
+    <h4>{subtitle}</h4>
+    <ReactMarkdown source={description} />
+    <div>{children}</div>
+    <hr />
+  </StyledDiv>
+);
 
 export default Chapter;
