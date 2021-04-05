@@ -1,35 +1,23 @@
 import { ButtonGroup, ProgressBar } from "react-bootstrap";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import Alert from "react-bootstrap/Alert";
 import Center from "components/Center";
-import Chapters from "./Chapters";
 import Delete from "./Delete";
 import Download from "./Download";
+import FileChapters from "./FileChapters";
 import Logo from "components/Logo";
 import Logout from "./Logout";
+import React from "react";
 import ReactMarkdown from "react-markdown";
+import References from "./References";
 import StyledPlate from "components/Plate";
-import { getFiles } from "api/files";
+import Survey from "./Survey";
 import { selectProgress } from "./portalSlice";
-import { setFiles } from "features/files/filesSlice";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 const Hook = (): React.ReactElement => {
-  const dispatch = useDispatch();
-  const [filesLoading, setFilesLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    getFiles()
-      .then((res) => {
-        dispatch(setFiles(res));
-        setFilesLoading(false);
-      })
-      .catch(console.error);
-  }, []);
   const progress = useSelector(selectProgress);
-
   const { t } = useTranslation();
 
   return (
@@ -52,7 +40,9 @@ const Hook = (): React.ReactElement => {
           <hr style={{ color: "#b8b8b8" }} />
         </div>
         <div>
-          <Chapters filesLoading={filesLoading} />
+          <FileChapters />
+          <Survey />
+          <References />
           <div style={{ padding: "20px 0" }}>
             {progress === 5 && (
               <Alert variant="success">{t("Application complete")}</Alert>

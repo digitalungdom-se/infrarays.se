@@ -3,6 +3,7 @@ import { Trans, withTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import ContactPerson from "components/ContactPerson";
+import TranslatedChapter from "./TranslatedChapter";
 import { addPersonSuccess } from "features/recommendations/recommendationsSlice";
 import moment from "moment";
 import { requestRecommendation } from "api/recommendations";
@@ -80,7 +81,9 @@ const References = (): React.ReactElement => {
       />
     );
   }
-  return <>{map}</>;
+  return (
+    <TranslatedChapter type="RECOMMENDATION_LETTER">{map}</TranslatedChapter>
+  );
 };
 
 export default References;

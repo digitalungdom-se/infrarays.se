@@ -35,15 +35,15 @@
       }
     },
     {
-      "fileType": "survey",
-      "survey": true
-    },
-    {
       "fileType": "APPENDIX",
       "upload": {
         "multiple": 5,
         "accept": ".pdf"
       }
+    },
+    {
+      "fileType": "SURVEY",
+      "survey": true
     },
     {
       "fileType": "RECOMMENDATION_LETTER",
