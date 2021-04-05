@@ -1,18 +1,11 @@
 import { authFail, authSuccess } from "features/auth/authSlice";
 
+import { ServerTokenResponse } from "types/tokens";
 import axios from "api/axios";
-// import axios from "axios";
 import { clearPortal } from "features/portal/portalSlice";
 import i18n from "i18n";
 import store from "store";
 import { toast } from "react-toastify";
-
-export interface ServerTokenResponse {
-  access_token: string;
-  refresh_token: string;
-  expires: number;
-  token_type: string;
-}
 
 export class TokenStorage {
   private static readonly LOCAL_STORAGE_ACCESS_TOKEN = "access_token";

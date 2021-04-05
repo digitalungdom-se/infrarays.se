@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Recommendation, addPersonSuccess } from "features/portal/portalSlice";
 import { Trans, withTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-import Axios from "api/axios";
 import ContactPerson from "components/ContactPerson";
+import { addPersonSuccess } from "features/recommendations/recommendationsSlice";
 import moment from "moment";
+import { requestRecommendation } from "api/recommendations";
 import { selectRecommendationByIndexAndApplicant } from "features/recommendations/recommendationsSlice";
 import { toast } from "react-toastify";
+import { useRecommendations } from "features/recommendations/recommendationHooks";
 
 const UploadLink = ({ code }: { code: string }) => (
   <a
@@ -42,20 +43,12 @@ const Person = ({
     moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
   function handleSubmit(email: string) {
     setLoading(true);
-    Axios.post<Recommendation>(
-      `/application/@me/recommendation/${recommendationIndex}`,
-      {
-        email,
-      }
-    )
+    requestRecommendation(recommendationIndex, email)
       .then((res) => {
         setLoading(false);
-        dispatch(addPersonSuccess([res.data]));
-        if (
-          res.data.code &&
-          res.config.baseURL === "https://devapi.infrarays.digitalungdom.se"
-        )
-          toast(<TranslatedUploadLink code={res.data.code} />, {
+        dispatch(addPersonSuccess([res]));
+        if (res.code)
+          toast(<TranslatedUploadLink code={res.code} />, {
             position: "bottom-center",
             autoClose: false,
           });
@@ -64,6 +57,7 @@ const Person = ({
   }
   return (
     <ContactPerson
+      key={recommendation?.email}
       onSubmit={handleSubmit}
       email={recommendation?.email}
       loading={loading || initialLoading}
@@ -74,12 +68,9 @@ const Person = ({
   );
 };
 
-interface ReferencesProps {
-  loading?: boolean;
-}
-
-const References = ({ loading }: ReferencesProps): React.ReactElement => {
+const References = (): React.ReactElement => {
   const map = [];
+  const { loading } = useRecommendations();
   for (let i = 0; i < 3; i += 1) {
     map[i] = (
       <Person

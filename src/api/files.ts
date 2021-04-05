@@ -1,7 +1,10 @@
 import { FileInfo, FileType } from "types/files";
 
 import FileSaver from "file-saver";
-import api from "axios";
+import api from "./axios";
+
+export const getFiles = (applicantID = "@me"): Promise<FileInfo[]> =>
+  api.format.get<FileInfo[]>(`/application/${applicantID}/file`);
 
 export const downloadFile = (
   fileID: string,

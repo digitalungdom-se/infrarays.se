@@ -1,10 +1,8 @@
 import { ButtonGroup, ProgressBar } from "react-bootstrap";
-import { FileInfo, selectProgress } from "./portalSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Alert from "react-bootstrap/Alert";
-import Axios from "api/axios";
 import Center from "components/Center";
 import Chapters from "./Chapters";
 import Delete from "./Delete";
@@ -13,26 +11,22 @@ import Logo from "components/Logo";
 import Logout from "./Logout";
 import ReactMarkdown from "react-markdown";
 import StyledPlate from "components/Plate";
-import { addPersonSuccess } from "features/portal/portalSlice";
+import { getFiles } from "api/files";
+import { selectProgress } from "./portalSlice";
 import { setFiles } from "features/files/filesSlice";
 import { useTranslation } from "react-i18next";
 
 const Hook = (): React.ReactElement => {
   const dispatch = useDispatch();
   const [filesLoading, setFilesLoading] = useState<boolean>(true);
-  const [referencesLoading, setReferencesLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    Axios.get<FileInfo[]>("/application/@me/file")
+    getFiles()
       .then((res) => {
-        dispatch(setFiles(res.data));
+        dispatch(setFiles(res));
         setFilesLoading(false);
       })
       .catch(console.error);
-    Axios.get("/application/@me/recommendation").then((res) => {
-      dispatch(addPersonSuccess(res.data));
-      setReferencesLoading(false);
-    });
   }, []);
   const progress = useSelector(selectProgress);
 
@@ -58,10 +52,7 @@ const Hook = (): React.ReactElement => {
           <hr style={{ color: "#b8b8b8" }} />
         </div>
         <div>
-          <Chapters
-            filesLoading={filesLoading}
-            referencesLoading={referencesLoading}
-          />
+          <Chapters filesLoading={filesLoading} />
           <div style={{ padding: "20px 0" }}>
             {progress === 5 && (
               <Alert variant="success">{t("Application complete")}</Alert>

@@ -75,12 +75,6 @@ const portalSlice = createSlice({
         state.filesByType[file.type]?.push(file.id);
       else state.filesByType[file.type] = [file.id];
     },
-    addPersonSuccess(state, action: PayloadAction<Recommendation[]>) {
-      action.payload.forEach(
-        (recommendation) =>
-          (state.recommendations[recommendation.index] = recommendation)
-      );
-    },
     setSurvey(state, action: PayloadAction<SurveyAnswers>) {
       state.survey = action.payload;
     },
@@ -116,7 +110,7 @@ export const selectProgress = (state: RootState): number => {
 export const {
   setFiles,
   uploadSuccess,
-  addPersonSuccess,
+
   setSurvey,
   clearPortal,
   deleteFileSuccess,

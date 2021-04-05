@@ -16,7 +16,6 @@ interface ChaptersProps extends WithTranslation {
 const Chapters: React.FC<ChaptersProps> = ({
   t,
   filesLoading,
-  referencesLoading,
 }): React.ReactElement => (
   <>
     {portal.chapters.map((chapter) => (
@@ -34,7 +33,7 @@ const Chapters: React.FC<ChaptersProps> = ({
             multiple={chapter.upload.multiple}
           />
         )}
-        {chapter.contactPeople && <References loading={referencesLoading} />}
+        {chapter.contactPeople && <References />}
         {chapter.survey && <PortalSurvey />}
       </Chapter>
     ))}

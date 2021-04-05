@@ -5,10 +5,10 @@ export type RecommendationRequest = {
   received: null | string;
   index: number;
   id: string;
+  code?: string;
 };
 
 export interface RecommendationFile extends RecommendationRequest {
-  code?: string;
   applicantId: string;
   fileId: null | string;
 }

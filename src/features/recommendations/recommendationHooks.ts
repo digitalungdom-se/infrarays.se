@@ -1,8 +1,11 @@
+import {
+  addPersonSuccess,
+  selectApplicantRecommendations,
+} from "./recommendationsSlice";
 import useApi, { UseApi } from "hooks/useApi";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RecommendationRequest } from "types/recommendations";
-import { selectApplicantRecommendations } from "./recommendationsSlice";
 
 export const useRecommendations = (
   applicantID = "@me"
@@ -14,8 +17,8 @@ export const useRecommendations = (
   const applicantRecommendations = useSelector(
     selectApplicantRecommendations(applicantID)
   );
-  if (data && !applicantRecommendations) {
-    dispatch(data);
+  if (data && !applicantRecommendations?.length) {
+    dispatch(addPersonSuccess(data));
   }
   return {
     loading,

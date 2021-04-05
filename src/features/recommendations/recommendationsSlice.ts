@@ -8,14 +8,21 @@ type RecommendationsState = Record<string, RecommendationRequest[]>;
 const initialState: RecommendationsState = {};
 
 const recommendationsSlice = createSlice({
-  name: "files",
+  name: "recommendations",
   initialState,
   reducers: {
     addPersonSuccess(state, action: PayloadAction<RecommendationRequest[]>) {
       action.payload.forEach((recommendation) => {
         if (state[recommendation.applicantId])
-          state[recommendation.applicantId].push(recommendation);
-        else state[recommendation.applicantId] = [recommendation];
+          state[recommendation.applicantId][
+            recommendation.index
+          ] = recommendation;
+        else {
+          state[recommendation.applicantId] = [];
+          state[recommendation.applicantId][
+            recommendation.index
+          ] = recommendation;
+        }
       });
     },
   },
@@ -37,7 +44,7 @@ export const selectRecommendationByIndexAndApplicant = (
 ) => (state: RootState): RecommendationRequest | undefined => {
   const id = applicantID || state.auth.user?.id;
   if (!id) return undefined;
-  return state.recommendations[id][recommendationIndex];
+  return state.recommendations[id]?.[recommendationIndex];
 };
 
 export default recommendationsSlice.reducer;
