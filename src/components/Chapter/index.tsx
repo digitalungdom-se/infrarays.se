@@ -1,13 +1,21 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import styled from "styled-components";
 
 interface ChapterProps {
   title: string;
   subtitle: string;
   description: string;
 }
+
+const StyledDiv = styled.div`
+  & > div {
+    margin-top: 1.5rem;
+  }
+  hr {
+    color: #b8b8b8;
+  }
+`;
 
 const Chapter: React.FC<ChapterProps> = ({
   title,
@@ -16,19 +24,13 @@ const Chapter: React.FC<ChapterProps> = ({
   children,
 }) => {
   return (
-    <div>
-      <h3 style={{ display: "block" }}>{title}</h3>
+    <StyledDiv>
+      <h3>{title}</h3>
       <h4>{subtitle}</h4>
-      <div
-        style={{
-          paddingTop: 10,
-        }}
-      >
-        <ReactMarkdown source={description} />
-      </div>
-      <div style={{ padding: "10px 0" }}>{children}</div>
-      <hr style={{ color: "#b8b8b8" }} />
-    </div>
+      <ReactMarkdown source={description} />
+      <div>{children}</div>
+      <hr />
+    </StyledDiv>
   );
 };
 

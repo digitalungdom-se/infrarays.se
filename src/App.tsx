@@ -1,3 +1,4 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import "utils/tokenInterceptor";
 import "resources/app.css";
 import "react-toastify/dist/ReactToastify.min.css";
