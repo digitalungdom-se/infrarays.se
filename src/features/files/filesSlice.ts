@@ -1,6 +1,4 @@
 import { FileID, FileInfo, FileType } from "types/files";
-/* eslint-disable camelcase */
-/* eslint-disable no-param-reassign */
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "store";
@@ -24,9 +22,14 @@ const filesSlice = createSlice({
         if (state.fileTypesByApplicants[file.userId] === undefined) {
           state.fileTypesByApplicants[file.userId] = {};
         }
-        if (state.fileTypesByApplicants[file.userId][file.type])
+        if (
+          state.fileTypesByApplicants[file.userId][file.type] &&
+          state.fileTypesByApplicants[file.userId][file.type]?.findIndex(
+            (f) => f.id === file.id
+          ) === -1
+        ) {
           state.fileTypesByApplicants[file.userId][file.type]?.push(file);
-        else state.fileTypesByApplicants[file.userId][file.type] = [file];
+        } else state.fileTypesByApplicants[file.userId][file.type] = [file];
       });
     },
     replaceFile(state, action: PayloadAction<FileInfo>) {

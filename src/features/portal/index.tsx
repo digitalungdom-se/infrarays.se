@@ -10,7 +10,7 @@ import Progress from "./Progress";
 import React from "react";
 import References from "./References";
 import StyledPlate from "components/Plate";
-import Survey from "features/survey";
+import SurveyChapter from "./SurveyChapter";
 
 const Portal = (): React.ReactElement => {
   return (
@@ -20,7 +20,7 @@ const Portal = (): React.ReactElement => {
         <Introduction />
         <div>
           <FileChapters />
-          <Survey />
+          <SurveyChapter />
           <References />
           <Progress />
           <div style={{ padding: "3rem 0" }}>

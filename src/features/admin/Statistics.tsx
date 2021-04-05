@@ -84,28 +84,35 @@ function StatisticsPage(): React.ReactElement {
     );
   return (
     <div>
-      <NumericalTable
-        title={t("What are your thoughts on the application process?")}
-        answers={data.applicationProcess}
-      />
-      <NumericalTable
-        title={t("What are your thoughts on the application portal?")}
-        answers={data.applicationPortal}
-      />
-      <NumericalTable title={t("Gender")} answers={data.gender} />
-      <StringTable title={t("What city do you live in?")} answers={data.city} />
-      <StringTable
-        title={t("Which school do you attend?")}
-        answers={data.school}
-      />
-      <StringTable
-        title={t("Improvements on application process and portal")}
-        answers={data.improvement}
-      />
-      <StringTable
-        title={t("How did you hear about Rays?")}
-        answers={data.informant}
-      />
+      {data && (
+        <>
+          <NumericalTable
+            title={t("What are your thoughts on the application process?")}
+            answers={data.applicationProcess}
+          />
+          <NumericalTable
+            title={t("What are your thoughts on the application portal?")}
+            answers={data.applicationPortal}
+          />
+          <NumericalTable title={t("Gender")} answers={data.gender} />
+          <StringTable
+            title={t("What city do you live in?")}
+            answers={data.city}
+          />
+          <StringTable
+            title={t("Which school do you attend?")}
+            answers={data.school}
+          />
+          <StringTable
+            title={t("Improvements on application process and portal")}
+            answers={data.improvement}
+          />
+          <StringTable
+            title={t("How did you hear about Rays?")}
+            answers={data.informant}
+          />
+        </>
+      )}
     </div>
   );
 }

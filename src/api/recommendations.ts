@@ -16,6 +16,9 @@ export const requestRecommendation = (
     }
   );
 
+export const getRecommendationRequestConfig = (code: string): string =>
+  `/application/recommendation/${code}`;
+
 export const uploadLetterOfRecommendation = (
   file: File,
   fileName: string,

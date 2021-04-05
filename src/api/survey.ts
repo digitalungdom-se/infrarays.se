@@ -1,6 +1,9 @@
 import { SurveyAnswers } from "types/survey";
 import api from "./axios";
 
+export const getSurveyConfig = (applicantID = "@me"): string =>
+  `/application/${applicantID}/survey`;
+
 export const postSurvey = (
   survey: SurveyAnswers,
   applicantID = "@me"

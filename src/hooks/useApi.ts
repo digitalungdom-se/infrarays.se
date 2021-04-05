@@ -6,10 +6,10 @@ export const useApi = makeUseAxios({
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface UseApi<T, E = any> {
+export interface UseApi<T = any, E = any> {
   loading: boolean;
-  data: T;
-  error: E;
+  data?: T;
+  error?: E;
 }
 
 export default useApi;
