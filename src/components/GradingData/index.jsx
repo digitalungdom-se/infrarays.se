@@ -19,12 +19,12 @@ const GradingData = ({ applicationGrades = [] }) => (
         {applicationGrades.map((grade) => (
           <tr key={`${grade.name}-grade`}>
             <td>{grade.firstName + " " + grade.lastName}</td>
-            <td>{grade.cv}</td>
-            <td>{grade.coverLetter}</td>
-            <td>{grade.essays}</td>
-            <td>{grade.grades}</td>
-            <td>{grade.recommendations}</td>
-            <td>{grade.overall}</td>
+            <td>{grade.cv.toFixed(2)}</td>
+            <td>{grade.coverLetter.toFixed(2)}</td>
+            <td>{grade.essays.toFixed(2)}</td>
+            <td>{grade.grades.toFixed(2)}</td>
+            <td>{grade.recommendations.toFixed(2)}</td>
+            <td>{grade.overall.toFixed(2)}</td>
           </tr>
         ))}
       </tbody>
