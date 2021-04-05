@@ -30,6 +30,16 @@ export const downloadFile = (
       );
     });
 
+export const downloadFullPDF = (applicantID = "@me"): Promise<void> =>
+  api
+    .get(`/application/${applicantID}/pdf`, { responseType: "blob" })
+    .then((res) => {
+      FileSaver.saveAs(
+        res.data,
+        res.headers["content-disposition"].split("filename=")[1]
+      );
+    });
+
 export const deleteFile = (
   fileID: string,
   applicantID = "@me"

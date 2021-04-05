@@ -4,7 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 import CenterCard from "components/CenterCard";
 import Upload from "components/portal/Upload";
-import axios from "api/axios";
+import { uploadLetterOfRecommendation } from "api/recommendations";
 import useAxios from "axios-hooks";
 import { useParams } from "react-router-dom";
 
@@ -37,17 +37,14 @@ const UploadState = ({
           setError({ msg: t("too large"), fileName });
           return;
         }
-        console.log(fileName);
-        const body = new FormData();
-        body.append("file", file, fileName);
         setUploading(true);
-        axios
-          .post(`/application/recommendation/${recommendationCode}`, body)
-          .then((res) => {
+        uploadLetterOfRecommendation(file, fileName, recommendationCode).then(
+          (res) => {
             setUploading(false);
             setError(undefined);
-            setUploaded(res.data.name);
-          });
+            setUploaded(res.fileName);
+          }
+        );
       }}
     />
   );

@@ -11,4 +11,5 @@ export type RecommendationRequest = {
 export interface RecommendationFile extends RecommendationRequest {
   applicantId: string;
   fileId: null | string;
+  fileName?: string;
 }

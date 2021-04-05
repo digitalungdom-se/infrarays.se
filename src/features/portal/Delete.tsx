@@ -1,8 +1,8 @@
 import { Button, Modal, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
-import Axios from "api/axios";
 import { TokenStorage } from "utils/tokenInterceptor";
+import { deleteUser } from "api/user";
 import { useTranslation } from "react-i18next";
 
 interface ConfirmModalProps {
@@ -36,7 +36,7 @@ const ConfirmModal = ({ show, onHide }: ConfirmModalProps) => {
           disabled={deleting}
           onClick={() => {
             setDelete(true);
-            Axios.delete("/user/@me").then(() => {
+            deleteUser().then(() => {
               TokenStorage.clear();
             });
           }}

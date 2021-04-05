@@ -1,9 +1,8 @@
 import { Button, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
-import Axios from "api/axios";
 import CSS from "csstype";
-import FileSaver from "file-saver";
+import { downloadFullPDF } from "api/files";
 import { useTranslation } from "react-i18next";
 
 interface DownloadProps {
@@ -18,15 +17,7 @@ const Download = ({ style }: DownloadProps): React.ReactElement => {
       style={style}
       onClick={() => {
         setDownload(true);
-        Axios.get("/application/@me/pdf", { responseType: "blob" }).then(
-          (res) => {
-            setDownload(false);
-            FileSaver.saveAs(
-              res.data,
-              res.headers["content-disposition"].split("filename=")[1]
-            );
-          }
-        );
+        downloadFullPDF().then(() => setDownload(false));
       }}
       disabled={downloading}
     >

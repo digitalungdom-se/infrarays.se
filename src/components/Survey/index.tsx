@@ -2,6 +2,7 @@ import * as Yup from "yup";
 
 import { Accordion, Button, Card, Spinner } from "react-bootstrap";
 import { Form, Formik } from "formik";
+import { Gender, SurveyAnswers } from "types/survey";
 
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
@@ -40,18 +41,6 @@ const StyledCard = styled(Card)`
     /* font-weight: 400; */
   }
 `;
-
-type Gender = "MALE" | "FEMALE" | "OTHER" | "UNDISCLOSED";
-
-export interface SurveyAnswers {
-  city: string;
-  school: string;
-  gender: Gender;
-  applicationPortal: number;
-  applicationProcess: number;
-  improvement: string;
-  informant: string;
-}
 
 interface SurveyProps {
   survey?: SurveyAnswers;

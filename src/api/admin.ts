@@ -35,3 +35,6 @@ export const postApplicationGrade = (
 
 export const addAdmin = (admin: NewAdmin): Promise<Admin> =>
   api.format.post<Admin>("/admin", admin);
+
+export const randomiseOrder = (): Promise<OrderItem[]> =>
+  api.format.post<OrderItem[]>("/admin/grading/randomise");

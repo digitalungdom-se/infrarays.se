@@ -5,7 +5,7 @@ import {
   userInfoSuccess,
 } from "features/auth/authSlice";
 
-import Axios from "api/axios";
+import { getUser } from "api/user";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -19,10 +19,10 @@ export default function AuthenticatedLayer(
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectAuthenticated);
   useEffect(() => {
-    Axios.get("/user/@me")
+    getUser()
       .then((res) => {
         dispatch(authSuccess());
-        dispatch(userInfoSuccess(res.data));
+        dispatch(userInfoSuccess(res));
       })
       .catch(console.error);
   }, [isAuthenticated]);

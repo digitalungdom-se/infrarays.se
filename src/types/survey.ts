@@ -12,8 +12,8 @@ export interface SurveyAnswers {
   city: string;
   school: string;
   gender: Gender;
-  applicationPortal: Grade;
-  applicationProcess: Grade;
+  applicationPortal: number;
+  applicationProcess: number;
   improvement: string;
   informant: string;
 }

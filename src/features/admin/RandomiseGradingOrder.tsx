@@ -1,7 +1,7 @@
 import { Button, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 
-import axios from "api/axios";
+import { randomiseOrder } from "api/admin";
 import { toast } from "react-toastify";
 import { updateGradingOrder } from "./adminSlice";
 import { useDispatch } from "react-redux";
@@ -16,11 +16,10 @@ const RandomiseOrder = (): React.ReactElement => {
       variant="success"
       onClick={() => {
         setRandomising(true);
-        axios
-          .post("/admin/grading/randomise")
+        randomiseOrder()
           .then((res) => {
             setRandomising(false);
-            dispatch(updateGradingOrder(res.data));
+            dispatch(updateGradingOrder(res));
           })
           .catch(() => {
             setRandomising(false);

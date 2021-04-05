@@ -1,14 +1,15 @@
-import Survey, { SurveyAnswers } from "components/Survey";
 import { selectSurvey, setSurvey } from "../portalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import Axios from "api/axios";
 import React from "react";
+import Survey from "components/Survey";
+import { SurveyAnswers } from "types/survey";
 import moment from "moment";
-import useAxios from "axios-hooks";
+import { postSurvey } from "api/survey";
+import useApi from "hooks/useApi";
 
 function useSurvey(): [SurveyAnswers | undefined, boolean] {
-  const [{ data, loading }] = useAxios("/application/@me/survey");
+  const [{ data, loading }] = useApi("/application/@me/survey");
   const dispatch = useDispatch();
   if (data) dispatch(setSurvey(data));
   const survey = useSelector(selectSurvey);
@@ -21,14 +22,18 @@ const PortalSurvey = (): React.ReactElement => {
   if (loading) return <div></div>;
   const applicationHasClosed =
     moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
+  const handleSubmit = React.useCallback(
+    (survey: SurveyAnswers) =>
+      postSurvey(survey).then(() => {
+        dispatch(setSurvey(survey));
+        return;
+      }),
+    [dispatch]
+  );
   return (
     <Survey
       survey={survey}
-      onSubmit={(newSurvey) => {
-        return Axios.post("/application/@me/survey", newSurvey).then(() => {
-          dispatch(setSurvey(newSurvey));
-        });
-      }}
+      onSubmit={handleSubmit}
       disabled={applicationHasClosed}
     />
   );

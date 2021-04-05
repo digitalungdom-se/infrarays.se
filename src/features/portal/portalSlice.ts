@@ -3,7 +3,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "store";
-import { SurveyAnswers } from "components/Survey";
+import { SurveyAnswers } from "types/survey";
 
 export type FileType =
   | "CV"
