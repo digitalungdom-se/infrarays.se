@@ -8,6 +8,7 @@ import {
   updateGradingOrder,
 } from "./adminSlice";
 
+import ApplicantInformation from "./ApplicantInformation";
 import { Application } from "types/grade";
 import BootstrapTable from "react-bootstrap-table-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -99,6 +100,15 @@ class Grading extends React.Component<GradingProps, GradingState> {
       },
     ];
 
+    const expandRow = {
+      renderer: (row: any) => (
+        <ApplicantInformation applicantID={row.id} email={row.email} />
+      ),
+      showExpandColumn: true,
+      expandByColumnOnly: true,
+      className: "white",
+    };
+
     return (
       <div>
         <div style={{ marginBottom: "2rem" }}>
@@ -109,6 +119,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
           <RandomiseGradingOrder />
         </div>
         <BootstrapTable
+          expandRow={expandRow}
           striped
           wrapperClasses="table-responsive"
           bordered
