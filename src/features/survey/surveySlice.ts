@@ -12,7 +12,8 @@ const surveySlice = createSlice({
   initialState,
   reducers: {
     setSurvey(state, action: PayloadAction<SurveyAnswers>) {
-      state.survey = action.payload;
+      if (action.payload.applicantId)
+        state[action.payload.applicantId] = action.payload;
     },
     clearSurvey(state) {
       Object.assign(state, initialState);

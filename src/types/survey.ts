@@ -16,6 +16,7 @@ export interface SurveyAnswers {
   applicationProcess: number;
   improvement: string;
   informant: string;
+  applicantId?: string;
 }
 
 export interface Statistics {
