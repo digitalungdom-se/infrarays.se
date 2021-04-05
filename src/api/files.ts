@@ -3,7 +3,10 @@ import { FileInfo, FileType } from "types/files";
 import FileSaver from "file-saver";
 import api from "axios";
 
-export const downloadFile = (fileID: string, applicantID = "@me") =>
+export const downloadFile = (
+  fileID: string,
+  applicantID = "@me"
+): Promise<void> =>
   api
     .get(`application/${applicantID}/file/${fileID}`, {
       responseType: "blob",
@@ -24,15 +27,17 @@ export const downloadFile = (fileID: string, applicantID = "@me") =>
       );
     });
 
-export const deleteFile = (fileID: string, applicantID = "@me") =>
-  api.delete(`/application/${applicantID}/file/${fileID}`);
+export const deleteFile = (
+  fileID: string,
+  applicantID = "@me"
+): Promise<void> => api.delete(`/application/${applicantID}/file/${fileID}`);
 
 export const uploadFile = (
   fileType: FileType,
   file: File,
   fileName: string,
   applicantID = "@me"
-) => {
+): Promise<FileInfo> => {
   const form = new FormData();
   form.append("file", file, fileName);
   return api

@@ -60,7 +60,7 @@ interface UploadRecommendationLetterProps {
 export const UploadRecommendationLetter = ({
   recommendationCode,
 }: UploadRecommendationLetterProps): React.ReactElement => {
-  const [{ response, error, loading }] = useAxios(
+  const [{ response }] = useAxios(
     `/application/recommendation/${recommendationCode}`
   );
 
@@ -72,7 +72,7 @@ export const UploadRecommendationLetter = ({
   );
 };
 
-const RecommendationCard = () => {
+const RecommendationCard = (): React.ReactElement => {
   const { recommendationCode } = useParams<{ recommendationCode: string }>();
   const [{ response, error, loading }] = useAxios(
     `/application/recommendation/${recommendationCode}`

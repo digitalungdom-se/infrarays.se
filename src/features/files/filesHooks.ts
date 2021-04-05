@@ -6,13 +6,12 @@ import useAxios from "axios-hooks";
 
 type UseFiles = {
   loading: boolean;
-  error: any;
 };
 
 export function useFiles(applicantID = "@me"): UseFiles {
   const dispatch = useDispatch();
   const files = useSelector(selectApplicantFilesLoaded(applicantID));
-  const [{ loading, data, error }] = useAxios<FileInfo[]>({
+  const [{ loading, data }] = useAxios<FileInfo[]>({
     url: `/application/${applicantID}/file`,
   });
   if (Boolean(files) === false && data) {
@@ -20,6 +19,5 @@ export function useFiles(applicantID = "@me"): UseFiles {
   }
   return {
     loading,
-    error,
   };
 }

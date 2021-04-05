@@ -101,7 +101,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
     ];
 
     const expandRow = {
-      renderer: (row: any) => (
+      renderer: (row: Application) => (
         <ApplicantInformation applicantID={row.id} email={row.email} />
       ),
       showExpandColumn: true,

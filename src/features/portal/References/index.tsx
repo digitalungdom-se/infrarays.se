@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Axios from "api/axios";
 import ContactPerson from "components/ContactPerson";
-import { RootState } from "store";
 import moment from "moment";
-import { selectRecommendation } from "features/portal/portalSlice";
+import { selectRecommendationByIndexAndApplicant } from "features/recommendations/recommendationsSlice";
 import { toast } from "react-toastify";
 
 const UploadLink = ({ code }: { code: string }) => (
@@ -35,8 +34,8 @@ const Person = ({
   disabled,
 }: PersonProps) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const recommendation = useSelector((state: RootState) =>
-    selectRecommendation(state, recommendationIndex)
+  const recommendation = useSelector(
+    selectRecommendationByIndexAndApplicant(recommendationIndex)
   );
   const dispatch = useDispatch();
   const applicationHasClosed =

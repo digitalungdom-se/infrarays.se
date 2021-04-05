@@ -97,32 +97,6 @@ const portalSlice = createSlice({
   },
 });
 
-export const selectAllFiles = (state: RootState) => state.portal.files;
-export const selectSingleFileByFileType = (
-  state: RootState,
-  type: FileType
-): FileInfo | undefined => {
-  if (state.portal.filesByType[type]) {
-    const files = state.portal.filesByType[type];
-    if (files) return state.portal.files[files[0]];
-    else return undefined;
-  }
-  return undefined;
-};
-export const selectFilesByFileType = (
-  state: RootState,
-  type: FileType
-): FileInfo[] | undefined => {
-  const array = state.portal.filesByType[type]?.map(
-    (fileID) => state.portal.files[fileID]
-  );
-  if (array === undefined || type === "APPENDIX") return array;
-};
-export const selectRecommendation = (
-  state: RootState,
-  recommendationIndex: number
-): Recommendation | undefined =>
-  state.portal.recommendations[recommendationIndex];
 export const selectSurvey = (state: RootState): SurveyAnswers | undefined =>
   state.portal.survey;
 export const selectProgress = (state: RootState): number => {
