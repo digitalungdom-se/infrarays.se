@@ -17,6 +17,17 @@ const StyledInputGroup = styled(InputGroup)`
     border-color: #28a745;
   }
 
+  &.uploaded .custom-file-label,
+  &.error .custom-file-label {
+    border-radius: 0;
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+  }
+
+  .custom-file-label::after {
+    border-radius: 0;
+  }
+
   &.uploaded .form-control,
   &.error .form-control {
     text-overflow: ellipsis;
@@ -67,7 +78,8 @@ const StyledFormControl = styled(FormControl)<StyledFormControlProps>`
     props
       ? `& ~ .custom-file-label::after {content: "${
           props.label || "Choose file"
-        }";`
+        }";
+        `
       : `&:lang(sv) ~ .custom-file-label::after {
     content: "Välj fil";
   }`}
