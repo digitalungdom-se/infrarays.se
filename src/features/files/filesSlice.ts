@@ -45,7 +45,10 @@ const filesSlice = createSlice({
     ) {
       const [applicantID, fileType, fileID] = action.payload;
       const files = state.fileTypesByApplicants[applicantID][fileType];
-      files?.filter((file) => file.id !== fileID);
+      if (files)
+        state.fileTypesByApplicants[applicantID][fileType] = files?.filter(
+          (file) => file.id !== fileID
+        );
     },
   },
 });

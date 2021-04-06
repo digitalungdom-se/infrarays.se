@@ -66,10 +66,10 @@ const UploadHook: React.FC<UploadHookProps> = ({
       ]);
     } else {
       setUploadingFiles([{ name: file.name, uploading: true }]);
-      uploadFile(fileType, file, fileName)
+      uploadFile(fileType, file, fileName, applicantID)
         .then((res) => {
-          if (multiple > 1) dispatch(replaceFile(res));
-          else dispatch(setFiles([res]));
+          if (multiple > 1) dispatch(setFiles([res]));
+          else dispatch(replaceFile(res));
           setUploadingFiles([]);
         })
         .catch((err) => {
@@ -99,7 +99,11 @@ const UploadHook: React.FC<UploadHookProps> = ({
           disabled={multiple > 1 || disabledUploading}
           uploadLabel={t("Choose file")}
           onDownload={() => downloadFile(file.id, file.userId)}
-          onDelete={() => handleDelete(file.id, file.userId)}
+          onDelete={
+            disabledUploading && !alwaysAbleToUpload
+              ? undefined
+              : () => handleDelete(file.id, file.userId)
+          }
           onChange={handleUpload}
         />
       ))}

@@ -185,6 +185,7 @@ const Upload: React.FC<UploadProps> = ({
           <div className="form-control">{newLabel}</div>
         ) : (
           <div className="custom-file">
+            <span className="custom-file-label">{newLabel}</span>
             <StyledFormControl
               disabled={disabled}
               type="file"
@@ -195,7 +196,6 @@ const Upload: React.FC<UploadProps> = ({
               label={uploadLabel}
               multiple={multiple}
             />
-            <span className="custom-file-label">{newLabel}</span>
           </div>
         )}
         {showDropdown && (

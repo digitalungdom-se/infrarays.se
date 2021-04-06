@@ -2,7 +2,9 @@ import { FileType } from "types/files";
 import React from "react";
 import Upload from "features/files/Upload";
 import portal from "config/portal.json";
+import { selectUserType } from "features/auth/authSlice";
 import { useFiles } from "features/files/filesHooks";
+import { useSelector } from "react-redux";
 
 interface ApplicantInformationProps {
   email: string;
@@ -13,7 +15,8 @@ function ApplicantInformation({
   email,
   applicantID,
 }: ApplicantInformationProps) {
-  const { loading, error } = useFiles(applicantID);
+  const { loading } = useFiles(applicantID);
+  const userType = useSelector(selectUserType);
   return (
     <div>
       <b>Email: </b>
@@ -28,6 +31,7 @@ function ApplicantInformation({
               accept={chapter.upload.accept}
               fileType={chapter.fileType as FileType}
               multiple={chapter.upload.multiple}
+              alwaysAbleToUpload={userType === "SUPER_ADMIN"}
             />
           ) : null
         )
