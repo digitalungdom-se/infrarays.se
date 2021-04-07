@@ -8,6 +8,7 @@ import {
   updateGradingOrder,
 } from "../adminSlice";
 
+import ApplicantInformation from "./ApplicantInformation";
 import BootstrapTable from "react-bootstrap-table-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Grade from "./Grade";
@@ -54,7 +55,6 @@ class Grading extends React.Component<GradingProps, GradingState> {
   }
 
   render() {
-    const loading = this.state.loading[0] || this.state.loading[1];
     const dataWithIndex = this.props.applications.map((application, index) => ({
       ...application,
       index,
@@ -99,6 +99,15 @@ class Grading extends React.Component<GradingProps, GradingState> {
       },
     ];
 
+    const expandRow = {
+      renderer: (row: any) => (
+        <ApplicantInformation applicantID={row.id} email={row.email} />
+      ),
+      showExpandColumn: true,
+      expandByColumnOnly: true,
+      className: "white",
+    };
+
     return (
       <div>
         <div style={{ marginBottom: "2rem" }}>
@@ -109,6 +118,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
           <RandomiseOrder />
         </div>
         <BootstrapTable
+          expandRow={expandRow}
           striped
           wrapperClasses="table-responsive"
           bordered

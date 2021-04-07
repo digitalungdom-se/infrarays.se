@@ -5,6 +5,7 @@
     {
       "fileType": "CV",
       "upload": {
+        "multiple": 1,
         "label": "Ladda upp CV",
         "accept": ".pdf"
       }
@@ -12,6 +13,7 @@
     {
       "fileType": "COVER_LETTER",
       "upload": {
+        "multiple": 1,
         "label": "Ladda upp personligt brev",
         "accept": ".pdf"
       }
@@ -19,6 +21,7 @@
     {
       "fileType": "ESSAY",
       "upload": {
+        "multiple": 1,
         "label": "Ladda upp essäsvar",
         "accept": ".pdf"
       }
@@ -26,6 +29,7 @@
     {
       "fileType": "GRADES",
       "upload": {
+        "multiple": 1,
         "label": "Ladda upp betyg",
         "accept": ".pdf"
       }
@@ -37,7 +41,7 @@
     {
       "fileType": "APPENDIX",
       "upload": {
-        "multiple": true,
+        "multiple": 5,
         "accept": ".pdf"
       }
     },
