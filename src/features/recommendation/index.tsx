@@ -18,13 +18,20 @@ const UploadState = ({
   uploadedFileName,
   recommendationCode,
 }: UploadStateProps) => {
-  const [error, setError] = useState<{
-    fileName?: string;
-    msg?: string;
-  }>();
+  const [error, setError] = useState<
+    | {
+        fileName?: string;
+        msg?: string;
+      }
+    | undefined
+  >();
   const [uploading, setUploading] = useState<boolean>();
   const [uploaded, setUploaded] = useState<string>();
   const { t } = useTranslation();
+
+  const handleCancel = () => {
+    setError(undefined);
+  };
   return (
     <>
       <Upload
@@ -34,6 +41,7 @@ const UploadState = ({
         uploading={uploading}
         uploaded={error?.fileName || uploaded || uploadedFileName}
         error={error?.msg}
+        onCancel={handleCancel}
         onChange={(file: File, fileName: string) => {
           if (file.size > 5 * 10 ** 6) {
             setError({ msg: t("too large"), fileName });
@@ -61,10 +69,9 @@ const UploadState = ({
             });
         }}
       />
-      {uploaded ||
-        (uploadedFileName && !error && (
-          <Alert variant="success">{t("You're done!")}</Alert>
-        ))}
+      {Boolean(uploaded || uploadedFileName) && !error && (
+        <Alert variant="success">{t("You're done!")}</Alert>
+      )}
     </>
   );
 };

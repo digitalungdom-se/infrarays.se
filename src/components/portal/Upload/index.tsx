@@ -144,6 +144,7 @@ const Upload: React.FC<UploadProps> = ({
   const showDropdown =
     (error && Boolean(onCancel)) ||
     (uploaded && (Boolean(onDownload) || Boolean(onDelete)));
+  console.log(showDropdown, error, onCancel);
 
   const newLabel = (
     <>
