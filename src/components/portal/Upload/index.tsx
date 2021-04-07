@@ -88,7 +88,7 @@ const StyledFormControl = styled(FormControl)<StyledFormControlProps>`
 export interface MostUploadProps {
   label?: string;
   onDownload?: () => Promise<void>;
-  onDelete?: () => Promise<void>;
+  onDelete?: () => Promise<Promise<void> | void>;
   onCancel?: () => void;
   uploaded?: string;
   uploading?: boolean;
@@ -258,10 +258,13 @@ const Upload: React.FC<UploadProps> = ({
                     as="button"
                     disabled={deleting}
                     onClick={() => {
-                      setDeleting(true);
                       if (onDelete)
-                        onDelete()?.then(() => {
-                          setDeleting(false);
+                        onDelete()?.then((promise) => {
+                          setDeleting(true);
+                          if (promise)
+                            promise.then(() => {
+                              setDeleting(false);
+                            });
                         });
                     }}
                   >

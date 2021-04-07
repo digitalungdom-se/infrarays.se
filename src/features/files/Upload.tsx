@@ -47,13 +47,23 @@ const UploadHook: React.FC<UploadHookProps> = ({
   const { t } = useTranslation();
 
   const handleDelete = (fileID: string, applicantID: string) =>
-    deleteFile(fileID, applicantID)
-      .then(() => {
-        dispatch(deleteFileSuccess([applicantID, fileType, fileID]));
-      })
-      .catch((err) => {
-        toast.error(err.message);
+    new Promise<Promise<void> | undefined>(() => {
+      const result = window.confirm(
+        "Är du säker på att du vill ta bort filen? Det går inte att ångra."
+      );
+      if (result) {
+        return deleteFile(fileID, applicantID)
+          .then(() => {
+            dispatch(deleteFileSuccess([applicantID, fileType, fileID]));
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+      }
+      return new Promise<void>((res) => {
+        res();
       });
+    });
 
   const handleUpload = (file: File, fileName: string) => {
     if (file.size > maxFileSize) {
