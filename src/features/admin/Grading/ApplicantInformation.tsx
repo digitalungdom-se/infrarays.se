@@ -19,8 +19,10 @@ function ApplicantInformation({
   const userType = useSelector(selectUserType);
   return (
     <div>
-      <b>Email: </b>
-      <a href={`mailto:${email}`}>{email}</a>
+      <div style={{ margin: "0.5rem 0 1rem 0" }}>
+        <b>Email: </b>
+        <a href={`mailto:${email}`}>{email}</a>
+      </div>
       {loading ? (
         <div>Loading</div>
       ) : (
