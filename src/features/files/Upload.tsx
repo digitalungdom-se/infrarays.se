@@ -112,9 +112,9 @@ const UploadHook: React.FC<UploadHookProps> = ({
           uploaded={file.name}
           key={"uploading-" + file.name}
           uploading={file.uploading}
-          disabled
           error={file.error}
           onCancel={handleCancel}
+          uploadLabel={t("Choose file")}
         />
       ))}
       {(files?.length || 0) + uploadingFiles.length < multiple && (
@@ -124,6 +124,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
             accept={accept}
             onChange={handleUpload}
             disabled={disabledUploading}
+            uploadLabel={t("Choose file")}
           />
         </>
       )}
