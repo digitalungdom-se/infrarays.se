@@ -1,8 +1,9 @@
-import { Alert, Spinner } from "react-bootstrap";
 import React, { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
+import Alert from "react-bootstrap/Alert";
 import CenterCard from "components/CenterCard";
+import Spinner from "react-bootstrap/Spinner";
 import Upload from "components/portal/Upload";
 import axios from "axios";
 import useAxios from "axios-hooks";
@@ -17,39 +18,62 @@ const UploadState = ({
   uploadedFileName,
   recommendationCode,
 }: UploadStateProps) => {
-  const [error, setError] = useState<{
-    fileName?: string;
-    msg?: string;
-  }>();
+  const [error, setError] = useState<
+    | {
+        fileName?: string;
+        msg?: string;
+      }
+    | undefined
+  >();
   const [uploading, setUploading] = useState<boolean>();
   const [uploaded, setUploaded] = useState<string>();
   const { t } = useTranslation();
+
+  const handleCancel = () => {
+    setError(undefined);
+  };
   return (
-    <Upload
-      accept=".pdf"
-      label={t("Upload LoR")}
-      uploadLabel={t("Choose file")}
-      uploading={uploading}
-      uploaded={error?.fileName || uploaded || uploadedFileName}
-      error={error?.msg}
-      onChange={(file: File, fileName: string) => {
-        if (file.size > 5 * 10 ** 6) {
-          setError({ msg: t("too large"), fileName });
-          return;
-        }
-        console.log(fileName);
-        const body = new FormData();
-        body.append("file", file, fileName);
-        setUploading(true);
-        axios
-          .post(`/application/recommendation/${recommendationCode}`, body)
-          .then((res) => {
-            setUploading(false);
-            setError(undefined);
-            setUploaded(res.data.name);
-          });
-      }}
-    />
+    <>
+      <Upload
+        accept=".pdf"
+        label={t("Upload LoR")}
+        uploadLabel={t("Choose file")}
+        uploading={uploading}
+        uploaded={error?.fileName || uploaded || uploadedFileName}
+        error={error?.msg}
+        onCancel={handleCancel}
+        onChange={(file: File, fileName: string) => {
+          if (file.size > 5 * 10 ** 6) {
+            setError({ msg: t("too large"), fileName });
+            return;
+          }
+          if (
+            fileName.length > 4 &&
+            fileName.substring(fileName.length - 4) !== ".pdf"
+          ) {
+            setError({ msg: t("Only PDF"), fileName });
+            return;
+          }
+          const body = new FormData();
+          body.append("file", file, fileName);
+          setUploading(true);
+          axios
+            .post(`/application/recommendation/${recommendationCode}`, body)
+            .then((res) => {
+              setUploading(false);
+              setError(undefined);
+              setUploaded(res.data.name);
+            })
+            .catch((err) => {
+              setError({ msg: t(err.message), fileName });
+              setUploading(false);
+            });
+        }}
+      />
+      {Boolean(uploaded || uploadedFileName) && !error && (
+        <Alert variant="success">{t("You're done!")}</Alert>
+      )}
+    </>
   );
 };
 
