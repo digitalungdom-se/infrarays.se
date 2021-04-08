@@ -22,7 +22,7 @@ interface AdminInfo {
 const Administration: React.FC = () => {
   const [{ data, loading }] = useAxios<AdminInfo[]>({
     url: "/admin",
-    params: { skip: 0, limit: 10 },
+    params: { skip: 0, limit: 512 },
   });
   const dispatch = useDispatch();
 
