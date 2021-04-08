@@ -147,7 +147,7 @@ export const selectApplicationsByTop = (state: RootState): ApplicationInfo[] =>
     (orderItem) => state.admin.applications[orderItem.applicantId]
   );
 
-interface GradingData extends GradeFormValues {
+export interface GradingData extends Grading {
   firstName: string;
   lastName: string;
 }
@@ -172,15 +172,9 @@ export const selectMyGrading = (
     );
     if (myGrading)
       return {
+        ...myGrading,
         firstName: state.admin.applications[myGrading.applicantId].firstName,
         lastName: state.admin.applications[myGrading.applicantId].lastName,
-        cv: myGrading?.cv,
-        coverLetter: myGrading?.coverLetter,
-        essays: myGrading?.essays,
-        grades: myGrading?.grades,
-        recommendations: myGrading?.recommendations,
-        overall: myGrading?.overall,
-        comment: myGrading?.comment,
       };
     return undefined;
   }
