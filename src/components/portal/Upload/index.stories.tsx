@@ -28,6 +28,18 @@ export const UploadHook = () => {
 
   const onChangeDelay: () => Promise<void> = () =>
     new Promise((res) => setTimeout(() => res(), 1000));
+
+  const confirmDelete = () =>
+    new Promise<Promise<void> | undefined>(() => {
+      const result = window.confirm(
+        "Är du säker på att du vill ta bort filen? Det går inte att ångra."
+      );
+      if (result) return onChangeDelay();
+      return new Promise<void>((res) => {
+        res();
+      });
+    });
+
   const handleCancel = () => setUploaded("");
 
   return (
@@ -37,7 +49,7 @@ export const UploadHook = () => {
       onChange={handleChange}
       uploading={uploading}
       uploaded={uploaded}
-      onDelete={onChangeDelay}
+      onDelete={confirmDelete}
       onDownload={onChangeDelay}
     />
   );
