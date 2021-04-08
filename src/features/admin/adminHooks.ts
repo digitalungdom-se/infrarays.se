@@ -30,7 +30,7 @@ export function useGrades(applicantId: string): UseGrades {
     data: admins.loading ? null : gradesByApplicant,
     error,
   };
-  console.log(result);
+
   return result;
 }
 

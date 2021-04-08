@@ -64,8 +64,9 @@ const UploadState = ({
               setError(undefined);
               setUploaded(res.data.name);
             })
-            .catch(() => {
-              setError(t("Couldn't upload"));
+            .catch((err) => {
+              setError({ msg: t(err.message), fileName });
+              setUploading(false);
             });
         }}
       />
