@@ -47,7 +47,7 @@ interface AdminInfo {
 export function useAdmins(): UseGrades {
   const [{ loading, data, error }] = useAxios<AdminInfo[]>({
     url: "/admin",
-    params: { skip: 0, limit: 10 },
+    params: { skip: 0, limit: 512 },
   });
   const dispatch = useDispatch();
   useEffect(() => {
