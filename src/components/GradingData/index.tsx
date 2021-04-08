@@ -1,4 +1,4 @@
-+import { GradingData } from "features/admin/adminSlice";
+import { GradingData } from "features/admin/adminSlice";
 import React from "react";
 import { Table } from "react-bootstrap";
 
