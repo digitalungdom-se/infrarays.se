@@ -59,19 +59,11 @@ const AdminContact: React.FC<AdminContactProps> = ({
   <Formik
     initialErrors={initialErrors}
     initialValues={{ firstName, lastName, email, superAdmin }}
-    onSubmit={(values, { setSubmitting, setErrors, setValues }) => {
-      setSubmitting(true);
-      if (onSubmit)
-        onSubmit(values)
-          .then(() => {
-            setValues({ firstName, lastName, email, superAdmin });
-            setSubmitting(false);
-          })
-          .catch(() => {
-            setErrors({ email: "already exists" });
-            setSubmitting(false);
-          });
-    }}
+    onSubmit={(values, { setErrors }) =>
+      onSubmit?.(values).catch(() => {
+        setErrors({ email: "already exists" });
+      })
+    }
   >
     {({ handleChange, values, handleSubmit, isSubmitting, errors }) => (
       <Form onSubmit={handleSubmit}>
@@ -84,12 +76,14 @@ const AdminContact: React.FC<AdminContactProps> = ({
               name="firstName"
               required
               type="text"
+              isInvalid={Boolean(errors.firstName)}
               placeholder="Förnamn"
             />
             <FormControl
               onChange={handleChange}
               value={values.lastName}
               disabled={isSubmitting || Boolean(status)}
+              isInvalid={Boolean(errors.lastName)}
               name="lastName"
               required
               type="text"
