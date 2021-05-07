@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
 import CenterCard from "components/CenterCard";
-import Upload from "components/portal/Upload";
+import Upload from "components/Upload";
 import { uploadLetterOfRecommendation } from "api/recommendations";
 import useAxios from "axios-hooks";
 import { useParams } from "react-router-dom";

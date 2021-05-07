@@ -13,7 +13,7 @@ import { Application } from "types/grade";
 import BootstrapTable from "react-bootstrap-table-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OpenGradingModalButton from "./OpenGradingModalButton";
-import OpenPDF from "components/portal/OpenPDF";
+import OpenPDF from "components/OpenPDF";
 import RandomiseGradingOrder from "./RandomiseGradingOrder";
 import React from "react";
 import { RootState } from "store";

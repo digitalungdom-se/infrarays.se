@@ -1,7 +1,7 @@
 import Chapter from "./index";
 import Plate from "components/Plate";
 import React from "react";
-import { UploadHook } from "components/portal/Upload/index.stories";
+import { UploadHook } from "components/Upload/index.stories";
 
 export default {
   title: "Chapter",

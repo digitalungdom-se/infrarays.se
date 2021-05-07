@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { FileType } from "types/files";
-import Upload from "components/portal/Upload";
+import Upload from "components/Upload";
 import hasApplicationClosed from "utils/hasApplicationClosed";
 import { toast } from "react-toastify";
 import { useFiles } from "./filesHooks";

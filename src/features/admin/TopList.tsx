@@ -5,7 +5,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GradedApplication } from "types/grade";
 import GradingData from "components/GradingData";
-import OpenPDF from "components/portal/OpenPDF";
+import OpenPDF from "components/OpenPDF";
 import React from "react";
 import { RootState } from "store";
 import Spinner from "react-bootstrap/Spinner";
