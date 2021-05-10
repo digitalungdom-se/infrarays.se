@@ -28,7 +28,7 @@ interface ContactPersonProps {
   email?: string;
   loading?: boolean;
   sendDate?: string;
-  onSubmit: (email: string) => void;
+  onSubmit?: (email: string) => void;
   received?: boolean;
   disabled?: boolean;
 }
@@ -65,7 +65,7 @@ function ContactPerson({
     <Formik
       initialValues={{ email }}
       onSubmit={(values, { setSubmitting }) => {
-        if (values.email) onSubmit(values.email);
+        if (values.email && onSubmit) onSubmit(values.email);
         setSubmitting(false);
       }}
     >
