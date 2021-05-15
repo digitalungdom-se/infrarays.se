@@ -9,7 +9,13 @@ const StyledButton = styled(Button)`
   border: dashed;
 `;
 
-const AddButton: React.FC<ButtonProps> = ({ disabled, children, ...props }) => (
+export type AddButtonProps = ButtonProps;
+
+const AddButton: React.FC<AddButtonProps> = ({
+  disabled,
+  children,
+  ...props
+}) => (
   <StyledButton {...props} variant="outline-primary" disabled={disabled}>
     {!disabled && <FontAwesomeIcon icon={faPlus} />} {children}
   </StyledButton>
