@@ -19,7 +19,9 @@ const Star = styled(Icon)`
   margin-top: -3px;
 `;
 
-const Rating = (props: RatingComponentProps): React.ReactElement => (
+export type RatingProps = RatingComponentProps;
+
+const Rating = (props: RatingProps): React.ReactElement => (
   <ReactRating
     {...props}
     emptySymbol={<Star className="empty icon" />}
