@@ -1,7 +1,34 @@
-import AdminContact from "./index";
+import AdminContact, { AdminContactProps } from "./index";
+import { Meta, Story } from "@storybook/react";
+
 import React from "react";
 
-export default { title: "AdminContact" };
+//👇 We create a "template" of how args map to rendering
+const Template: Story<AdminContactProps> = (args) => <AdminContact {...args} />;
+
+export const Primary = Template.bind({});
+
+Primary.args = {
+  firstName: "Alfred",
+  lastName: "Nobel",
+  email: "alfred@nobel.org",
+  superAdmin: false,
+  // status: ["LOADING", "REQUESTED", "RECEIVED"],
+};
+
+export default {
+  title: "AdminContact",
+  component: AdminContact,
+  //👇 Creates specific argTypes
+  argTypes: {
+    status: {
+      control: {
+        type: "select",
+        options: [undefined, "LOADING", "REQUESTED", "VERIFIED"],
+      },
+    },
+  },
+} as Meta;
 
 export const Basic = () => (
   <>

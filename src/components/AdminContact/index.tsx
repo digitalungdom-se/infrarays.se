@@ -41,8 +41,10 @@ interface AdminContactFields {
   superAdmin: boolean;
 }
 
-interface AdminContactProps extends Partial<AdminContactFields> {
-  status?: "VERIFIED" | "REQUESTED" | "LOADING";
+type Status = "VERIFIED" | "REQUESTED" | "LOADING";
+
+export interface AdminContactProps extends Partial<AdminContactFields> {
+  status?: Status;
   initialErrors?: FormikErrors<AdminContactFields>;
   onSubmit?: (values: AdminContactFields) => Promise<void | string>;
 }
@@ -120,7 +122,7 @@ const AdminContact: React.FC<AdminContactProps> = ({
                     type="submit"
                     disabled={isSubmitting || Boolean(status)}
                   >
-                    {(status === "loading" || isSubmitting) && (
+                    {(status === "LOADING" || isSubmitting) && (
                       <>
                         <Spinner animation="border" size="sm" />{" "}
                       </>
