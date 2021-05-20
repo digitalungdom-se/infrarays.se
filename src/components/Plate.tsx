@@ -12,10 +12,7 @@ const Plate = styled.div`
   -o-box-shadow: 0 0 3px #ccc;
   box-shadow: 0 0 3px #ccc;
   border-radius: 8px;
-
   min-width: 300px;
-
-  /* display: block; */
 `;
 
 export default Plate;
