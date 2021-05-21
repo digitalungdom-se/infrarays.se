@@ -6,6 +6,11 @@ interface StyledGroupProps {
   y: number;
 }
 
+const defaultProps = {
+  x: 0.75,
+  y: 1.5,
+};
+
 const StyledGroup = styled(Form.Group)<StyledGroupProps>`
   & {
     position: relative;
@@ -18,11 +23,13 @@ const StyledGroup = styled(Form.Group)<StyledGroupProps>`
   }
 
   & > input {
-    padding: ${({ props }) => props.y}rem ${(props) => props.x}rem;
+    padding: ${({ y = defaultProps.y }) => y}rem
+      ${({ x = defaultProps.x }) => x}rem;
   }
 
   & > label {
-    padding: ${(props) => props.y / 2}rem ${(props) => props.x}rem;
+    padding: ${({ y = defaultProps.y }) => y / 2}rem
+      ${({ x = defaultProps.x }) => x}rem;
   }
 
   & > label {
@@ -62,22 +69,18 @@ const StyledGroup = styled(Form.Group)<StyledGroupProps>`
 
   & input:not(:placeholder-shown):not([type="date"]) {
     padding-top: calc(
-      ${(props) => props.y}rem + ${(props) => props.y}rem * (1 / 3)
+      ${({ y = defaultProps.y }) => y}rem + ${({ y = defaultProps.y }) => y}rem *
+        (1 / 3)
     );
-    padding-bottom: calc(${(props) => props.y}rem * (2 / 3));
+    padding-bottom: calc(${({ y = defaultProps.y }) => y}rem * (2 / 3));
   }
 
   & input:not(:placeholder-shown) ~ label {
-    padding-top: calc(${(props) => props.y / 2}rem * (1 / 3));
-    padding-bottom: calc(${(props) => props.y}rem * (2 / 3));
+    padding-top: calc(${({ y = defaultProps.y }) => y / 2}rem * (1 / 3));
+    padding-bottom: calc(${({ y = defaultProps.y }) => y}rem * (2 / 3));
     font-size: 12px;
     color: ${(props) => props.theme.brand || "#777"};
   }
 `;
-
-StyledGroup.defaultProps = {
-  x: 0.75,
-  y: 1.5,
-};
 
 export default StyledGroup;
