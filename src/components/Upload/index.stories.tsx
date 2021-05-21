@@ -7,17 +7,19 @@ export default {
   title: "Upload",
 };
 
-export const TooLong = () => (
+export const TooLong = (): React.ReactElement => (
   <Upload uploaded="1289377128371298739812793871297392173987129371982379827319879387.pdf" />
 );
 
-export const Error = () => <Upload uploaded="file.pdf" error="Fel" />;
+export const Error = (): React.ReactElement => (
+  <Upload uploaded="file.pdf" error="Fel" />
+);
 
-export const UploadHook = () => {
+export const UploadHook = (): React.ReactElement => {
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState("");
 
-  function handleChange(file: any, fileName: string) {
+  function handleChange(file: File, fileName: string) {
     action("file-change")(file, fileName);
     setUploading(true);
     setTimeout(() => {
@@ -43,11 +45,13 @@ export const UploadHook = () => {
   );
 };
 
-export const UploadedHook = () => {
+export const UploadedHook = (): React.ReactElement => {
   const [uploading, setUploading] = useState(false);
-  const [uploaded, setUploaded] = useState("");
+  const [uploaded, setUploaded] = useState(
+    "1289377128371298739812793871297392173987129371982379827319879387.pdf"
+  );
 
-  function handleChange(file: any, fileName: string) {
+  function handleChange(file: File, fileName: string) {
     action("file-change")(file, fileName);
     setUploading(true);
     setTimeout(() => {
@@ -62,15 +66,18 @@ export const UploadedHook = () => {
 
   return (
     <Upload
-      uploaded="1289377128371298739812793871297392173987129371982379827319879387.pdf"
+      uploaded={uploaded}
       disabled
+      uploading={uploading}
       onDownload={onChangeDelay}
       onDelete={onChangeDelay}
+      onCancel={handleCancel}
+      onChange={handleChange}
     />
   );
 };
 
-export const ErrorStatic = () => (
+export const ErrorStatic = (): React.ReactElement => (
   <Upload
     uploaded="file.pdf"
     error="Fel"

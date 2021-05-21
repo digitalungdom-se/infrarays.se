@@ -30,7 +30,7 @@ export default {
   },
 } as Meta;
 
-export const Basic = () => (
+export const Basic = (): React.ReactElement => (
   <>
     <AdminContact
       onSubmit={() => new Promise((res) => setTimeout(res, 1000))}
