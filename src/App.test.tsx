@@ -1,9 +1,9 @@
+import App from "./App";
 import React from "react";
 import { render } from "@testing-library/react";
-import App from "./App";
 
-test('renders "Utvecklat av Digital Ungdom"', () => {
+test('renders "Digital Ungdom"', () => {
   const { getByText } = render(<App />);
-  const element = getByText(/Svenska/i);
+  const element = getByText(/Digital Ungdom/i);
   expect(element).toBeInTheDocument();
 });
