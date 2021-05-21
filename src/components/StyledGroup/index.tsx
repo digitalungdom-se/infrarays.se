@@ -1,8 +1,12 @@
 import Form from "react-bootstrap/Form";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const StyledGroup = styled(Form.Group)`
+interface StyledGroupProps {
+  x: number;
+  y: number;
+}
+
+const StyledGroup = styled(Form.Group)<StyledGroupProps>`
   & {
     position: relative;
     margin-bottom: 1rem;
@@ -14,7 +18,7 @@ const StyledGroup = styled(Form.Group)`
   }
 
   & > input {
-    padding: ${(props) => props.y}rem ${(props) => props.x}rem;
+    padding: ${({ props }) => props.y}rem ${(props) => props.x}rem;
   }
 
   & > label {
@@ -74,11 +78,6 @@ const StyledGroup = styled(Form.Group)`
 StyledGroup.defaultProps = {
   x: 0.75,
   y: 1.5,
-};
-
-StyledGroup.propTypes = {
-  x: PropTypes.number,
-  y: PropTypes.number,
 };
 
 export default StyledGroup;
