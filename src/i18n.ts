@@ -2,12 +2,11 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import en from "resources/locales/en.json";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import portalEn from "resources/locales/portal_en.json";
-import portalSv from "resources/locales/portal_sv.json";
+import portalEn from "config/portal_en.json";
+import portalSv from "config/portal_sv.json";
 import sv from "resources/locales/sv.json";
 
 // the translations
-// (tip move them in a JSON file and import them)
 const resources = {
   en: {
     translation: {
