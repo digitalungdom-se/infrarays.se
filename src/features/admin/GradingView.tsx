@@ -21,26 +21,13 @@ import Spinner from "react-bootstrap/Spinner";
 import { downloadAndOpen } from "api/downloadPDF";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 
-interface ApplicationInfo {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  finnish: boolean;
-  birthdate: string;
-  city: string;
-  school: string;
-}
-
 interface GradingState {
-  loading: boolean[];
-  applications: Record<string, ApplicationInfo> | undefined;
+  loading: boolean;
 }
 
 class Grading extends React.Component<GradingProps, GradingState> {
   state = {
-    loading: [true, true],
-    applications: {},
+    loading: true,
   };
 
   componentDidMount() {
@@ -50,7 +37,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
       });
       getGradingOrder().then((res) => {
         this.props.updateGradingOrder(res);
-        this.setState({ loading: [this.state.loading[0], false] });
+        this.setState({ loading: false });
       });
     }
   }
@@ -127,7 +114,7 @@ class Grading extends React.Component<GradingProps, GradingState> {
           data={dataWithIndex}
           columns={columns}
           noDataIndication={() =>
-            this.state.loading[1] ? (
+            this.state.loading ? (
               <Spinner
                 animation="border"
                 style={{
