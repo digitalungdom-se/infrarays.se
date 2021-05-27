@@ -44,12 +44,7 @@ const StyledCard = styled(Card)`
 
 interface SurveyProps {
   survey?: SurveyAnswers;
-  onSubmit: (
-    surveyAnswers: SurveyAnswers,
-    helpers: {
-      setSubmitting: (isSubmitting: boolean) => void;
-    }
-  ) => Promise<void>;
+  onSubmit: (surveyAnswers: SurveyAnswers) => Promise<void>;
   disabled?: boolean;
 }
 
@@ -82,7 +77,10 @@ const Survey = ({
           <Card.Body>
             <Formik
               initialValues={initialValues}
-              onSubmit={({ gender, ...values }, helpers) => {
+              onSubmit={(
+                { gender, ...values },
+                { setSubmitting, setErrors }
+              ) => {
                 let processError,
                   portalError,
                   genderError = false;
@@ -90,20 +88,17 @@ const Survey = ({
                 if (values.applicationPortal === 0) portalError = true;
                 if (gender === "select") genderError = true;
                 if (processError || portalError || genderError) {
-                  helpers.setErrors({
+                  setErrors({
                     gender: genderError ? "Select an option" : undefined,
                     applicationPortal: portalError ? "required" : undefined,
                     applicationProcess: processError ? "required" : undefined,
                   });
-                  helpers.setSubmitting(false);
+                  setSubmitting(false);
                 } else {
-                  onSubmit(
-                    {
-                      ...values,
-                      gender: gender as Gender,
-                    },
-                    helpers
-                  ).then(() => helpers.setSubmitting(false));
+                  onSubmit({
+                    ...values,
+                    gender: gender as Gender,
+                  }).then(() => setSubmitting(false));
                 }
               }}
               validationSchema={validationSchema}
