@@ -28,3 +28,22 @@ export interface Statistics {
   school: string[];
   gender: { count: Record<Gender, number> };
 }
+
+export type CustomSurveyQuestion = SurveyTextQuestion | SurveyRangeQuestion;
+
+export type SurveyTextQuestion = {
+  type: "TEXT";
+  maxLength?: number;
+  id?: string;
+};
+
+export type SurveyRangeQuestion = {
+  type: "RANGE";
+  range?: [number, number];
+  id?: string;
+};
+
+export type CustomSurveyAnswer = {
+  id?: string;
+  value: number | string;
+};
