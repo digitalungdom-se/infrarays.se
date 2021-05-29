@@ -1,4 +1,5 @@
 import CustomSurvey from "./index";
+import { CustomSurveyQuestion } from "types/survey";
 import React from "react";
 
 export default {
@@ -8,7 +9,7 @@ export default {
 const onSubmit = (): Promise<void> =>
   new Promise((res) => setInterval(res, 1000));
 
-const config = [
+const config: CustomSurveyQuestion[] = [
   {
     type: "TEXT",
     maxLength: 100,
