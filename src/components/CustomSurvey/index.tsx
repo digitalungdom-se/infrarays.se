@@ -40,11 +40,30 @@ function Question(props: CustomSurveyQuestion): React.ReactElement {
   const label = <Form.Label>{t(`survey.${props.id}`)}</Form.Label>;
   switch (props.type) {
     case "RANGE":
-      return <Form.Group>{label}</Form.Group>;
+      return (
+        <Form.Group>
+          <Form.Label>{t(`survey.${props.id}.label`)}</Form.Label>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span>{t(`survey.${props.id}.low`)}</span>
+            {[...Array(props.range[1] - props.range[0] + 1)].map((_, i) => (
+              <Form.Check
+                key={props.id + i}
+                inline
+                name={props.id}
+                type="radio"
+                label={props.range[0] + i}
+                value={props.range[0] + i}
+              />
+            ))}
+            <span>{t(`survey.${props.id}.high`)}</span>
+          </div>
+        </Form.Group>
+      );
+
     case "TEXT":
       return (
         <Form.Group>
-          {label}
+          <Form.Label>{t(`survey.${props.id}`)}</Form.Label>
           <Form.Control
             type="text"
             maxLength={props.maxLength}

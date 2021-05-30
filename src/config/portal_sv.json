@@ -63,8 +63,16 @@
         "UNDISCLOSED": "Vill ej uppge"
       }
     },
-    "applicationPortal": "Vad tycker du om ansökningsportalen?",
-    "applicationProcess": "Vad tycker du om ansökningsprocessen?",
+    "applicationPortal": {
+      "label": "Vad tycker du om ansökningsportalen?",
+      "low": "Väldigt dålig",
+      "high": "Väldigt bra"
+    },
+    "applicationProcess": {
+      "label": "Vad tycker du om ansökningsprocessen?",
+      "low": "Väldigt dålig",
+      "high": "Väldigt bra"
+    },
     "improvement": "Hur kan ansökningsprocessen och portalen förbättras?",
     "informant": "Hur hörde du talas om Rays?"
   },

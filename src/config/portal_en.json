@@ -63,8 +63,16 @@
         "UNDISCLOSED": "Prefer not to disclose"
       }
     },
-    "applicationPortal": "What are your thoughts on the application portal?",
-    "applicationProcess": "What are your thoughts on the application process?",
+    "applicationPortal": {
+      "label": "What are your thoughts on the application portal?",
+      "low": "Very bad",
+      "high": "Very good"
+    },
+    "applicationProcess": {
+      "label": "What are your thoughts on the application process?",
+      "low": "Very bad",
+      "high": "Very good"
+    },
     "improvement": "How can the application process and portal be improved?",
     "informant": "How did you hear about Rays?"
   },
