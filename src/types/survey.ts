@@ -29,21 +29,30 @@ export interface Statistics {
   gender: { count: Record<Gender, number> };
 }
 
-export type CustomSurveyQuestion = SurveyTextQuestion | SurveyRangeQuestion;
+export type CustomSurveyQuestion =
+  | SurveyTextQuestion
+  | SurveyRangeQuestion
+  | SurveySelectQuestion;
 
 export type SurveyTextQuestion = {
   type: "TEXT";
-  maxLength?: number;
-  id?: string;
+  maxLength: number;
+  id: string;
 };
 
 export type SurveyRangeQuestion = {
   type: "RANGE";
-  range?: [number, number];
-  id?: string;
+  range: [number, number];
+  id: string;
+};
+
+export type SurveySelectQuestion = {
+  type: "SELECT";
+  options: string[];
+  id: string;
 };
 
 export type CustomSurveyAnswer = {
-  id?: string;
+  id: string;
   value: number | string;
 };
