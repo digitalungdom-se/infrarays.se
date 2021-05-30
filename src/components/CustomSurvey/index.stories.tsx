@@ -12,7 +12,38 @@ const onSubmit = (): Promise<void> =>
 const config: CustomSurveyQuestion[] = [
   {
     type: "TEXT",
-    maxLength: 100,
+    maxLength: 256,
+    id: "city",
+  },
+  {
+    type: "TEXT",
+    maxLength: 256,
+    id: "school",
+  },
+  {
+    type: "SELECT",
+    options: ["MALE", "FEMALE", "OTHER", "UNDISCLOSED"],
+    id: "gender",
+  },
+  {
+    type: "RANGE",
+    range: [1, 5],
+    id: "applicationPortal",
+  },
+  {
+    type: "RANGE",
+    range: [1, 5],
+    id: "applicationProcess",
+  },
+  {
+    type: "TEXT",
+    maxLength: 8192,
+    id: "improvement",
+  },
+  {
+    type: "TEXT",
+    maxLength: 8192,
+    id: "informant",
   },
 ];
 
