@@ -3,7 +3,7 @@ import { CustomSurveyAnswer, CustomSurveyQuestion } from "types/survey";
 import Accordion from "react-bootstrap/Accordion";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
+import CustomSurveyForm from "./CustomSurveyForm";
 import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -22,10 +22,6 @@ const StyledCard = styled(Card)`
   &.done .card-header .btn {
     color: #155724;
   }
-
-  & .form-label {
-    /* font-weight: 400; */
-  }
 `;
 
 interface CustomSurveyAccordionProps {
@@ -35,75 +31,12 @@ interface CustomSurveyAccordionProps {
   disabled?: boolean;
 }
 
-function Question(props: CustomSurveyQuestion): React.ReactElement {
-  const { t } = useTranslation();
-  const label = <Form.Label>{t(`survey.${props.id}`)}</Form.Label>;
-  switch (props.type) {
-    case "RANGE":
-      return (
-        <Form.Group>
-          <Form.Label>{t(`survey.${props.id}.label`)}</Form.Label>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>{t(`survey.${props.id}.low`)}</span>
-            {[...Array(props.range[1] - props.range[0] + 1)].map((_, i) => (
-              <Form.Check
-                key={props.id + i}
-                inline
-                name={props.id}
-                type="radio"
-                label={props.range[0] + i}
-                value={props.range[0] + i}
-              />
-            ))}
-            <span>{t(`survey.${props.id}.high`)}</span>
-          </div>
-        </Form.Group>
-      );
-
-    case "TEXT":
-      return (
-        <Form.Group>
-          <Form.Label>{t(`survey.${props.id}`)}</Form.Label>
-          <Form.Control
-            type="text"
-            maxLength={props.maxLength}
-            as={props.maxLength > 256 ? "textarea" : "input"}
-          />
-        </Form.Group>
-      );
-    case "SELECT":
-      return (
-        <Form.Group>
-          <Form.Label>{t(`survey.${props.id}.label`)}</Form.Label>
-          <Form.Control as="select" name="gender">
-            <option value="select" disabled>
-              {t("Choose an option")}
-            </option>
-            {props.options.map((option) => (
-              <option value={option} key={option}>
-                {t(`survey.${props.id}.options.${option}`)}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
-      );
-    default:
-      return <Form.Group>{label}</Form.Group>;
-  }
-}
-
-const CustomSurveyAccordion = ({
-  config,
-  onSubmit,
-  disabled,
-  initialValues,
-}: CustomSurveyAccordionProps): React.ReactElement => {
+const CustomSurveyAccordion = (
+  props: CustomSurveyAccordionProps
+): React.ReactElement => {
   const { t } = useTranslation();
 
-  const done = initialValues ? "done" : "";
-  const form = config.map((question) => (
-    <Question key={question.id} {...question} />
-  ));
+  const done = props.initialValues ? "done" : "";
 
   return (
     <Accordion defaultActiveKey={done ? "1" : "0"} className={done}>
@@ -115,13 +48,7 @@ const CustomSurveyAccordion = ({
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Card.Body>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-            >
-              {form}
-            </form>
+            <CustomSurveyForm {...props} />
           </Card.Body>
         </Accordion.Collapse>
       </StyledCard>

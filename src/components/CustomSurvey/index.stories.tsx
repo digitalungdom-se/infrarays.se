@@ -1,4 +1,5 @@
 import CustomSurvey from "./index";
+import CustomSurveyForm from "./CustomSurveyForm";
 import { CustomSurveyQuestion } from "types/survey";
 import React from "react";
 
@@ -47,6 +48,10 @@ const config: CustomSurveyQuestion[] = [
   },
 ];
 
-export const Basic = (): React.ReactElement => (
+export const Accordion = (): React.ReactElement => (
   <CustomSurvey onSubmit={onSubmit} config={config} />
+);
+
+export const Form = (): React.ReactElement => (
+  <CustomSurveyForm onSubmit={onSubmit} config={config} />
 );
