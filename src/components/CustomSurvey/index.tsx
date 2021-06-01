@@ -26,7 +26,7 @@ const StyledCard = styled(Card)`
 
 interface CustomSurveyAccordionProps {
   config: CustomSurveyQuestion[];
-  initialValues?: CustomSurveyAnswer[];
+  initialValues?: Record<string, CustomSurveyAnswer>;
   onSubmit: (surveyAnswers: CustomSurveyAnswer[]) => Promise<void>;
   disabled?: boolean;
 }
