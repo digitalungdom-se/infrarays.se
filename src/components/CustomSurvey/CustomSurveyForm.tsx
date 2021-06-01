@@ -5,16 +5,21 @@ import React from "react";
 
 interface CustomSurveyFormProps {
   config: CustomSurveyQuestion[];
-  initialValues?: CustomSurveyAnswer[];
+  initialValues?: Record<string, CustomSurveyAnswer>;
   onSubmit: (surveyAnswers: CustomSurveyAnswer[]) => Promise<void>;
   disabled?: boolean;
 }
 
 function CustomSurveyForm({
   config,
+  initialValues,
 }: CustomSurveyFormProps): React.ReactElement {
   const questions = config.map((question) => (
-    <Question key={question.id} {...question} />
+    <Question
+      key={question.id}
+      question={question}
+      value={initialValues?.[question.id]}
+    />
   ));
   return (
     <form

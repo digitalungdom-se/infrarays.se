@@ -48,10 +48,24 @@ const config: CustomSurveyQuestion[] = [
   },
 ];
 
+const initialValues = {
+  city: "Stockholm",
+  school: "Nobel",
+  gender: 0,
+  applicationPortal: 5,
+  applicationProcess: 3,
+  improvement: "hmmm...",
+  informant: "vem?",
+};
+
 export const Accordion = (): React.ReactElement => (
   <CustomSurvey onSubmit={onSubmit} config={config} />
 );
 
 export const Form = (): React.ReactElement => (
-  <CustomSurveyForm onSubmit={onSubmit} config={config} />
+  <CustomSurveyForm
+    onSubmit={onSubmit}
+    config={config}
+    initialValues={initialValues}
+  />
 );

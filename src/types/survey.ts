@@ -52,7 +52,4 @@ export type SurveySelectQuestion = {
   id: string;
 };
 
-export type CustomSurveyAnswer = {
-  id: string;
-  value: number | string;
-};
+export type CustomSurveyAnswer = number | string | undefined;
