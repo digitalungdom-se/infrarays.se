@@ -30,6 +30,7 @@ function Question({ question, value }: QuestionProps): React.ReactElement {
                   label={question.range[0] + i}
                   value={question.range[0] + i}
                   defaultChecked={question.range[0] + i === value}
+                  required
                 />
               )
             )}
@@ -48,6 +49,8 @@ function Question({ question, value }: QuestionProps): React.ReactElement {
             maxLength={question.maxLength}
             as={question.maxLength > 256 ? "textarea" : "input"}
             defaultValue={value}
+            required
+            name={question.id}
           />
         </Form.Group>
       );
@@ -55,8 +58,8 @@ function Question({ question, value }: QuestionProps): React.ReactElement {
       return (
         <Form.Group>
           <Form.Label>{t(`survey.${question.id}.label`)}</Form.Label>
-          <Form.Control as="select" name="gender">
-            <option value="select" disabled selected={!value}>
+          <Form.Control as="select" name={question.id} required>
+            <option value="" disabled selected={!value} hidden>
               {t("Choose an option")}
             </option>
             {question.options.map((option, i) => (

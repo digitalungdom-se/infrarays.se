@@ -1,14 +1,19 @@
+import { CustomSurveyAnswer, CustomSurveyQuestion } from "types/survey";
+
 import CustomSurvey from "./index";
 import CustomSurveyForm from "./CustomSurveyForm";
-import { CustomSurveyQuestion } from "types/survey";
 import React from "react";
+import { action } from "@storybook/addon-actions";
 
 export default {
   title: "CustomSurvey",
 };
 
-const onSubmit = (): Promise<void> =>
-  new Promise((res) => setInterval(res, 1000));
+const onSubmit = (values: Record<string, CustomSurveyAnswer>): Promise<void> =>
+  new Promise((res) => {
+    action("values")(values);
+    setInterval(res, 1000);
+  });
 
 const config: CustomSurveyQuestion[] = [
   {
