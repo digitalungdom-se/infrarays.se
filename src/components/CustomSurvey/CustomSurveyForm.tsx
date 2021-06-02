@@ -6,7 +6,7 @@ import Question from "./CustomSurveyQuestion";
 import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
 
-interface CustomSurveyFormProps {
+export interface CustomSurveyFormProps {
   config: CustomSurveyQuestion[];
   initialValues?: Record<string, CustomSurveyAnswer>;
   onSubmit: (values: Record<string, CustomSurveyAnswer>) => Promise<void>;

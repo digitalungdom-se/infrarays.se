@@ -1,9 +1,8 @@
-import { CustomSurveyAnswer, CustomSurveyQuestion } from "types/survey";
+import CustomSurveyForm, { CustomSurveyFormProps } from "./CustomSurveyForm";
 
 import Accordion from "react-bootstrap/Accordion";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import CustomSurveyForm from "./CustomSurveyForm";
 import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
@@ -24,20 +23,13 @@ const StyledCard = styled(Card)`
   }
 `;
 
-interface CustomSurveyAccordionProps {
-  config: CustomSurveyQuestion[];
-  initialValues?: Record<string, CustomSurveyAnswer>;
-  onSubmit: (surveyAnswers: CustomSurveyAnswer[]) => Promise<void>;
-  disabled?: boolean;
-}
+export type CustomSurveyAccordionProps = CustomSurveyFormProps;
 
 const CustomSurveyAccordion = (
   props: CustomSurveyAccordionProps
 ): React.ReactElement => {
   const { t } = useTranslation();
-
   const done = props.initialValues ? "done" : "";
-
   return (
     <Accordion defaultActiveKey={done ? "1" : "0"} className={done}>
       <StyledCard className={done}>
