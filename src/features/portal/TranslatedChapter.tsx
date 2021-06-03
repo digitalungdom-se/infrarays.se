@@ -14,9 +14,9 @@ const TranslatedChapter: React.FC<TranslatedChapterProps> = ({
 }) => (
   <Chapter
     key={type}
-    title={t(`${type}.title`)}
-    description={t(`${type}.description`)}
-    subtitle={t(`${type}.subtitle`)}
+    title={t(`chapters.${type}.title`)}
+    description={t(`chapters.${type}.description`)}
+    subtitle={t(`chapters.${type}.subtitle`)}
   >
     {children}
   </Chapter>
