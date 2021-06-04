@@ -37,7 +37,32 @@
     "SURVEY": {
       "title": "Formulär",
       "subtitle": "",
-      "description": "Vi som arrangerar Rays vill veta varifrån du kommer, på vilken gymnasieskola du studerar, hur du hört talas om Rays samt vad du tycker om ansökningsprocessen. Allt detta för att vi ska kunna bli ännu bättre på att marknadsföra oss samt utveckla ansökningprocessen. Fyll därför i formuläret nedan och klicka på skicka för att spara ditt svar."
+      "description": "Vi som arrangerar Rays vill veta varifrån du kommer, på vilken gymnasieskola du studerar, hur du hört talas om Rays samt vad du tycker om ansökningsprocessen. Allt detta för att vi ska kunna bli ännu bättre på att marknadsföra oss samt utveckla ansökningprocessen. Fyll därför i formuläret nedan och klicka på skicka för att spara ditt svar.",
+      "questions": {
+        "city": "Vilken stad bor du i?",
+        "school": "Vilken skola går du på?",
+        "gender": {
+          "label": "Kön",
+          "options": {
+            "MALE": "Man",
+            "FEMALE": "Kvinna",
+            "OTHER": "Annat",
+            "UNDISCLOSED": "Vill ej uppge"
+          }
+        },
+        "applicationPortal": {
+          "label": "Vad tycker du om ansökningsportalen?",
+          "low": "Väldigt dålig",
+          "high": "Väldigt bra"
+        },
+        "applicationProcess": {
+          "label": "Vad tycker du om ansökningsprocessen?",
+          "low": "Väldigt dålig",
+          "high": "Väldigt bra"
+        },
+        "improvement": "Hur kan ansökningsprocessen och portalen förbättras?",
+        "informant": "Hur hörde du talas om Rays?"
+      }
     },
     "RECOMMENDATION_LETTER": {
       "title": "Rekommendationsbrev",
@@ -52,31 +77,6 @@
         "label": "Ladda upp bilagor"
       }
     }
-  },
-  "survey": {
-    "city": "Vilken stad bor du i?",
-    "school": "Vilken skola går du på?",
-    "gender": {
-      "label": "Kön",
-      "options": {
-        "MALE": "Man",
-        "FEMALE": "Kvinna",
-        "OTHER": "Annat",
-        "UNDISCLOSED": "Vill ej uppge"
-      }
-    },
-    "applicationPortal": {
-      "label": "Vad tycker du om ansökningsportalen?",
-      "low": "Väldigt dålig",
-      "high": "Väldigt bra"
-    },
-    "applicationProcess": {
-      "label": "Vad tycker du om ansökningsprocessen?",
-      "low": "Väldigt dålig",
-      "high": "Väldigt bra"
-    },
-    "improvement": "Hur kan ansökningsprocessen och portalen förbättras?",
-    "informant": "Hur hörde du talas om Rays?"
   },
   "GDPR": "#### RAYS Application Portal GDPR\n\nNär du skapar ett konto godkänner du att:\n\n-   RESEARCH ACADEMY FOR YOUNG SCIENTISTS (RAYS), nedan kallat RAYS, och Digital Ungdom får spara dina personuppgifter upp till en (1) månad efter resultatet har meddelats.\n\n-   RAYS och Digital Ungdom får spara all uppladdad data på hemsidan upp till en (1) månad efter resultatet har meddelats.\n\nDu har rätt att:\n\n-   Slippa få dina personuppgifter utlämnade till tredje parter.\n\n-   Få ut en utskrift med all information som RAYS sparat om dig.\n\n-   Få dina uppgifter rättade om de är fel.\n\n-   Få uppgifter om dig raderade.\n\nDet görs genom att skicka e-post till [e-application@raysforexcellence.se](mailto:e-application@raysforexcellence.se) och berätta vad du vill.\n\nRAYS använder dina personuppgifter till att:\n\n-   Ta fram relevant statistik för RAYS.\n\n-   Kontakta dig med eventuell relevant information.\n\n-   Välja ut sökande i antagningsprocessen.\n\n-   Publicera information om de antagna.\n\nRAYS använder specifikt dessa personuppgifter till att:\n\n-   Namn: för att identifera dig.\n\n-   Email: för att kontakta dig.\n\n-   Ansöker via Finland: För att veta ursprunget av ansökan.\n\n-   Födelsedag: Statistik och bekräftning av identitet.\n\n-   Uppladdade filer och rekommendationsbrev: Urval i antagningsprocessen.\n\nRAYS ansvarar för att:\n\n-   Aldrig lämna ut dina personuppgifter utan att du har godkänt det.\n\n-   Vara försiktiga så att ingen utanför föreningen tar del av dina personuppgifter.\n\nHar ni frågor om RAYS och dataskyddet för dina uppgifter kontakta\nkansliet via e-post\n[e-application@raysforexcellence.se](mailto:e-application@raysforexcellence.se)."
 }

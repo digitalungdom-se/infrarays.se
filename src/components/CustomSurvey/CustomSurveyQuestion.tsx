@@ -15,10 +15,12 @@ function Question({ question, value }: QuestionProps): React.ReactElement {
     case "RANGE":
       return (
         <Form.Group>
-          <Form.Label>{t(`survey.${question.id}.label`)}</Form.Label>
+          <Form.Label>
+            {t(`chapters.SURVEY.questions.${question.id}.label`)}
+          </Form.Label>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span className="text-secondary">
-              {t(`survey.${question.id}.low`)}
+              {t(`chapters.SURVEY.questions.${question.id}.low`)}
             </span>
             {[...Array(question.range[1] - question.range[0] + 1)].map(
               (_, i) => (
@@ -35,7 +37,7 @@ function Question({ question, value }: QuestionProps): React.ReactElement {
               )
             )}
             <span className="text-secondary">
-              {t(`survey.${question.id}.high`)}
+              {t(`chapters.SURVEY.questions.${question.id}.high`)}
             </span>
           </div>
         </Form.Group>
@@ -43,7 +45,9 @@ function Question({ question, value }: QuestionProps): React.ReactElement {
     case "TEXT":
       return (
         <Form.Group>
-          <Form.Label>{t(`survey.${question.id}`)}</Form.Label>
+          <Form.Label>
+            {t(`chapters.SURVEY.questions.${question.id}`)}
+          </Form.Label>
           <Form.Control
             type="text"
             maxLength={question.maxLength}
@@ -57,14 +61,18 @@ function Question({ question, value }: QuestionProps): React.ReactElement {
     case "SELECT":
       return (
         <Form.Group>
-          <Form.Label>{t(`survey.${question.id}.label`)}</Form.Label>
+          <Form.Label>
+            {t(`chapters.SURVEY.questions.${question.id}.label`)}
+          </Form.Label>
           <Form.Control as="select" name={question.id} required>
             <option value="" disabled selected={!value} hidden>
               {t("Choose an option")}
             </option>
             {question.options.map((option, i) => (
               <option value={option} key={option} selected={i === value}>
-                {t(`survey.${question.id}.options.${option}`)}
+                {t(
+                  `chapters.SURVEY.questions.${question.id}.options.${option}`
+                )}
               </option>
             ))}
           </Form.Control>
