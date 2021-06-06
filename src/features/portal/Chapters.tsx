@@ -1,8 +1,9 @@
+import CustomSurveyAccordion from "components/CustomSurvey";
+import { CustomSurveyQuestion } from "types/survey";
 import React from "react";
 import TranslatedChapter from "./TranslatedChapter";
-import Upload from "features/files/Upload";
 
-type Chapter = FileChapter;
+type Chapter = FileChapter | SurveyChapter;
 
 type FileChapter = {
   id: string;
@@ -11,6 +12,12 @@ type FileChapter = {
     multiple: number;
     accept: ".pdf";
   };
+};
+
+type SurveyChapter = {
+  id: string;
+  type: "SURVEY";
+  questions: CustomSurveyQuestion[];
 };
 
 export interface ChaptersProps {
@@ -22,11 +29,10 @@ function Chapters({ chapters }: ChaptersProps): React.ReactElement {
     <>
       {chapters.map((chapter) => (
         <TranslatedChapter key={chapter.id} type={chapter.id}>
-          {chapter.type === "FILES" && (
-            <Upload
-              accept={chapter.upload?.accept}
-              fileType={chapter.id}
-              multiple={chapter.upload?.multiple}
+          {chapter.type === "SURVEY" && (
+            <CustomSurveyAccordion
+              config={chapter.questions}
+              onSubmit={() => new Promise((res) => res())}
             />
           )}
         </TranslatedChapter>
