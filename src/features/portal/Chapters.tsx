@@ -1,9 +1,10 @@
 import CustomSurveyAccordion from "components/CustomSurvey";
 import { CustomSurveyQuestion } from "types/survey";
 import React from "react";
+import RecommendationChapter from "./RecommendationChapter";
 import TranslatedChapter from "./TranslatedChapter";
 
-type Chapter = FileChapter | SurveyChapter;
+type Chapter = FileChapter | SurveyChapter | ReferenceChapter;
 
 type FileChapter = {
   id: string;
@@ -20,8 +21,30 @@ type SurveyChapter = {
   questions: CustomSurveyQuestion[];
 };
 
+type ReferenceChapter = {
+  id: string;
+  type: "RECOMMENDATION_LETTER";
+  max: 3;
+};
+
 export interface ChaptersProps {
   chapters: Chapter[];
+}
+
+function CustomChapter(props: Chapter) {
+  switch (props.type) {
+    case "RECOMMENDATION_LETTER":
+      return <RecommendationChapter {...props} />;
+    case "SURVEY":
+      return (
+        <CustomSurveyAccordion
+          config={props.questions}
+          onSubmit={() => new Promise((res) => res())}
+        />
+      );
+    default:
+      return <></>;
+  }
 }
 
 function Chapters({ chapters }: ChaptersProps): React.ReactElement {
@@ -29,12 +52,7 @@ function Chapters({ chapters }: ChaptersProps): React.ReactElement {
     <>
       {chapters.map((chapter) => (
         <TranslatedChapter key={chapter.id} type={chapter.id}>
-          {chapter.type === "SURVEY" && (
-            <CustomSurveyAccordion
-              config={chapter.questions}
-              onSubmit={() => new Promise((res) => res())}
-            />
-          )}
+          <CustomChapter {...chapter} />
         </TranslatedChapter>
       ))}
     </>

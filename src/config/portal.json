@@ -79,6 +79,8 @@
     },
     {
       "fileType": "RECOMMENDATION_LETTER",
+      "type": "RECOMMENDATION_LETTER",
+      "max": 3,
       "contactPeople": true
     }
   ],
