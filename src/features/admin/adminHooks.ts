@@ -75,37 +75,40 @@ export function useAdmins(): UseAdmins {
 export function useStatistics(): UseApi<Statistics> {
   const [{ loading, data, error }] = useApi<SurveyAnswers[]>("/admin/survey");
   const statistics: Statistics = {
-    applicationPortal: { count: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, average: 0 },
-    applicationProcess: { count: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, average: 0 },
-    gender: {
-      count: {
-        MALE: 0,
-        FEMALE: 0,
-        OTHER: 0,
-        UNDISCLOSED: 0,
-      },
-    },
-    city: [],
-    school: [],
-    improvement: [],
-    informant: [],
+    // applicationPortal: { count: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, average: 0 },
+    // applicationProcess: { count: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, average: 0 },
+    // gender: {
+    //   count: {
+    //     MALE: 0,
+    //     FEMALE: 0,
+    //     OTHER: 0,
+    //     UNDISCLOSED: 0,
+    //   },
+    // },
+    // city: [],
+    // school: [],
+    // improvement: [],
+    // informant: [],
   };
   if (data) {
     data.forEach((answer) => {
-      statistics.applicationPortal.count[answer.applicationPortal]++;
-      statistics.applicationProcess.count[answer.applicationPortal]++;
-      statistics.gender.count[answer.gender]++;
-      statistics.city.push(answer.city);
-      statistics.school.push(answer.school);
-      statistics.improvement.push(answer.improvement);
-      statistics.informant.push(answer.informant);
+      Object.keys(answer).forEach((key) => {
+        if (typeof answer[key] === "string") statistics[key];
+      });
+      // statistics.applicationPortal.count[answer.applicationPortal]++;
+      // statistics.applicationProcess.count[answer.applicationPortal]++;
+      // statistics.gender.count[answer.gender]++;
+      // statistics.city.push(answer.city);
+      // statistics.school.push(answer.school);
+      // statistics.improvement.push(answer.improvement);
+      // statistics.informant.push(answer.informant);
     });
-    statistics.applicationPortal.average = average(
-      statistics.applicationPortal.count
-    );
-    statistics.applicationProcess.average = average(
-      statistics.applicationProcess.count
-    );
+    // statistics.applicationPortal.average = average(
+    //   statistics.applicationPortal.count
+    // );
+    // statistics.applicationProcess.average = average(
+    //   statistics.applicationProcess.count
+    // );
   }
 
   return {

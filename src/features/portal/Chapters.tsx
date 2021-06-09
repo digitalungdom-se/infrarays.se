@@ -1,7 +1,7 @@
-import CustomSurveyAccordion from "components/CustomSurvey";
 import { CustomSurveyQuestion } from "types/survey";
 import React from "react";
 import RecommendationChapter from "./RecommendationChapter";
+import SurveyChapter from "./SurveyChapter";
 import TranslatedChapter from "./TranslatedChapter";
 
 type Chapter = FileChapter | SurveyChapter | ReferenceChapter;
@@ -36,12 +36,7 @@ function CustomChapter(props: Chapter) {
     case "RECOMMENDATION_LETTER":
       return <RecommendationChapter {...props} />;
     case "SURVEY":
-      return (
-        <CustomSurveyAccordion
-          config={props.questions}
-          onSubmit={() => new Promise((res) => res())}
-        />
-      );
+      return <SurveyChapter config={props.questions} />;
     default:
       return <></>;
   }

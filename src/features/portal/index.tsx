@@ -22,7 +22,7 @@ const Portal = (): React.ReactElement => {
         <hr style={{ color: "#b8b8b8" }} />
         <div>
           <FileChapters />
-          <SurveyChapter />
+          {/* <SurveyChapter /> */}
           <RecommendationChapter />
           <Progress />
           <div style={{ padding: "3rem 0" }}>

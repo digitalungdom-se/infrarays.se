@@ -172,7 +172,7 @@ const Survey = ({
                       disabled={disabled}
                     >
                       <Rating
-                        initialRating={values.applicationProcess}
+                        // initialRating={values.applicationProcess}
                         onChange={(value) => {
                           if (disabled) return;
                           else {
@@ -196,7 +196,7 @@ const Survey = ({
                       disabled={disabled}
                     >
                       <Rating
-                        initialRating={values.applicationPortal}
+                        // initialRating={values.applicationPortal}
                         onChange={(value) => {
                           if (disabled) return;
                           else {

@@ -86,7 +86,7 @@ function StatisticsPage(): React.ReactElement {
     <div>
       {data && (
         <>
-          <NumericalTable
+          {/* <NumericalTable
             title={t("What are your thoughts on the application process?")}
             answers={data.applicationProcess}
           />
@@ -110,7 +110,7 @@ function StatisticsPage(): React.ReactElement {
           <StringTable
             title={t("How did you hear about Rays?")}
             answers={data.informant}
-          />
+          /> */}
         </>
       )}
     </div>

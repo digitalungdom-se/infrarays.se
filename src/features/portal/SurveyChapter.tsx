@@ -1,10 +1,15 @@
+import { CustomSurveyQuestion } from "types/survey";
 import React from "react";
 import Survey from "features/survey";
 import TranslatedChapter from "./TranslatedChapter";
 
-const SurveyChapter = (): React.ReactElement => (
+interface SurveyChapterProps {
+  config: CustomSurveyQuestion[];
+}
+
+const SurveyChapter = ({ config }: SurveyChapterProps): React.ReactElement => (
   <TranslatedChapter type="SURVEY">
-    <Survey />
+    <Survey config={config} />
   </TranslatedChapter>
 );
 
