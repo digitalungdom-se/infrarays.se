@@ -11,6 +11,9 @@ import React from "react";
 import RecommendationChapter from "./RecommendationChapter";
 import StyledPlate from "components/Plate";
 import SurveyChapter from "./SurveyChapter";
+import { chapters } from "config/portal.json";
+
+const config = chapters[5];
 
 const Portal = (): React.ReactElement => {
   return (
@@ -22,7 +25,7 @@ const Portal = (): React.ReactElement => {
         <hr style={{ color: "#b8b8b8" }} />
         <div>
           <FileChapters />
-          {/* <SurveyChapter /> */}
+          <SurveyChapter config={config} />
           <RecommendationChapter />
           <Progress />
           <div style={{ padding: "3rem 0" }}>
