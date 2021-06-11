@@ -1,4 +1,3 @@
-import { FileInfo, FileType } from "types/files";
 import {
   deleteFile,
   downloadFile as downloadIndividualFile,
@@ -9,23 +8,24 @@ import {
   deleteFileSuccess,
   replaceFile,
   selectApplicantFilesLoaded,
-  selectFilesByFileTypeAndApplicant,
+  selectFilesByIDAndApplicant,
   setFiles,
 } from "./filesSlice";
 import useApi, { UseApi } from "hooks/useApi";
 import { useDispatch, useSelector } from "react-redux";
 
+import { FileInfo } from "types/files";
 import { RecommendationFile } from "types/recommendations";
 import { getRecommendationRequestConfig } from "api/recommendations";
 import { useCallback } from "react";
 
 type UseFiles = (
   applicantID?: string,
-  type?: FileType
+  type?: string
 ) => UseApi<FileInfo[]> & {
   removeFile: (fileID: string) => Promise<void>;
   addFile: (
-    fileType: FileType,
+    fileType: string,
     file: File,
     fileName: string,
     replace?: boolean
@@ -33,7 +33,7 @@ type UseFiles = (
   downloadFile: (fileID: string) => Promise<void>;
 };
 
-export const useFiles: UseFiles = (applicantID = "@me", type?: FileType) => {
+export const useFiles: UseFiles = (applicantID = "@me", type?: string) => {
   const dispatch = useDispatch();
   // if applicantID is @me then we don't want to call redux with
   // any function as it will automatically replace with the user id
@@ -43,7 +43,7 @@ export const useFiles: UseFiles = (applicantID = "@me", type?: FileType) => {
   const files =
     type === undefined
       ? undefined
-      : useSelector(selectFilesByFileTypeAndApplicant(type, id));
+      : useSelector(selectFilesByIDAndApplicant(type, id));
 
   // use an API hook to load in the data with a configured get request.
   const [{ loading, data }] = useApi<FileInfo[]>(

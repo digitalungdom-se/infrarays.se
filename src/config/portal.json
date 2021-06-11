@@ -1,42 +1,46 @@
 {
   "chapters": [
     {
-      "fileType": "CV",
+      "type": "FILES",
+      "id": "CV",
       "upload": {
         "multiple": 1,
         "accept": ".pdf"
       }
     },
     {
-      "fileType": "COVER_LETTER",
+      "type": "FILES",
+      "id": "COVER_LETTER",
       "upload": {
         "multiple": 1,
         "accept": ".pdf"
       }
     },
     {
-      "fileType": "ESSAY",
+      "type": "FILES",
+      "id": "ESSAY",
       "upload": {
         "multiple": 1,
         "accept": ".pdf"
       }
     },
     {
-      "fileType": "GRADES",
+      "type": "FILES",
+      "id": "GRADES",
       "upload": {
         "multiple": 1,
         "accept": ".pdf"
       }
     },
     {
-      "fileType": "APPENDIX",
+      "type": "FILES",
+      "id": "APPENDIX",
       "upload": {
         "multiple": 5,
         "accept": ".pdf"
       }
     },
     {
-      "fileType": "SURVEY",
       "type": "SURVEY",
       "id": "SURVEY",
       "questions": [
@@ -78,10 +82,9 @@
       ]
     },
     {
-      "fileType": "RECOMMENDATION_LETTER",
+      "id": "RECOMMENDATION_LETTER",
       "type": "RECOMMENDATION_LETTER",
-      "max": 3,
-      "contactPeople": true
+      "max": 3
     }
   ],
   "deadline": 1617238799000

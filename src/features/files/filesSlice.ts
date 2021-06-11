@@ -1,10 +1,10 @@
-import { FileID, FileInfo, FileType } from "types/files";
+import { FileID, FileInfo } from "types/files";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "store";
 
-// Files are organized by their FileType, i.e. CV: [file1, file2, etc]
-type FilesByType = Partial<Record<FileType, FileInfo[]>>;
+// Files are organized by their string, i.e. CV: [file1, file2, etc]
+type FilesByType = Partial<Record<string, FileInfo[]>>;
 
 // File types are organized by the application IDs, i.e. [user1_ID]: {CV: files}
 interface FilesState {
@@ -28,7 +28,7 @@ const filesSlice = createSlice({
         }
         // add the file to the store
         if (
-          // if there are already uploaded files for this FileType
+          // if there are already uploaded files for this string
           state.fileTypesByApplicants[file.userId][file.type] &&
           // and if the file is NOT already in there
           state.fileTypesByApplicants[file.userId][file.type]?.findIndex(
@@ -54,10 +54,7 @@ const filesSlice = createSlice({
       // otherwise create a new array
       else state.fileTypesByApplicants[file.userId][file.type] = [file];
     },
-    deleteFileSuccess(
-      state,
-      action: PayloadAction<[FileID, FileType, FileID]>
-    ) {
+    deleteFileSuccess(state, action: PayloadAction<[FileID, string, FileID]>) {
       const [applicantID, fileType, fileID] = action.payload;
       const files = state.fileTypesByApplicants[applicantID][fileType];
       files?.filter((file) => file.id !== fileID);
@@ -88,8 +85,8 @@ export const selectApplicantFilesLoaded = (applicantID?: string) => (
   return Boolean(fileTypesByApplicants);
 };
 
-export const selectFilesByFileTypeAndApplicant = (
-  type: FileType,
+export const selectFilesByIDAndApplicant = (
+  type: string,
   applicantID?: string
 ) => (state: RootState): FileInfo[] => {
   const id = applicantID || state.auth.user?.id;

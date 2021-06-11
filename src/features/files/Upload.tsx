@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { FileType } from "types/files";
 import Upload from "components/Upload";
 import hasApplicationClosed from "utils/hasApplicationClosed";
 import { toast } from "react-toastify";
@@ -9,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 interface UploadHookProps {
   accept?: string;
-  fileType: FileType;
+  id: string;
   applicantID?: string;
   multiple?: number;
   maxFileSize?: number;
@@ -24,7 +23,7 @@ interface UploadingFileInfo {
 
 const UploadHook: React.FC<UploadHookProps> = ({
   accept,
-  fileType,
+  id,
   maxFileSize = 5 * 10 ** 6,
   multiple = 1,
   alwaysAbleToUpload,
@@ -33,7 +32,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
   const { t } = useTranslation();
   const { removeFile, data: files, addFile, loading, downloadFile } = useFiles(
     applicantID,
-    fileType
+    id
   );
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFileInfo[]>([]);
 
@@ -53,7 +52,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
       ]);
     } else {
       setUploadingFiles([{ name: file.name, uploading: true }]);
-      addFile(fileType, file, fileName)
+      addFile(id, file, fileName)
         .then(() => {
           setUploadingFiles([]);
         })
@@ -69,7 +68,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
 
   const closed = hasApplicationClosed();
   const disabledUploading = (closed && !alwaysAbleToUpload) || loading;
-  const label = t(`${fileType}.upload.label`);
+  const label = t(`${id}.upload.label`);
 
   return (
     <>

@@ -1,4 +1,3 @@
-import { FileType } from "types/files";
 import React from "react";
 import Upload from "features/files/Upload";
 import portal from "config/portal.json";
@@ -26,7 +25,7 @@ function ApplicantInformation({
             <Upload
               applicantID={applicantID}
               accept={chapter.upload.accept}
-              fileType={chapter.fileType as FileType}
+              id={chapter.id}
               multiple={chapter.upload.multiple}
             />
           ) : null

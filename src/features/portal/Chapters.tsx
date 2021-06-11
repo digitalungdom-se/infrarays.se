@@ -1,31 +1,9 @@
-import { CustomSurveyQuestion } from "types/survey";
+import { Chapter } from "types/chapters";
 import React from "react";
 import RecommendationChapter from "./RecommendationChapter";
 import SurveyChapter from "./SurveyChapter";
 import TranslatedChapter from "./TranslatedChapter";
-
-type Chapter = FileChapter | SurveyChapter | ReferenceChapter;
-
-type FileChapter = {
-  id: string;
-  type: "FILES";
-  upload: {
-    multiple: number;
-    accept: ".pdf";
-  };
-};
-
-type SurveyChapter = {
-  id: string;
-  type: "SURVEY";
-  questions: CustomSurveyQuestion[];
-};
-
-type ReferenceChapter = {
-  id: string;
-  type: "RECOMMENDATION_LETTER";
-  max: 3;
-};
+import Upload from "features/files/Upload";
 
 export interface ChaptersProps {
   chapters: Chapter[];
@@ -37,6 +15,16 @@ function CustomChapter(props: Chapter) {
       return <RecommendationChapter {...props} />;
     case "SURVEY":
       return <SurveyChapter config={props.questions} />;
+    case "FILES":
+      return (
+        <TranslatedChapter key={props.id} type={props.id}>
+          <Upload
+            accept={props.upload?.accept}
+            id={props.id}
+            multiple={props.upload?.multiple}
+          />
+        </TranslatedChapter>
+      );
     default:
       return <></>;
   }
