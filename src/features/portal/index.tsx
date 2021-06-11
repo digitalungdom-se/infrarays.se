@@ -13,7 +13,7 @@ import StyledPlate from "components/Plate";
 import SurveyChapter from "./SurveyChapter";
 import { chapters } from "config/portal.json";
 
-const config = chapters[5];
+const config = chapters[5].questions;
 
 const Portal = (): React.ReactElement => {
   return (
