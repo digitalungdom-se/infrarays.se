@@ -24,6 +24,7 @@ function CustomSurveyForm({
       key={question.id}
       question={question}
       value={initialValues?.[question.id]}
+      disabled={disabled}
     />
   ));
   const [isSubmitting, setSubmitting] = useState(false);

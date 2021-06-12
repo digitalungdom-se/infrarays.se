@@ -49,7 +49,6 @@ function NumericalTable({ answers, title }: NumericalTableProps) {
         <tbody>
           {Object.keys(answers.count).map((n, i) => (
             <tr key={title + "-" + n + "-" + i}>
-              {console.log(t(n), n)}
               <td>{t(n)}</td>
               <td>{answers.count[n]}</td>
             </tr>

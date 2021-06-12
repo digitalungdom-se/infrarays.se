@@ -1,7 +1,7 @@
 import { Chapter } from "types/chapters";
 import React from "react";
 import RecommendationChapter from "./RecommendationChapter";
-import SurveyChapter from "./SurveyChapter";
+import Survey from "features/survey";
 import TranslatedChapter from "./TranslatedChapter";
 import Upload from "features/files/Upload";
 
@@ -14,16 +14,14 @@ function CustomChapter(props: Chapter) {
     case "RECOMMENDATION_LETTER":
       return <RecommendationChapter {...props} />;
     case "SURVEY":
-      return <SurveyChapter config={props.questions} />;
+      return <Survey config={props.questions} />;
     case "FILES":
       return (
-        <TranslatedChapter key={props.id} type={props.id}>
-          <Upload
-            accept={props.upload?.accept}
-            id={props.id}
-            multiple={props.upload?.multiple}
-          />
-        </TranslatedChapter>
+        <Upload
+          accept={props.upload?.accept}
+          id={props.id}
+          multiple={props.upload?.multiple}
+        />
       );
     default:
       return <></>;

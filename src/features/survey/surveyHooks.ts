@@ -13,7 +13,7 @@ interface UseSurvey extends UseApi<SurveyAnswers> {
 export function useSurvey(applicantID = "@me"): UseSurvey {
   const [{ data, loading, error }] = useApi(getSurveyConfig(applicantID));
   const dispatch = useDispatch();
-  const survey = useSelector(selectSurvey);
+  const survey = useSelector(selectSurvey());
   if (data && survey === undefined) dispatch(setSurvey(data));
   const updateSurvey = useCallback(
     (survey: SurveyAnswers) =>

@@ -68,7 +68,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
 
   const closed = hasApplicationClosed();
   const disabledUploading = (closed && !alwaysAbleToUpload) || loading;
-  const label = t(`${id}.upload.label`);
+  const label = t(`chapters.${id}.upload.label`);
 
   return (
     <>

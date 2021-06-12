@@ -21,8 +21,13 @@ const surveySlice = createSlice({
   },
 });
 
-export const selectSurvey = (state: RootState): SurveyAnswers | undefined =>
-  state.survey.survey;
+export const selectSurvey = (userID?: string) => (
+  state: RootState
+): SurveyAnswers | undefined => {
+  const id = userID || state.auth.user?.id;
+  if (!id) return;
+  return state.survey[id];
+};
 
 export const { setSurvey, clearSurvey } = surveySlice.actions;
 

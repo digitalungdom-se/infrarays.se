@@ -7,9 +7,14 @@ import { useTranslation } from "react-i18next";
 interface QuestionProps {
   question: CustomSurveyQuestion;
   value: CustomSurveyAnswer;
+  disabled?: boolean;
 }
 
-function Question({ question, value }: QuestionProps): React.ReactElement {
+function Question({
+  question,
+  value,
+  disabled,
+}: QuestionProps): React.ReactElement {
   const { t } = useTranslation();
   switch (question.type) {
     case "RANGE":
@@ -33,6 +38,7 @@ function Question({ question, value }: QuestionProps): React.ReactElement {
                   value={question.range[0] + i}
                   defaultChecked={question.range[0] + i === value}
                   required
+                  disabled={disabled}
                 />
               )
             )}
@@ -55,6 +61,7 @@ function Question({ question, value }: QuestionProps): React.ReactElement {
             defaultValue={value}
             required
             name={question.id}
+            disabled={disabled}
           />
         </Form.Group>
       );
@@ -64,7 +71,12 @@ function Question({ question, value }: QuestionProps): React.ReactElement {
           <Form.Label>
             {t(`chapters.SURVEY.questions.${question.id}.label`)}
           </Form.Label>
-          <Form.Control as="select" name={question.id} required>
+          <Form.Control
+            as="select"
+            name={question.id}
+            required
+            disabled={disabled}
+          >
             <option value="" disabled selected={!value} hidden>
               {t("Choose an option")}
             </option>

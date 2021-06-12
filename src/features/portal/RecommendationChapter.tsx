@@ -1,6 +1,5 @@
 import React from "react";
 import Reference from "features/recommendations/Reference";
-import TranslatedChapter from "./TranslatedChapter";
 
 type RecommendationChapterProps = {
   max?: number;
@@ -13,9 +12,7 @@ const RecommendationChapter = ({
   for (let i = 0; i < max; i += 1) {
     map[i] = <Reference key={`email-person-${i}`} index={i} />;
   }
-  return (
-    <TranslatedChapter type="RECOMMENDATION_LETTER">{map}</TranslatedChapter>
-  );
+  return <>{map}</>;
 };
 
 export default RecommendationChapter;
