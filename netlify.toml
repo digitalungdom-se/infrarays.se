@@ -11,4 +11,6 @@
   REACT_APP_API_URL = "https://devapi.infrarays.digitalungdom.se"
 
 [build]
+  NETLIFY_USE_YARN = "true"
+  command = "yarn run build"
   publish = ".next/"
