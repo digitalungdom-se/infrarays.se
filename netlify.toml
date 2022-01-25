@@ -14,4 +14,4 @@
   NETLIFY_USE_YARN = "true"
   environment = { YARN_VERSION = "1.22.17", NODE_VERSION = "16.13.1" }
   command = "yarn run build"
-  publish = ".next/"
+  publish = "out"

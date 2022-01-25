@@ -7,8 +7,8 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -19,8 +19,5 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react", "@typescript-eslint", "jest", "prettier"],
-  rules: {
-    "react/prop-types": 0,
-    "react/jsx-one-expression-per-line": "off",
-  },
+  rules: {},
 };
