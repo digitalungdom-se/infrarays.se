@@ -1,7 +1,13 @@
 {
-  "name": "infrarays.se",
-  "version": "0.2.0",
-  "private": false,
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
+    "chromatic": "npx chromatic"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
@@ -25,6 +31,7 @@
     "i18next": "^20.1.0",
     "i18next-browser-languagedetector": "^6.1.0",
     "moment": "^2.29.1",
+    "next": "latest",
     "polished": "^4.1.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
@@ -39,7 +46,7 @@
     "react-moment": "^1.1.1",
     "react-rating": "^2.0.5",
     "react-redux": "^7.2.3",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
     "react-toastify": "^7.0.3",
     "redux-persist": "^6.0.0",
@@ -47,32 +54,10 @@
     "typescript": "^4.2.3",
     "yup": "^0.32.9"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
-    "chromatic": "npx chromatic"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@babel/core": "^7.13.14",
+    "@netlify/plugin-nextjs": "^4.2.1",
+    "@next/eslint-plugin-next": "^12.0.8",
     "@storybook/addon-actions": "^6.2.1",
     "@storybook/addon-essentials": "^6.2.1",
     "@storybook/addon-links": "^6.2.1",
@@ -80,17 +65,21 @@
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.1",
     "@types/file-saver": "^2.0.1",
+    "@types/node": "17.0.4",
+    "@types/react": "17.0.38",
     "@types/react-bootstrap-table-next": "^4.0.13",
     "@types/react-copy-to-clipboard": "^5.0.0",
     "@types/react-csv": "^1.1.1",
     "@types/react-maskedinput": "^4.0.4",
     "@types/react-redux": "^7.1.16",
-    "@types/react-router-dom": "^5.1.7",
+    "@types/react-router-dom": "5.1.7",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
+    "autoprefixer": "^10.4.0",
     "chromatic": "^5.7.0",
     "eslint": "^7.23.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-next": "^12.0.8",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.4.0",
@@ -100,7 +89,10 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "postcss": "^8.4.5",
     "prettier": "^2.2.1",
-    "prettier-eslint": "^12.0.0"
+    "prettier-eslint": "^12.0.0",
+    "tailwindcss": "^3.0.7",
+    "typescript": "4.5.4"
   }
 }

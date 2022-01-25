@@ -1,3 +1,6 @@
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 [context.production.environment]
   REACT_APP_API_URL = "https://api.infrarays.digitalungdom.se"
 
@@ -10,7 +13,8 @@
 [context.dev.environment]
   REACT_APP_API_URL = "https://devapi.infrarays.digitalungdom.se"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+[build]
+  NETLIFY_USE_YARN = "true"
+  environment = { YARN_VERSION = "1.22.17", NODE_VERSION = "16.13.1" }
+  command = "yarn next build"
+  publish = ".next"

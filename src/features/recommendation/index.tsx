@@ -139,7 +139,7 @@ const Recommendation = (): React.ReactElement => {
               </Trans>
               <UploadState
                 uploadedFileName={response?.data.fileName}
-                recommendationCode={recommendationCode}
+                recommendationCode={recommendationCode || ''}
               />
             </>
           )}
