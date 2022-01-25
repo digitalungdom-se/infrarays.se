@@ -20,10 +20,10 @@ const AppRouter: React.FC = () => (
   <Router>
     <Suspense fallback={<Loading />}>
       <Switch>
-        <ProtectedRoute exact path="/" shouldBeAuthenticated>
+        <ProtectedRoute path="/" shouldBeAuthenticated>
           <Portal />
         </ProtectedRoute>
-        <ProtectedRoute shouldBeAuthenticated={false} path="/login" exact>
+        <ProtectedRoute shouldBeAuthenticated={false} path="/login">
           <Login />
         </ProtectedRoute>
         <ProtectedRoute shouldBeAuthenticated={false} path="/register">
@@ -35,7 +35,7 @@ const AppRouter: React.FC = () => (
         <ProtectedRoute
           shouldBeAuthenticated={false}
           path="/login/:emailInBase64"
-          exact
+        
         >
           <LoginWithCodeRoute />
         </ProtectedRoute>

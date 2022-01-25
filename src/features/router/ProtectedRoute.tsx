@@ -27,19 +27,18 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        shouldBeAuthenticated === Boolean(userType) ? (
+    >
+      { shouldBeAuthenticated === Boolean(userType) ? (
           children
         ) : (
           <Redirect
             to={{
               pathname: shouldBeAuthenticated ? "/login" : "/",
-              state: { from: location },
             }}
           />
         )
       }
-    />
+    </Route>
   );
 };
 

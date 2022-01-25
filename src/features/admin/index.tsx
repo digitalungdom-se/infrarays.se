@@ -37,7 +37,7 @@ const Admin: React.FC = () => (
         }
       >
         <Switch>
-          <Route exact path="/admin">
+          <Route path="/admin">
             <Grading />
           </Route>
           <Route path="/admin/toplist">

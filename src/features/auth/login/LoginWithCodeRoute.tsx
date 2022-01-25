@@ -7,9 +7,9 @@ const LoginWithCodeRoute = (): React.ReactElement => {
   const { emailInBase64 } = useParams<{ emailInBase64: string }>();
   return (
     <LoginWithCode
-      email={atob(emailInBase64)}
+      email={atob(emailInBase64 || '')}
       onSubmit={(values, { setErrors, setSubmitting }) => {
-        loginWithCode(atob(emailInBase64), values.code).catch((err) => {
+        loginWithCode(atob(emailInBase64 || ''), values.code).catch((err) => {
           setSubmitting(false);
           if (err.request.status) setErrors({ code: "Wrong code" });
           else setErrors({ code: "fetch error" });

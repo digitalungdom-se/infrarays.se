@@ -12,7 +12,7 @@ const AutomaticLogin: React.FC = () => {
   const [error, setError] = useState<string[]>([]);
   const { t } = useTranslation();
   useEffect(() => {
-    loginWithToken(token).catch((err) => {
+    loginWithToken(token || '').catch((err) => {
       if (!err.request.status)
         setError(["fetch error", "fetch error description"]);
       else setError(["Bad link", "Bad link description"]);

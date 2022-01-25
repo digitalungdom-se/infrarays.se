@@ -7,9 +7,8 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
+    "next/core-web-vitals",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -19,7 +18,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint", "jest"],
+  plugins: ["react", "@typescript-eslint", "jest", "prettier"],
   rules: {
     "react/prop-types": 0,
     "react/jsx-one-expression-per-line": "off",
