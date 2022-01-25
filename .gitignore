@@ -4,6 +4,7 @@
 
 # storybook
 build-storybook.log
+storybook-static
 
 # dependencies
 /node_modules
