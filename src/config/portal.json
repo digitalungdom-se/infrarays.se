@@ -1,53 +1,91 @@
 {
-  "title": "Ansökan för Rays",
-  "introduction": "Tack för att du vill ansöka till Rays! Vi kommer att läsa alla ansökningar och återkomma så snart vi kan. Du ser nedan vilka uppgifter vi vill att du sänder in. Den 31 mars klockan 23:59 stänger möjligheten att ladda uppansökningar och då kommer din ansökan automatiskt att skickas in till Rays. För att din ansökan ska skickas måste du ha laddat upp alla filer samt fyllt i formuläret. Fram till detta datum kan du uppdatera en del genom att bara ladda upp en ny fil igen. Din gamla fil kommer då ersättas med den nya. Alla filer måste vara i pdf-format och de specifika begränsningarna för filstorlek och antalet ord står bredvid varje uppladdningsdel.\n\nVi som arrangerar Rays önskar dig ett stort lycka till och ser fram emot att få läsa din ansökan! [För mer information tryck här!](http://raysforexcellence.se/ansok/)",
   "chapters": [
     {
-      "fileType": "CV",
+      "type": "FILES",
+      "id": "CV",
       "upload": {
         "multiple": 1,
-        "label": "Ladda upp CV",
         "accept": ".pdf"
       }
     },
     {
-      "fileType": "COVER_LETTER",
+      "type": "FILES",
+      "id": "COVER_LETTER",
       "upload": {
         "multiple": 1,
-        "label": "Ladda upp personligt brev",
         "accept": ".pdf"
       }
     },
     {
-      "fileType": "ESSAY",
+      "type": "FILES",
+      "id": "ESSAY",
       "upload": {
         "multiple": 1,
-        "label": "Ladda upp essäsvar",
         "accept": ".pdf"
       }
     },
     {
-      "fileType": "GRADES",
+      "type": "FILES",
+      "id": "GRADES",
       "upload": {
         "multiple": 1,
-        "label": "Ladda upp betyg",
         "accept": ".pdf"
       }
     },
     {
-      "fileType": "survey",
-      "survey": true
-    },
-    {
-      "fileType": "APPENDIX",
+      "type": "FILES",
+      "id": "APPENDIX",
       "upload": {
         "multiple": 5,
         "accept": ".pdf"
       }
     },
     {
-      "fileType": "RECOMMENDATION_LETTER",
-      "contactPeople": true
+      "type": "SURVEY",
+      "id": "SURVEY",
+      "questions": [
+        {
+          "type": "TEXT",
+          "maxLength": 256,
+          "id": "city"
+        },
+        {
+          "type": "TEXT",
+          "maxLength": 256,
+          "id": "school"
+        },
+        {
+          "type": "SELECT",
+          "options": ["MALE", "FEMALE", "OTHER", "UNDISCLOSED"],
+          "id": "gender"
+        },
+        {
+          "type": "RANGE",
+          "range": [1, 5],
+          "id": "applicationPortal"
+        },
+        {
+          "type": "RANGE",
+          "range": [1, 5],
+          "id": "applicationProcess"
+        },
+        {
+          "type": "TEXT",
+          "maxLength": 8192,
+          "id": "improvement"
+        },
+        {
+          "type": "TEXT",
+          "maxLength": 8192,
+          "id": "informant"
+        }
+      ]
+    },
+    {
+      "id": "RECOMMENDATION_LETTER",
+      "type": "RECOMMENDATION_LETTER",
+      "max": 3
     }
-  ]
+  ],
+  "deadline": 1617238799000
 }

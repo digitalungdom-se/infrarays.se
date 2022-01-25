@@ -1,58 +1,119 @@
+import { Admin, NewAdmin } from "types/user";
+import {
+  ApplicationGrade,
+  IndividualGrading,
+  IndividualGradingWithName,
+} from "types/grade";
+import { Statistics, SurveyAnswers } from "types/survey";
+import { addAdmin, getGradesConfig, postApplicationGrade } from "api/admin";
 import {
   selectAdmins,
   selectGradesByApplicant,
   setAdmins,
   setGrades,
+  setMyGrade,
 } from "./adminSlice";
+import useApi, { UseApi } from "hooks/useApi";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import useAxios from "axios-hooks";
-import { useEffect } from "react";
+import average from "utils/average";
 
-interface UseGrades {
-  loading: boolean;
-  data: any;
-  error: any;
-}
+type UseGrades = (
+  applicantId: string
+) => UseApi<IndividualGradingWithName[]> & {
+  addMyGrade: (grades: ApplicationGrade) => Promise<void>;
+};
 
-export function useGrades(applicantId: string): UseGrades {
-  const admins = useAdmins();
-  const [{ loading, data, error }] = useAxios(
-    `/application/${applicantId}/grade`
+export const useGrades: UseGrades = (applicantId: string) => {
+  useAdmins();
+  const [{ loading, data, error }] = useApi<IndividualGrading[]>(
+    getGradesConfig(applicantId)
   );
   const dispatch = useDispatch();
+  const grades = useSelector(selectGradesByApplicant(applicantId));
+  const addMyGrade = useCallback(
+    (grades) =>
+      postApplicationGrade(applicantId, grades).then((grading) => {
+        setMyGrade(grading);
+      }),
+    [applicantId]
+  );
+
   useEffect(() => {
-    if (data) dispatch(setGrades({ grades: data, applicantId }));
+    if (data && Boolean(grades) === false)
+      dispatch(setGrades({ grades: data, applicantId }));
   }, [data]);
-  const gradesByApplicant = useSelector(selectGradesByApplicant(applicantId));
-  const result = {
-    loading: admins.loading || loading,
-    data: admins.loading ? null : gradesByApplicant,
-    error,
-  };
+  return { loading, data: grades, error, addMyGrade };
+};
 
-  return result;
+interface UseAdmins extends UseApi<Admin[]> {
+  addAdmin: (admin: NewAdmin) => Promise<Admin>;
 }
 
-interface AdminInfo {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  type: "SUPER_ADMIN" | "ADMIN";
-  verified: boolean;
-  created: string;
-}
-
-export function useAdmins(): UseGrades {
-  const [{ loading, data, error }] = useAxios<AdminInfo[]>({
+export function useAdmins(): UseAdmins {
+  const [{ loading, data, error }] = useApi<Admin[]>({
     url: "/admin",
-    params: { skip: 0, limit: 512 },
+    params: { skip: 0, limit: 20 },
   });
   const dispatch = useDispatch();
   useEffect(() => {
-    if (data) dispatch(setAdmins(data));
+    if (data && admins.length === 0) dispatch(setAdmins(data));
   }, [data]);
   const admins = useSelector(selectAdmins);
-  return { loading, data: admins, error };
+  const newAdmin = useCallback(
+    (admin: NewAdmin) =>
+      addAdmin(admin).then((res) => {
+        dispatch(setAdmins([res]));
+        return res;
+      }),
+    [dispatch]
+  );
+  return { loading, data: admins, error, addAdmin: newAdmin };
+}
+
+export function useStatistics(): UseApi<Statistics> {
+  const [{ loading, data, error }] = useApi<SurveyAnswers[]>("/admin/survey");
+  const statistics: Statistics = {
+    // applicationPortal: { count: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, average: 0 },
+    // applicationProcess: { count: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, average: 0 },
+    // gender: {
+    //   count: {
+    //     MALE: 0,
+    //     FEMALE: 0,
+    //     OTHER: 0,
+    //     UNDISCLOSED: 0,
+    //   },
+    // },
+    // city: [],
+    // school: [],
+    // improvement: [],
+    // informant: [],
+  };
+  if (data) {
+    data.forEach((answer) => {
+      Object.keys(answer).forEach((key) => {
+        if (typeof answer[key] === "string") statistics[key];
+      });
+      // statistics.applicationPortal.count[answer.applicationPortal]++;
+      // statistics.applicationProcess.count[answer.applicationPortal]++;
+      // statistics.gender.count[answer.gender]++;
+      // statistics.city.push(answer.city);
+      // statistics.school.push(answer.school);
+      // statistics.improvement.push(answer.improvement);
+      // statistics.informant.push(answer.informant);
+    });
+    // statistics.applicationPortal.average = average(
+    //   statistics.applicationPortal.count
+    // );
+    // statistics.applicationProcess.average = average(
+    //   statistics.applicationProcess.count
+    // );
+  }
+
+  return {
+    loading,
+    data: statistics,
+    error,
+  };
 }

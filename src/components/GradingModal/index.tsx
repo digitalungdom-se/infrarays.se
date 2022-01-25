@@ -50,7 +50,7 @@ export type GradeFormValues = Record<NumericalGradeField, number> & {
 interface GradingModalProps extends WithTranslation {
   name?: string;
   initialValues?: GradeFormValues;
-  onSubmit?: (values: GradeFormValues) => Promise<any>;
+  onSubmit?: (values: GradeFormValues) => Promise<void>;
 }
 
 const GradingModal: React.FC<GradingModalProps> = ({
@@ -95,27 +95,27 @@ const GradingModal: React.FC<GradingModalProps> = ({
         <h3>{name}</h3>
         <StarField
           name="cv"
-          label={t("CV.title")}
+          label={t("chapters.CV.title")}
           isInvalid={Boolean(errors.cv)}
         />
         <StarField
           name="coverLetter"
-          label={t("COVER_LETTER.title")}
+          label={t("chapters.COVER_LETTER.title")}
           isInvalid={Boolean(errors.coverLetter)}
         />
         <StarField
           name="essays"
-          label={t("ESSAY.title")}
+          label={t("chapters.ESSAY.title")}
           isInvalid={Boolean(errors.essays)}
         />
         <StarField
           name="grades"
-          label={t("GRADES.title")}
+          label={t("chapters.GRADES.title")}
           isInvalid={Boolean(errors.grades)}
         />
         <StarField
           name="recommendations"
-          label={t("RECOMMENDATION_LETTER.title")}
+          label={t("chapters.RECOMMENDATION_LETTER.title")}
           isInvalid={Boolean(errors.recommendations)}
         />
         <StarField

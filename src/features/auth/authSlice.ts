@@ -1,20 +1,9 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { User, UserTypes } from "types/user";
 
 import { RootState } from "store";
-
-type UserType = "APPLICANT" | "ADMIN" | "SUPER_ADMIN";
-
-interface User {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  type: UserType;
-  verified: boolean;
-  created: string;
-}
 
 interface AuthState {
   isAuthorised: boolean;
@@ -46,7 +35,7 @@ const authSlice = createSlice({
 export const selectAuthenticated = (state: RootState): boolean =>
   state.auth.isAuthorised;
 
-export const selectUserType = (state: RootState): UserType | undefined =>
+export const selectUserType = (state: RootState): UserTypes | undefined =>
   state.auth.user?.type;
 
 export const selectUserID = (state: RootState): string | undefined =>

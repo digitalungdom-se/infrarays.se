@@ -1,71 +1,31 @@
-import { ButtonGroup, ProgressBar } from "react-bootstrap";
-import { FileInfo, selectProgress } from "./portalSlice";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import Alert from "react-bootstrap/Alert";
-import Axios from "axios";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Center from "components/Center";
+import { Chapter } from "types/chapters";
 import Chapters from "./Chapters";
 import Delete from "./Delete";
 import Download from "./Download";
+import Introduction from "./Introduction";
 import Logo from "components/Logo";
 import Logout from "./Logout";
-import ReactMarkdown from "react-markdown";
+import Progress from "./Progress";
+import React from "react";
 import StyledPlate from "components/Plate";
-import { addPersonSuccess } from "features/portal/portalSlice";
-import { setFiles } from "features/files/filesSlice";
-import { useTranslation } from "react-i18next";
+import config from "config/portal.json";
 
-const Hook = () => {
-  const dispatch = useDispatch();
-  const [filesLoading, setFilesLoading] = useState<boolean>(true);
-  const [referencesLoading, setReferencesLoading] = useState<boolean>(true);
+const chapters = config.chapters as Chapter[];
 
-  useEffect(() => {
-    Axios.get<FileInfo[]>("/application/@me/file")
-      .then((res) => {
-        dispatch(setFiles(res.data));
-        setFilesLoading(false);
-      })
-      .catch(console.error);
-    Axios.get("/application/@me/recommendation").then((res) => {
-      dispatch(addPersonSuccess(res.data));
-      setReferencesLoading(false);
-    });
-  }, []);
-  const progress = useSelector(selectProgress);
-
-  const { t } = useTranslation();
-
+const Portal = (): React.ReactElement => {
   return (
     <Center>
       <StyledPlate>
         <Logo center />
+        <Introduction />
+        <Progress />
+        <hr style={{ color: "#b8b8b8" }} />
         <div>
-          <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
-          <ReactMarkdown source={t("introduction") || ""} />
-          <ProgressBar
-            label={`${(progress / 5) * 100}%`}
-            variant="custom"
-            now={(progress / 5) * 100}
-          />
-          {progress === 5 && (
-            <Alert variant="success" style={{ marginTop: 10 }}>
-              {t("Application complete")}
-            </Alert>
-          )}
-          <hr style={{ color: "#b8b8b8" }} />
-        </div>
-        <div>
-          <Chapters
-            filesLoading={filesLoading}
-            referencesLoading={referencesLoading}
-          />
-          <div style={{ padding: "20px 0" }}>
-            {progress === 5 && (
-              <Alert variant="success">{t("Application complete")}</Alert>
-            )}
+          <Chapters chapters={chapters} />
+          <Progress />
+          <div style={{ padding: "3rem 0" }}>
             <ButtonGroup>
               <Delete />
               <Logout />
@@ -78,4 +38,4 @@ const Hook = () => {
   );
 };
 
-export default Hook;
+export default Portal;

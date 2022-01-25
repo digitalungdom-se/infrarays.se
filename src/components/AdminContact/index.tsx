@@ -6,7 +6,7 @@ import {
   InputGroup,
   Spinner,
 } from "react-bootstrap";
-import { Formik, setNestedObjectValues } from "formik";
+import { Formik, FormikErrors } from "formik";
 
 import React from "react";
 import styled from "styled-components";
@@ -41,9 +41,11 @@ interface AdminContactFields {
   superAdmin: boolean;
 }
 
-interface AdminContactProps extends Partial<AdminContactFields> {
-  status?: "VERIFIED" | "REQUESTED" | "LOADING";
-  initialErrors?: any;
+type Status = "VERIFIED" | "REQUESTED" | "LOADING";
+
+export interface AdminContactProps extends Partial<AdminContactFields> {
+  status?: Status;
+  initialErrors?: FormikErrors<AdminContactFields>;
   onSubmit?: (values: AdminContactFields) => Promise<void | string>;
 }
 
@@ -59,19 +61,11 @@ const AdminContact: React.FC<AdminContactProps> = ({
   <Formik
     initialErrors={initialErrors}
     initialValues={{ firstName, lastName, email, superAdmin }}
-    onSubmit={(values, { setSubmitting, setErrors, setValues }) => {
-      setSubmitting(true);
-      if (onSubmit)
-        onSubmit(values)
-          .then(() => {
-            setValues({ firstName, lastName, email, superAdmin });
-            setSubmitting(false);
-          })
-          .catch(() => {
-            setErrors({ email: "already exists" });
-            setSubmitting(false);
-          });
-    }}
+    onSubmit={(values, { setErrors }) =>
+      onSubmit?.(values).catch(() => {
+        setErrors({ email: "already exists" });
+      })
+    }
   >
     {({ handleChange, values, handleSubmit, isSubmitting, errors }) => (
       <Form onSubmit={handleSubmit}>
@@ -84,12 +78,14 @@ const AdminContact: React.FC<AdminContactProps> = ({
               name="firstName"
               required
               type="text"
+              isInvalid={Boolean(errors.firstName)}
               placeholder="Förnamn"
             />
             <FormControl
               onChange={handleChange}
               value={values.lastName}
               disabled={isSubmitting || Boolean(status)}
+              isInvalid={Boolean(errors.lastName)}
               name="lastName"
               required
               type="text"
@@ -126,7 +122,7 @@ const AdminContact: React.FC<AdminContactProps> = ({
                     type="submit"
                     disabled={isSubmitting || Boolean(status)}
                   >
-                    {(status === "loading" || isSubmitting) && (
+                    {(status === "LOADING" || isSubmitting) && (
                       <>
                         <Spinner animation="border" size="sm" />{" "}
                       </>

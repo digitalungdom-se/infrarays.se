@@ -1,23 +1,14 @@
 import React, { useState } from "react";
-import { deleteFile, downloadFile, uploadFile } from "api/files";
-import {
-  deleteFileSuccess,
-  replaceFile,
-  selectFilesByFileTypeAndApplicant,
-  setFiles,
-} from "./filesSlice";
-import { useDispatch, useSelector } from "react-redux";
 
-import { FileType } from "types/files";
-import Upload from "components/portal/Upload";
-import moment from "moment";
+import Upload from "components/Upload";
+import hasApplicationClosed from "utils/hasApplicationClosed";
 import { toast } from "react-toastify";
+import { useFiles } from "./filesHooks";
 import { useTranslation } from "react-i18next";
 
 interface UploadHookProps {
   accept?: string;
-  fileType: FileType;
-  disabled?: boolean;
+  id: string;
   applicantID?: string;
   multiple?: number;
   maxFileSize?: number;
@@ -31,38 +22,23 @@ interface UploadingFileInfo {
 }
 
 const UploadHook: React.FC<UploadHookProps> = ({
-  disabled,
   accept,
-  fileType,
-  applicantID,
+  id,
   maxFileSize = 5 * 10 ** 6,
   multiple = 1,
   alwaysAbleToUpload,
+  applicantID,
 }) => {
-  const [uploadingFiles, setUploadingFiles] = useState<UploadingFileInfo[]>([]);
-  const dispatch = useDispatch();
-  const files = useSelector(
-    selectFilesByFileTypeAndApplicant(fileType, applicantID)
-  );
   const { t } = useTranslation();
+  const { removeFile, data: files, addFile, loading, downloadFile } = useFiles(
+    applicantID,
+    id
+  );
+  const [uploadingFiles, setUploadingFiles] = useState<UploadingFileInfo[]>([]);
 
-  const handleDelete = (fileID: string, applicantID: string) =>
-    new Promise<Promise<void> | undefined>(() => {
-      const result = window.confirm(
-        "Är du säker på att du vill ta bort filen? Det går inte att ångra."
-      );
-      if (result) {
-        return deleteFile(fileID, applicantID)
-          .then(() => {
-            dispatch(deleteFileSuccess([applicantID, fileType, fileID]));
-          })
-          .catch((err) => {
-            toast.error(err.message);
-          });
-      }
-      return new Promise<void>((res) => {
-        res();
-      });
+  const handleDelete = (fileID: string) =>
+    removeFile(fileID).catch((err) => {
+      toast.error(err.message);
     });
 
   const handleUpload = (file: File, fileName: string) => {
@@ -76,10 +52,8 @@ const UploadHook: React.FC<UploadHookProps> = ({
       ]);
     } else {
       setUploadingFiles([{ name: file.name, uploading: true }]);
-      uploadFile(fileType, file, fileName, applicantID)
-        .then((res) => {
-          if (multiple > 1) dispatch(setFiles([res]));
-          else dispatch(replaceFile(res));
+      addFile(id, file, fileName)
+        .then(() => {
           setUploadingFiles([]);
         })
         .catch((err) => {
@@ -92,11 +66,9 @@ const UploadHook: React.FC<UploadHookProps> = ({
 
   const handleCancel = () => setUploadingFiles([]);
 
-  const applicationHasClosed =
-    moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
-  const disabledUploading =
-    (applicationHasClosed && !alwaysAbleToUpload) || disabled;
-  const label = t(`${fileType}.upload.label`);
+  const closed = hasApplicationClosed();
+  const disabledUploading = (closed && !alwaysAbleToUpload) || loading;
+  const label = t(`chapters.${id}.upload.label`);
 
   return (
     <>
@@ -108,12 +80,8 @@ const UploadHook: React.FC<UploadHookProps> = ({
           accept={accept}
           disabled={multiple > 1 || disabledUploading}
           uploadLabel={t("Choose file")}
-          onDownload={() => downloadFile(file.id, file.userId)}
-          onDelete={
-            disabledUploading && !alwaysAbleToUpload
-              ? undefined
-              : () => handleDelete(file.id, file.userId)
-          }
+          onDownload={() => downloadFile(file.id)}
+          onDelete={() => handleDelete(file.id)}
           onChange={handleUpload}
         />
       ))}
@@ -122,9 +90,9 @@ const UploadHook: React.FC<UploadHookProps> = ({
           uploaded={file.name}
           key={"uploading-" + file.name}
           uploading={file.uploading}
+          disabled
           error={file.error}
           onCancel={handleCancel}
-          uploadLabel={t("Choose file")}
         />
       ))}
       {(files?.length || 0) + uploadingFiles.length < multiple && (
@@ -134,7 +102,6 @@ const UploadHook: React.FC<UploadHookProps> = ({
             accept={accept}
             onChange={handleUpload}
             disabled={disabledUploading}
-            uploadLabel={t("Choose file")}
           />
         </>
       )}

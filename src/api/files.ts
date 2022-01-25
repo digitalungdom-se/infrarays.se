@@ -1,9 +1,18 @@
 import { FileInfo, FileType } from "types/files";
 
 import FileSaver from "file-saver";
-import api from "axios";
+import api from "./axios";
 
-export const downloadFile = (fileID: string, applicantID = "@me") =>
+export const getFilesConfiguration = (applicantID = "@me"): string =>
+  `/application/${applicantID}/file`;
+
+export const getFiles = (applicantID = "@me"): Promise<FileInfo[]> =>
+  api.format.get<FileInfo[]>(getFilesConfiguration(applicantID));
+
+export const downloadFile = (
+  fileID: string,
+  applicantID = "@me"
+): Promise<void> =>
   api
     .get(`application/${applicantID}/file/${fileID}`, {
       responseType: "blob",
@@ -24,20 +33,37 @@ export const downloadFile = (fileID: string, applicantID = "@me") =>
       );
     });
 
-export const deleteFile = (fileID: string, applicantID = "@me") =>
-  api.delete(`/application/${applicantID}/file/${fileID}`);
+export const downloadFullPDF = (applicantID = "@me"): Promise<void> =>
+  api
+    .get(`/application/${applicantID}/pdf`, { responseType: "blob" })
+    .then((res) => {
+      FileSaver.saveAs(
+        res.data,
+        res.headers["content-disposition"].split("filename=")[1]
+      );
+    });
+
+export const deleteFile = (
+  fileID: string,
+  applicantID = "@me"
+): Promise<void> =>
+  api.format.delete(`/application/${applicantID}/file/${fileID}`);
 
 export const uploadFile = (
   fileType: FileType,
   file: File,
   fileName: string,
   applicantID = "@me"
-) => {
+): Promise<FileInfo> => {
+  // create FormData to append file with desired file name
   const form = new FormData();
   form.append("file", file, fileName);
-  return api
-    .post<FileInfo>(`application/${applicantID}/file/${fileType}`, form, {
+  // format the results, useful if there are errors!
+  return api.format.post<FileInfo>(
+    `application/${applicantID}/file/${fileType}`,
+    form,
+    {
       headers: { "Content-Type": "multipart/form-data" },
-    })
-    .then((res) => res.data);
+    }
+  );
 };

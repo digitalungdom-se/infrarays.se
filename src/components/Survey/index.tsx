@@ -2,6 +2,7 @@ import * as Yup from "yup";
 
 import { Accordion, Button, Card, Spinner } from "react-bootstrap";
 import { Form, Formik } from "formik";
+import { Gender, SurveyAnswers } from "types/survey";
 
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
@@ -41,30 +42,17 @@ const StyledCard = styled(Card)`
   }
 `;
 
-type Gender = "MALE" | "FEMALE" | "OTHER" | "UNDISCLOSED";
-
-export interface SurveyAnswers {
-  city: string;
-  school: string;
-  gender: Gender;
-  applicationPortal: number;
-  applicationProcess: number;
-  improvement: string;
-  informant: string;
-}
-
 interface SurveyProps {
   survey?: SurveyAnswers;
-  onSubmit: (
-    surveyAnswers: SurveyAnswers,
-    helpers: {
-      setSubmitting: (isSubmitting: boolean) => void;
-    }
-  ) => Promise<void>;
+  onSubmit: (surveyAnswers: SurveyAnswers) => Promise<void>;
   disabled?: boolean;
 }
 
-const Survey = ({ survey, onSubmit, disabled }: SurveyProps) => {
+const Survey = ({
+  survey,
+  onSubmit,
+  disabled,
+}: SurveyProps): React.ReactElement => {
   const { t } = useTranslation();
 
   const initialValues = {
@@ -89,7 +77,10 @@ const Survey = ({ survey, onSubmit, disabled }: SurveyProps) => {
           <Card.Body>
             <Formik
               initialValues={initialValues}
-              onSubmit={({ gender, ...values }, helpers) => {
+              onSubmit={(
+                { gender, ...values },
+                { setSubmitting, setErrors }
+              ) => {
                 let processError,
                   portalError,
                   genderError = false;
@@ -97,20 +88,17 @@ const Survey = ({ survey, onSubmit, disabled }: SurveyProps) => {
                 if (values.applicationPortal === 0) portalError = true;
                 if (gender === "select") genderError = true;
                 if (processError || portalError || genderError) {
-                  helpers.setErrors({
+                  setErrors({
                     gender: genderError ? "Select an option" : undefined,
                     applicationPortal: portalError ? "required" : undefined,
                     applicationProcess: processError ? "required" : undefined,
                   });
-                  helpers.setSubmitting(false);
+                  setSubmitting(false);
                 } else {
-                  onSubmit(
-                    {
-                      ...values,
-                      gender: gender as Gender,
-                    },
-                    helpers
-                  ).then(() => helpers.setSubmitting(false));
+                  onSubmit({
+                    ...values,
+                    gender: gender as Gender,
+                  }).then(() => setSubmitting(false));
                 }
               }}
               validationSchema={validationSchema}
@@ -184,7 +172,7 @@ const Survey = ({ survey, onSubmit, disabled }: SurveyProps) => {
                       disabled={disabled}
                     >
                       <Rating
-                        initialRating={values.applicationProcess}
+                        // initialRating={values.applicationProcess}
                         onChange={(value) => {
                           if (disabled) return;
                           else {
@@ -208,7 +196,7 @@ const Survey = ({ survey, onSubmit, disabled }: SurveyProps) => {
                       disabled={disabled}
                     >
                       <Rating
-                        initialRating={values.applicationPortal}
+                        // initialRating={values.applicationPortal}
                         onChange={(value) => {
                           if (disabled) return;
                           else {

@@ -11,8 +11,8 @@ const LoginWithCodeRoute = (): React.ReactElement => {
       onSubmit={(values, { setErrors, setSubmitting }) => {
         loginWithCode(atob(emailInBase64 || ''), values.code).catch((err) => {
           setSubmitting(false);
-          if (err.request.status) setErrors({ code: "Wrong code" });
-          else setErrors({ code: "fetch error" });
+          if (err.params.Authorization) setErrors({ code: "Wrong code" });
+          else setErrors({ code: "Network error" });
         });
       }}
     />

@@ -14,7 +14,7 @@ const AutomaticLogin: React.FC = () => {
   useEffect(() => {
     loginWithToken(token || '').catch((err) => {
       if (!err.request.status)
-        setError(["fetch error", "fetch error description"]);
+        setError(["Network error", "fetch error description"]);
       else setError(["Bad link", "Bad link description"]);
     });
   }, [token]);

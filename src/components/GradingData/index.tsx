@@ -1,14 +1,14 @@
-import { GradingData } from "features/admin/adminSlice";
+import { IndividualGradingWithName } from "types/grade";
 import React from "react";
 import { Table } from "react-bootstrap";
 
-interface GradingDataTableProps {
-  applicationGrades: GradingData[];
+interface GradingDataProps {
+  applicationGrades?: IndividualGradingWithName[];
 }
 
-const GradingDataTable = ({
+const GradingData = ({
   applicationGrades = [],
-}: GradingDataTableProps): React.ReactElement => (
+}: GradingDataProps): React.ReactElement => (
   <>
     <Table striped bordered hover>
       <thead>
@@ -24,7 +24,7 @@ const GradingDataTable = ({
       </thead>
       <tbody>
         {applicationGrades.map((grade) => (
-          <tr key={`${grade.id}-grade`}>
+          <tr key={`${grade.firstName}-grade`}>
             <td>{grade.firstName + " " + grade.lastName}</td>
             <td>{grade.cv}</td>
             <td>{grade.coverLetter}</td>
@@ -47,7 +47,7 @@ const GradingDataTable = ({
         {applicationGrades.map(
           (grade) =>
             Boolean(grade.comment) && (
-              <tr key={`${grade.id}-comment`}>
+              <tr key={`${grade.firstName}-comment`}>
                 <td>{grade.firstName + " " + grade.lastName}</td>
                 <td style={{ wordBreak: "break-all" }}>{grade.comment}</td>
               </tr>
@@ -58,4 +58,4 @@ const GradingDataTable = ({
   </>
 );
 
-export default GradingDataTable;
+export default GradingData;

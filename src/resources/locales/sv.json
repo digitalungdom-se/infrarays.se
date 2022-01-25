@@ -9,7 +9,7 @@
   "Invalid value": "Ogiltig format",
   "email exists": "Email är redan registrerad",
   "not verified": "Bekräfta din e-postadress först.",
-  "fetch error": "Nätverksproblem.",
+  "Network error": "Nätverksproblem.",
   "Register here": "Registrera dig här",
   "First name": "Förnamn",
   "Surname": "Efternamn",
@@ -57,7 +57,7 @@
   "UNDISCLOSED": "Vill ej uppge",
   "LoR-description": "<0>För {{name}}</0><1>Tack för att du vill skriva ett rekommendationsbrev!</1><2>Rekommendationsbrevet skall skrivas, signeras och skickas av elevens lärare, tränare eller liknande. Max 1 sida per brev. Filen måste vara en PDF och får max vara 5 MB stor.</2><3>Eleven kommer inte att kunna se brevet, men kommer att få notifikation när det är uppladdat.</3><4>För mer information, se här.</4>",
   "LoR-link": "https://raysforexcellence.se/rekommendationsbev",
-  "You're done!": "Du är klar! Filen är uppladdad och rekommendationsbrevet är mottaget.",
+  "You're done!": "Du är klar!",
   "Upload LoR": "Ladda upp rekommendationsbrev",
   "Choose file": "Välj fil",
   "Couldn't find any student": "Kunde inte hitta någon elev som tillhör denna länk.",
@@ -98,9 +98,9 @@
   "Click to copy": "Klicka koden för att kopiera!",
   "Copied": "Kopierad!",
   "Click to open link": "Klicka här för att öppna uppladdningslänk!",
-  "Only PDF": "Filen måste vara en PDF.",
   "Application has closed": "Ansökningsperioden har stängt",
   "Couldn't upload": "Kunde inte ladda upp fil",
-  "Request failed with status code 415": "Otillåtet filformat. Kolla att din fil verkligen är en PDF och inte endast slutar med .pdf",
-  "average": "Medelvärde"
+  "Only PDF": "Filen måste vara en PDF",
+  "average": "Medelvärde",
+  "Uploading": "Laddar upp"
 }

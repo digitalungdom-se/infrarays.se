@@ -1,17 +1,13 @@
 import { authFail, authSuccess } from "features/auth/authSlice";
 
-import axios from "axios";
-import { clearPortal } from "features/portal/portalSlice";
+import { ServerTokenResponse } from "types/tokens";
+import axios from "api/axios";
+import { clearFiles } from "features/files/filesSlice";
+import { clearRecommendations } from "features/recommendations/recommendationsSlice";
+import { clearSurvey } from "features/survey/surveySlice";
 import i18n from "i18n";
 import store from "store";
 import { toast } from "react-toastify";
-
-export interface ServerTokenResponse {
-  access_token: string;
-  refresh_token: string;
-  expires: number;
-  token_type: string;
-}
 
 export class TokenStorage {
   private static readonly LOCAL_STORAGE_ACCESS_TOKEN = "access_token";
@@ -29,26 +25,24 @@ export class TokenStorage {
   }
 
   public static getNewToken(): Promise<string> {
-    const getNewTokenPromise: Promise<string> = new Promise(
-      (resolve, reject): void => {
-        this.updatingToken = true;
-        axios
-          .post<ServerTokenResponse>("/user/oauth/token", {
-            refresh_token: this.getRefreshToken(),
-            grant_type: "refresh_token",
-          })
-          .then((response) => {
-            this.updatingToken = false;
-            this.storeTokens(response.data);
-            resolve(response.data.access_token);
-          })
-          .catch((error) => {
-            this.updatingToken = false;
-            this.removeTokensAndNotify();
-            console.error(error);
-          });
-      }
-    );
+    const getNewTokenPromise: Promise<string> = new Promise((resolve): void => {
+      this.updatingToken = true;
+      axios
+        .post<ServerTokenResponse>("/user/oauth/token", {
+          refresh_token: this.getRefreshToken(),
+          grant_type: "refresh_token",
+        })
+        .then((response) => {
+          this.updatingToken = false;
+          this.storeTokens(response.data);
+          resolve(response.data.access_token);
+        })
+        .catch((error) => {
+          this.updatingToken = false;
+          this.removeTokensAndNotify();
+          console.error(error);
+        });
+    });
     this.updateTokenPromise = getNewTokenPromise;
     return getNewTokenPromise;
   }
@@ -107,7 +101,9 @@ export class TokenStorage {
     localStorage.removeItem(TokenStorage.LOCAL_STORAGE_REFRESH_TOKEN);
     localStorage.removeItem(TokenStorage.LOCAL_STORAGE_TOKEN_EXPIRY);
     store.dispatch(authFail());
-    store.dispatch(clearPortal());
+    store.dispatch(clearSurvey());
+    store.dispatch(clearFiles());
+    store.dispatch(clearRecommendations());
   }
 
   private static getRefreshToken(): string | null {

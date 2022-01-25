@@ -8,13 +8,15 @@ const AutomaticLogin = lazy(() => import("features/auth/login/AutomaticLogin"));
 const Login = lazy(() => import("features/auth/login"));
 const Portal = lazy(() => import("features/portal"));
 const Register = lazy(() => import("features/auth/register"));
-const NoMatch = lazy(() => import("features/nomatch"));
-const Recommendation = lazy(() => import("features/recommendation"));
+const NoMatch = lazy(() => import("components/NoMatch"));
+const Recommendation = lazy(
+  () => import("features/files/UploadRecommendationLetter")
+);
 const LoginWithCodeRoute = lazy(
   () => import("features/auth/login/LoginWithCodeRoute")
 );
 const GDPR = lazy(() => import("features/GDPR"));
-const AdminPortal = lazy(() => import("features/admin"));
+const AdminPortal = lazy(() => import("features/admin/AdminView"));
 
 const AppRouter: React.FC = () => (
   <Router>

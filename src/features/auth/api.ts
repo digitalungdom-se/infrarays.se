@@ -1,35 +1,19 @@
-import Axios, { AxiosResponse } from "axios";
-import { ServerTokenResponse, TokenStorage } from "utils/tokenInterceptor";
+import { authorizeWithEmailAndCode, authorizeWithToken } from "api/auth";
+
+import { ServerTokenResponse } from "types/tokens";
+import { TokenStorage } from "utils/tokenInterceptor";
 
 export const loginWithCode = (
   email: string,
-  loginCode: string
-): Promise<AxiosResponse<ServerTokenResponse>> =>
-  Axios.post<ServerTokenResponse>(
-    "/user/oauth/token",
-    {
-      grant_type: "client_credentials",
-    },
-    {
-      headers: { Authorization: `Email ${btoa(email + ":" + loginCode)}` },
-    }
-  ).then((res) => {
-    TokenStorage.storeTokens(res.data);
+  code: string
+): Promise<ServerTokenResponse> =>
+  authorizeWithEmailAndCode(email, code).then((res) => {
+    TokenStorage.storeTokens(res);
     return res;
   });
 
-export const loginWithToken = (
-  token: string
-): Promise<AxiosResponse<ServerTokenResponse>> =>
-  Axios.post<ServerTokenResponse>(
-    "/user/oauth/token",
-    {
-      grant_type: "client_credentials",
-    },
-    {
-      headers: { Authorization: `Email ${token}` },
-    }
-  ).then((res) => {
-    TokenStorage.storeTokens(res.data);
+export const loginWithToken = (token: string): Promise<ServerTokenResponse> =>
+  authorizeWithToken(token).then((res) => {
+    TokenStorage.storeTokens(res);
     return res;
   });
