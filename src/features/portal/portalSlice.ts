@@ -128,13 +128,15 @@ export const selectSurvey = (state: RootState): SurveyAnswers | undefined =>
 export const selectProgress = (state: RootState): number => {
   let i = 0;
   const check: FileType[] = ["CV", "COVER_LETTER", "GRADES", "ESSAY"];
-  check.forEach((name: FileType) => {
-    if (
-      state.portal.filesByType[name] !== undefined &&
-      state.portal.filesByType[name]?.length
-    )
-      i++;
-  });
+  console.log(state.files)
+
+  const applicantId = state.auth.user?.id
+  if(applicantId && state.files.fileTypesByApplicants[applicantId]) {
+    check.forEach((name) => {
+      if(state.files.fileTypesByApplicants[applicantId][name]?.length) i++;
+    })
+  }
+
   if (state.portal.survey !== undefined) i++;
   return i;
 };
