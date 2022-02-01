@@ -23,7 +23,7 @@ const AppRouter: React.FC = () => (
         <ProtectedRoute exact path="/" shouldBeAuthenticated>
           <Portal />
         </ProtectedRoute>
-        <ProtectedRoute shouldBeAuthenticated={false} path="/login" exact>
+        <ProtectedRoute exact shouldBeAuthenticated={false} path="/login">
           <Login />
         </ProtectedRoute>
         <ProtectedRoute shouldBeAuthenticated={false} path="/register">

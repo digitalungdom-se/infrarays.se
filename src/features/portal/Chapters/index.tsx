@@ -32,6 +32,7 @@ const Chapters: React.FC<ChaptersProps> = ({
             fileType={chapter.fileType as FileType}
             disabled={filesLoading}
             multiple={chapter.upload.multiple}
+            me
           />
         )}
         {chapter.contactPeople && <References loading={referencesLoading} />}

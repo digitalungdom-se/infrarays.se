@@ -31,6 +31,7 @@ const filesSlice = createSlice({
     },
     replaceFile(state, action: PayloadAction<FileInfo>) {
       const file = action.payload;
+      if(state.fileTypesByApplicants[file.userId] === undefined) state.fileTypesByApplicants[file.userId] = {};
       state.fileTypesByApplicants[file.userId][file.type] = [file];
     },
     uploadSuccess(state, action: PayloadAction<FileInfo>) {

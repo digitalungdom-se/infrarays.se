@@ -22,6 +22,7 @@ interface UploadHookProps {
   multiple?: number;
   maxFileSize?: number;
   alwaysAbleToUpload?: boolean;
+  me?: boolean;
 }
 
 interface UploadingFileInfo {
@@ -38,6 +39,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
   maxFileSize = 5 * 10 ** 6,
   multiple = 1,
   alwaysAbleToUpload,
+  me = false,
 }) => {
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFileInfo[]>([]);
   const dispatch = useDispatch();
@@ -52,7 +54,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
         "Är du säker på att du vill ta bort filen? Det går inte att ångra."
       );
       if (result) {
-        return deleteFile(fileID, applicantID)
+        return deleteFile(fileID, me ? "@me" : applicantID)
           .then(() => {
             dispatch(deleteFileSuccess([applicantID, fileType, fileID]));
           })
@@ -76,7 +78,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
       ]);
     } else {
       setUploadingFiles([{ name: file.name, uploading: true }]);
-      uploadFile(fileType, file, fileName, applicantID)
+      uploadFile(fileType, file, fileName, me ? "@me" : applicantID)
         .then((res) => {
           if (multiple > 1) dispatch(setFiles([res]));
           else dispatch(replaceFile(res));
@@ -108,7 +110,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
           accept={accept}
           disabled={multiple > 1 || disabledUploading}
           uploadLabel={t("Choose file")}
-          onDownload={() => downloadFile(file.id, file.userId)}
+          onDownload={() => downloadFile(file.id, me ? "@me" : file.userId)}
           onDelete={
             disabledUploading && !alwaysAbleToUpload
               ? undefined
