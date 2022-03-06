@@ -3,7 +3,7 @@ import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
 import useAxios from "axios-hooks";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 
 interface UseStatistics {
   loading: boolean;
@@ -98,7 +98,7 @@ function useStatistics(): UseStatistics {
 
 interface StringTableProps {
   answers: string[];
-  title: string;
+  title: React.ReactNode;
 }
 
 function StringTable({ answers, title }: StringTableProps) {
@@ -198,7 +198,14 @@ function StatisticsPage(): React.ReactElement {
         answers={data.improvement}
       />
       <StringTable
-        title={t("How did you hear about Rays?")}
+        title={
+          <Trans i18nKey="How did you hear about Rays?">
+            How did you hear about Rays?
+            <span style={{display: "block", fontSize: "0.8rem"}}>
+              If you heard it from someone who previously attended Rays (an xRay), please write their name!
+            </span>
+          </Trans>
+        }
         answers={data.informant}
       />
     </div>
