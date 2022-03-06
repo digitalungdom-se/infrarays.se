@@ -9,7 +9,7 @@ import FormLabel from "react-bootstrap/FormLabel";
 import Rating from "components/Rating";
 import React from "react";
 import styled from "styled-components";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 const validationSchema = Yup.object().shape({
   city: Yup.string(),
@@ -238,7 +238,14 @@ const Survey = ({ survey, onSubmit, disabled }: SurveyProps) => {
                     />
                   </FormGroup>
                   <FormGroup controlId="form-city">
-                    <FormLabel>{t("How did you hear about Rays?")}</FormLabel>
+                    <FormLabel>
+                      <Trans i18nKey="How did you hear about Rays?">
+                        How did you hear about Rays?
+                        <span style={{display: "block", fontSize: "0.8rem"}}>
+                          If you heard it from someone who previously attended Rays (an xRay), please write their name!
+                        </span>
+                      </Trans>
+                    </FormLabel>
                     <FormControl
                       value={values.informant}
                       onChange={handleChange}
