@@ -13,6 +13,7 @@ import Upload from "components/portal/Upload";
 import moment from "moment";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { selectIsFinnish } from "features/application/applicationSlice";
 
 interface UploadHookProps {
   accept?: string;
@@ -46,6 +47,7 @@ const UploadHook: React.FC<UploadHookProps> = ({
   const files = useSelector(
     selectFilesByFileTypeAndApplicant(fileType, applicantID)
   );
+  const isFinnish = useSelector(selectIsFinnish);
   const { t } = useTranslation();
 
   const handleDelete = (fileID: string, applicantID: string) =>
@@ -94,8 +96,9 @@ const UploadHook: React.FC<UploadHookProps> = ({
 
   const handleCancel = () => setUploadingFiles([]);
 
-  const applicationHasClosed =
-    moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
+  const applicationHasClosed = isFinnish
+    ? moment("04-23", "MM-DD").utc().diff(Date.now()) < 0
+    : moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
   const disabledUploading =
     (applicationHasClosed && !alwaysAbleToUpload) || disabled;
   const label = t(`${fileType}.upload.label`);
