@@ -33,6 +33,7 @@ export type GradeFormValues = Record<NumericalGradeField, number> & {
 type GradingField =
   | "cv"
   | "coverLetter"
+  | "essays"
   | "grades"
   | "recommendations"
   | "overall";
@@ -100,6 +101,7 @@ const adminSlice = createSlice({
             score =
               (application?.cv as number) +
               (application?.coverLetter as number) +
+              (application?.essays as number) +
               (application?.grades as number) +
               (application?.recommendations as number) +
               (application?.overall as number);
@@ -152,14 +154,14 @@ export interface GradingData extends Grading {
   lastName: string;
 }
 
-export const selectGradesByApplicant = (userID: string) => (
-  state: RootState
-): GradingData[] | undefined =>
-  state.admin.grades[userID]?.map((grade) => ({
-    ...grade,
-    firstName: state.admin.admins[grade.adminId]?.firstName,
-    lastName: state.admin.admins[grade.adminId]?.lastName,
-  }));
+export const selectGradesByApplicant =
+  (userID: string) =>
+  (state: RootState): GradingData[] | undefined =>
+    state.admin.grades[userID]?.map((grade) => ({
+      ...grade,
+      firstName: state.admin.admins[grade.adminId]?.firstName,
+      lastName: state.admin.admins[grade.adminId]?.lastName,
+    }));
 
 export const selectMyGrading = (
   state: RootState,
