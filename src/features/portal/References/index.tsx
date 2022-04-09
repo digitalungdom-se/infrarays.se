@@ -9,6 +9,7 @@ import { RootState } from "store";
 import moment from "moment";
 import { selectRecommendation } from "features/portal/portalSlice";
 import { toast } from "react-toastify";
+import { selectIsFinnish } from "features/application/applicationSlice";
 
 const UploadLink = ({ code }: { code: string }) => (
   <a
@@ -38,9 +39,11 @@ const Person = ({
   const recommendation = useSelector((state: RootState) =>
     selectRecommendation(state, recommendationIndex)
   );
+  const isFinnish = useSelector(selectIsFinnish);
   const dispatch = useDispatch();
-  const applicationHasClosed =
-    moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
+  const applicationHasClosed = isFinnish
+    ? moment("04-23", "MM-DD").utc().diff(Date.now()) < 0
+    : moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
   function handleSubmit(email: string) {
     setLoading(true);
     Axios.post<Recommendation>(

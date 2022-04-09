@@ -101,5 +101,6 @@
   "Application has closed": "Application period has closed",
   "Couldn't upload": "Couldn't upload file",
   "Request failed with status code 415": "Unsupported media file. Check that your file really is a PDF and doesn't only end in .pdf",
-  "average": "Average"
+  "average": "Average",
+  "Application has closed for Sweden": "Application period has closed for Swedish students."
 }
