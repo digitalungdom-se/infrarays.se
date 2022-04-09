@@ -55,6 +55,9 @@ const Hook = () => {
               {t("Application complete")}
             </Alert>
           )}
+          <Alert variant="warning" style={{ marginTop: 10 }}>
+            {t("Application has closed for Sweden")}
+          </Alert>
           <hr style={{ color: "#b8b8b8" }} />
         </div>
         <div>

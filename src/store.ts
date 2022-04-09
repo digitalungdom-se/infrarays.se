@@ -18,6 +18,7 @@ import admin from "features/admin/adminSlice";
 import auth from "features/auth/authSlice";
 import files from "features/files/filesSlice";
 import portal from "features/portal/portalSlice";
+import application from "features/application/applicationSlice";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
 const persistConfig = {
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   portal,
   admin,
   files,
+  application
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -6,6 +6,7 @@ import Axios from "axios";
 import React from "react";
 import moment from "moment";
 import useAxios from "axios-hooks";
+import { selectIsFinnish } from "features/application/applicationSlice";
 
 function useSurvey(): [SurveyAnswers | undefined, boolean] {
   const [{ data, loading }] = useAxios("/application/@me/survey");
@@ -18,9 +19,11 @@ function useSurvey(): [SurveyAnswers | undefined, boolean] {
 const PortalSurvey = () => {
   const [survey, loading] = useSurvey();
   const dispatch = useDispatch();
+  const isFinnish = useSelector(selectIsFinnish);
   if (loading) return <div></div>;
-  const applicationHasClosed =
-    moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
+  const applicationHasClosed = isFinnish
+    ? moment("04-23", "MM-DD").utc().diff(Date.now()) < 0
+    : moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
   return (
     <Survey
       survey={survey}
