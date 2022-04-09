@@ -23,11 +23,11 @@ export default function AuthenticatedLayer(
   useEffect(() => {
     Axios.get("/user/@me")
       .then((res) => {
-        Axios.get("/application/@me").then(r2 => {
-          dispatch(authSuccess());
-          dispatch(userInfoSuccess(res.data));
-          dispatch(applicationSuccess(r2.data))
-        })
+        dispatch(authSuccess());
+        dispatch(userInfoSuccess(res.data));
+        Axios.get("/application/@me").then((r2) => {
+          dispatch(applicationSuccess(r2.data));
+        });
       })
       .catch(console.error);
   }, [isAuthenticated]);
