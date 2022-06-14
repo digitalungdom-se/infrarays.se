@@ -1,0 +1,87 @@
+import { MailIcon } from "@heroicons/react/solid";
+import Button from "components/Button";
+import FormInput from "components/FormInput";
+import Plate from "components/Plate";
+import Head from "next/head";
+import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import useShowCode from "utils/showCode";
+import { useRouter } from "next/router";
+import { useAuth } from "hooks/auth";
+import { useSendLoginCode } from "hooks/auth";
+
+export default function Home(): JSX.Element {
+  useAuth(false);
+
+  const {
+    register,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    setError,
+  } = useForm();
+  const showCode = useShowCode();
+  const router = useRouter();
+  const [sendLoginCode, sendingCode] = useSendLoginCode();
+
+  return (
+    <>
+      <Plate className="max-w-sm py-5">
+        <Head>
+          <title>Rays ansökningsportal</title>
+        </Head>
+        <div className="h-24 relative">
+          <Image src="/rays.png" layout="fill" objectFit="contain" alt="Rays" />
+        </div>
+        <form
+          className="w-full py-8"
+          onSubmit={handleSubmit(
+            async ({ email }) =>
+              await sendLoginCode(email)
+                .then((res) => {
+                  console.log(res);
+                  router.push(`/login/${btoa(email)}`);
+                  res && showCode(res as string);
+                })
+                .catch((err) => {
+                  if (err.general) setError("dummy", err.general.message);
+                  else
+                    setError("email", {
+                      type: "value",
+                      message: err.params.email,
+                    });
+                })
+          )}
+        >
+          <FormInput
+            type="email"
+            prependIcon={<MailIcon />}
+            className="w-full"
+            placeholder="Email"
+            error={errors.email}
+            disabled={isSubmitting}
+            {...register("email")}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="email"
+            render={({ message }) => (
+              <label className="text-red-600">{message}</label>
+            )}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="dummy"
+            render={({ message }) => (
+              <label className="text-red-600">{message}</label>
+            )}
+          />
+          <Button className="mt-8" disabled={isSubmitting}>
+            Sign in
+          </Button>
+        </form>
+      </Plate>
+      <Plate className="max-w-sm mt-6">Hello</Plate>
+    </>
+  );
+}

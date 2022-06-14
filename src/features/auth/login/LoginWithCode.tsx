@@ -1,8 +1,8 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import { Trans, WithTranslation, withTranslation } from "react-i18next";
 
-import Button from "react-bootstrap/Button";
-import CenterCard from "components/CenterCard";
+import Button from "components/Button";
+import Plate from "components/Plate";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
@@ -27,16 +27,16 @@ const LoginWithCode: React.FC<LoginWithCodeProps> = ({
   t,
   email,
 }) => (
-  <CenterCard title={t("Login")} maxWidth="400px">
+  <Plate title={t("Login")} className="max-w-sm">
     <Formik initialValues={{ code: "" }} onSubmit={onSubmit}>
       {({ values, handleChange, isSubmitting, errors }) => (
         <Form>
-          <div style={{ marginBottom: 20 }}>
+          <p className="mb-4">
             <Trans i18nKey="Check your email">
               Check your email ({{ email }}) for a login code. Paste it down
               below and log in.
             </Trans>
-          </div>
+          </p>
           <StyledGroup>
             <FormControl
               name="code"
@@ -53,22 +53,14 @@ const LoginWithCode: React.FC<LoginWithCodeProps> = ({
             </FormControl.Feedback>
           </StyledGroup>
           <FormGroup>
-            <Button
-              size="lg"
-              variant="custom"
-              type="submit"
-              style={{
-                width: "100%",
-              }}
-              disabled={isSubmitting}
-            >
+            <Button disabled={isSubmitting}>
               {isSubmitting ? t("Logging in") : t("Login")}
             </Button>
           </FormGroup>
         </Form>
       )}
     </Formik>
-  </CenterCard>
+  </Plate>
 );
 
 export default withTranslation()(LoginWithCode);

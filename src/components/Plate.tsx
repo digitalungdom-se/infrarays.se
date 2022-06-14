@@ -1,18 +1,27 @@
-import styled from "styled-components";
+import clsx from "clsx";
 
-const Plate = styled.div`
-  padding: 20px 36px;
-  @media (max-width: 400px) {
-    padding: 20px 5%;
-  }
-  background: #fff;
-  color: #000;
-  -moz-box-shadow: 0 0 3px #ccc;
-  -webkit-box-shadow: 0 0 3px #ccc;
-  -o-box-shadow: 0 0 3px #ccc;
-  box-shadow: 0 0 3px #ccc;
-  border-radius: 8px;
-  min-width: 300px;
-`;
+type PlateProps = {
+  className?: string;
+  title?: string;
+};
+
+const Plate: React.FC<PlateProps> = ({ title, children, className }) => (
+  <div
+    className={clsx(
+      "rounded bg-white py-3 px-5 border shadow-sm w-full",
+      className
+    )}
+  >
+    {title && (
+      <>
+        <h1 className="text-center text-brand-600 text-4xl font-medium">
+          {title}
+        </h1>
+        <hr />
+      </>
+    )}
+    {children}
+  </div>
+);
 
 export default Plate;

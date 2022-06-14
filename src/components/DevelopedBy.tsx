@@ -1,16 +1,9 @@
 import { Trans, WithTranslation, withTranslation } from "react-i18next";
 
 import React from "react";
-import styled from "styled-components";
-
-const StyledDiv = styled.div`
-  text-align: center;
-  width: 100%;
-  height: 2.5rem; /* Footer height */
-`;
 
 const DevelopedBy: React.FC<WithTranslation> = () => (
-  <StyledDiv>
+  <div className="my-4">
     <Trans i18nKey="Developed by">
       Developed by
       <a
@@ -21,7 +14,7 @@ const DevelopedBy: React.FC<WithTranslation> = () => (
         Digital Ungdom
       </a>
     </Trans>
-  </StyledDiv>
+  </div>
 );
 
 export default withTranslation()(DevelopedBy);

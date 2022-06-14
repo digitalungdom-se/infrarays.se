@@ -41,7 +41,9 @@ const format: FormattedRequests = {
       .catch(formatErrors),
 };
 
-export default {
+const API = {
   ...api,
   format,
 };
+
+export default API;

@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import CustomThemeProvider from "./../src/components/CustomThemeProvider";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../src/i18n";
+import "../src/styles/globals.css";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

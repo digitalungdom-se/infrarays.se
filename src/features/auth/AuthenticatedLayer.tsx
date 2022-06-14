@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
-import { selectAuthenticated, userInfoSuccess } from "features/auth/authSlice";
+import {
+  authFail,
+  selectAuthenticated,
+  userInfoSuccess,
+} from "features/auth/authSlice";
 
 import { getUser } from "api/user";
 import { useDispatch } from "react-redux";
@@ -19,7 +23,9 @@ export default function AuthenticatedLayer(
       .then((res) => {
         dispatch(userInfoSuccess(res));
       })
-      .catch(console.error);
-  }, [isAuthenticated]);
+      .catch((err) => {
+        if (err.params.Authorization) dispatch(authFail());
+      });
+  }, [dispatch, isAuthenticated]);
   return props.children;
 }

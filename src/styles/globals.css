@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-color-50: #fef2f2;
+  --brand-color-100: #fee2e2;
+  --brand-color-200: #fecaca;
+  --brand-color-300: #fca5a5;
+  --brand-color-400: #f87171;
+  --brand-color-500: #ef4444;
+  --brand-color-600: #dc2626;
+  --brand-color-700: #b91c1c;
+  --brand-color-800: #991b1b;
+  --brand-color-900: #7f1d1d;
+}

@@ -1,5 +1,5 @@
-import { deadline } from "config/portal.json";
+import portal from "config/portal.json";
 
-const hasApplicationClosed = (): boolean => deadline < Date.now();
+const hasApplicationClosed = (): boolean => portal.deadline < Date.now();
 
 export default hasApplicationClosed;

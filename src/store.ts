@@ -1,25 +1,23 @@
 import {
+  persistStore,
+  persistReducer,
   FLUSH,
+  REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
   REGISTER,
-  REHYDRATE,
-  persistReducer,
-  persistStore,
 } from "redux-persist";
-import {
-  combineReducers,
-  configureStore,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
-
-import admin from "features/admin/adminSlice";
+import storage from "redux-persist/lib/storage";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+// Or from '@reduxjs/toolkit/query/react'
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { authApi } from "services/auth";
+import { userApi } from "services/user";
+import { applicationApi } from "services/application";
+import { fileApi } from "services/file";
+import { surveyApi } from "services/survey";
 import auth from "features/auth/authSlice";
-import files from "features/files/filesSlice";
-import recommendations from "features/recommendations/recommendationsSlice";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import survey from "features/survey/surveySlice";
 
 const persistConfig = {
   key: "root",
@@ -29,22 +27,30 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth,
-  admin,
-  files,
-  recommendations,
-  survey,
+  [authApi.reducerPath]: authApi.reducer,
+  [userApi.reducerPath]: userApi.reducer,
+  [applicationApi.reducerPath]: applicationApi.reducer,
+  [fileApi.reducerPath]: fileApi.reducer,
+  [surveyApi.reducerPath]: surveyApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const store = configureStore({
+export const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }),
+  // Adding the api middleware enables caching, invalidation, polling,
+  // and other useful features of `rtk-query`.
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(authApi.middleware, userApi.middleware),
 });
+
+// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
+// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
+setupListeners(store.dispatch);
 
 export const persistor = persistStore(store);
 
