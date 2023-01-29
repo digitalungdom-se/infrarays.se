@@ -42,7 +42,7 @@ const Person = ({
   const isFinnish = useSelector(selectIsFinnish);
   const dispatch = useDispatch();
   const applicationHasClosed = isFinnish
-    ? moment("04-23", "MM-DD").utc().diff(Date.now()) < 0
+    ? moment("04-01", "MM-DD").utc().diff(Date.now()) < 0
     : moment.utc().month(2).endOf("month").diff(Date.now()) < 0;
   function handleSubmit(email: string) {
     setLoading(true);

@@ -33,7 +33,7 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
   const { push } = useHistory();
   const toastId = React.useRef<React.ReactText>(null);
   const applicationHasClosed =
-    moment("04-23", "MM-DD").utc().diff(Date.now()) < 0;
+    moment("04-01", "MM-DD").utc().diff(Date.now()) < 0;
   return (
     <Center maxWidth="850px">
       <Plate>
@@ -233,12 +233,6 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                   {t(errors.dummy)}
                 </Alert>
               )}
-              <Alert
-                style={{ width: "100%", margin: "10px 5%" }}
-                variant="warning"
-              >
-                {t("Application has closed for Sweden")}
-              </Alert>
               <Button
                 size="lg"
                 type="submit"
