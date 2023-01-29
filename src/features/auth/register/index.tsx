@@ -203,7 +203,6 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                     type="radio"
                     id="custom-inline-radio-2"
                     name="finnish"
-                    disabled
                   />
                 </FormControl>
                 <FormControl.Feedback type="invalid">
