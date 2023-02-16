@@ -98,7 +98,7 @@ class TopList extends React.Component<TopListProps, TopListState> {
 
     const dataWithIndex = this.props.applications.map((application, index) => ({
       ...application,
-      name: `${application.firstName} ${application.lastName}${application.finnish ? "(finsk)" : ""}`,
+      name: `${application.firstName} ${application.lastName}${application.finnish ? " (finsk)" : ""}`,
       index,
     }));
 
