@@ -1,8 +1,9 @@
 import { Redirect, Route, RouteProps } from "react-router-dom";
 
 import React from "react";
-import { selectUserType } from "features/auth/authSlice";
+// import { selectUserType } from "features/auth/authSlice";
 import { useSelector } from "react-redux";
+import { useGetUserQuery } from "services/user";
 
 interface ProtectedRouteProps extends RouteProps {
   shouldBeAuthenticated?: boolean;
@@ -15,7 +16,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   ...rest
 }) => {
-  const userType = useSelector(selectUserType);
+  // const userType = useSelector(selectUserType);
+  const { data } = useGetUserQuery();
+  const userType = data?.type;
   if (admin && userType === "APPLICANT") return <Redirect to="/" />;
   if (
     admin !== true &&
@@ -25,19 +28,16 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Redirect to="/admin" />;
 
   return (
-    <Route
-      {...rest}
-    >
-      { shouldBeAuthenticated === Boolean(userType) ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: shouldBeAuthenticated ? "/login" : "/",
-            }}
-          />
-        )
-      }
+    <Route {...rest}>
+      {shouldBeAuthenticated === Boolean(userType) ? (
+        children
+      ) : (
+        <Redirect
+          to={{
+            pathname: shouldBeAuthenticated ? "/login" : "/",
+          }}
+        />
+      )}
     </Route>
   );
 };

@@ -70,6 +70,8 @@ export interface UploadProps {
    * Function that is called when a file is chosen
    */
   onChange?: (file: File, name: string) => void;
+
+  deleting?: boolean;
 }
 
 const Upload: React.FC<UploadProps> = ({
@@ -84,10 +86,11 @@ const Upload: React.FC<UploadProps> = ({
   error,
   uploadLabel,
   disabled,
+  deleting,
 }) => {
   const [fileName, updateFileName] = useState("");
   const [downloading, setDownloading] = useState<boolean>(false);
-  const [deleting, setDeleting] = useState<boolean>(false);
+  // const [deleting, setDeleting] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const onToggle = (
     isOpen: boolean,
@@ -213,11 +216,12 @@ const Upload: React.FC<UploadProps> = ({
                     as="button"
                     disabled={deleting}
                     onClick={() => {
-                      setDeleting(true);
-                      if (onDelete)
-                        onDelete()?.then(() => {
-                          setDeleting(false);
-                        });
+                      onDelete?.();
+                      // setDeleting(true);
+                      // if (onDelete)
+                      //   onDelete()?.then(() => {
+                      //     setDeleting(false);
+                      //   });
                     }}
                   >
                     {deleting ? (

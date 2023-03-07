@@ -10,9 +10,14 @@ import useShowCode from "utils/showCode";
 import { useRouter } from "next/router";
 import { useAuth } from "hooks/auth";
 import { useSendLoginCode } from "hooks/auth";
+import { Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import StyledGroup from "components/StyledGroup";
 
 export default function Home(): JSX.Element {
   useAuth(false);
+
+  const { t } = useTranslation();
 
   const {
     register,
@@ -48,12 +53,29 @@ export default function Home(): JSX.Element {
                   else
                     setError("email", {
                       type: "value",
-                      message: err.params.email,
+                      message: err.data.errors[0].param.message,
                     });
                 })
           )}
         >
-          <FormInput
+          <StyledGroup controlId="form-email" style={{ marginTop: 50 }}>
+            <FormControl
+              type="email"
+              placeholder="E-mail"
+              autoFocus
+              required
+              {...register("email", {
+                required: true,
+              })}
+              isInvalid={!!errors.email}
+              disabled={isSubmitting}
+            />
+            <FormLabel>E-mail</FormLabel>
+            <FormControl.Feedback type="invalid">
+              {errors.email && t(errors.email)}
+            </FormControl.Feedback>
+          </StyledGroup>
+          {/* <FormInput
             type="email"
             prependIcon={<MailIcon />}
             className="w-full"
@@ -75,7 +97,7 @@ export default function Home(): JSX.Element {
             render={({ message }) => (
               <label className="text-red-600">{message}</label>
             )}
-          />
+          /> */}
           <Button className="mt-8" disabled={isSubmitting}>
             Sign in
           </Button>

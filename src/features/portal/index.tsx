@@ -23,7 +23,7 @@ const Portal = (): React.ReactElement => {
       <Progress />
       <hr style={{ color: "#b8b8b8" }} />
       <div>
-        {/* <Chapters chapters={chapters} /> */}
+        <Chapters chapters={chapters} />
         {/* <Progress />
          */}
         <div style={{ padding: "3rem 0" }}>

@@ -11,7 +11,7 @@ export const userApi = createApi({
   baseQuery,
   tagTypes: ["User"],
   endpoints: (builder) => ({
-    getUser: builder.query<User, string>({
+    getUser: builder.query<User, string | void>({
       query: (user = "@me") => ({
         url: `/user/${user}`,
       }),

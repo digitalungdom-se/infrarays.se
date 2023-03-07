@@ -18,13 +18,11 @@ export const downloadFile = (
       responseType: "blob",
     })
     .then((res) => {
-      const utf8FileName = res.headers["content-disposition"].split(
-        "filename*=UTF-8''"
-      )[1];
+      const utf8FileName =
+        res.headers["content-disposition"].split("filename*=UTF-8''")[1];
       const decodedName = decodeURIComponent(utf8FileName);
-      const normalName = res.headers["content-disposition"].split(
-        "filename="
-      )[1];
+      const normalName =
+        res.headers["content-disposition"].split("filename=")[1];
       FileSaver.saveAs(
         res.data,
         utf8FileName === undefined

@@ -45,7 +45,12 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(authApi.middleware, userApi.middleware),
+    }).concat(
+      authApi.middleware,
+      userApi.middleware,
+      fileApi.middleware,
+      surveyApi.middleware
+    ),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

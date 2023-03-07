@@ -19,7 +19,7 @@ function CustomChapter(props: Chapter) {
       return (
         <Upload
           accept={props.upload?.accept}
-          id={props.id}
+          type={props.id}
           multiple={props.upload?.multiple}
         />
       );

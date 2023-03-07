@@ -3,12 +3,20 @@ import React, { useState } from "react";
 import Upload from "components/Upload";
 import hasApplicationClosed from "utils/hasApplicationClosed";
 import { toast } from "react-toastify";
-import { useFiles } from "./filesHooks";
+// import { useFiles } from "./filesHooks";
 import { useTranslation } from "react-i18next";
+import {
+  useDeleteFileMutation,
+  useGetFilesByType,
+  useGetFilesQuery,
+  useLazyDownloadFileQuery,
+  useUploadFileMutation,
+} from "services/file";
+import { FileType } from "types/files";
 
 interface UploadHookProps {
   accept?: string;
-  id: string;
+  type: FileType;
   applicantID?: string;
   multiple?: number;
   maxFileSize?: number;
@@ -23,23 +31,33 @@ interface UploadingFileInfo {
 
 const UploadHook: React.FC<UploadHookProps> = ({
   accept,
-  id,
+  type,
   maxFileSize = 5 * 10 ** 6,
   multiple = 1,
   alwaysAbleToUpload,
   applicantID,
 }) => {
   const { t } = useTranslation();
-  const { removeFile, data: files, addFile, loading, downloadFile } = useFiles(
-    applicantID,
-    id
+  const { files, isLoading: filesLoading } = useGetFilesByType(
+    type,
+    applicantID
   );
+  const [downloadFile] = useLazyDownloadFileQuery();
+  const [deleteFile, { isLoading: deleteFileLoading }] =
+    useDeleteFileMutation();
+  const [uploadFile, { isLoading: uploadLoading }] = useUploadFileMutation();
+
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFileInfo[]>([]);
 
   const handleDelete = (fileID: string) =>
-    removeFile(fileID).catch((err) => {
-      toast.error(err.message);
-    });
+    deleteFile({
+      fileID,
+      applicantID,
+    })
+      .then(() => {})
+      .catch((err: any) => {
+        toast.error(err.message);
+      });
 
   const handleUpload = (file: File, fileName: string) => {
     if (file.size > maxFileSize) {
@@ -52,13 +70,21 @@ const UploadHook: React.FC<UploadHookProps> = ({
       ]);
     } else {
       setUploadingFiles([{ name: file.name, uploading: true }]);
-      addFile(id, file, fileName)
+      uploadFile({
+        file,
+        applicantID,
+        fileType: type,
+      })
         .then(() => {
           setUploadingFiles([]);
         })
         .catch((err) => {
           setUploadingFiles([
-            { name: file.name, uploading: false, error: err.message },
+            {
+              name: file.name,
+              error: err.message,
+              uploading: false,
+            },
           ]);
         });
     }
@@ -67,8 +93,9 @@ const UploadHook: React.FC<UploadHookProps> = ({
   const handleCancel = () => setUploadingFiles([]);
 
   const closed = hasApplicationClosed();
-  const disabledUploading = (closed && !alwaysAbleToUpload) || loading;
-  const label = t(`chapters.${id}.upload.label`);
+  const disabledUploading =
+    (closed && !alwaysAbleToUpload) || filesLoading || uploadLoading;
+  const label = t(`chapters.${type}.upload.label`);
 
   return (
     <>
@@ -80,7 +107,14 @@ const UploadHook: React.FC<UploadHookProps> = ({
           accept={accept}
           disabled={multiple > 1 || disabledUploading}
           uploadLabel={t("Choose file")}
-          onDownload={() => downloadFile(file.id)}
+          uploading={uploadLoading}
+          onDownload={() =>
+            downloadFile({
+              fileID: file.id,
+              applicantID,
+            }).then(() => {})
+          }
+          deleting={deleteFileLoading}
           onDelete={() => handleDelete(file.id)}
           onChange={handleUpload}
         />
@@ -101,7 +135,9 @@ const UploadHook: React.FC<UploadHookProps> = ({
             label={label}
             accept={accept}
             onChange={handleUpload}
-            disabled={disabledUploading}
+            disabled={disabledUploading || uploadingFiles.length > 0}
+            uploadLabel={t("Choose file")}
+            uploading={uploadLoading}
           />
         </>
       )}

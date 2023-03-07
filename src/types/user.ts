@@ -5,7 +5,7 @@ export type User = {
   id: string;
   created: string;
   verified: boolean;
-  type?: UserTypes;
+  type: UserTypes;
 };
 
 export type UserTypes = Applicant["type"] & Admin["type"];

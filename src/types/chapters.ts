@@ -1,9 +1,10 @@
+import { FileType } from "./files";
 import { CustomSurveyQuestion } from "./survey";
 
 export type Chapter = FileChapter | SurveyChapter | ReferenceChapter;
 
 export type FileChapter = {
-  id: string;
+  id: FileType;
   type: "FILES";
   upload: {
     multiple: number;
