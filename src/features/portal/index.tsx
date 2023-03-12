@@ -43,7 +43,7 @@ const Hook = () => {
       <StyledPlate>
         <Logo center />
         <div>
-          <h1 style={{ textAlign: "center" }}>{t("title")}</h1>
+          <h1 style={{ textAlign: "center" }}>{t("title")} {new Date().getFullYear()}</h1>
           <ReactMarkdown source={t("introduction") || ""} />
           <ProgressBar
             label={`${(progress / 5) * 100}%`}
