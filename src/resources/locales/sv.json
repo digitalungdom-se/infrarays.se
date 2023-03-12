@@ -103,5 +103,6 @@
   "Couldn't upload": "Kunde inte ladda upp fil",
   "Request failed with status code 415": "Otillåtet filformat. Kolla att din fil verkligen är en PDF och inte endast slutar med .pdf",
   "average": "Medelvärde",
-  "Application has closed for Sweden": "Ansökningsperioden har stängt för svenska elever."
+  "Application has closed for Sweden": "Ansökningsperioden har stängt för svenska elever.",
+  "Don't wait": "Se ansökningsinstruktioner här utan att skapa ett konto!"
 }

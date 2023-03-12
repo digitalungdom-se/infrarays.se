@@ -5,6 +5,9 @@ import Loading from "components/Loading";
 import ProtectedRoute from "./ProtectedRoute";
 
 const AutomaticLogin = lazy(() => import("features/auth/login/AutomaticLogin"));
+const ApplicationInstructions = lazy(
+  () => import("features/portal/instructions")
+);
 const Login = lazy(() => import("features/auth/login"));
 const Portal = lazy(() => import("features/portal"));
 const Register = lazy(() => import("features/auth/register"));
@@ -23,6 +26,9 @@ const AppRouter: React.FC = () => (
         <ProtectedRoute exact path="/" shouldBeAuthenticated>
           <Portal />
         </ProtectedRoute>
+        <Route path="/instructions">
+          <ApplicationInstructions />
+        </Route>
         <ProtectedRoute exact shouldBeAuthenticated={false} path="/login">
           <Login />
         </ProtectedRoute>
