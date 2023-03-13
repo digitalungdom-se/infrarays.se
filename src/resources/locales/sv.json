@@ -56,7 +56,7 @@
   "OTHER": "Annat",
   "UNDISCLOSED": "Vill ej uppge",
   "LoR-description": "<0>För {{name}}</0><1>Tack för att du vill skriva ett rekommendationsbrev!</1><2>Rekommendationsbrevet skall skrivas, signeras och skickas av elevens lärare, tränare eller liknande. Max 1 sida per brev. Filen måste vara en PDF och får max vara 5 MB stor.</2><3>Eleven kommer inte att kunna se brevet, men kommer att få notifikation när det är uppladdat.</3><4>För mer information, se här.</4>",
-  "LoR-link": "https://raysforexcellence.se/rekommendationsbev",
+  "LoR-link": "https://raysforexcellence.se/rekommendationsbrev",
   "You're done!": "Du är klar! Filen är uppladdad och rekommendationsbrevet är mottaget.",
   "Upload LoR": "Ladda upp rekommendationsbrev",
   "Choose file": "Välj fil",
