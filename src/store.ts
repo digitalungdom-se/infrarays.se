@@ -18,6 +18,8 @@ import { applicationApi } from "services/application";
 import { fileApi } from "services/file";
 import { surveyApi } from "services/survey";
 import auth from "features/auth/authSlice";
+import { recommendationApi } from "services/recommendations";
+import { adminApi } from "services/admins";
 
 const persistConfig = {
   key: "root",
@@ -25,14 +27,36 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = combineReducers({
+// Reducer with reset state on logout
+const appReducer = combineReducers({
   auth,
   [authApi.reducerPath]: authApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [applicationApi.reducerPath]: applicationApi.reducer,
   [fileApi.reducerPath]: fileApi.reducer,
   [surveyApi.reducerPath]: surveyApi.reducer,
+  [recommendationApi.reducerPath]: recommendationApi.reducer,
+  [adminApi.reducerPath]: adminApi.reducer,
 });
+
+const rootReducer = (state: any, action: any) => {
+  if (action.type === "auth/logout") {
+    state = {
+      auth: {},
+      [authApi.reducerPath]: authApi.reducer(undefined, action),
+      [userApi.reducerPath]: userApi.reducer(undefined, action),
+      [applicationApi.reducerPath]: applicationApi.reducer(undefined, action),
+      [fileApi.reducerPath]: fileApi.reducer(undefined, action),
+      [surveyApi.reducerPath]: surveyApi.reducer(undefined, action),
+      [recommendationApi.reducerPath]: recommendationApi.reducer(
+        undefined,
+        action
+      ),
+      [adminApi.reducerPath]: adminApi.reducer(undefined, action),
+    };
+  }
+  return appReducer(state, action);
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -48,8 +72,11 @@ export const store = configureStore({
     }).concat(
       authApi.middleware,
       userApi.middleware,
+      applicationApi.middleware,
       fileApi.middleware,
-      surveyApi.middleware
+      surveyApi.middleware,
+      recommendationApi.middleware,
+      adminApi.middleware
     ),
 });
 

@@ -11,8 +11,9 @@ import { useRouter } from "next/router";
 import { useAuth } from "hooks/auth";
 import { useSendLoginCode } from "hooks/auth";
 import { Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import StyledGroup from "components/StyledGroup";
+import Link from "next/link";
 
 export default function Home(): JSX.Element {
   useAuth(false);
@@ -49,11 +50,12 @@ export default function Home(): JSX.Element {
                   res && showCode(res as string);
                 })
                 .catch((err) => {
-                  if (err.general) setError("dummy", err.general.message);
+                  if (err.status == "FETCH_ERROR")
+                    setError("dummy", { message: "Network error." });
                   else
                     setError("email", {
                       type: "value",
-                      message: err.data.errors[0].param.message,
+                      message: err.data.errors[0].message,
                     });
                 })
           )}
@@ -72,7 +74,7 @@ export default function Home(): JSX.Element {
             />
             <FormLabel>E-mail</FormLabel>
             <FormControl.Feedback type="invalid">
-              {errors.email && t(errors.email)}
+              {errors.email && t(errors.email.message)}
             </FormControl.Feedback>
           </StyledGroup>
           {/* <FormInput
@@ -103,7 +105,14 @@ export default function Home(): JSX.Element {
           </Button>
         </form>
       </Plate>
-      <Plate className="max-w-sm mt-6">Hello</Plate>
+      <Plate className="max-w-sm mt-6">
+        <span>
+          No account?{" "}
+          <Link href="/register">
+            <a>Register here!</a>
+          </Link>
+        </span>
+      </Plate>
     </>
   );
 }

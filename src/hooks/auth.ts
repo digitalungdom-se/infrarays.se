@@ -1,4 +1,4 @@
-import { authFail, authSuccess } from "features/auth/authSlice";
+import { authFail, authSuccess, selectToken } from "features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import {
   useRevokeMutation,
@@ -8,6 +8,8 @@ import {
 import { userApi } from "services/user";
 import Router from "next/router";
 import { useGetUserQuery } from "services/user";
+import { fileApi } from "services/file";
+import { useSelector } from "react-redux";
 
 type UseLoginWithEmailAndCode = [
   loginWithEmailAndCode: (email: string, code: string) => Promise<void>,
@@ -49,8 +51,10 @@ export function useLogout(): UseLogout {
 
   const logout = () =>
     revoke().then(() => {
-      dispatch(authFail());
-      dispatch(userApi.util.invalidateTags(["User"]));
+      dispatch({
+        type: "auth/logout",
+      });
+      Router.push("/");
     });
 
   return [logout, loggingOut];
@@ -59,21 +63,44 @@ export function useLogout(): UseLogout {
 type UseAuth = (shouldBeAuthenticated?: boolean, admin?: boolean) => void;
 
 export const useAuth: UseAuth = (
-  shouldBeAuthenticated = true,
+  shouldBeAuthenticated = false,
   admin = false
 ) => {
-  const { data: user } = useGetUserQuery("@me");
+  const { data: user, isLoading, error } = useGetUserQuery("@me");
 
-  const userType = user?.type;
+  if (isLoading) return;
 
-  if (admin && userType === "APPLICANT") return Router.push("/");
-  if (
-    admin !== true &&
-    shouldBeAuthenticated &&
-    (userType === "ADMIN" || userType === "SUPER_ADMIN")
-  )
-    return Router.push("/admin");
+  if (shouldBeAuthenticated && !user) {
+    Router.push("/login");
+  }
 
-  if (shouldBeAuthenticated !== Boolean(userType))
-    return Router.push(shouldBeAuthenticated ? "/login" : "/");
+  if (!shouldBeAuthenticated && user) {
+    switch (user.type) {
+      case "APPLICANT":
+        Router.push("/");
+        break;
+      case "ADMIN":
+      case "SUPER_ADMIN":
+        Router.push("/admin");
+        break;
+    }
+  }
+
+  // const userType = user?.type;
+
+  // if (admin && userType === "APPLICANT") return Router.push("/");
+  // if (
+  //   admin !== true &&
+  //   shouldBeAuthenticated &&
+  //   (userType === "ADMIN" || userType === "SUPER_ADMIN")
+  // )
+  //   return Router.push("/admin");
+
+  // if (shouldBeAuthenticated !== Boolean(userType))
+  //   return Router.push(shouldBeAuthenticated ? "/login" : "/");
+};
+
+export const useGetIsAuthenticated = (): boolean => {
+  const token = useSelector(selectToken);
+  return Boolean(token);
 };

@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import {
   useDeleteFileMutation,
-  useGetFilesByType,
   useGetFilesQuery,
   useLazyDownloadFileQuery,
   useUploadFileMutation,
@@ -38,106 +37,116 @@ const UploadHook: React.FC<UploadHookProps> = ({
   applicantID,
 }) => {
   const { t } = useTranslation();
-  const { files, isLoading: filesLoading } = useGetFilesByType(
-    type,
-    applicantID
-  );
-  const [downloadFile] = useLazyDownloadFileQuery();
+
+  const {
+    data: allFilesByApplicant,
+    isLoading: filesLoading,
+    error: errorFiles,
+  } = useGetFilesQuery(applicantID);
+
+  const files = allFilesByApplicant?.filter((file) => file.type === type);
+
+  const [downloadFile, { isLoading: isDownloading }] =
+    useLazyDownloadFileQuery();
   const [deleteFile, { isLoading: deleteFileLoading }] =
     useDeleteFileMutation();
-  const [uploadFile, { isLoading: uploadLoading }] = useUploadFileMutation();
+  const [
+    uploadFile,
+    { isLoading: uploadLoading, data: uploadedFile, originalArgs },
+  ] = useUploadFileMutation();
 
-  const [uploadingFiles, setUploadingFiles] = useState<UploadingFileInfo[]>([]);
+  const [error, setError] = useState<UploadingFileInfo | null>(null);
 
   const handleDelete = (fileID: string) =>
     deleteFile({
       fileID,
       applicantID,
     })
-      .then(() => {})
+      .then(() => {
+        return;
+      })
       .catch((err: any) => {
         toast.error(err.message);
       });
 
-  const handleUpload = (file: File, fileName: string) => {
+  const handleUpload = (file: File) => {
     if (file.size > maxFileSize) {
-      setUploadingFiles([
-        {
-          name: file.name,
-          error: "too large",
-          uploading: false,
-        },
-      ]);
+      setError({
+        name: file.name,
+        error: "too large",
+        uploading: false,
+      });
     } else {
-      setUploadingFiles([{ name: file.name, uploading: true }]);
       uploadFile({
         file,
         applicantID,
         fileType: type,
-      })
-        .then(() => {
-          setUploadingFiles([]);
-        })
-        .catch((err) => {
-          setUploadingFiles([
-            {
-              name: file.name,
-              error: err.message,
-              uploading: false,
-            },
-          ]);
-        });
+      });
+      // .then(() => {
+      //   setError();
+      // })
+      // .catch((err) => {
+      //   setError({
+      //     name: file.name,
+      //     error: err.message,
+      //     uploading: false,
+      //   });
+      // });
     }
   };
 
-  const handleCancel = () => setUploadingFiles([]);
+  const handleCancel = () => setError(null);
 
   const closed = hasApplicationClosed();
   const disabledUploading =
-    (closed && !alwaysAbleToUpload) || filesLoading || uploadLoading;
+    (closed && !alwaysAbleToUpload) ||
+    filesLoading ||
+    uploadLoading ||
+    errorFiles !== undefined;
   const label = t(`chapters.${type}.upload.label`);
+
+  console.log(
+    error?.name || originalArgs?.file.name || uploadedFile?.name,
+    error?.error
+  );
 
   return (
     <>
       {files?.map((file) => (
         <Upload
-          uploaded={file.name}
+          uploaded={originalArgs?.file.name || file.name || uploadedFile?.name}
           key={file.id}
           label={label}
           accept={accept}
           disabled={multiple > 1 || disabledUploading}
           uploadLabel={t("Choose file")}
-          uploading={uploadLoading}
+          uploading={(uploadLoading || filesLoading) && multiple == 1}
+          downloading={isDownloading}
           onDownload={() =>
             downloadFile({
               fileID: file.id,
               applicantID,
-            }).then(() => {})
+            }).then(() => {
+              return;
+            })
           }
           deleting={deleteFileLoading}
           onDelete={() => handleDelete(file.id)}
           onChange={handleUpload}
         />
       ))}
-      {uploadingFiles.map((file) => (
-        <Upload
-          uploaded={file.name}
-          key={"uploading-" + file.name}
-          uploading={file.uploading}
-          disabled
-          error={file.error}
-          onCancel={handleCancel}
-        />
-      ))}
-      {(files?.length || 0) + uploadingFiles.length < multiple && (
+      {(files?.length || 0) < multiple && (
         <>
           <Upload
             label={label}
             accept={accept}
             onChange={handleUpload}
-            disabled={disabledUploading || uploadingFiles.length > 0}
+            disabled={disabledUploading}
             uploadLabel={t("Choose file")}
             uploading={uploadLoading}
+            error={error?.error}
+            uploaded={error?.name}
+            onCancel={handleCancel}
           />
         </>
       )}

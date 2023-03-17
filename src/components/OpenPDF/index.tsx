@@ -8,7 +8,7 @@ interface OpenPDFProps extends ButtonProps {
   /**
    * A function returning a promise that will change the loading state of the button
    */
-  onDownload: () => Promise<void>;
+  onDownload: () => Promise<any>;
 }
 
 const OpenPDF: React.FC<OpenPDFProps> = ({

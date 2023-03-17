@@ -1,5 +1,4 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { SpeakerphoneIcon } from "@heroicons/react/outline";
 import Button from "components/Button";
 import Link from "next/link";
 

@@ -15,4 +15,7 @@ export interface RecommendationFile extends RecommendationRequest {
   applicantId: string;
   fileId: null | string;
   fileName?: string;
+  applicantEmail: string;
+  applicantFirstName: string;
+  applicantLastName: string;
 }

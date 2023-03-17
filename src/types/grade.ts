@@ -1,5 +1,18 @@
 import { Admin, Applicant } from "./user";
 
+export type GradingQuestionConfig = {
+  id: string;
+} & (
+  | {
+      type: "TEXT";
+    }
+  | {
+      type: "RANGE";
+      min: number;
+      max: number;
+    }
+);
+
 export type Application = Applicant &
   Partial<ApplicationGrade> & {
     city: string;

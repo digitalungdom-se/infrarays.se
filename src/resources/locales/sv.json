@@ -5,7 +5,7 @@
   "Forgot password": "Glömt lösenordet?",
   "No account": "Inget konto? <1>Skapa ett här!</1>",
   "incorrect password": "Felaktigt lösenord",
-  "no user": "Okänd e-mail",
+  "User with that email not found.": "Okänd e-mail",
   "Invalid value": "Ogiltig format",
   "email exists": "Email är redan registrerad",
   "not verified": "Bekräfta din e-postadress först.",

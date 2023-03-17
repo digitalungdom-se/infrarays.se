@@ -25,7 +25,6 @@ export default function Home(): JSX.Element {
   // useGetSurveyQuery();
   // // const { data: application } = useGetApplicationQuery("@me");
   // const dispatch = useDispatch();
-  // useAuth();
 
   return (
     <Plate className="max-w-3xl mt-12 w-full py-12 prose">

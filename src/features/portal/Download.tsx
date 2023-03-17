@@ -1,25 +1,27 @@
 import { Button, Spinner } from "react-bootstrap";
-import React, { useState } from "react";
+import React from "react";
 
-import CSS from "csstype";
-import { downloadFullPDF } from "api/files";
 import { useTranslation } from "react-i18next";
+import { useLazyGetApplicationPDFQuery } from "services/file";
+import FileSaver from "file-saver";
 
-interface DownloadProps {
-  style: CSS.Properties;
-}
-
-const Download = ({ style }: DownloadProps): React.ReactElement => {
-  const [downloading, setDownload] = useState(false);
+const Download = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
+  const [downloadApplicationPDF, { isLoading: downloading }] =
+    useLazyGetApplicationPDFQuery();
   const { t } = useTranslation();
   return (
     <Button
-      style={style}
-      onClick={() => {
-        setDownload(true);
-        downloadFullPDF().then(() => setDownload(false));
-      }}
+      onClick={() =>
+        downloadApplicationPDF().then((res) => {
+          if (res.data) FileSaver.saveAs(...res.data);
+        })
+      }
       disabled={downloading}
+      className={className}
     >
       {downloading ? (
         <span>

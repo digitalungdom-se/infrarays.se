@@ -84,12 +84,7 @@ const Login = (): React.ReactElement => {
           )}
         </Formik>
       </Plate>
-      <Plate
-        style={{
-          marginTop: "1rem",
-          textAlign: "center",
-        }}
-      >
+      <Plate>
         <Trans i18nKey="No account">
           No account?
           <Link to="/register">Register here!</Link>

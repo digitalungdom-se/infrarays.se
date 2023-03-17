@@ -11,10 +11,10 @@ export interface ChaptersProps {
 
 function CustomChapter(props: Chapter) {
   switch (props.type) {
-    // case "RECOMMENDATION_LETTER":
-    //   return <RecommendationChapter {...props} />;
-    // case "SURVEY":
-    //   return <Survey config={props.questions} />;
+    case "RECOMMENDATION_LETTER":
+      return <RecommendationChapter {...props} />;
+    case "SURVEY":
+      return <Survey config={props.questions} />;
     case "FILES":
       return (
         <Upload

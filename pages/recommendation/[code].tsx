@@ -4,25 +4,27 @@ import { Trans, useTranslation } from "react-i18next";
 
 import CenterCard from "components/CenterCard";
 import Upload from "components/Upload";
-import { uploadLetterOfRecommendation } from "api/recommendations";
-import useAxios from "axios-hooks";
-import { useParams } from "react-router-dom";
+import { useRouter } from "next/router";
+import {
+  useGetRecommendationRequestConfigQuery,
+  useUploadLetterOfRecommendationMutation,
+} from "services/recommendations";
 
 interface UploadStateProps {
-  uploadedFileName: string;
   recommendationCode: string;
 }
 
-const UploadState = ({
-  uploadedFileName,
-  recommendationCode,
-}: UploadStateProps) => {
+const UploadState = ({ recommendationCode }: UploadStateProps) => {
   const [error, setError] = useState<{
     fileName?: string;
     msg?: string;
   }>();
-  const [uploading, setUploading] = useState<boolean>();
-  const [uploaded, setUploaded] = useState<string>();
+
+  const { data } = useGetRecommendationRequestConfigQuery(recommendationCode);
+
+  const [uploadLetterOfRecommendation, { isLoading: uploading }] =
+    useUploadLetterOfRecommendationMutation();
+
   const { t } = useTranslation();
   return (
     <Upload
@@ -30,21 +32,18 @@ const UploadState = ({
       label={t("Upload LoR")}
       uploadLabel={t("Choose file")}
       uploading={uploading}
-      uploaded={error?.fileName || uploaded || uploadedFileName}
+      uploaded={error?.fileName || data?.fileName}
       error={error?.msg}
       onChange={(file: File, fileName: string) => {
         if (file.size > 5 * 10 ** 6) {
           setError({ msg: t("too large"), fileName });
           return;
         }
-        setUploading(true);
-        uploadLetterOfRecommendation(file, fileName, recommendationCode).then(
-          (res) => {
-            setUploading(false);
-            setError(undefined);
-            setUploaded(res.fileName);
-          }
-        );
+        uploadLetterOfRecommendation({
+          file,
+          fileName,
+          code: recommendationCode,
+        });
       }}
     />
   );
@@ -57,26 +56,21 @@ interface UploadRecommendationLetterProps {
 export const UploadRecommendationLetter = ({
   recommendationCode,
 }: UploadRecommendationLetterProps): React.ReactElement => {
-  const [{ response }] = useAxios(
-    `/application/recommendation/${recommendationCode}`
-  );
-
-  return (
-    <UploadState
-      uploadedFileName={response?.data.fileName}
-      recommendationCode={recommendationCode}
-    />
-  );
+  return <UploadState recommendationCode={recommendationCode} />;
 };
 
 const RecommendationCard = (): React.ReactElement => {
-  const { recommendationCode } = useParams<{ recommendationCode: string }>();
-  const [{ response, error, loading }] = useAxios(
-    `/application/recommendation/${recommendationCode}`
-  );
+  const router = useRouter();
+  const recommendationCode = router.query.code?.toString() || "";
+
+  const {
+    data,
+    isLoading: loading,
+    error,
+  } = useGetRecommendationRequestConfigQuery(recommendationCode);
+
   const { t } = useTranslation();
-  const name =
-    response?.data.applicantFirstName + " " + response?.data.applicantLastName;
+  const name = data?.applicantFirstName + " " + data?.applicantLastName;
   return (
     <CenterCard maxWidth="480px" title={t("Upload LoR")}>
       {loading ? (
@@ -94,12 +88,12 @@ const RecommendationCard = (): React.ReactElement => {
       ) : (
         <>
           {error &&
-            ((!!error.isAxiosError && !error.response) === false ? (
+            ((error as any)?.response == undefined ? (
               <Alert variant="danger">{t("Couldn't find any student")}</Alert>
             ) : (
               <Alert variant="danger">{t("Cant connect to server")}</Alert>
             ))}
-          {error === null && (
+          {error === undefined && (
             <>
               <Trans i18nKey="LoR-description">
                 <h4>For {{ name }}</h4>
@@ -125,10 +119,7 @@ const RecommendationCard = (): React.ReactElement => {
                   For more information, see here.
                 </a>
               </Trans>
-              <UploadState
-                uploadedFileName={response?.data.fileName}
-                recommendationCode={recommendationCode}
-              />
+              <UploadState recommendationCode={recommendationCode} />
             </>
           )}
         </>

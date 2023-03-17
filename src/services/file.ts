@@ -12,11 +12,13 @@ export const fileApi = createApi({
   baseQuery,
   tagTypes: ["File"],
   endpoints: (builder) => ({
-    getFiles: builder.query<FileInfo[], string | void>({
+    getFiles: builder.query<FileInfo[], string | undefined>({
       query: (applicantID = "@me") => ({
         url: `/application/${applicantID}/file`,
       }),
-      providesTags: (applicantId) => [{ type: "File", applicantId: "@me" }],
+      providesTags: (result, error, applicantID) => [
+        { type: "File", id: applicantID },
+      ],
     }),
     deleteFile: builder.mutation<
       void,
@@ -88,20 +90,32 @@ export const fileApi = createApi({
         }),
       }
     ),
+    getApplicationPDF: builder.query<[Blob, string], string | void>({
+      query: (applicantID = "@me") => ({
+        url: `/application/${applicantID}/pdf`,
+        responseType: "blob",
+        responseHandler: (response) => {
+          return response.blob().then((blob) => {
+            const utf8FileName = response.headers
+              .get("content-disposition")
+              ?.split("filename*=UTF-8''")[1];
+            const decodedName = decodeURIComponent(utf8FileName ?? "");
+            const normalName = response.headers
+              .get("content-disposition")
+              ?.split("filename=")[1];
+            const name = utf8FileName === undefined ? normalName : decodedName;
+            return [blob, name];
+          });
+        },
+      }),
+    }),
   }),
 });
-
-// Hook to get file based on fileID
-export const useGetFilesByType = (fileType: FileType, applicantID = "@me") => {
-  const { data, error, isLoading } =
-    fileApi.endpoints.getFiles.useQuery(applicantID);
-  const files = data?.filter((file) => file.type === fileType);
-  return { files, error, isLoading };
-};
 
 export const {
   useGetFilesQuery,
   useLazyDownloadFileQuery,
   useDeleteFileMutation,
   useUploadFileMutation,
+  useLazyGetApplicationPDFQuery,
 } = fileApi;

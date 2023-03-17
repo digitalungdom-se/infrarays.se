@@ -3,14 +3,20 @@ import React, { useState } from "react";
 import AddButton from "components/AddButton";
 import AdminContact from "components/AdminContact";
 import { Spinner } from "react-bootstrap";
-import { selectUserType } from "features/auth/authSlice";
-import { useAdmins } from "./adminHooks";
-import { useSelector } from "react-redux";
 
-const Administration: React.FC = () => {
-  const { loading, data, addAdmin } = useAdmins();
+import Layout from "App";
+import AdminLayout from "components/AdminLayout";
+import { ReactElement } from "react";
+import { useAddAdminMutation, useGetAdminsQuery } from "services/admins";
+import { useGetUserQuery } from "services/user";
+
+const Administration = () => {
+  const { isLoading: loading, data } = useGetAdminsQuery({});
+  const [addAdmin] = useAddAdminMutation();
   const [numberOfEmptyFields, setEmptyFields] = useState<number[]>([]);
-  const userType = useSelector(selectUserType);
+  const { data: user } = useGetUserQuery();
+  const userType = user?.type;
+  console.log(data);
   const emptyFields: React.ReactElement[] = [];
   numberOfEmptyFields.forEach((i) => {
     emptyFields.push(
@@ -67,6 +73,14 @@ const Administration: React.FC = () => {
         </>
       )}
     </div>
+  );
+};
+
+Administration.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <Layout>
+      <AdminLayout>{page}</AdminLayout>
+    </Layout>
   );
 };
 

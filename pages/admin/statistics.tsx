@@ -1,9 +1,11 @@
 import { NumericalStatistic } from "types/survey";
-import React from "react";
+import React, { ReactElement } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
-import { useStatistics } from "./adminHooks";
+import { useStatistics } from "features/admin/adminHooks";
 import { useTranslation } from "react-i18next";
+import App from "App";
+import AdminLayout from "components/AdminLayout";
 
 interface StringTableProps {
   answers: string[];
@@ -81,39 +83,51 @@ function StatisticsPage(): React.ReactElement {
         }}
       />
     );
+  console.log(data);
   return (
     <div>
       {data && (
         <>
-          {/* <NumericalTable
+          <NumericalTable
             title={t("What are your thoughts on the application process?")}
-            answers={data.applicationProcess}
+            answers={data.numericals.applicationProcess}
           />
           <NumericalTable
             title={t("What are your thoughts on the application portal?")}
-            answers={data.applicationPortal}
+            answers={data.numericals.applicationPortal}
           />
-          <NumericalTable title={t("Gender")} answers={data.gender} />
+          <NumericalTable
+            title={t("Gender")}
+            answers={data.numericals.gender}
+          />
           <StringTable
             title={t("What city do you live in?")}
-            answers={data.city}
+            answers={data.strings.city}
           />
           <StringTable
             title={t("Which school do you attend?")}
-            answers={data.school}
+            answers={data.strings.school}
           />
           <StringTable
             title={t("Improvements on application process and portal")}
-            answers={data.improvement}
+            answers={data.strings.improvement}
           />
           <StringTable
             title={t("How did you hear about Rays?")}
-            answers={data.informant}
-          /> */}
+            answers={data.strings.informant}
+          />
         </>
       )}
     </div>
   );
 }
+
+StatisticsPage.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <App>
+      <AdminLayout>{page}</AdminLayout>
+    </App>
+  );
+};
 
 export default StatisticsPage;

@@ -1,27 +1,30 @@
-import "./signup.css";
+// import "./signup.css";
 
 import { Form, Formik } from "formik";
 import FormControl, { FormControlProps } from "react-bootstrap/FormControl";
-import { Link, useHistory } from "react-router-dom";
 import MaskedInput, { MaskedInputProps } from "react-maskedinput";
 import { Trans, WithTranslation, withTranslation } from "react-i18next";
 
 import Alert from "react-bootstrap/Alert";
-import Button from "react-bootstrap/Button";
+import Button from "components/Button";
 import Center from "components/Center";
 import FormCheck from "react-bootstrap/FormCheck";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
-import Logo from "components/Logo";
+// import Logo from "components/Logo";
 import Plate from "components/Plate";
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import StyledGroup from "components/StyledGroup";
 import hasApplicationClosed from "utils/hasApplicationClosed";
 import moment from "moment";
-import { register } from "api/register";
 import sendLoginCodeAndShowCode from "api/sendLoginCode";
 import useShowCode from "utils/showCode";
+import { useRegisterApplicationMutation } from "services/application";
+import { useRouter } from "next/router";
+import { useSendLoginCodeMutation } from "services/auth";
+import Link from "next/link";
+import Logo from "components/Logo";
 
 type MaskedFieldProps = Omit<FormControlProps, "size"> &
   Omit<MaskedInputProps, "mask" | "name">;
@@ -32,14 +35,21 @@ const MaskedField = (props: MaskedFieldProps) => (
 );
 
 const Register: React.FC<WithTranslation> = ({ t }) => {
-  const { push } = useHistory();
   const showCode = useShowCode();
   const closed = hasApplicationClosed();
+  const router = useRouter();
+  const [sendLoginCode] = useSendLoginCodeMutation();
+
+  const [
+    registerApplication,
+    { isLoading: isRegistering, error: registerError },
+  ] = useRegisterApplicationMutation();
+
   return (
     <Center maxWidth="850px">
       <Plate>
-        <Logo center />
-        <h1>{t("Register here")}</h1>
+        <Logo />
+        <h1 className="text-center font-bold">{t("Register here")}</h1>
         <Formik
           initialValues={{
             birthdate: "",
@@ -71,11 +81,14 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
               birthdate,
               finnish: finnish === "Yes",
             };
-            register(form)
-              .then(() => {
-                sendLoginCodeAndShowCode(email).then((code) => {
-                  push(`/login/${btoa(email)}`);
-                  code && showCode(code);
+            registerApplication(form)
+              .then((res) => {
+                console.log(res);
+                setSubmitting(false);
+                sendLoginCode(email).then((res) => {
+                  router.push(`/login/${btoa(email)}`);
+                  if ((res as any)?.data !== undefined)
+                    showCode((res as any)?.data);
                 });
               })
               .catch((error) => {
@@ -95,7 +108,7 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
               }}
               onSubmit={handleSubmit}
             >
-              <StyledGroup className="inputbox" controlId="form-firstname">
+              <StyledGroup className="mt-4 w-72" controlId="form-firstname">
                 <FormControl
                   autoFocus
                   required
@@ -107,7 +120,7 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                 />
                 <FormLabel>{t("First name")}</FormLabel>
               </StyledGroup>
-              <StyledGroup className="inputbox" controlId="form-lastname">
+              <StyledGroup className="mt-4 w-72" controlId="form-lastname">
                 <FormControl
                   required
                   type="text"
@@ -118,7 +131,7 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                 />
                 <FormLabel>{t("Surname")}</FormLabel>
               </StyledGroup>
-              <StyledGroup className="inputbox" controlId="form-email">
+              <StyledGroup className="mt-4 w-72" controlId="form-email">
                 <FormControl
                   isInvalid={Boolean(errors.email)}
                   required
@@ -133,7 +146,7 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                   {errors.email && t(errors.email)}
                 </FormControl.Feedback>
               </StyledGroup>
-              <StyledGroup className="inputbox" controlId="form-birthdate">
+              <StyledGroup className="mt-4 w-72" controlId="form-birthdate">
                 <FormControl
                   as={MaskedField}
                   required
@@ -147,7 +160,7 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                   {errors.birthdate && t(errors.birthdate)}
                 </FormControl.Feedback>
               </StyledGroup>
-              <FormGroup controlId="form-finland" className="inputbox">
+              <FormGroup controlId="form-finland" className="mt-4 w-72">
                 <FormControl
                   as="div"
                   style={{
@@ -202,7 +215,7 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
               >
                 <Trans i18nKey="TOS">
                   By creating an account you accept how we handle your data.
-                  <Link to="/gdpr"> Read more.</Link>
+                  {/* <Link to="/gdpr"> Read more.</Link> */}
                 </Trans>
               </div>
               {errors.dummy && (
@@ -214,10 +227,9 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                 </Alert>
               )}
               <Button
-                size="lg"
                 type="submit"
-                variant="custom"
-                style={{ minWidth: 300, width: "50%", margin: "0 25%" }}
+                className="mt-4 w-72 mx-[25%]"
+                // style={{ minWidth: 300, width: "50%", margin: "0 25%" }}
                 disabled={isSubmitting || closed}
               >
                 {closed ? (
@@ -235,10 +247,12 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                 )}
               </Button>
               <div style={{ paddingTop: 20, textAlign: "center" }}>
-                <Trans i18nKey="Have account?">
+                <Trans i18nKey="Already have an account?">
                   Already have an account?
-                  <Link to="/login">Login here!</Link>
-                </Trans>
+                </Trans>{" "}
+                <Link href="/login">
+                  <a>Login here!</a>
+                </Link>
               </div>
             </Form>
           )}

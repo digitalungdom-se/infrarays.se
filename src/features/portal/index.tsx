@@ -10,10 +10,13 @@ import React from "react";
 import config from "config/portal.json";
 import Image from "next/image";
 import LoginBanner from "components/LoginBanner";
+import { useGetIsAuthenticated } from "hooks/auth";
 
 const chapters = config.chapters as Chapter[];
 
 const Portal = (): React.ReactElement => {
+  const isAuthenticated = useGetIsAuthenticated();
+
   return (
     <>
       <div className="w-max-sm relative h-24 my-12">
@@ -24,17 +27,20 @@ const Portal = (): React.ReactElement => {
       <hr style={{ color: "#b8b8b8" }} />
       <div>
         <Chapters chapters={chapters} />
-        {/* <Progress />
-         */}
-        <div style={{ padding: "3rem 0" }}>
-          <ButtonGroup>
-            {/* <Delete /> */}
-            <Logout />
-          </ButtonGroup>
-          {/* <Download style={{ float: "right" }} /> */}
-        </div>
+        {isAuthenticated && (
+          <>
+            <Progress />
+            <div className="py-3">
+              <ButtonGroup>
+                <Delete />
+                <Logout />
+              </ButtonGroup>
+              <Download className="float-right" />
+            </div>
+          </>
+        )}
       </div>
-      <LoginBanner />
+      {!isAuthenticated && <LoginBanner />}
     </>
   );
 };

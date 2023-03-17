@@ -78,5 +78,40 @@
       }
     }
   },
+  "grading": {
+    "cv": {
+      "label": "CV",
+      "low": "Very bad",
+      "high": "Very good"
+    },
+    "coverLetter": {
+      "label": "Personligt brev",
+      "low": "Very bad",
+      "high": "Very good"
+    },
+    "essays": {
+      "label": "Essäsvar",
+      "low": "Very bad",
+      "high": "Very good"
+    },
+    "grades": {
+      "label": "Betyg",
+      "low": "Very bad",
+      "high": "Very good"
+    },
+    "recommendations": {
+      "label": "Rekommendationsbrev",
+      "low": "Very bad",
+      "high": "Very good"
+    },
+    "overall": {
+      "label": "Helhetsbedömning",
+      "low": "Very bad",
+      "high": "Very good"
+    },
+    "comment": {
+      "label": "Kommentar"
+    }
+  },
   "GDPR": "#### RAYS Application Portal GDPR\n\nNär du skapar ett konto godkänner du att:\n\n-   RESEARCH ACADEMY FOR YOUNG SCIENTISTS (RAYS), nedan kallat RAYS, och Digital Ungdom får spara dina personuppgifter upp till en (1) månad efter resultatet har meddelats.\n\n-   RAYS och Digital Ungdom får spara all uppladdad data på hemsidan upp till en (1) månad efter resultatet har meddelats.\n\nDu har rätt att:\n\n-   Slippa få dina personuppgifter utlämnade till tredje parter.\n\n-   Få ut en utskrift med all information som RAYS sparat om dig.\n\n-   Få dina uppgifter rättade om de är fel.\n\n-   Få uppgifter om dig raderade.\n\nDet görs genom att skicka e-post till [e-application@raysforexcellence.se](mailto:e-application@raysforexcellence.se) och berätta vad du vill.\n\nRAYS använder dina personuppgifter till att:\n\n-   Ta fram relevant statistik för RAYS.\n\n-   Kontakta dig med eventuell relevant information.\n\n-   Välja ut sökande i antagningsprocessen.\n\n-   Publicera information om de antagna.\n\nRAYS använder specifikt dessa personuppgifter till att:\n\n-   Namn: för att identifera dig.\n\n-   Email: för att kontakta dig.\n\n-   Ansöker via Finland: För att veta ursprunget av ansökan.\n\n-   Födelsedag: Statistik och bekräftning av identitet.\n\n-   Uppladdade filer och rekommendationsbrev: Urval i antagningsprocessen.\n\nRAYS ansvarar för att:\n\n-   Aldrig lämna ut dina personuppgifter utan att du har godkänt det.\n\n-   Vara försiktiga så att ingen utanför föreningen tar del av dina personuppgifter.\n\nHar ni frågor om RAYS och dataskyddet för dina uppgifter kontakta\nkansliet via e-post\n[e-application@raysforexcellence.se](mailto:e-application@raysforexcellence.se)."
 }

@@ -24,7 +24,7 @@ const App: React.FC = ({ children }) => {
           <footer className="flex items-center justify-center w-full">
             <DevelopedBy />
           </footer>
-          {/* <ChangeLanguage /> */}
+          <ChangeLanguage />
           <ToastContainer />
         </div>
       </PersistGate>

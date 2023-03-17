@@ -72,6 +72,8 @@ export interface UploadProps {
   onChange?: (file: File, name: string) => void;
 
   deleting?: boolean;
+
+  downloading?: boolean;
 }
 
 const Upload: React.FC<UploadProps> = ({
@@ -87,9 +89,10 @@ const Upload: React.FC<UploadProps> = ({
   uploadLabel,
   disabled,
   deleting,
+  downloading,
 }) => {
-  const [fileName, updateFileName] = useState("");
-  const [downloading, setDownloading] = useState<boolean>(false);
+  // const [fileName, updateFileName] = useState("");
+  // const [downloading, setDownloading] = useState<boolean>(false);
   // const [deleting, setDeleting] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const onToggle = (
@@ -106,7 +109,7 @@ const Upload: React.FC<UploadProps> = ({
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const list = e.target.value.split("\\");
-    updateFileName(list[list.length - 1]);
+    // updateFileName(list[list.length - 1]);
     if (e.target.files)
       return onChange(e.target.files[0], list[list.length - 1]);
   }
@@ -122,7 +125,7 @@ const Upload: React.FC<UploadProps> = ({
       {uploading && (
         <span>
           <Spinner animation="border" variant="primary" size="sm" />{" "}
-          {t("Laddar upp")} {fileName || uploaded}
+          {t("Laddar upp")} {uploaded}
         </span>
       )}
       {!uploading && uploaded && (
@@ -185,11 +188,7 @@ const Upload: React.FC<UploadProps> = ({
                     as="button"
                     disabled={downloading}
                     onClick={() => {
-                      setDownloading(true);
-                      if (onDownload)
-                        onDownload()?.then(() => {
-                          setDownloading(false);
-                        });
+                      onDownload?.();
                     }}
                   >
                     {downloading ? (

@@ -52,4 +52,9 @@ const authSlice = createSlice({
 
 export const { authSuccess, authFail } = authSlice.actions;
 
+// Get auth token selector
+
+export const selectToken = (state: RootState): Token | undefined =>
+  state.auth.token;
+
 export default authSlice.reducer;

@@ -5,7 +5,7 @@
   "Forgot password": "Forgot password?",
   "No account": "No account? <1>Register here!</1>",
   "incorrect password": "Incorect password",
-  "no user": "Unknown e-mail",
+  "User with that email not found.": "Unknown e-mail",
   "Invalid value": "Invalid format",
   "email exists": "Email is already registered",
   "not verified": "Verify your e-mail first.",

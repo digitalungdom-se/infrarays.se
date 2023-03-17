@@ -87,5 +87,47 @@
       "max": 3
     }
   ],
+  "grading": [
+    {
+      "id": "cv",
+      "type": "RANGE",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "coverLetter",
+      "type": "RANGE",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "essays",
+      "type": "RANGE",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "grades",
+      "type": "RANGE",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "recommendations",
+      "type": "RANGE",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "overall",
+      "type": "RANGE",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "id": "comment",
+      "type": "TEXT"
+    }
+  ],
   "deadline": 1680307200000
 }

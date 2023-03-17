@@ -18,10 +18,11 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import average from "utils/average";
+import { useGetSurveysQuery } from "services/survey";
 
-type UseGrades = (
-  applicantId: string
-) => UseApi<IndividualGradingWithName[]> & {
+type UseGrades = (applicantId: string) => UseApi<
+  IndividualGradingWithName[]
+> & {
   addMyGrade: (grades: ApplicationGrade) => Promise<void>;
 };
 
@@ -73,42 +74,54 @@ export function useAdmins(): UseAdmins {
 }
 
 export function useStatistics(): UseApi<Statistics> {
-  const [{ loading, data, error }] = useApi<SurveyAnswers[]>("/admin/survey");
+  const { data, isLoading: loading, error } = useGetSurveysQuery();
   const statistics: Statistics = {
-    // applicationPortal: { count: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, average: 0 },
-    // applicationProcess: { count: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }, average: 0 },
-    // gender: {
-    //   count: {
-    //     MALE: 0,
-    //     FEMALE: 0,
-    //     OTHER: 0,
-    //     UNDISCLOSED: 0,
-    //   },
-    // },
-    // city: [],
-    // school: [],
-    // improvement: [],
-    // informant: [],
+    numericals: {
+      applicationPortal: {
+        count: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+        average: 0,
+      },
+      applicationProcess: {
+        count: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+        average: 0,
+      },
+      gender: {
+        count: {
+          MALE: 0,
+          FEMALE: 0,
+          OTHER: 0,
+          UNDISCLOSED: 0,
+        },
+      },
+    },
+    strings: {
+      city: [],
+      school: [],
+      improvement: [],
+      informant: [],
+    },
   };
   if (data) {
     data.forEach((answer) => {
-      Object.keys(answer).forEach((key) => {
-        if (typeof answer[key] === "string") statistics[key];
-      });
-      // statistics.applicationPortal.count[answer.applicationPortal]++;
-      // statistics.applicationProcess.count[answer.applicationPortal]++;
-      // statistics.gender.count[answer.gender]++;
-      // statistics.city.push(answer.city);
-      // statistics.school.push(answer.school);
-      // statistics.improvement.push(answer.improvement);
-      // statistics.informant.push(answer.informant);
+      // Object.keys(answer).forEach((key) => {
+      //   if (typeof answer[key] === "string") statistics[key];
+      // });
+      statistics.numericals.applicationPortal.count[answer.applicationPortal]++;
+      statistics.numericals.applicationProcess.count[
+        answer.applicationPortal
+      ]++;
+      statistics.numericals.gender.count[answer.gender]++;
+      statistics.strings.city.push(answer.city as string);
+      statistics.strings.school.push(answer.school as string);
+      statistics.strings.improvement.push(answer.improvement as string);
+      statistics.strings.informant.push(answer.informant as string);
     });
-    // statistics.applicationPortal.average = average(
-    //   statistics.applicationPortal.count
-    // );
-    // statistics.applicationProcess.average = average(
-    //   statistics.applicationProcess.count
-    // );
+    statistics.numericals.applicationPortal.average = average(
+      statistics.numericals.applicationPortal.count
+    );
+    statistics.numericals.applicationProcess.average = average(
+      statistics.numericals.applicationProcess.count
+    );
   }
 
   return {

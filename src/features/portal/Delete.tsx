@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { TokenStorage } from "utils/tokenInterceptor";
 import { deleteUser } from "api/user";
 import { useTranslation } from "react-i18next";
+import { useDeleteUserMutation } from "services/user";
+import { useLogout } from "hooks/auth";
 
 interface ConfirmModalProps {
   show: boolean;
@@ -11,8 +13,9 @@ interface ConfirmModalProps {
 }
 
 const ConfirmModal = ({ show, onHide }: ConfirmModalProps) => {
-  const [deleting, setDelete] = useState(false);
   const { t } = useTranslation();
+  const [deleteUser, { isLoading: deleting }] = useDeleteUserMutation();
+  const [logout] = useLogout();
   return (
     <Modal
       onHide={onHide}
@@ -35,9 +38,8 @@ const ConfirmModal = ({ show, onHide }: ConfirmModalProps) => {
           variant="danger"
           disabled={deleting}
           onClick={() => {
-            setDelete(true);
             deleteUser().then(() => {
-              TokenStorage.clear();
+              logout();
             });
           }}
         >

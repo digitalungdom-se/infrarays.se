@@ -1,9 +1,11 @@
-import { Button, Form, FormControl, Spinner } from "react-bootstrap";
+import { Button, Form, FormControl, FormGroup, Spinner } from "react-bootstrap";
 import { Field, FieldProps, Formik } from "formik";
 import { WithTranslation, withTranslation } from "react-i18next";
+import portalConfig from "config/portal.json";
 
-import Rating from "components/Rating";
+// import Rating from "components/Rating";
 import React from "react";
+import { GradingQuestionConfig } from "types/grade";
 
 interface StarFieldProps extends WithTranslation {
   name: string;
@@ -11,29 +13,29 @@ interface StarFieldProps extends WithTranslation {
   isInvalid?: boolean;
 }
 
-const StarField = withTranslation()(
-  ({ name, t, isInvalid, label }: StarFieldProps) => (
-    <Form.Group>
-      <Form.Label style={{ display: "block", fontWeight: "bold" }}>
-        {label || t(`${name}.title`)}
-      </Form.Label>
-      <Form.Control as="span" bsPrefix="null" isInvalid={isInvalid}>
-        <Field name={name}>
-          {({ field: { value }, form: { setFieldValue } }: FieldProps) => (
-            <Rating
-              initialRating={value}
-              onChange={(newValue) => setFieldValue(name, newValue)}
-            />
-          )}
-        </Field>
-      </Form.Control>
-      <Form.Control.Feedback type="invalid">
-        {t("You need to set a score!")}
-      </Form.Control.Feedback>
-      <hr />
-    </Form.Group>
-  )
-);
+// const StarField = withTranslation()(
+//   ({ name, t, isInvalid, label }: StarFieldProps) => (
+//     <Form.Group>
+//       <Form.Label style={{ display: "block", fontWeight: "bold" }}>
+//         {label || t(`${name}.title`)}
+//       </Form.Label>
+//       <Form.Control as="span" bsPrefix="null" isInvalid={isInvalid}>
+//         <Field name={name}>
+//           {({ field: { value }, form: { setFieldValue } }: FieldProps) => (
+//             <Rating
+//               initialRating={value}
+//               onChange={(newValue) => setFieldValue(name, newValue)}
+//             />
+//           )}
+//         </Field>
+//       </Form.Control>
+//       <Form.Control.Feedback type="invalid">
+//         {t("You need to set a score!")}
+//       </Form.Control.Feedback>
+//       <hr />
+//     </Form.Group>
+//   )
+// );
 
 type NumericalGradeField =
   | "cv"
@@ -50,7 +52,8 @@ export type GradeFormValues = Record<NumericalGradeField, number> & {
 interface GradingModalProps extends WithTranslation {
   name?: string;
   initialValues?: GradeFormValues;
-  onSubmit?: (values: GradeFormValues) => Promise<void>;
+  // The promise can return anything or nothing, but it should be resolved
+  onSubmit?: (values: GradeFormValues) => Promise<any>;
 }
 
 const GradingModal: React.FC<GradingModalProps> = ({
@@ -71,69 +74,77 @@ const GradingModal: React.FC<GradingModalProps> = ({
     initialValues={initialValues}
     onSubmit={(values, { setSubmitting, setErrors }) => {
       setSubmitting(true);
-      const errors: Partial<Record<NumericalGradeField, string>> = {};
-      const fields: NumericalGradeField[] = [
-        "cv",
-        "coverLetter",
-        "essays",
-        "grades",
-        "recommendations",
-      ];
-      fields.forEach((key: NumericalGradeField) => {
-        if (values[key] === 0) errors[key] = "required";
-      });
-      if (Object.keys(errors).length) {
-        setErrors(errors);
-        setSubmitting(false);
-        return;
-      }
+      // const errors: Partial<Record<NumericalGradeField, string>> = {};
+      // const fields: NumericalGradeField[] = [
+      //   "cv",
+      //   "coverLetter",
+      //   "essays",
+      //   "grades",
+      //   "recommendations",
+      // ];
+      // fields.forEach((key: NumericalGradeField) => {
+      //   if (values[key] === 0) errors[key] = "required";
+      // });
+      // if (Object.keys(errors).length) {
+      //   setErrors(errors);
+      //   setSubmitting(false);
+      //   return;
+      // }
       if (onSubmit) onSubmit(values).then(() => setSubmitting(false));
     }}
   >
     {({ handleChange, values, handleSubmit, isSubmitting, errors }) => (
       <Form onSubmit={handleSubmit}>
         <h3>{name}</h3>
-        <StarField
-          name="cv"
-          label={t("chapters.CV.title")}
-          isInvalid={Boolean(errors.cv)}
-        />
-        <StarField
-          name="coverLetter"
-          label={t("chapters.COVER_LETTER.title")}
-          isInvalid={Boolean(errors.coverLetter)}
-        />
-        <StarField
-          name="essays"
-          label={t("chapters.ESSAY.title")}
-          isInvalid={Boolean(errors.essays)}
-        />
-        <StarField
-          name="grades"
-          label={t("chapters.GRADES.title")}
-          isInvalid={Boolean(errors.grades)}
-        />
-        <StarField
-          name="recommendations"
-          label={t("chapters.RECOMMENDATION_LETTER.title")}
-          isInvalid={Boolean(errors.recommendations)}
-        />
-        <StarField
-          name="overall"
-          isInvalid={Boolean(errors.overall)}
-          label={t("overall")}
-        />
-        <Form.Group>
-          <Form.Label>{t("comment")}</Form.Label>
-          <FormControl
-            name="comment"
-            as="textarea"
-            type="text"
-            value={values.comment}
-            onChange={handleChange}
-            maxLength={8192}
-          />
-        </Form.Group>
+        {(portalConfig.grading as GradingQuestionConfig[]).map((question) => (
+          <FormGroup key={question.id}>
+            <Form.Label style={{ display: "block", fontWeight: "bold" }}>
+              {t(`grading.${question.id}.label`)}
+            </Form.Label>{" "}
+            {question.type === "TEXT" && (
+              <FormControl
+                name={question.id}
+                as="textarea"
+                type="text"
+                value={values.comment}
+                onChange={handleChange}
+                maxLength={8192}
+              />
+            )}
+            {question.type === "RANGE" && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  maxWidth: 300,
+                }}
+              >
+                {/* <span className="text-secondary">
+                  {t(`grading.${question.id}.low`)}
+                </span> */}
+                {[...Array(question.max - question.min + 1)].map((_, i) => (
+                  <Form.Check
+                    key={question.id + i}
+                    inline
+                    name={question.id}
+                    type="radio"
+                    label={question.min + i}
+                    value={question.min + i}
+                    defaultChecked={
+                      question.max + i ===
+                      values[question.id as NumericalGradeField]
+                    }
+                    onChange={handleChange}
+                    required
+                  />
+                ))}
+                {/* <span className="text-secondary">
+                  {t(`grading.${question.id}.high`)}
+                </span> */}
+              </div>
+            )}
+          </FormGroup>
+        ))}
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? (
             <>

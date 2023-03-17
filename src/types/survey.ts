@@ -25,10 +25,9 @@ export type SurveyAnswers = Record<string, CustomSurveyAnswer> & {
 
 export interface Statistics {
   // [keyof SurveyAnswer ]
-  [s: string]:
-    | NumericalStatistic
-    | string[]
-    | { count: Record<string, number> };
+  numericals: Record<string, NumericalStatistic>;
+  strings: Record<string, string[]>;
+
   // applicationProcess: NumericalStatistic;
   // applicationPortal: NumericalStatistic;
   // improvement: string[];
@@ -61,4 +60,4 @@ export type SurveySelectQuestion = {
   id: string;
 };
 
-export type CustomSurveyAnswer = number | string | undefined;
+export type CustomSurveyAnswer = number | string; // | undefined
