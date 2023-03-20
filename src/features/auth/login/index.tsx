@@ -110,6 +110,19 @@ const Login = (): React.ReactElement => {
         style={{
           marginTop: 16,
           textAlign: "center",
+          backgroundColor: "#fff3cd",
+          borderColor: "#ffeeba",
+          color: "#856404",
+        }}
+      >
+        <Link to="/instructions">
+          <Trans i18nKey="Don't wait"></Trans>
+        </Link>
+      </Plate>
+      <Plate
+        style={{
+          marginTop: 16,
+          textAlign: "center",
         }}
       >
         <Trans i18nKey="No account">
