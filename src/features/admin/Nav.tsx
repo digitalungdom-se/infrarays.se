@@ -3,18 +3,23 @@ import { Link, LinkProps, useLocation } from "react-router-dom";
 import BootstrapNav from "react-bootstrap/Nav";
 import React from "react";
 
-const BootstrapNavLink: React.FC<LinkProps> = ({ to, children, ...props }) => {
+const BootstrapNavLink: React.FC<LinkProps & { disabled?: boolean }> = ({
+  to,
+  children,
+  disabled,
+}) => {
   const location = useLocation();
   return (
     <BootstrapNav.Item>
-      <Link
+      <BootstrapNav.Link
+        as={Link}
         to={to}
         data-rb-event-key={to}
+        disabled={disabled}
         className={`nav-link ${location.pathname === to && "active"}`}
-        {...props}
       >
         {children}
-      </Link>
+      </BootstrapNav.Link>
     </BootstrapNav.Item>
   );
 };
@@ -29,7 +34,9 @@ const Nav = (): React.ReactElement => (
     defaultValue={location.pathname}
   >
     <BootstrapNavLink to="/admin">Ansökningar</BootstrapNavLink>
-    <BootstrapNavLink to="/admin/toplist">Topplista</BootstrapNavLink>
+    <BootstrapNavLink to="/admin/toplist" disabled>
+      Topplista
+    </BootstrapNavLink>
     <BootstrapNavLink to="/admin/administration">Admins</BootstrapNavLink>
     <BootstrapNavLink to="/admin/statistics">Statistik</BootstrapNavLink>
   </BootstrapNav>
