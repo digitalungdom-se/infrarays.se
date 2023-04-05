@@ -82,7 +82,7 @@ class TopList extends React.Component<TopListProps, TopListState> {
       },
       {
         dataField: "overall",
-        text: "Ö",
+        text: "TO",
         formatter: (n: number) => n && n.toFixed(2),
       },
       {
@@ -98,7 +98,9 @@ class TopList extends React.Component<TopListProps, TopListState> {
 
     const dataWithIndex = this.props.applications.map((application, index) => ({
       ...application,
-      name: `${application.firstName} ${application.lastName}${application.finnish ? " (finsk)" : ""}`,
+      name: `${application.firstName} ${application.lastName}${
+        application.finnish ? " (finsk)" : ""
+      }`,
       index,
     }));
 
