@@ -1,6 +1,6 @@
 {
   "title": "Application for Rays",
-  "introduction": "Thank you for your interest in applying to Rays! We will be reading all applications and respond to you as we can. Below you can find the information we want you to send. On the **March 31st at 23:59** you will no longer be able to edit your application and it will automatically be sent to Rays. For your application to be sent you must have uplaoded all files and filled in the survey. Until this date you can update any part by simply uploading a new file again. Your old file will be replaced by the new one. All files must be in PDF-format and the specific requirements for word count can be located in each part. The file limit is 5 MB per part.\n\nWe who arrange Rays wish you the very best of luck and look forward to reading your application! [For more information please check the website!](http://raysforexcellence.se/ansok/)\n\n**PLEASE NOTE THAT THE APPLICATION NEEDS TO BE WRITTEN IN SWEDISH.**",
+  "introduction": "Thank you for your interest in applying to Rays! We will be reading all applications and respond to you as we can. Below you can find the information we want you to send. On the **March 31st at 23:59** you will no longer be able to edit your application and it will automatically be sent to Rays. For your application to be sent you must have uplaoded all files and filled in the survey. Until this date you can update any part by simply uploading a new file again. Your old file will be replaced by the new one. All files must be in PDF-format and the specific requirements for word count can be located in each part. The file limit is 5 MB per part.\n\nWe who arrange Rays wish you the very best of luck and look forward to reading your application! [For more information please check the website!](http://raysforexcellence.se/ansok/)\n\n**PLEASE NOTE THAT YOUR COVER LETTER AND ESSAYS NEED TO BE IN SWEDISH.**",
   "COVER_LETTER": {
     "title": "Personligt brev",
     "subtitle": "Max 600 ord",
@@ -11,8 +11,8 @@
   },
   "CV": {
     "title": "CV",
-    "subtitle": "Max 2 sidor",
-    "description": "Förutom grundläggande information rekommenderas ditt CV innehålla beskrivning av exempelvis deltagande i såväl naturvetenskapliga som idrottsliga tävlingar, utmärkelser i skolan eller andra sammanhang, samt ideellt arbete och förtroendeuppdrag.",
+    "subtitle": "Maximum 2 pages",
+    "description": "Apart from basic information, we recommend you to include descriptions of competitions you have partaken in (both scientific and athletic), awards won at school or in other contexts, experience of voluntary work and holding positions of trust.",
     "upload": {
       "label": "Upload CV"
     }
