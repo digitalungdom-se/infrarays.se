@@ -32,8 +32,12 @@ const MaskedField = (props: MaskedFieldProps) => (
 const Register: React.FC<WithTranslation> = ({ t }) => {
   const { push } = useHistory();
   const toastId = React.useRef<React.ReactText>(null);
-  const applicationHasClosed =
-    moment("04-01", "MM-DD").utc().diff(Date.now()) < 0;
+  const now = moment().utc();
+  const openDate = moment("02-01", "MM-DD").utc();
+  const closeDate = moment("04-01", "MM-DD").utc();
+
+  const applicationIsNotOpen = !(now.isSameOrAfter(openDate) && now.isBefore(closeDate));
+
   return (
     <Center maxWidth="850px">
       <Plate>
@@ -237,10 +241,10 @@ const Register: React.FC<WithTranslation> = ({ t }) => {
                 type="submit"
                 variant="custom"
                 style={{ minWidth: 300, width: "50%", margin: "0 25%" }}
-                disabled={isSubmitting || applicationHasClosed}
+                disabled={isSubmitting || applicationIsOpen}
               >
-                {applicationHasClosed ? (
-                  t("Application has closed")
+                {!applicationIsNotOpen ? (
+                  t("Application is not open")
                 ) : isSubmitting ? (
                   <>
                     <Spinner

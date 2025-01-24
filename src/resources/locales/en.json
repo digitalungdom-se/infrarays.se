@@ -99,6 +99,7 @@
   "Click to open link": "Click here to open upload link!",
   "Only PDF": "The file must be a PDF.",
   "Application has closed": "Application period has closed",
+  "Application is not open": "The application period is not open",
   "Couldn't upload": "Couldn't upload file",
   "Request failed with status code 415": "Unsupported media file. Check that your file really is a PDF and doesn't only end in .pdf",
   "average": "Average",
