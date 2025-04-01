@@ -34,7 +34,7 @@ const Nav = (): React.ReactElement => (
     defaultValue={location.pathname}
   >
     <BootstrapNavLink to="/admin">Ansökningar</BootstrapNavLink>
-    <BootstrapNavLink to="/admin/toplist">
+    <BootstrapNavLink to="/admin/toplist" disabled>
       Topplista
     </BootstrapNavLink>
     <BootstrapNavLink to="/admin/administration">Admins</BootstrapNavLink>
