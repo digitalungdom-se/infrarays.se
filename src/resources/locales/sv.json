@@ -100,6 +100,7 @@
   "Click to open link": "Klicka här för att öppna uppladdningslänk!",
   "Only PDF": "Filen måste vara en PDF.",
   "Application has closed": "Ansökningsperioden har stängt",
+  "Application is not open": "Ansökningsperioden är inte öppen",
   "Couldn't upload": "Kunde inte ladda upp fil",
   "Request failed with status code 415": "Otillåtet filformat. Kolla att din fil verkligen är en PDF och inte endast slutar med .pdf",
   "average": "Medelvärde",
